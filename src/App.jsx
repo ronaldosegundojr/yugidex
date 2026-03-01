@@ -285,7 +285,7 @@ function CardsView({ cards, filteredCards, currentPage, setCurrentPage, deck, se
   )
 }
 
-function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, deck: deckContext, setDeck: setDeckContext }) {
+function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, setMobileDeckModal, deck: deckContext, setDeck: setDeckContext }) {
   const [activeId, setActiveId] = useState(null)
   const [deckName, setDeckName] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -525,7 +525,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
     )
   }
 
-  const DeckZone = ({ title, deckArray, zoneId, stats, onEmptyClick, isMobile }) => {
+  const DeckZone = ({ title, deckArray, zoneId, stats, onEmptyClick }) => {
     const { setNodeRef, isOver } = useDroppable({ id: zoneId })
     
     return (
@@ -574,9 +574,9 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
               <input type="text" className="deck-name-input" placeholder="Nome do Deck" value={deckName} onChange={(e) => setDeckName(e.target.value)} />
             </div>
             
-            <DeckZone title="Main Deck (40-60)" deckArray={mainDeck} zoneId="main-deck-zone" stats={stats} onEmptyClick={() => setMobileDeckModal(true)} isMobile={isMobile} />
-            <DeckZone title="Extra Deck (0-15)" deckArray={extraDeck} zoneId="extra-deck-zone" stats={getDeckStats(extraDeck)} onEmptyClick={() => setMobileDeckModal(true)} isMobile={isMobile} />
-            <DeckZone title="Side Deck (0-15)" deckArray={sideDeck} zoneId="side-deck-zone" stats={getDeckStats(sideDeck)} onEmptyClick={() => setMobileDeckModal(true)} isMobile={isMobile} />
+            <DeckZone title="Main Deck (40-60)" deckArray={mainDeck} zoneId="main-deck-zone" stats={stats} onEmptyClick={() => setMobileDeckModal(true)} />
+            <DeckZone title="Extra Deck (0-15)" deckArray={extraDeck} zoneId="extra-deck-zone" stats={getDeckStats(extraDeck)} onEmptyClick={() => setMobileDeckModal(true)} />
+            <DeckZone title="Side Deck (0-15)" deckArray={sideDeck} zoneId="side-deck-zone" stats={getDeckStats(sideDeck)} onEmptyClick={() => setMobileDeckModal(true)} />
 
             <div className="deck-rules-info">
               <h4>Regras do Deck</h4>
@@ -816,7 +816,7 @@ function App() {
         <main className="main-content">
           <Routes>
             <Route path="/" element={<CardsView cards={cards} filteredCards={filteredCards} currentPage={currentPage} setCurrentPage={setCurrentPage} deck={deck} setModalCard={setModalCard} searchTerm={searchTerm} setSearchTerm={setSearchTerm} typeFilter={typeFilter} setTypeFilter={setTypeFilter} raceFilter={raceFilter} setRaceFilter={setRaceFilter} attrFilter={attrFilter} setAttrFilter={setAttrFilter} races={races} lang={lang} setLang={setLang} />} />
-            <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} />} />
+            <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} isMobile={isMobile} setMobileDeckModal={setMobileDeckModal} />} />
           </Routes>
         </main>
 
