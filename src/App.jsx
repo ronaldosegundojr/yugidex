@@ -363,9 +363,17 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
   const sideDeck = deck.filter(c => c.deckType === 'side')
 
   const getCardType = (card) => {
-    if (['monster', 'xyz', 'synchro', 'fusion', 'ritual', 'link'].includes(card.cardType)) return 'monster'
     if (card.cardType === 'spell') return 'spell'
     if (card.cardType === 'trap') return 'trap'
+    if (card.cardType === 'monster') {
+      const name = card.text?.en?.name?.toLowerCase() || ''
+      if (name.includes('xyz') || name.includes('-xyz')) return 'xyz'
+      if (name.includes('synchro')) return 'synchro'
+      if (name.includes('fusion') || name.includes('fusdragon')) return 'fusion'
+      if (name.includes('ritual')) return 'ritual'
+      if (name.includes(' link') || name.includes('-link') || name.endsWith('link')) return 'link'
+      return 'monster'
+    }
     return card.cardType
   }
 
@@ -788,9 +796,17 @@ function App() {
   }
 
   const getCardType = (card) => {
-    if (['monster', 'xyz', 'synchro', 'fusion', 'ritual', 'link'].includes(card.cardType)) return 'monster'
     if (card.cardType === 'spell') return 'spell'
     if (card.cardType === 'trap') return 'trap'
+    if (card.cardType === 'monster') {
+      const name = card.text?.en?.name?.toLowerCase() || ''
+      if (name.includes('xyz') || name.includes('-xyz')) return 'xyz'
+      if (name.includes('synchro')) return 'synchro'
+      if (name.includes('fusion') || name.includes('fusdragon')) return 'fusion'
+      if (name.includes('ritual')) return 'ritual'
+      if (name.includes(' link') || name.includes('-link') || name.endsWith('link')) return 'link'
+      return 'monster'
+    }
     return card.cardType
   }
 
