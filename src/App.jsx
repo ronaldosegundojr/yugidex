@@ -525,7 +525,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
     )
   }
 
-  const DeckZone = ({ title, deckArray, zoneId, stats, onEmptyClick }) => {
+  const DeckZone = ({ title, deckArray, zoneId, stats, onEmptyClick, isMobile }) => {
     const { setNodeRef, isOver } = useDroppable({ id: zoneId })
     
     return (
@@ -574,9 +574,9 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
               <input type="text" className="deck-name-input" placeholder="Nome do Deck" value={deckName} onChange={(e) => setDeckName(e.target.value)} />
             </div>
             
-            <DeckZone title="Main Deck (40-60)" deckArray={mainDeck} zoneId="main-deck-zone" stats={stats} onEmptyClick={() => setMobileDeckModal(true)} />
-            <DeckZone title="Extra Deck (0-15)" deckArray={extraDeck} zoneId="extra-deck-zone" stats={getDeckStats(extraDeck)} onEmptyClick={() => setMobileDeckModal(true)} />
-            <DeckZone title="Side Deck (0-15)" deckArray={sideDeck} zoneId="side-deck-zone" stats={getDeckStats(sideDeck)} onEmptyClick={() => setMobileDeckModal(true)} />
+            <DeckZone title="Main Deck (40-60)" deckArray={mainDeck} zoneId="main-deck-zone" stats={stats} onEmptyClick={() => setMobileDeckModal(true)} isMobile={isMobile} />
+            <DeckZone title="Extra Deck (0-15)" deckArray={extraDeck} zoneId="extra-deck-zone" stats={getDeckStats(extraDeck)} onEmptyClick={() => setMobileDeckModal(true)} isMobile={isMobile} />
+            <DeckZone title="Side Deck (0-15)" deckArray={sideDeck} zoneId="side-deck-zone" stats={getDeckStats(sideDeck)} onEmptyClick={() => setMobileDeckModal(true)} isMobile={isMobile} />
 
             <div className="deck-rules-info">
               <h4>Regras do Deck</h4>
