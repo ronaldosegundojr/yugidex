@@ -127,14 +127,22 @@ function CardsView({ cards, filteredCards, currentPage, setCurrentPage, deck, se
   const [expandedTypes, setExpandedTypes] = useState({})
 
   const getCardType = (card) => {
-    if (['monster', 'xyz', 'synchro', 'fusion', 'ritual', 'link'].includes(card.cardType)) return 'monster'
     if (card.cardType === 'spell') return 'spell'
     if (card.cardType === 'trap') return 'trap'
+    if (card.cardType === 'monster') {
+      const name = card.text?.en?.name?.toLowerCase() || ''
+      if (name.includes('xyz') || name.includes('-xyz')) return 'xyz'
+      if (name.includes('synchro')) return 'synchro'
+      if (name.includes('fusion') || name.includes('fusdragon')) return 'fusion'
+      if (name.includes('ritual')) return 'ritual'
+      if (name.includes(' link') || name.includes('-link') || name.endsWith('link')) return 'link'
+      return 'monster'
+    }
     return card.cardType
   }
 
   const getDetailedCardType = (card) => {
-    return card.cardType
+    return getCardType(card)
   }
 
   const totalPages = Math.ceil(filteredCards.length / ITEMS_PER_PAGE)
@@ -157,7 +165,7 @@ function CardsView({ cards, filteredCards, currentPage, setCurrentPage, deck, se
   }
 
   const getCardsByType = (types) => {
-    return cards.filter(card => types.includes(card.cardType))
+    return cards.filter(card => types.includes(getCardType(card)))
   }
 
   return (
@@ -183,6 +191,11 @@ function CardsView({ cards, filteredCards, currentPage, setCurrentPage, deck, se
             <option value="monster">Monstro</option>
             <option value="spell">Magia</option>
             <option value="trap">Armadilha</option>
+            <option value="xyz">XYZ</option>
+            <option value="synchro">Synchro</option>
+            <option value="fusion">Fusion</option>
+            <option value="ritual">Ritual</option>
+            <option value="link">Link</option>
           </select>
           <select className="filter-select" value={raceFilter} onChange={(e) => setRaceFilter(e.target.value)}>
             <option value="">Todas as Raças</option>
@@ -234,6 +247,56 @@ function CardsView({ cards, filteredCards, currentPage, setCurrentPage, deck, se
                   <h3 className="group-title">Armadilhas ({filteredCards.filter(c => getCardType(c) === 'trap').length})</h3>
                   <div className="simple-card-grid">
                     {paginatedCards.filter(c => getCardType(c) === 'trap').map(card => (
+                      <SimpleCard key={card.id} card={card} onClick={setModalCard} />
+                    ))}
+                  </div>
+                </div>
+              )}
+              {filteredCards.filter(c => getCardType(c) === 'xyz').length > 0 && (
+                <div className="cards-group">
+                  <h3 className="group-title">XYZ ({filteredCards.filter(c => getCardType(c) === 'xyz').length})</h3>
+                  <div className="simple-card-grid">
+                    {paginatedCards.filter(c => getCardType(c) === 'xyz').map(card => (
+                      <SimpleCard key={card.id} card={card} onClick={setModalCard} />
+                    ))}
+                  </div>
+                </div>
+              )}
+              {filteredCards.filter(c => getCardType(c) === 'synchro').length > 0 && (
+                <div className="cards-group">
+                  <h3 className="group-title">Synchro ({filteredCards.filter(c => getCardType(c) === 'synchro').length})</h3>
+                  <div className="simple-card-grid">
+                    {paginatedCards.filter(c => getCardType(c) === 'synchro').map(card => (
+                      <SimpleCard key={card.id} card={card} onClick={setModalCard} />
+                    ))}
+                  </div>
+                </div>
+              )}
+              {filteredCards.filter(c => getCardType(c) === 'fusion').length > 0 && (
+                <div className="cards-group">
+                  <h3 className="group-title">Fusion ({filteredCards.filter(c => getCardType(c) === 'fusion').length})</h3>
+                  <div className="simple-card-grid">
+                    {paginatedCards.filter(c => getCardType(c) === 'fusion').map(card => (
+                      <SimpleCard key={card.id} card={card} onClick={setModalCard} />
+                    ))}
+                  </div>
+                </div>
+              )}
+              {filteredCards.filter(c => getCardType(c) === 'ritual').length > 0 && (
+                <div className="cards-group">
+                  <h3 className="group-title">Ritual ({filteredCards.filter(c => getCardType(c) === 'ritual').length})</h3>
+                  <div className="simple-card-grid">
+                    {paginatedCards.filter(c => getCardType(c) === 'ritual').map(card => (
+                      <SimpleCard key={card.id} card={card} onClick={setModalCard} />
+                    ))}
+                  </div>
+                </div>
+              )}
+              {filteredCards.filter(c => getCardType(c) === 'link').length > 0 && (
+                <div className="cards-group">
+                  <h3 className="group-title">Link ({filteredCards.filter(c => getCardType(c) === 'link').length})</h3>
+                  <div className="simple-card-grid">
+                    {paginatedCards.filter(c => getCardType(c) === 'link').map(card => (
                       <SimpleCard key={card.id} card={card} onClick={setModalCard} />
                     ))}
                   </div>
