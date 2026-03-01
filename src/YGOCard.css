@@ -1,0 +1,610 @@
+.ygo-card {
+  width: 100%;
+  max-width: 230px;
+  aspect-ratio: 2.5 / 3.5;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  font-family: 'Cinzel', 'Times New Roman', serif;
+}
+
+.ygo-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+/* ===== PATTERN BASE ===== */
+.ygo-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+/* Monster Normal - Yellow */
+.ygo-card.monster-normal::before {
+  background: linear-gradient(135deg, #f7dc6f 0%, #f4d03f 20%, #d4ac0d 80%, #f4d03f 100%);
+}
+
+/* Monster Effect - Orange */
+.ygo-card.monster-effect::before {
+  background: linear-gradient(135deg, #f5b041 0%, #f39c12 20%, #d68910 80%, #f39c12 100%);
+}
+
+/* Monster Ritual - Blue */
+.ygo-card.monster-ritual::before {
+  background: linear-gradient(135deg, #85c1e9 0%, #5dade2 20%, #3498db 80%, #5dade2 100%);
+}
+
+/* Monster Fusion - Purple */
+.ygo-card.monster-fusion::before {
+  background: linear-gradient(135deg, #d7bde2 0%, #af7ac5 20%, #8e44ad 80%, #af7ac5 100%);
+}
+
+/* Monster Synchro - White */
+.ygo-card.monster-synchro::before {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ecf0f1 20%, #bdc3c7 80%, #ecf0f1 100%);
+}
+
+/* Monster Xyz - Black */
+.ygo-card.monster-xyz::before {
+  background: linear-gradient(135deg, #34495e 0%, #2c3e50 20%, #1a1a2e 80%, #2c3e50 100%);
+}
+
+/* Monster Link - Dark Blue */
+.ygo-card.monster-link::before {
+  background: linear-gradient(135deg, #3498db 0%, #2874a6 20%, #154360 80%, #2874a6 100%);
+}
+
+/* Monster Pendulum - Orange top, Blue bottom */
+.ygo-card.monster-pendulum::before {
+  background: linear-gradient(180deg, 
+    #f39c12 0%, #f39c12 55%, 
+    #1a5276 55%, #1a5276 100%
+  );
+}
+
+/* Spell - Green */
+.ygo-card.spell::before {
+  background: linear-gradient(135deg, #82e0aa 0%, #58d68d 20%, #27ae60 80%, #58d68d 100%);
+}
+
+/* Trap - Red/Pink */
+.ygo-card.trap::before {
+  background: linear-gradient(135deg, #f1948a 0%, #ec7063 20%, #e74c3c 80%, #ec7063 100%);
+}
+
+/* Border */
+.ygo-card {
+  border: 3px solid #b7950b;
+}
+
+.ygo-card.monster-normal { border-color: #b7950b; }
+.ygo-card.monster-effect { border-color: #b9770e; }
+.ygo-card.monster-ritual { border-color: #1f618d; }
+.ygo-card.monster-fusion { border-color: #6c3483; }
+.ygo-card.monster-synchro { border-color: #7f8c8d; }
+.ygo-card.monster-xyz { border-color: #1a1a2e; }
+.ygo-card.monster-link { border-color: #154360; }
+.ygo-card.monster-pendulum { border-color: #b9770e; }
+.ygo-card.spell { border-color: #1e8449; }
+.ygo-card.trap { border-color: #b03a2e; }
+
+/* ===== FRAME CONTENT ===== */
+.ygo-card-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  padding: 3%;
+}
+
+/* Name Band */
+.ygo-card-name-band {
+  height: 11%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2%;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  margin-bottom: 1%;
+}
+
+.ygo-card.spell .ygo-card-name-band,
+.ygo-card.trap .ygo-card-name-band {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.ygo-card.monster-xyz .ygo-card-name-band {
+  background: rgba(255, 215, 0, 0.3);
+  border-color: #ffd700;
+}
+
+.ygo-card.monster-link .ygo-card-name-band {
+  background: rgba(0, 100, 200, 0.3);
+  border-color: #0064c8;
+}
+
+.ygo-card-name {
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  margin-right: 4px;
+}
+
+.ygo-card.monster-xyz .ygo-card-name { color: #ffd700; text-shadow: 0 0 2px #000; }
+.ygo-card.monster-link .ygo-card-name { color: #fff; text-shadow: 0 0 2px #000; }
+.ygo-card.spell .ygo-card-name { color: #fff; text-shadow: 0 0 2px #000; }
+.ygo-card.trap .ygo-card-name { color: #fff; text-shadow: 0 0 2px #000; }
+
+/* Attribute */
+.ygo-card-attr {
+  width: 14%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ygo-card-attr-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.attr-light { background: linear-gradient(135deg, #fff9c4, #ffd700); }
+.attr-dark { background: linear-gradient(135deg, #7b1fa2, #4a148c); }
+.attr-water { background: linear-gradient(135deg, #4fc3f7, #0288d1); }
+.attr-fire { background: linear-gradient(135deg, #ff8a65, #d84315); }
+.attr-earth { background: linear-gradient(135deg, #a1887f, #5d4037); }
+.attr-wind { background: linear-gradient(135deg, #a5d6a7, #388e3c); }
+.attr-divine { background: linear-gradient(135deg, #f48fb1, #c2185b); }
+
+/* Level Stars */
+.ygo-card-level {
+  height: 7%;
+  display: flex;
+  align-items: center;
+  padding: 0 2%;
+  margin-bottom: 1%;
+}
+
+.ygo-card-level-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.ygo-card-level-star {
+  width: 9px;
+  height: 9px;
+  background: #e74c3c;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.ygo-card.monster-xyz .ygo-card-level-star {
+  background: #ffd700;
+  clip-path: polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%);
+}
+
+.ygo-card.monster-link .ygo-card-level-star {
+  background: #e74c3c;
+  clip-path: polygon(0% 50%, 30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%);
+}
+
+.ygo-card.monster-link .ygo-card-level {
+  justify-content: flex-start;
+}
+
+/* Image */
+.ygo-card-image-container {
+  height: 42%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2%;
+  background: #1a1a1a;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  margin-bottom: 1%;
+}
+
+.ygo-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Type Box */
+.ygo-card-type-box {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #fffef0, #f5e6c8);
+  border: 1px solid #b7950b;
+  padding: 1px 4px;
+  font-size: 0.45rem;
+  color: #000;
+  white-space: nowrap;
+  z-index: 10;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.ygo-card.monster-xyz .ygo-card-type-box {
+  background: linear-gradient(180deg, #ffd700, #b8860b);
+  border-color: #ffd700;
+  color: #000;
+  font-weight: 700;
+}
+
+.ygo-card.monster-link .ygo-card-type-box {
+  background: linear-gradient(180deg, #0064c8, #003d80);
+  border-color: #0064c8;
+  color: #fff;
+}
+
+/* Text Box */
+.ygo-card-text-box {
+  flex: 1;
+  padding: 3%;
+  font-size: 0.42rem;
+  color: #000;
+  line-height: 1.25;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #fffef0 0%, #f5e6c8 100%);
+  border: 1px solid #b7950b;
+  border-radius: 1px;
+}
+
+.ygo-card.monster-xyz .ygo-card-text-box {
+  background: linear-gradient(180deg, #2c3e50, #1a252f);
+  border-color: #ffd700;
+  color: #ffd700;
+}
+
+.ygo-card.monster-link .ygo-card-text-box {
+  background: linear-gradient(180deg, #154360, #0a2e4a);
+  border-color: #0064c8;
+  color: #fff;
+}
+
+.ygo-card.spell .ygo-card-text-box {
+  background: linear-gradient(180deg, #e8f8f5, #d5f5e3);
+  border-color: #1e8449;
+  color: #000;
+}
+
+.ygo-card.trap .ygo-card-text-box {
+  background: linear-gradient(180deg, #fdedec, #fadbd8);
+  border-color: #b03a2e;
+  color: #000;
+}
+
+.ygo-card-text-box p {
+  margin: 0;
+  text-align: justify;
+}
+
+/* Spell/Trap Type Label */
+.ygo-card-spell-type,
+.ygo-card-trap-type {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.4rem;
+  margin-bottom: 2px;
+  font-weight: bold;
+}
+
+.ygo-card-spell-type::before {
+  content: '⚪';
+  font-size: 0.5rem;
+}
+
+.ygo-card-trap-type::before {
+  content: '🔴';
+  font-size: 0.5rem;
+}
+
+/* Footer */
+.ygo-card-footer {
+  height: 6%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 2%;
+}
+
+.ygo-card-atkdef {
+  font-size: 0.6rem;
+  font-weight: 900;
+  color: #000;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+}
+
+.ygo-card.monster-xyz .ygo-card-atkdef { color: #ffd700; }
+.ygo-card.monster-link .ygo-card-atkdef { color: #fff; }
+.ygo-card.spell .ygo-card-atkdef,
+.ygo-card.trap .ygo-card-atkdef { display: none; }
+
+/* Password / Set Code */
+.ygo-card-pass-code {
+  position: absolute;
+  bottom: 1%;
+  right: 3%;
+  font-size: 0.45rem;
+  color: #000;
+  font-weight: bold;
+}
+
+.ygo-card.monster-xyz .ygo-card-pass-code { color: #ffd700; }
+.ygo-card.monster-link .ygo-card-pass-code { color: #fff; }
+.ygo-card.spell .ygo-card-pass-code,
+.ygo-card.trap .ygo-card-pass-code { color: #fff; }
+
+/* Link Arrows (simplified) */
+.ygo-card-link-arrows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Pendulum Scale */
+.ygo-card-pendulum-scale {
+  display: none;
+}
+
+.ygo-card.monster-pendulum .ygo-card-pendulum-scale {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 28%;
+  width: 15%;
+  height: 12%;
+  background: linear-gradient(180deg, #1a5276, #0a2e4a);
+  border: 2px solid #0064c8;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.ygo-card.monster-pendulum .ygo-card-pendulum-scale.left { left: 4%; }
+.ygo-card.monster-pendulum .ygo-card-pendulum-scale.right { right: 4%; }
+
+/* ===== MINI CARD (for deck) ===== */
+.ygo-card-mini {
+  width: 42px;
+  height: 58px;
+  border-radius: 3px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid #b7950b;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.ygo-card-mini:hover {
+  transform: scale(1.3);
+  z-index: 100;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.ygo-card-mini img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ygo-card-mini-qty {
+  position: absolute;
+  bottom: -3px;
+  right: -3px;
+  background: #d4a857;
+  color: #000;
+  font-size: 0.55rem;
+  font-weight: bold;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #000;
+}
+
+.ygo-card-mini-remove {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ygo-card-mini:hover .ygo-card-mini-remove {
+  opacity: 1;
+}
+
+/* ===== MODAL LARGE ===== */
+.ygo-card-modal-large {
+  max-width: 400px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .ygo-card {
+    max-width: 160px;
+  }
+  
+  .ygo-card-name {
+    font-size: 0.55rem;
+  }
+  
+  .ygo-card-text-box {
+    font-size: 0.35rem;
+  }
+}
+
+/* ===== LIBRARY CARDS (smaller) ===== */
+.library-card {
+  width: 100%;
+  max-width: 140px;
+  aspect-ratio: 2.5 / 3.5;
+}
+
+.library-card .ygo-card-name {
+  font-size: 0.5rem;
+}
+
+.library-card .ygo-card-text-box {
+  font-size: 0.32rem;
+}
+
+.library-card .ygo-card-name-band {
+  height: 10%;
+  padding: 0 1px;
+}
+
+.library-card .ygo-card-attr {
+  width: 12%;
+}
+
+.library-card .ygo-card-level {
+  height: 6%;
+}
+
+.library-card .ygo-card-level-star {
+  width: 7px;
+  height: 7px;
+}
+
+.library-card .ygo-card-image-container {
+  height: 40%;
+}
+
+.library-card .ygo-card-type-box {
+  font-size: 0.35rem;
+  top: 50%;
+}
+
+.library-card .ygo-card-footer {
+  height: 5%;
+}
+
+.library-card .ygo-card-atkdef {
+  font-size: 0.45rem;
+}
+
+.library-card .ygo-card-pass-code {
+  font-size: 0.35rem;
+}
+
+/* Grid for library */
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.75rem;
+  padding: 0.5rem;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+/* Modal with buttons */
+.ygo-card-modal-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.ygo-card-modal-buttons .btn {
+  flex: 1;
+  min-width: 120px;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.ygo-card-modal-buttons .btn-add {
+  background: var(--green-glow);
+  border-color: var(--green-glow);
+  color: #000;
+}
+
+.ygo-card-modal-buttons .btn-add:hover {
+  background: #27ae60;
+}
+
+.ygo-card-modal-buttons .btn-remove {
+  background: var(--red-glow);
+  border-color: var(--red-glow);
+  color: #fff;
+}
+
+.ygo-card-modal-buttons .btn-remove:hover {
+  background: #c0392b;
+}
+
+.ygo-card-modal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Language toggle */
+.lang-toggle {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.lang-toggle button {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  background: transparent;
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+}
+
+.lang-toggle button.active {
+  background: var(--gold);
+  color: var(--egypt-dark);
+}
