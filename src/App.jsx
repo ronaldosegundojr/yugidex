@@ -181,15 +181,16 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button className="scanner-btn-icon" onClick={onOpenScanner} title="Escanear carta">
-            📷
-          </button>
           <div className="lang-toggle">
             <button className={lang === 'pt' ? 'active' : ''} onClick={() => setLang('pt')}>PT</button>
             <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>EN</button>
             <button className={lang === 'ja' ? 'active' : ''} onClick={() => setLang('ja')}>JP</button>
           </div>
         </div>
+        <button className="scanner-open-btn" onClick={onOpenScanner}>
+          <span className="scanner-open-btn-icon">📷</span>
+          <span>Escanear Carta</span>
+        </button>
         <div className="filter-group">
           <select className="filter-select" value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}>
             <option value="">Todos os Tipos</option>
@@ -603,17 +604,16 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
           <div className="card-search-panel">
             <div className="search-panel-header">
               <h3>Biblioteca de Cartas</h3>
-              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                <button className="scanner-btn-icon" onClick={onOpenScanner} title="Escanear carta">
-                  📷
-                </button>
-                <div className="lang-toggle">
+              <div className="lang-toggle">
                 <button className={lang === 'pt' ? 'active' : ''} onClick={() => setLang('pt')}>PT</button>
                 <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>EN</button>
                 <button className={lang === 'ja' ? 'active' : ''} onClick={() => setLang('ja')}>JP</button>
               </div>
-              </div>
             </div>
+            <button className="scanner-open-btn deck-scanner-btn" onClick={onOpenScanner}>
+              <span className="scanner-open-btn-icon">📷</span>
+              <span>Escanear Carta</span>
+            </button>
             <div className="search-panel-filters">
               <input type="text" className="search-input" placeholder="Buscar (ex: dragao, blue eyes)..." value={deckSearchTerm} onChange={(e) => { setDeckSearchTerm(e.target.value); setCurrentPage(1) }} />
               <select className="filter-select" value={deckTypeFilter} onChange={(e) => { setDeckTypeFilter(e.target.value); setCurrentPage(1) }}>
