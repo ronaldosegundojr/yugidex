@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { DndContext, DragOverlay, useSensor, useSensors, PointerSensor, useDraggable, useDroppable } from '@dnd-kit/core'
 import { YGOCard, YGOCardMini } from './YGOCard'
@@ -6,15 +6,104 @@ import './YGOCard.css'
 
 const ITEMS_PER_PAGE = 60
 
-const SimpleCard = ({ card, onClick }) => {
-  const getCardName = (card) => card.text?.pt?.name || card.text?.en?.name || Object.values(card.text || {})[0]?.name || 'Unknown'
-  const getCardImage = (card) => card.images?.[0]?.card || card.images?.[0]?.art || ''
-  
-  return (
-    <div className="simple-card" onClick={() => onClick(card)}>
-      <img src={getCardImage(card)} alt={getCardName(card)} loading="lazy" />
-    </div>
-  )
+function useDebounce(value, delay) {
+  const [debounced, setDebounced] = useState(value)
+  useEffect(() => {
+    const timer = setTimeout(() => setDebounced(value), delay)
+    return () => clearTimeout(timer)
+  }, [value, delay])
+  return debounced
+}
+
+const REPLACEMENTS = {
+  'dragao': 'dragao', 'dragão': 'dragao', 'dragon': 'dragao',
+  'branco': 'branco', 'white': 'branco',
+  'olhos': 'olhos', 'eyes': 'olhos',
+  'azuis': 'azuis', 'blue': 'azuis', 'azul': 'azuis',
+  'negro': 'negro', 'black': 'negro',
+  'mago': 'mago', 'magician': 'mago', 'wizard': 'mago',
+  'fogo': 'fogo', 'fire': 'fogo',
+  'agua': 'agua', 'water': 'agua', 'água': 'agua',
+  'terra': 'terra', 'earth': 'terra',
+  'vento': 'vento', 'wind': 'vento',
+  'luz': 'luz', 'light': 'luz',
+  'trevas': 'trevas', 'dark': 'trevas', 'darkness': 'trevas',
+  'cavaleiro': 'cavaleiro', 'knight': 'cavaleiro',
+  'feiticeiro': 'feiticeiro', 'sorcerer': 'feiticeiro',
+  'demônio': 'demonio', 'demon': 'demonio', 'fiend': 'demonio',
+  'zumbi': 'zumbi', 'zombie': 'zumbi', 'undead': 'zumbi',
+  'mec': 'mec', 'machine': 'mec', 'mech': 'mec',
+  'dinossauro': 'dinossauro', 'dinosaur': 'dinossauro',
+  'peixe': 'peixe', 'fish': 'peixe',
+  'fada': 'fada', 'fairy': 'fada', 'faerie': 'fada',
+  'reptil': 'reptil', 'reptile': 'reptil',
+  'besta': 'besta', 'beast': 'besta',
+  'guerreiro': 'guerreiro', 'warrior': 'guerreiro',
+  'anao': 'anao', 'dwarf': 'anao',
+  'thunder': 'thunder', 'trovão': 'thunder',
+  'cripta': 'cripta', 'crypt': 'cripta',
+  'morte': 'morte', 'death': 'morte',
+  'imperador': 'imperador', 'emperor': 'imperador',
+  'rei': 'rei', 'king': 'rei',
+  'rainha': 'rainha', 'queen': 'rainha',
+  'princesa': 'princesa', 'princess': 'princesa',
+  'bebe': 'bebe', 'baby': 'bebe', 'infant': 'bebe',
+  'anel': 'anel', 'ring': 'anel',
+  'espada': 'espada', 'sword': 'espada',
+  'escudo': 'escudo', 'shield': 'escudo',
+  'armadilha': 'armadilha', 'trap': 'armadilha',
+  'magia': 'magia', 'spell': 'magia',
+  'ritual': 'ritual',
+  'arma': 'arma', 'weapon': 'arma',
+  'elmo': 'elmo', 'helm': 'elmo', 'helmet': 'elmo',
+  'dracon': 'dracon', 'draco': 'dracon',
+  'serpente': 'serpente', 'snake': 'serpente', 'serpent': 'serpente',
+  'cobra': 'cobra', 'asp': 'cobra',
+  'lagarto': 'lagarto', 'lizard': 'lagarto',
+  'aranha': 'aranha', 'spider': 'aranha', 'arachnid': 'aranha',
+  'inseto': 'inseto', 'insect': 'inseto',
+  'planta': 'planta', 'plant': 'planta',
+  'cogumelo': 'cogumelo', 'mushroom': 'cogumelo',
+  'gem': 'gem', 'gema': 'gem', 'jewel': 'gem',
+  'anjo': 'anjo', 'angel': 'anjo',
+  'arquine': 'arquine', 'archer': 'arquine',
+  'morcego': 'morcego', 'bat': 'morcego',
+  'vampiro': 'vampiro', 'vampire': 'vampiro',
+  'lobisomem': 'lobisomem', 'werewolf': 'lobisomem',
+  'fantasma': 'fantasma', 'ghost': 'fantasma', 'specter': 'fantasma',
+  'esqueleto': 'esqueleto', 'skeleton': 'esqueleto',
+  'gargula': 'gargula', 'gargoyle': 'gargula',
+  'golem': 'golem',
+  'espírito': 'espirito', 'spirit': 'espirito',
+  'duende': 'duende', 'goblin': 'duende', 'elf': 'duende',
+  'fênix': 'fenix', 'phoenix': 'fenix',
+  'grifo': 'grifo', 'griffin': 'grifo',
+  'hidra': 'hidra', 'hydra': 'hidra',
+  'quimera': 'quimera', 'chimera': 'quimera',
+  'basilisco': 'basilisco', 'basilisk': 'basilisco',
+  'sereia': 'sereia', 'mermaid': 'sereia',
+  'nikko': 'nikko', 'ninja': 'nikko',
+  'samurai': 'samurai',
+  'cave': 'cave', 'caverna': 'cave',
+  'wing': 'wing', 'asa': 'wing',
+  'tail': 'tail', 'cauda': 'tail',
+  'claw': 'claw', 'garra': 'claw',
+  'horn': 'horn', 'chifre': 'horn',
+  'olho': 'olho', 'eye': 'olho',
+  'scale': 'scale', 'escama': 'scale',
+  'feather': 'feather', 'pena': 'feather',
+  'storm': 'storm', 'tempestade': 'storm',
+  'ice': 'ice', 'gelo': 'ice', 'gelado': 'ice',
+  'flame': 'flame', 'chama': 'flame',
+  'cyber': 'cyber', 'ciber': 'cyber',
+  'neo': 'neo', 'novo': 'neo', 'new': 'neo',
+  'ancient': 'ancient', 'antigo': 'ancient', 'arcaico': 'ancient',
+  'ultimate': 'ultimate', 'ultimato': 'ultimate',
+  'super': 'super',
+  'mega': 'mega',
+  'giga': 'giga',
+  'impervious': 'impervious', 'imune': 'impervious', 'immune': 'impervious',
+  'cherub': 'cherub', 'querubim': 'cherub',
 }
 
 const normalizeText = (text) => {
@@ -26,147 +115,59 @@ const normalizeText = (text) => {
     .replace(/\s+/g, ' ')
     .trim()
   
-  const replacements = {
-    'dragao': 'dragao', 'dragão': 'dragao', 'dragon': 'dragao',
-    'branco': 'branco', 'white': 'branco',
-    'olhos': 'olhos', 'eyes': 'olhos',
-    'azuis': 'azuis', 'blue': 'azuis', 'azul': 'azuis',
-    'negro': 'negro', 'black': 'negro',
-    'mago': 'mago', 'magician': 'mago', 'wizard': 'mago',
-    'fogo': 'fogo', 'fire': 'fogo',
-    'agua': 'agua', 'water': 'agua', 'água': 'agua',
-    'terra': 'terra', 'earth': 'terra',
-    'vento': 'vento', 'wind': 'vento',
-    'luz': 'luz', 'light': 'luz',
-    'trevas': 'trevas', 'dark': 'trevas', 'darkness': 'trevas',
-    'cavaleiro': 'cavaleiro', 'knight': 'cavaleiro',
-    'feiticeiro': 'feiticeiro', 'sorcerer': 'feiticeiro',
-    'demônio': 'demonio', 'demon': 'demonio', 'fiend': 'demonio',
-    'zumbi': 'zumbi', 'zombie': 'zumbi', 'undead': 'zumbi',
-    'mec': 'mec', 'machine': 'mec', 'mech': 'mec',
-    'dinossauro': 'dinossauro', 'dinosaur': 'dinossauro',
-    'peixe': 'peixe', 'fish': 'peixe',
-    'fada': 'fada', 'fairy': 'fada', 'faerie': 'fada',
-    'reptil': 'reptil', 'reptile': 'reptil',
-    'besta': 'besta', 'beast': 'besta',
-    'guerreiro': 'guerreiro', 'warrior': 'guerreiro',
-    'anao': 'anao', 'dwarf': 'anao',
-    'thunder': 'thunder', 'trovão': 'thunder',
-    'cripta': 'cripta', 'crypt': 'cripta',
-    'morte': 'morte', 'death': 'morte',
-    'imperador': 'imperador', 'emperor': 'imperador',
-    'rei': 'rei', 'king': 'rei',
-    'rainha': 'rainha', 'queen': 'rainha',
-    'princesa': 'princesa', 'princess': 'princesa',
-    'bebe': 'bebe', 'baby': 'bebe', 'infant': 'bebe',
-    'anel': 'anel', 'ring': 'anel',
-    'espada': 'espada', 'sword': 'espada',
-    'escudo': 'escudo', 'shield': 'escudo',
-    'armadilha': 'armadilha', 'trap': 'armadilha',
-    'magia': 'magia', 'spell': 'magia',
-    'ritual': 'ritual',
-    'arma': 'arma', 'weapon': 'arma',
-    'elmo': 'elmo', 'helm': 'elmo', 'helmet': 'elmo',
-    'dracon': 'dracon', 'draco': 'dracon',
-    'serpente': 'serpente', 'snake': 'serpente', 'serpent': 'serpente',
-    'cobra': 'cobra', 'asp': 'cobra',
-    'lagarto': 'lagarto', 'lizard': 'lagarto',
-    'aranha': 'aranha', 'spider': 'aranha', 'arachnid': 'aranha',
-    'inseto': 'inseto', 'insect': 'inseto',
-    'planta': 'planta', 'plant': 'planta',
-    'cogumelo': 'cogumelo', 'mushroom': 'cogumelo',
-    'gem': 'gem', 'gema': 'gem', 'jewel': 'gem',
-    'anjo': 'anjo', 'angel': 'anjo',
-    'arquine': 'arquine', 'archer': 'arquine',
-    'morcego': 'morcego', 'bat': 'morcego',
-    'vampiro': 'vampiro', 'vampire': 'vampiro',
-    'lobisomem': 'lobisomem', 'werewolf': 'lobisomem',
-    'fantasma': 'fantasma', 'ghost': 'fantasma', 'specter': 'fantasma',
-    'esqueleto': 'esqueleto', 'skeleton': 'esqueleto',
-    'gargula': 'gargula', 'gargoyle': 'gargula',
-    'golem': 'golem',
-    'espírito': 'espirito', 'spirit': 'espirito',
-    'duende': 'duende', 'goblin': 'duende', 'elf': 'duende',
-    'fênix': 'fenix', 'phoenix': 'fenix',
-    'grifo': 'grifo', 'griffin': 'grifo',
-    'hidra': 'hidra', 'hydra': 'hidra',
-    'quimera': 'quimera', 'chimera': 'quimera',
-    'basilisco': 'basilisco', 'basilisk': 'basilisco',
-    'sereia': 'sereia', 'mermaid': 'sereia',
-    'nikko': 'nikko', 'ninja': 'nikko',
-    'samurai': 'samurai',
-    'cave': 'cave', 'caverna': 'cave',
-    'wing': 'wing', 'asa': 'wing',
-    'tail': 'tail', 'cauda': 'tail',
-    'claw': 'claw', 'garra': 'claw',
-    'horn': 'horn', 'chifre': 'horn',
-    'olho': 'olho', 'eye': 'olho',
-    'scale': 'scale', 'escama': 'scale',
-    'feather': 'feather', 'pena': 'feather',
-    'storm': 'storm', 'tempestade': 'storm',
-    'ice': 'ice', 'gelo': 'ice', 'gelado': 'ice',
-    'flame': 'flame', 'chama': 'flame',
-    'cyber': 'cyber', 'ciber': 'cyber',
-    'neo': 'neo', 'novo': 'neo', 'new': 'neo',
-    'ancient': 'ancient', 'antigo': 'ancient', 'arcaico': 'ancient',
-    'ultimate': 'ultimate', 'ultimato': 'ultimate',
-    'super': 'super',
-    'mega': 'mega',
-    'giga': 'giga',
-    'impervious': 'impervious', 'imune': 'impervious', 'immune': 'impervious',
-    'cherub': 'cherub', 'querubim': 'cherub',
-  }
-  
   const words = normalized.split(' ')
-  const mapped = words.map(word => replacements[word] || word)
+  const mapped = words.map(word => REPLACEMENTS[word] || word)
   
   return mapped.join(' ')
 }
 
-function CardsView({ cards, filteredCards, currentPage, setCurrentPage, deck, setModalCard, searchTerm, setSearchTerm, typeFilter, setTypeFilter, raceFilter, setRaceFilter, attrFilter, setAttrFilter, races, lang, setLang }) {
+const getCardType = (card) => {
+  const cached = card._cardType
+  if (cached) return cached
+  if (card.cardType === 'spell') return 'spell'
+  if (card.cardType === 'trap') return 'trap'
+  if (card.cardType === 'monster') {
+    const name = card._enNameLower || ''
+    if (name.includes('xyz') || name.includes('-xyz')) return 'xyz'
+    if (name.includes('synchro')) return 'synchro'
+    if (name.includes('fusion') || name.includes('fusdragon')) return 'fusion'
+    if (name.includes('ritual')) return 'ritual'
+    if (name.includes(' link') || name.includes('-link') || name.endsWith('link')) return 'link'
+    return 'monster'
+  }
+  return card.cardType
+}
+
+const SimpleCard = ({ card, onClick }) => (
+  <div className="simple-card" onClick={() => onClick(card)}>
+    <img src={card._image} alt={card._ptName} loading="lazy" />
+  </div>
+)
+
+const MemoSimpleCard = SimpleCard
+
+function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurrentPage, deck, setModalCard, searchTerm, setSearchTerm, typeFilter, setTypeFilter, raceFilter, setRaceFilter, attrFilter, setAttrFilter, races, lang, setLang }) {
   const [expandedTypes, setExpandedTypes] = useState({})
-
-  const getCardType = (card) => {
-    if (card.cardType === 'spell') return 'spell'
-    if (card.cardType === 'trap') return 'trap'
-    if (card.cardType === 'monster') {
-      const name = card.text?.en?.name?.toLowerCase() || ''
-      if (name.includes('xyz') || name.includes('-xyz')) return 'xyz'
-      if (name.includes('synchro')) return 'synchro'
-      if (name.includes('fusion') || name.includes('fusdragon')) return 'fusion'
-      if (name.includes('ritual')) return 'ritual'
-      if (name.includes(' link') || name.includes('-link') || name.endsWith('link')) return 'link'
-      return 'monster'
-    }
-    return card.cardType
-  }
-
-  const getDetailedCardType = (card) => {
-    return getCardType(card)
-  }
 
   const totalPages = Math.ceil(filteredCards.length / ITEMS_PER_PAGE)
   const paginatedCards = filteredCards.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
 
-  const monsterTypes = ['monster', 'xyz', 'synchro', 'fusion', 'ritual', 'link']
   const allCardTypes = [
-    { key: 'monster', label: 'Monstros', types: ['monster'] },
-    { key: 'spell', label: 'Magias', types: ['spell'] },
-    { key: 'trap', label: 'Armadilhas', types: ['trap'] },
-    { key: 'xyz', label: 'XYZ', types: ['xyz'] },
-    { key: 'synchro', label: 'Synchro', types: ['synchro'] },
-    { key: 'fusion', label: 'Fusion', types: ['fusion'] },
-    { key: 'ritual', label: 'Ritual', types: ['ritual'] },
-    { key: 'link', label: 'Link', types: ['link'] }
+    { key: 'monster', label: 'Monstros', type: 'monster' },
+    { key: 'spell', label: 'Magias', type: 'spell' },
+    { key: 'trap', label: 'Armadilhas', type: 'trap' },
+    { key: 'xyz', label: 'XYZ', type: 'xyz' },
+    { key: 'synchro', label: 'Synchro', type: 'synchro' },
+    { key: 'fusion', label: 'Fusion', type: 'fusion' },
+    { key: 'ritual', label: 'Ritual', type: 'ritual' },
+    { key: 'link', label: 'Link', type: 'link' }
   ]
 
   const toggleType = (type) => {
     setExpandedTypes(prev => ({ ...prev, [type]: !prev[type] }))
   }
 
-  const getCardsByType = (types) => {
-    return cards.filter(card => types.includes(getCardType(card)))
-  }
+  const hasFilter = searchTerm || typeFilter || raceFilter || attrFilter
 
   return (
     <section className="view active">
@@ -216,92 +217,28 @@ function CardsView({ cards, filteredCards, currentPage, setCurrentPage, deck, se
         </div>
       </div>
 
-      {searchTerm || typeFilter || raceFilter || attrFilter ? (
+      {hasFilter ? (
         filteredCards.length === 0 ? (
           <div className="no-cards"><h3>Nenhuma carta encontrada</h3><p>Tente ajustar seus filtros de busca</p></div>
         ) : (
           <>
             <div className="cards-section">
-              {filteredCards.filter(c => getCardType(c) === 'monster').length > 0 && (
-                <div className="cards-group">
-                  <h3 className="group-title">Monstros ({filteredCards.filter(c => getCardType(c) === 'monster').length})</h3>
-                  <div className="simple-card-grid">
-                    {paginatedCards.filter(c => getCardType(c) === 'monster').map(card => (
-                      <SimpleCard key={card.id} card={card} onClick={setModalCard} />
-                    ))}
+              {allCardTypes.map(({ key, label, type }) => {
+                const group = filteredByType[type]
+                if (!group || group.length === 0) return null
+                const paginated = paginatedCards.filter(c => c._cardType === type)
+                if (paginated.length === 0 && group.length > 0 && currentPage !== 1) return null
+                return (
+                  <div key={key} className="cards-group">
+                    <h3 className="group-title">{label} ({group.length})</h3>
+                    <div className="simple-card-grid">
+                      {paginated.map(card => (
+                        <MemoSimpleCard key={card.id} card={card} onClick={setModalCard} />
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
-              {filteredCards.filter(c => getCardType(c) === 'spell').length > 0 && (
-                <div className="cards-group">
-                  <h3 className="group-title">Magias ({filteredCards.filter(c => getCardType(c) === 'spell').length})</h3>
-                  <div className="simple-card-grid">
-                    {paginatedCards.filter(c => getCardType(c) === 'spell').map(card => (
-                      <SimpleCard key={card.id} card={card} onClick={setModalCard} />
-                    ))}
-                  </div>
-                </div>
-              )}
-              {filteredCards.filter(c => getCardType(c) === 'trap').length > 0 && (
-                <div className="cards-group">
-                  <h3 className="group-title">Armadilhas ({filteredCards.filter(c => getCardType(c) === 'trap').length})</h3>
-                  <div className="simple-card-grid">
-                    {paginatedCards.filter(c => getCardType(c) === 'trap').map(card => (
-                      <SimpleCard key={card.id} card={card} onClick={setModalCard} />
-                    ))}
-                  </div>
-                </div>
-              )}
-              {filteredCards.filter(c => getCardType(c) === 'xyz').length > 0 && (
-                <div className="cards-group">
-                  <h3 className="group-title">XYZ ({filteredCards.filter(c => getCardType(c) === 'xyz').length})</h3>
-                  <div className="simple-card-grid">
-                    {paginatedCards.filter(c => getCardType(c) === 'xyz').map(card => (
-                      <SimpleCard key={card.id} card={card} onClick={setModalCard} />
-                    ))}
-                  </div>
-                </div>
-              )}
-              {filteredCards.filter(c => getCardType(c) === 'synchro').length > 0 && (
-                <div className="cards-group">
-                  <h3 className="group-title">Synchro ({filteredCards.filter(c => getCardType(c) === 'synchro').length})</h3>
-                  <div className="simple-card-grid">
-                    {paginatedCards.filter(c => getCardType(c) === 'synchro').map(card => (
-                      <SimpleCard key={card.id} card={card} onClick={setModalCard} />
-                    ))}
-                  </div>
-                </div>
-              )}
-              {filteredCards.filter(c => getCardType(c) === 'fusion').length > 0 && (
-                <div className="cards-group">
-                  <h3 className="group-title">Fusion ({filteredCards.filter(c => getCardType(c) === 'fusion').length})</h3>
-                  <div className="simple-card-grid">
-                    {paginatedCards.filter(c => getCardType(c) === 'fusion').map(card => (
-                      <SimpleCard key={card.id} card={card} onClick={setModalCard} />
-                    ))}
-                  </div>
-                </div>
-              )}
-              {filteredCards.filter(c => getCardType(c) === 'ritual').length > 0 && (
-                <div className="cards-group">
-                  <h3 className="group-title">Ritual ({filteredCards.filter(c => getCardType(c) === 'ritual').length})</h3>
-                  <div className="simple-card-grid">
-                    {paginatedCards.filter(c => getCardType(c) === 'ritual').map(card => (
-                      <SimpleCard key={card.id} card={card} onClick={setModalCard} />
-                    ))}
-                  </div>
-                </div>
-              )}
-              {filteredCards.filter(c => getCardType(c) === 'link').length > 0 && (
-                <div className="cards-group">
-                  <h3 className="group-title">Link ({filteredCards.filter(c => getCardType(c) === 'link').length})</h3>
-                  <div className="simple-card-grid">
-                    {paginatedCards.filter(c => getCardType(c) === 'link').map(card => (
-                      <SimpleCard key={card.id} card={card} onClick={setModalCard} />
-                    ))}
-                  </div>
-                </div>
-              )}
+                )
+              })}
             </div>
             {totalPages > 1 && (
               <div className="pagination">
@@ -319,10 +256,11 @@ function CardsView({ cards, filteredCards, currentPage, setCurrentPage, deck, se
         )
       ) : (
         <div className="cards-section">
-          {allCardTypes.map(({ key, label, types }) => {
-            const typeCards = getCardsByType(types)
+          {allCardTypes.map(({ key, label, type }) => {
+            const typeCards = cards._byType?.[type] || []
             const isExpanded = expandedTypes[key]
             const displayCards = isExpanded ? typeCards : typeCards.slice(0, 20)
+            if (typeCards.length === 0) return null
             
             return (
               <div key={key} className="cards-group">
@@ -336,7 +274,7 @@ function CardsView({ cards, filteredCards, currentPage, setCurrentPage, deck, se
                 </div>
                 <div className="simple-card-grid">
                   {displayCards.map(card => (
-                    <SimpleCard key={card.id} card={card} onClick={setModalCard} />
+                    <MemoSimpleCard key={card.id} card={card} onClick={setModalCard} />
                   ))}
                 </div>
               </div>
@@ -348,7 +286,7 @@ function CardsView({ cards, filteredCards, currentPage, setCurrentPage, deck, se
   )
 }
 
-function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, setMobileDeckModal, deck: deckContext, setDeck: setDeckContext }) {
+function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, setMobileDeckModal, deck: deckContext, setDeck: setDeckContext, deckIdSet }) {
   const [activeId, setActiveId] = useState(null)
   const [deckName, setDeckName] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -362,28 +300,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
   const extraDeck = deck.filter(c => c.deckType === 'extra')
   const sideDeck = deck.filter(c => c.deckType === 'side')
 
-  const getCardType = (card) => {
-    if (card.cardType === 'spell') return 'spell'
-    if (card.cardType === 'trap') return 'trap'
-    if (card.cardType === 'monster') {
-      const name = card.text?.en?.name?.toLowerCase() || ''
-      if (name.includes('xyz') || name.includes('-xyz')) return 'xyz'
-      if (name.includes('synchro')) return 'synchro'
-      if (name.includes('fusion') || name.includes('fusdragon')) return 'fusion'
-      if (name.includes('ritual')) return 'ritual'
-      if (name.includes(' link') || name.includes('-link') || name.endsWith('link')) return 'link'
-      return 'monster'
-    }
-    return card.cardType
-  }
-
-  const getCardName = (card) => card.text?.pt?.name || card.text?.en?.name || Object.values(card.text || {})[0]?.name || 'Unknown'
-  
-  const getCardImage = (card) => card.images?.[0]?.card || card.images?.[0]?.art || ''
-  
   const DeckLibraryCard = ({ card, onAdd, onRemove, isInDeck, deckType, onClick }) => {
-    const getCardName = (card) => card.text?.pt?.name || card.text?.en?.name || 'Unknown'
-    const getCardImage = (card) => card.images?.[0]?.card || card.images?.[0]?.art || ''
     const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: card.id })
     
     const style = transform ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` } : undefined
@@ -397,8 +314,8 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         {...attributes}
         onClick={() => onClick(card)}
       >
-        <img src={getCardImage(card)} alt={getCardName(card)} loading="lazy" />
-        <div className="deck-library-card-name">{getCardName(card)}</div>
+        <img src={card._image} alt={card._ptName} loading="lazy" />
+        <div className="deck-library-card-name">{card._ptName}</div>
         {isInDeck ? (
           <button className="deck-library-btn remove" onClick={(e) => { e.stopPropagation(); onRemove(card.id) }}>
             ✕ Remover ({deckType})
@@ -411,26 +328,23 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
       </div>
     )
   }
-  
-  const getAllNames = (card) => {
-    if (!card.text) return ''
-    return Object.values(card.text)
-      .map(t => t?.name || '')
-      .filter(Boolean)
-      .join(' ')
-  }
 
   const filteredCards = useMemo(() => {
+    if (!cards.length) return []
+    const normalizedSearch = normalizeText(deckSearchTerm)
+    const hasSearch = !!deckSearchTerm
+    const hasType = !!deckTypeFilter
+    const hasLevel = !!deckLevelFilter
+    
     return cards.filter(card => {
-      const allNames = getAllNames(card)
-      const normalizedSearch = normalizeText(deckSearchTerm)
-      const normalizedAllNames = normalizeText(allNames)
-      const type = getCardType(card)
-      
-      if (deckSearchTerm && !normalizedAllNames.includes(normalizedSearch)) return false
-      if (deckTypeFilter && type !== deckTypeFilter) return false
-      if (deckLevelFilter) {
+      if (hasSearch && !card._normalizedNames.includes(normalizedSearch)) return false
+      if (hasType) {
+        const type = card._cardType
+        if (deckTypeFilter !== type) return false
+      }
+      if (hasLevel) {
         const level = card.level || 0
+        const type = card._cardType
         if (deckLevelFilter === '1-3' && (level < 1 || level > 3)) return false
         if (deckLevelFilter === '4-6' && (level < 4 || level > 6)) return false
         if (deckLevelFilter === '7+' && level < 7) return false
@@ -461,7 +375,6 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
 
   const addToDeck = (card, deckTypeOverride) => {
     setDeck(prev => {
-      const type = getCardType(card)
       let deckType = deckTypeOverride
       if (!deckType) {
         if (['fusion', 'synchro', 'xyz', 'link', 'ritual'].includes(card.cardType)) {
@@ -484,9 +397,13 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
   const removeFromDeck = (cardId) => setDeck(prev => prev.filter(c => c.id !== cardId))
 
   const getDeckStats = (deckArray) => {
-    const monsters = deckArray.filter(c => getCardType(c) === 'monster').reduce((sum, c) => sum + c.qty, 0)
-    const spells = deckArray.filter(c => getCardType(c) === 'spell').reduce((sum, c) => sum + c.qty, 0)
-    const traps = deckArray.filter(c => getCardType(c) === 'trap').reduce((sum, c) => sum + c.qty, 0)
+    let monsters = 0, spells = 0, traps = 0
+    for (const c of deckArray) {
+      const t = c._cardType
+      if (t === 'monster') monsters += c.qty
+      else if (t === 'spell') spells += c.qty
+      else if (t === 'trap') traps += c.qty
+    }
     return { monsters, spells, traps, total: monsters + spells + traps }
   }
 
@@ -575,26 +492,21 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
   const stats = getDeckStats(mainDeck)
   const activeCard = activeId ? cards.find(c => c.id === activeId) : null
 
-  const DeckCard = ({ card, qty, onClick, onRemove }) => {
-    const getCardName = (card) => card.text?.pt?.name || card.text?.en?.name || 'Unknown'
-    const getCardImage = (card) => card.images?.[0]?.card || card.images?.[0]?.art || ''
-    
-    return (
-      <div className="deck-card-item">
-        <div className="deck-card-image-wrapper" onClick={() => onClick(card)}>
-          <img src={getCardImage(card)} alt={getCardName(card)} loading="lazy" />
-          {qty > 1 && <span className="deck-card-qty">{qty}</span>}
-          <div className="deck-card-tooltip">
-            <div className="tooltip-name">{getCardName(card)}</div>
-            <div className="tooltip-type">{card.cardType}</div>
-            {card.atk !== undefined && <div className="tooltip-stat">ATK: {card.atk}</div>}
-            {card.def !== undefined && <div className="tooltip-stat">DEF: {card.def}</div>}
-          </div>
+  const DeckCard = ({ card, qty, onClick, onRemove }) => (
+    <div className="deck-card-item">
+      <div className="deck-card-image-wrapper" onClick={() => onClick(card)}>
+        <img src={card._image} alt={card._ptName} loading="lazy" />
+        {qty > 1 && <span className="deck-card-qty">{qty}</span>}
+        <div className="deck-card-tooltip">
+          <div className="tooltip-name">{card._ptName}</div>
+          <div className="tooltip-type">{card.cardType}</div>
+          {card.atk !== undefined && <div className="tooltip-stat">ATK: {card.atk}</div>}
+          {card.def !== undefined && <div className="tooltip-stat">DEF: {card.def}</div>}
         </div>
-        <button className="deck-card-remove" onClick={() => onRemove(card.id)}>×</button>
       </div>
-    )
-  }
+      <button className="deck-card-remove" onClick={() => onRemove(card.id)}>×</button>
+    </div>
+  )
 
   const DeckZone = ({ title, deckArray, zoneId, stats, onEmptyClick, isMobile }) => {
     const { setNodeRef, isOver } = useDroppable({ id: zoneId })
@@ -718,7 +630,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
                   card={card} 
                   onAdd={(c) => addToDeck(c)}
                   onRemove={removeFromDeck}
-                  isInDeck={deck.some(d => d.id === card.id)}
+                  isInDeck={deckIdSet.has(card.id)}
                   deckType={getCardDeckType(card.id)}
                   onClick={setModalCard}
                 />
@@ -738,7 +650,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
       <DragOverlay>
         {activeCard && (
           <div style={{ width: 120, borderRadius: 8, overflow: 'hidden', border: '2px solid var(--gold)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
-            <img src={activeCard.images?.[0]?.card || activeCard.images?.[0]?.art || ''} alt="" style={{ width: '100%', display: 'block' }} />
+            <img src={activeCard._image} alt="" style={{ width: '100%', display: 'block' }} />
           </div>
         )}
       </DragOverlay>
@@ -749,6 +661,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
 function App() {
   const [cards, setCards] = useState([])
   const [filteredCards, setFilteredCards] = useState([])
+  const [filteredByType, setFilteredByType] = useState({})
   const [races, setRaces] = useState(new Set())
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
@@ -775,13 +688,56 @@ function App() {
 
   useEffect(() => { loadCards(); loadSavedDecks() }, [])
 
+  const enrichCard = (card) => {
+    const ptName = card.text?.pt?.name || card.text?.en?.name || Object.values(card.text || {})[0]?.name || 'Unknown'
+    const enName = card.text?.en?.name || ''
+    const image = card.images?.[0]?.card || card.images?.[0]?.art || ''
+    const allNames = Object.values(card.text || {}).map(t => t?.name || '').filter(Boolean).join(' ')
+    const normalizedNames = normalizeText(allNames)
+    
+    const cardType = getCardTypeRaw(card, enName)
+    
+    return {
+      ...card,
+      _ptName: ptName,
+      _enNameLower: enName.toLowerCase(),
+      _image: image,
+      _normalizedNames: normalizedNames,
+      _cardType: cardType
+    }
+  }
+
+  function getCardTypeRaw(card, enNameLower) {
+    if (card.cardType === 'spell') return 'spell'
+    if (card.cardType === 'trap') return 'trap'
+    if (card.cardType === 'monster') {
+      if (enNameLower.includes('xyz') || enNameLower.includes('-xyz')) return 'xyz'
+      if (enNameLower.includes('synchro')) return 'synchro'
+      if (enNameLower.includes('fusion') || enNameLower.includes('fusdragon')) return 'fusion'
+      if (enNameLower.includes('ritual')) return 'ritual'
+      if (enNameLower.includes(' link') || enNameLower.includes('-link') || enNameLower.endsWith('link')) return 'link'
+      return 'monster'
+    }
+    return card.cardType
+  }
+
   const loadCards = async () => {
     try {
       const response = await fetch('/json/cards.json')
       const data = await response.json()
-      setCards(data)
+      const enriched = data.map(enrichCard)
+      
+      const byType = { monster: [], spell: [], trap: [], xyz: [], synchro: [], fusion: [], ritual: [], link: [] }
+      for (const card of enriched) {
+        const t = card._cardType
+        if (byType[t]) byType[t].push(card)
+      }
+      enriched._byType = byType
+      
+      setCards(enriched)
+      
       const raceSet = new Set()
-      data.forEach(card => { if (card.type) raceSet.add(card.type) })
+      for (const card of data) { if (card.type) raceSet.add(card.type) }
       setRaces(raceSet)
       setLoading(false)
     } catch (error) {
@@ -794,33 +750,6 @@ function App() {
     const saved = localStorage.getItem('ygoSavedDecks')
     if (saved) setSavedDecks(JSON.parse(saved))
   }
-
-  const getCardType = (card) => {
-    if (card.cardType === 'spell') return 'spell'
-    if (card.cardType === 'trap') return 'trap'
-    if (card.cardType === 'monster') {
-      const name = card.text?.en?.name?.toLowerCase() || ''
-      if (name.includes('xyz') || name.includes('-xyz')) return 'xyz'
-      if (name.includes('synchro')) return 'synchro'
-      if (name.includes('fusion') || name.includes('fusdragon')) return 'fusion'
-      if (name.includes('ritual')) return 'ritual'
-      if (name.includes(' link') || name.includes('-link') || name.endsWith('link')) return 'link'
-      return 'monster'
-    }
-    return card.cardType
-  }
-
-  const getCardName = (card) => card.text?.pt?.name || card.text?.en?.name || Object.values(card.text || {})[0]?.name || 'Unknown'
-  const getCardEffect = (card) => card.text?.pt?.effect || card.text?.en?.effect || Object.values(card.text || {})[0]?.effect || ''
-  
-  const getAllNames = (card) => {
-    if (!card.text) return ''
-    return Object.values(card.text)
-      .map(t => t?.name || '')
-      .filter(Boolean)
-      .join(' ')
-  }
-  const getCardImage = (card) => card.images?.[0]?.card || card.images?.[0]?.art || ''
 
   const getAttributeClass = (attr) => {
     const attrs = { 'light': 'attr-light', 'dark': 'attr-dark', 'water': 'attr-water', 'fire': 'attr-fire', 'earth': 'attr-earth', 'wind': 'attr-wind', 'divine': 'attr-divine' }
@@ -847,21 +776,45 @@ function App() {
     return races[race.toLowerCase()] || race
   }
 
+  const debouncedSearchTerm = useDebounce(searchTerm, 200)
+
   useEffect(() => {
-    const normalizedSearch = normalizeText(searchTerm)
-    const filtered = cards.filter(card => {
-      const allNames = getAllNames(card)
-      const normalizedAllNames = normalizeText(allNames)
-      const type = getCardType(card)
-      if (searchTerm && !normalizedAllNames.includes(normalizedSearch)) return false
-      if (typeFilter && type !== typeFilter) return false
-      if (raceFilter && card.type !== raceFilter) return false
-      if (attrFilter && card.attribute?.toLowerCase() !== attrFilter.toLowerCase()) return false
-      return true
-    })
-    setFilteredCards(filtered)
+    if (!cards.length) return
+    
+    const normalizedSearch = normalizeText(debouncedSearchTerm)
+    const hasSearch = !!debouncedSearchTerm
+    const hasType = !!typeFilter
+    const hasRace = !!raceFilter
+    const hasAttr = !!attrFilter
+    
+    const lowerAttr = attrFilter?.toLowerCase()
+    
+    const result = { monster: [], spell: [], trap: [], xyz: [], synchro: [], fusion: [], ritual: [], link: [] }
+    const flat = []
+    
+    for (const card of cards) {
+      if (hasSearch && !card._normalizedNames.includes(normalizedSearch)) continue
+      if (hasType && card._cardType !== typeFilter) continue
+      if (hasRace && card.type !== raceFilter) continue
+      if (hasAttr && card.attribute?.toLowerCase() !== lowerAttr) continue
+      
+      const t = card._cardType
+      if (result[t]) {
+        result[t].push(card)
+      }
+      flat.push(card)
+    }
+    
+    setFilteredByType(result)
+    setFilteredCards(flat)
     setCurrentPage(1)
-  }, [cards, searchTerm, typeFilter, raceFilter, attrFilter])
+  }, [cards, debouncedSearchTerm, typeFilter, raceFilter, attrFilter])
+
+  const deckIdSet = useMemo(() => {
+    const set = new Set()
+    for (const d of deck) set.add(d.id)
+    return set
+  }, [deck])
 
   const handleTranslate = () => {
     window.open(`https://translate.google.com/translate?sl=auto&tl=pt&u=${encodeURIComponent(window.location.href)}`, '_blank')
@@ -894,8 +847,8 @@ function App() {
 
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<CardsView cards={cards} filteredCards={filteredCards} currentPage={currentPage} setCurrentPage={setCurrentPage} deck={deck} setModalCard={setModalCard} searchTerm={searchTerm} setSearchTerm={setSearchTerm} typeFilter={typeFilter} setTypeFilter={setTypeFilter} raceFilter={raceFilter} setRaceFilter={setRaceFilter} attrFilter={attrFilter} setAttrFilter={setAttrFilter} races={races} lang={lang} setLang={setLang} />} />
-            <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} isMobile={isMobile} setMobileDeckModal={setMobileDeckModal} />} />
+            <Route path="/" element={<CardsView cards={cards} filteredCards={filteredCards} filteredByType={filteredByType} currentPage={currentPage} setCurrentPage={setCurrentPage} deck={deck} setModalCard={setModalCard} searchTerm={searchTerm} setSearchTerm={setSearchTerm} typeFilter={typeFilter} setTypeFilter={setTypeFilter} raceFilter={raceFilter} setRaceFilter={setRaceFilter} attrFilter={attrFilter} setAttrFilter={setAttrFilter} races={races} lang={lang} setLang={setLang} />} />
+            <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} isMobile={isMobile} setMobileDeckModal={setMobileDeckModal} deckIdSet={deckIdSet} />} />
           </Routes>
         </main>
 
@@ -906,18 +859,18 @@ function App() {
                 <div className="card-detail">
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                   <img 
-                    src={modalCard.images?.[0]?.card || modalCard.images?.[0]?.art || ''} 
-                    alt={modalCard.text?.pt?.name || modalCard.text?.en?.name || 'Card'}
+                    src={modalCard._image} 
+                    alt={modalCard._ptName}
                     style={{ maxWidth: '280px', width: '100%', height: 'auto', aspectRatio: '2.5/3.5', objectFit: 'contain', borderRadius: '8px', border: '3px solid var(--gold)' }}
                   />
                 </div>
                 <div className="card-detail-info">
-                  <h2>{modalCard.text?.pt?.name || modalCard.text?.en?.name || 'Nome Desconhecido'}</h2>
+                  <h2>{modalCard._ptName}</h2>
                   {modalCard.text?.en?.name && modalCard.text?.en?.name !== modalCard.text?.pt?.name && (
                     <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '0.5rem' }}>({modalCard.text.en.name})</p>
                   )}
                   <div className="card-detail-meta">
-                    <div className="meta-item"><span className="meta-label">Tipo:</span><span className="meta-value">{getCardType(modalCard) === 'monster' ? 'Monstro' : getCardType(modalCard) === 'spell' ? 'Magia' : getCardType(modalCard) === 'trap' ? 'Armadilha' : getCardType(modalCard)}</span></div>
+                    <div className="meta-item"><span className="meta-label">Tipo:</span><span className="meta-value">{modalCard._cardType === 'monster' ? 'Monstro' : modalCard._cardType === 'spell' ? 'Magia' : modalCard._cardType === 'trap' ? 'Armadilha' : modalCard._cardType}</span></div>
                     {modalCard.level && <div className="meta-item"><span className="meta-label">Nível:</span><span className="meta-value">{'★'.repeat(modalCard.level)} ({modalCard.level})</span></div>}
                     {modalCard.attribute && <div className="meta-item"><span className="meta-label">Atributo:</span><span className="meta-value">{getAttributeNamePT(modalCard.attribute)}</span></div>}
                     {modalCard.type && <div className="meta-item"><span className="meta-label">Raça:</span><span className="meta-value">{getRacePT(modalCard.type)}</span></div>}
@@ -1020,16 +973,26 @@ function App() {
             </div>
             <div className="mobile-deck-modal-results">
               {filteredCards.slice(0, 30).map(card => {
-                const inDeck = deck.some(d => d.id === card.id)
+                const inDeck = deckIdSet.has(card.id)
                 const qty = deck.find(d => d.id === card.id)?.qty || 0
                 return (
                   <div key={card.id} className="mobile-deck-card-item" onClick={() => {
                     if (inDeck && qty >= 3) { alert('Máximo 3 cópias!'); return }
-                    addToDeck(card)
+                    const deckType = ['fusion', 'synchro', 'xyz', 'link', 'ritual'].includes(card.cardType) ? 'extra' : 'main'
+                    setDeck(prev => {
+                      const existing = prev.find(c => c.id === card.id)
+                      if (existing) {
+                        if (existing.qty < 3) return prev.map(c => c.id === card.id ? { ...c, qty: c.qty + 1 } : c)
+                        return prev
+                      }
+                      const totalCards = prev.reduce((sum, c) => sum + c.qty, 0)
+                      if (totalCards >= 60) { alert('Deck cheio! (máx 60)'); return prev }
+                      return [...prev, { ...card, qty: 1, deckType }]
+                    })
                   }}>
-                    <img src={card.images?.[0]?.card || card.images?.[0]?.art || ''} alt="" />
+                    <img src={card._image} alt="" />
                     <div className="mobile-deck-card-info">
-                      <span className="mobile-deck-card-name">{card.text?.pt?.name || card.text?.en?.name || 'Unknown'}</span>
+                      <span className="mobile-deck-card-name">{card._ptName}</span>
                       <span className="mobile-deck-card-type">{card.cardType}</span>
                     </div>
                     <button className={`mobile-deck-card-btn ${inDeck ? 'remove' : 'add'}`}>
