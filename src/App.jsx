@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { DndContext, DragOverlay, useSensor, useSensors, PointerSensor, useDraggable, useDroppable } from '@dnd-kit/core'
 import { YGOCard, YGOCardMini } from './YGOCard'
+import CardScanner from './CardScanner'
 import './YGOCard.css'
 
 const ITEMS_PER_PAGE = 60
@@ -146,7 +147,7 @@ const SimpleCard = ({ card, onClick }) => (
 
 const MemoSimpleCard = SimpleCard
 
-function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurrentPage, deck, setModalCard, searchTerm, setSearchTerm, typeFilter, setTypeFilter, raceFilter, setRaceFilter, attrFilter, setAttrFilter, races, lang, setLang }) {
+function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurrentPage, deck, setModalCard, searchTerm, setSearchTerm, typeFilter, setTypeFilter, raceFilter, setRaceFilter, attrFilter, setAttrFilter, races, lang, setLang, onOpenScanner }) {
   const [expandedTypes, setExpandedTypes] = useState({})
 
   const totalPages = Math.ceil(filteredCards.length / ITEMS_PER_PAGE)
@@ -180,6 +181,9 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
+          <button className="scanner-btn-icon" onClick={onOpenScanner} title="Escanear carta">
+            📷
+          </button>
           <div className="lang-toggle">
             <button className={lang === 'pt' ? 'active' : ''} onClick={() => setLang('pt')}>PT</button>
             <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>EN</button>
@@ -286,7 +290,7 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
   )
 }
 
-function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, setMobileDeckModal, deck: deckContext, setDeck: setDeckContext, deckIdSet }) {
+function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, setMobileDeckModal, deck: deckContext, setDeck: setDeckContext, deckIdSet, onOpenScanner }) {
   const [activeId, setActiveId] = useState(null)
   const [deckName, setDeckName] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -599,10 +603,15 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
           <div className="card-search-panel">
             <div className="search-panel-header">
               <h3>Biblioteca de Cartas</h3>
-              <div className="lang-toggle">
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <button className="scanner-btn-icon" onClick={onOpenScanner} title="Escanear carta">
+                  📷
+                </button>
+                <div className="lang-toggle">
                 <button className={lang === 'pt' ? 'active' : ''} onClick={() => setLang('pt')}>PT</button>
                 <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>EN</button>
                 <button className={lang === 'ja' ? 'active' : ''} onClick={() => setLang('ja')}>JP</button>
+              </div>
               </div>
             </div>
             <div className="search-panel-filters">
@@ -678,6 +687,7 @@ function App() {
   const [lang, setLang] = useState('pt')
   const [mobileDeckModal, setMobileDeckModal] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [scannerOpen, setScannerOpen] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768)
@@ -847,8 +857,8 @@ function App() {
 
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<CardsView cards={cards} filteredCards={filteredCards} filteredByType={filteredByType} currentPage={currentPage} setCurrentPage={setCurrentPage} deck={deck} setModalCard={setModalCard} searchTerm={searchTerm} setSearchTerm={setSearchTerm} typeFilter={typeFilter} setTypeFilter={setTypeFilter} raceFilter={raceFilter} setRaceFilter={setRaceFilter} attrFilter={attrFilter} setAttrFilter={setAttrFilter} races={races} lang={lang} setLang={setLang} />} />
-            <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} isMobile={isMobile} setMobileDeckModal={setMobileDeckModal} deckIdSet={deckIdSet} />} />
+            <Route path="/" element={<CardsView cards={cards} filteredCards={filteredCards} filteredByType={filteredByType} currentPage={currentPage} setCurrentPage={setCurrentPage} deck={deck} setModalCard={setModalCard} searchTerm={searchTerm} setSearchTerm={setSearchTerm} typeFilter={typeFilter} setTypeFilter={setTypeFilter} raceFilter={raceFilter} setRaceFilter={setRaceFilter} attrFilter={attrFilter} setAttrFilter={setAttrFilter} races={races} lang={lang} setLang={setLang} onOpenScanner={() => setScannerOpen(true)} />} />
+            <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} isMobile={isMobile} setMobileDeckModal={setMobileDeckModal} deckIdSet={deckIdSet} onOpenScanner={() => setScannerOpen(true)} />} />
           </Routes>
         </main>
 
@@ -1004,6 +1014,17 @@ function App() {
             </div>
           </div>
         </div>
+
+        {scannerOpen && (
+          <CardScanner
+            cards={cards}
+            onSelect={(card) => {
+              setSearchTerm(card._ptName || card.text?.en?.name || '')
+              setScannerOpen(false)
+            }}
+            onClose={() => setScannerOpen(false)}
+          />
+        )}
 
         <button className="translate-btn" onClick={handleTranslate} title="Traduzir página">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
