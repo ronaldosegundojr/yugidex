@@ -721,8 +721,8 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
             <div className="deck-actions">
               <button className="btn btn-primary" onClick={saveDeck}>Salvar Deck</button>
               <button className="btn" onClick={exportDeck}>Exportar .txt</button>
-              <button className="btn" onClick={exportDeckJson}>Exportar .json</button>
-              <button className="btn" onClick={() => fileInputRef.current?.click()}>Importar</button>
+              <button className="btn" onClick={exportDeckJson}>EXPORTAR DECK (JSON)</button>
+              <button className="btn" onClick={() => fileInputRef.current?.click()}>IMPORTAR DECK (JSON)</button>
               <input type="file" ref={fileInputRef} onChange={importDeck} accept=".json" style={{ display: 'none' }} />
               <button className="btn btn-danger" onClick={clearDeck}>Limpar</button>
             </div>
@@ -751,10 +751,6 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
                 <button className={lang === 'ja' ? 'active' : ''} onClick={() => setLang('ja')}>JP</button>
               </div>
             </div>
-            <button className="scanner-open-btn deck-scanner-btn" onClick={onOpenScanner}>
-              <span className="scanner-open-btn-icon">📷</span>
-              <span>Escanear Carta</span>
-            </button>
             <div className="search-panel-filters">
               <input type="text" className="search-input" placeholder="Buscar (ex: dragao, blue eyes)..." value={deckSearchTerm} onChange={(e) => { setDeckSearchTerm(e.target.value); setCurrentPage(1) }} />
               <select className="filter-select" value={deckTypeFilter} onChange={(e) => { setDeckTypeFilter(e.target.value); setCurrentPage(1) }}>
@@ -989,7 +985,7 @@ function App() {
         <header className="header">
           <div className="header-content">
             <div className="logo">
-              <div className="logo-icon">⚜</div>
+              <img src="/yugidex-icon.png" alt="Yugidex" className="logo-icon" />
               <h1>Yugioh <span>Dex</span></h1>
             </div>
             <nav className="nav-tabs">
