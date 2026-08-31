@@ -973,7 +973,7 @@ function App() {
   if (loading) {
     return (
       <div className="loading-overlay">
-        <div className="loading-pyramid"></div>
+        <img src="/loading-kaiba.gif" alt="Kaiba" className="loading-kaiba" />
         <div className="loading-text">Carregando as Cartas...</div>
       </div>
     )
