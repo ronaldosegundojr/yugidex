@@ -1384,6 +1384,13 @@ body::before {
 .tooltip-type { color: var(--text-muted); font-size: 0.6rem; text-transform: capitalize; }
 .tooltip-stat { color: var(--text); font-size: 0.65rem; }
 .deck-library-btn.remove:hover { background: #ff6b7a; }
+.deck-library-controls { display: flex; align-items: center; justify-content: center; gap: 0.25rem; padding: 0.25rem; flex-wrap: wrap; }
+.deck-library-btn.decrement { background: var(--red-glow); color: white; padding: 0.15rem 0.4rem; font-size: 0.6rem; }
+.deck-library-btn.decrement:hover { background: #ff6b7a; }
+.deck-library-btn.increment { background: var(--green-glow); color: var(--egypt-dark); padding: 0.15rem 0.4rem; font-size: 0.6rem; }
+.deck-library-btn.increment:hover:not(.disabled) { background: #3ce680; }
+.deck-library-btn.increment.disabled { background: var(--gold-dark); color: var(--text-muted); cursor: not-allowed; opacity: 0.5; }
+.deck-library-qty { color: var(--gold); font-size: 0.65rem; font-weight: bold; min-width: 24px; text-align: center; }
 
 /* Mobile Deck Modal */
 .mobile-deck-modal {

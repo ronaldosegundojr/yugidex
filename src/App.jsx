@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { DndContext, DragOverlay, useSensor, useSensors, PointerSensor, useDraggable, useDroppable } from '@dnd-kit/core'
 import { YGOCard, YGOCardMini } from './YGOCard'
@@ -122,23 +122,6 @@ const normalizeText = (text) => {
   return mapped.join(' ')
 }
 
-const getCardType = (card) => {
-  const cached = card._cardType
-  if (cached) return cached
-  if (card.cardType === 'spell') return 'spell'
-  if (card.cardType === 'trap') return 'trap'
-  if (card.cardType === 'monster') {
-    const name = card._enNameLower || ''
-    if (name.includes('xyz') || name.includes('-xyz')) return 'xyz'
-    if (name.includes('synchro')) return 'synchro'
-    if (name.includes('fusion') || name.includes('fusdragon')) return 'fusion'
-    if (name.includes('ritual')) return 'ritual'
-    if (name.includes(' link') || name.includes('-link') || name.endsWith('link')) return 'link'
-    return 'monster'
-  }
-  return card.cardType
-}
-
 const SimpleCard = ({ card, onClick }) => (
   <div className="simple-card" onClick={() => onClick(card)}>
     <img src={card._image} alt={card._ptName} loading="lazy" />
@@ -147,7 +130,7 @@ const SimpleCard = ({ card, onClick }) => (
 
 const MemoSimpleCard = SimpleCard
 
-function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurrentPage, deck, setModalCard, searchTerm, setSearchTerm, typeFilter, setTypeFilter, raceFilter, setRaceFilter, attrFilter, setAttrFilter, races, lang, setLang, onOpenScanner }) {
+function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurrentPage, setModalCard, searchTerm, setSearchTerm, typeFilter, setTypeFilter, raceFilter, setRaceFilter, attrFilter, setAttrFilter, races, lang, setLang, onOpenScanner }) {
   const [expandedTypes, setExpandedTypes] = useState({})
 
   const totalPages = Math.ceil(filteredCards.length / ITEMS_PER_PAGE)
@@ -291,7 +274,7 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
   )
 }
 
-function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, setMobileDeckModal, deck: deckContext, setDeck: setDeckContext, deckIdSet, onOpenScanner }) {
+function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, setMobileDeckModal, deckIdSet, onOpenScanner }) {
   const [activeId, setActiveId] = useState(null)
   const [deckName, setDeckName] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -305,7 +288,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
   const extraDeck = deck.filter(c => c.deckType === 'extra')
   const sideDeck = deck.filter(c => c.deckType === 'side')
 
-  const DeckLibraryCard = ({ card, onAdd, onRemove, isInDeck, deckType, onClick }) => {
+  const DeckLibraryCard = ({ card, onAdd, onIncrement, onDecrement, isInDeck, qty, onClick }) => {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: card.id })
     
     const style = transform ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` } : undefined
@@ -321,15 +304,30 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
       >
         <img src={card._image} alt={card._ptName} loading="lazy" />
         <div className="deck-library-card-name">{card._ptName}</div>
-        {isInDeck ? (
-          <button className="deck-library-btn remove" onClick={(e) => { e.stopPropagation(); onRemove(card.id) }}>
-            ✕ Remover ({deckType})
-          </button>
-        ) : (
-          <button className="deck-library-btn add" onClick={(e) => { e.stopPropagation(); onAdd(card) }}>
-            + Adicionar
-          </button>
-        )}
+        <div className="deck-library-controls">
+          {isInDeck ? (
+            <>
+              <button 
+                className="deck-library-btn decrement" 
+                onClick={(e) => { e.stopPropagation(); onDecrement(card.id) }}
+              >
+                -1
+              </button>
+              <span className="deck-library-qty">{qty}/3</span>
+              <button 
+                className={`deck-library-btn increment ${qty >= 3 ? 'disabled' : ''}`}
+                disabled={qty >= 3}
+                onClick={(e) => { e.stopPropagation(); onIncrement(card) }}
+              >
+                +1
+              </button>
+            </>
+          ) : (
+            <button className="deck-library-btn add" onClick={(e) => { e.stopPropagation(); onAdd(card) }}>
+              + Adicionar
+            </button>
+          )}
+        </div>
       </div>
     )
   }
@@ -399,18 +397,30 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
     })
   }
 
-  const removeFromDeck = (cardId) => setDeck(prev => prev.filter(c => c.id !== cardId))
-
-  const getDeckStats = (deckArray) => {
-    let monsters = 0, spells = 0, traps = 0
-    for (const c of deckArray) {
-      const t = c._cardType
-      if (t === 'monster') monsters += c.qty
-      else if (t === 'spell') spells += c.qty
-      else if (t === 'trap') traps += c.qty
-    }
-    return { monsters, spells, traps, total: monsters + spells + traps }
+  const incrementInDeck = (card) => {
+    setDeck(prev => {
+      const existing = prev.find(c => c.id === card.id)
+      if (existing && existing.qty < 3) {
+        return prev.map(c => c.id === card.id ? { ...c, qty: c.qty + 1 } : c)
+      }
+      return prev
+    })
   }
+
+  const decrementInDeck = (cardId) => {
+    setDeck(prev => {
+      const existing = prev.find(c => c.id === cardId)
+      if (existing) {
+        if (existing.qty <= 1) {
+          return prev.filter(c => c.id !== cardId)
+        }
+        return prev.map(c => c.id === cardId ? { ...c, qty: c.qty - 1 } : c)
+      }
+      return prev
+    })
+  }
+
+  const removeFromDeck = (cardId) => setDeck(prev => prev.filter(c => c.id !== cardId))
 
   const saveDeck = () => {
     const name = deckName.trim() || `Deck ${savedDecks.length + 1}`
@@ -452,14 +462,128 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
 
   const clearDeck = () => { if (confirm('Limpar deck?')) { setDeck([]); setDeckName('') } }
 
-  const exportDeck = () => {
-    if (mainDeck.length === 0) { alert('Adicione cartas ao deck!'); return }
+  const exportDeckJson = () => {
+    if (mainDeck.length === 0 && extraDeck.length === 0 && sideDeck.length === 0) { alert('Adicione cartas ao deck!'); return }
     const name = deckName.trim() || 'ygo-deck'
-    const blob = new Blob([JSON.stringify({ name, main: mainDeck.map(c => ({ id: c.id, qty: c.qty })), extra: extraDeck.map(c => ({ id: c.id, qty: c.qty })), side: sideDeck.map(c => ({ id: c.id, qty: c.qty })) }, null, 2)], { type: 'application/json' })
+    const deckData = {
+      name,
+      main: mainDeck.map(c => ({ id: c.id, qty: c.qty })),
+      extra: extraDeck.map(c => ({ id: c.id, qty: c.qty })),
+      side: sideDeck.map(c => ({ id: c.id, qty: c.qty }))
+    }
+    const blob = new Blob([JSON.stringify(deckData, null, 2)], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
     a.download = `${name}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const getDetailedDeckStats = (deckArray) => {
+    let monsters = 0, spells = 0, traps = 0
+    let fusion = 0, synchro = 0, xyz = 0, link = 0, ritual = 0
+    for (const c of deckArray) {
+      const t = c._cardType
+      if (t === 'monster') monsters += c.qty
+      else if (t === 'spell') spells += c.qty
+      else if (t === 'trap') traps += c.qty
+      else if (t === 'fusion') fusion += c.qty
+      else if (t === 'synchro') synchro += c.qty
+      else if (t === 'xyz') xyz += c.qty
+      else if (t === 'link') link += c.qty
+      else if (t === 'ritual') ritual += c.qty
+    }
+    return { monsters, spells, traps, fusion, synchro, xyz, link, ritual, total: monsters + spells + traps + fusion + synchro + xyz + link + ritual }
+  }
+
+  const exportDeck = () => {
+    if (mainDeck.length === 0 && extraDeck.length === 0 && sideDeck.length === 0) { alert('Adicione cartas ao deck!'); return }
+    const name = deckName.trim() || 'ygo-deck'
+    
+    const allCards = [...mainDeck, ...extraDeck, ...sideDeck]
+    const stats = getDetailedDeckStats(allCards)
+    
+    let content = `========================================\n`
+    content += `       INFORMAÇÕES DO DECK: ${name.toUpperCase()}\n`
+    content += `========================================\n\n`
+    
+    content += `NOME DO DECK: ${name}\n`
+    content += `DATA DE EXPORTAÇÃO: ${new Date().toLocaleString('pt-BR')}\n\n`
+    
+    content += `========================================\n`
+    content += `           CARTAS DO DECK\n`
+    content += `========================================\n\n`
+    
+    const sections = [
+      { title: 'MAIN DECK', cards: mainDeck },
+      { title: 'EXTRA DECK', cards: extraDeck },
+      { title: 'SIDE DECK', cards: sideDeck }
+    ]
+    
+    let cardNumber = 1
+    sections.forEach(section => {
+      if (section.cards.length > 0) {
+        content += `--- ${section.title} (${section.cards.reduce((sum, c) => sum + c.qty, 0)} cartas) ---\n\n`
+        section.cards.forEach(card => {
+          for (let i = 0; i < card.qty; i++) {
+            content += `${cardNumber}. NOME DA CARTA: ${card._ptName}\n`
+            content += `   IMAGEM DA CARTA: ${card._image}\n`
+            content += `   QUANTIDADE NO DECK: ${card.qty}\n`
+            content += `   TIPO: ${card._cardType}\n`
+            if (card.level) content += `   NÍVEL: ${card.level}\n`
+            if (card.attribute) content += `   ATRIBUTO: ${card.attribute}\n`
+            if (card.type) content += `   RAÇA: ${card.type}\n`
+            if (card.atk !== undefined) content += `   ATK: ${card.atk}\n`
+            if (card.def !== undefined) content += `   DEF: ${card.def}\n`
+            content += `\n`
+            cardNumber++
+          }
+        })
+      }
+    })
+    
+    content += `========================================\n`
+    content += `           RESUMO DO DECK\n`
+    content += `========================================\n\n`
+    content += `TOTAL DE CARTAS: ${stats.total}\n\n`
+    content += `Monstros Normais/Efeito: ${stats.monsters}\n`
+    content += `Cartas Mágicas: ${stats.spells}\n`
+    content += `Cartas Armadilhas: ${stats.traps}\n`
+    content += `Fusão: ${stats.fusion}\n`
+    content += `Synchro: ${stats.synchro}\n`
+    content += `XYZ: ${stats.xyz}\n`
+    content += `Link: ${stats.link}\n`
+    content += `Ritual: ${stats.ritual}\n\n`
+    
+    content += `========================================\n`
+    content += `       RESUMO POR TIPO DE DECK\n`
+    content += `========================================\n\n`
+    
+    const mainStats = getDetailedDeckStats(mainDeck)
+    const extraStats = getDetailedDeckStats(extraDeck)
+    const sideStats = getDetailedDeckStats(sideDeck)
+    
+    content += `MAIN DECK: ${mainStats.total}/60\n`
+    content += `  Monstros: ${mainStats.monsters} | Mágicas: ${mainStats.spells} | Armadilhas: ${mainStats.traps}\n`
+    content += `  Fusion: ${mainStats.fusion} | Synchro: ${mainStats.synchro} | XYZ: ${mainStats.xyz} | Link: ${mainStats.link} | Ritual: ${mainStats.ritual}\n\n`
+    
+    content += `EXTRA DECK: ${extraStats.total}/15\n`
+    content += `  Fusion: ${extraStats.fusion} | Synchro: ${extraStats.synchro} | XYZ: ${extraStats.xyz} | Link: ${extraStats.link} | Ritual: ${extraStats.ritual}\n\n`
+    
+    content += `SIDE DECK: ${sideStats.total}/15\n`
+    content += `  Monstros: ${sideStats.monsters} | Mágicas: ${sideStats.spells} | Armadilhas: ${sideStats.traps}\n`
+    content += `  Fusion: ${sideStats.fusion} | Synchro: ${sideStats.synchro} | XYZ: ${sideStats.xyz} | Link: ${sideStats.link} | Ritual: ${sideStats.ritual}\n\n`
+    
+    content += `========================================\n`
+    content += `       FIM DA EXPORTAÇÃO\n`
+    content += `========================================\n`
+    
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${name}.txt`
     a.click()
     URL.revokeObjectURL(url)
   }
@@ -483,7 +607,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         setDeck(newDeck)
         setDeckName(data.name || 'Deck Importado')
         alert('Deck importado com sucesso!')
-      } catch (err) { alert('Erro ao importar deck!'); }
+      } catch { alert('Erro ao importar deck!'); }
     }
     reader.readAsText(file)
     event.target.value = ''
@@ -494,7 +618,9 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
     return card?.deckType || null
   }
 
-  const stats = getDeckStats(mainDeck)
+  const stats = getDetailedDeckStats(mainDeck)
+  const extraStats = getDetailedDeckStats(extraDeck)
+  const sideStats = getDetailedDeckStats(sideDeck)
   const activeCard = activeId ? cards.find(c => c.id === activeId) : null
 
   const DeckCard = ({ card, qty, onClick, onRemove }) => (
@@ -513,8 +639,10 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
     </div>
   )
 
-  const DeckZone = ({ title, deckArray, zoneId, stats, onEmptyClick, isMobile }) => {
+  const DeckZone = ({ title, deckArray, zoneId, stats, onEmptyClick, isMobile, showDetailed = false }) => {
     const { setNodeRef, isOver } = useDroppable({ id: zoneId })
+    const maxCards = title.includes('Main') ? 60 : 15
+    const isMain = title.includes('Main')
     
     return (
       <div 
@@ -523,8 +651,8 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
       >
         <div className="deck-zone-header">
           <h4>{title}</h4>
-          <span className={`deck-count ${stats.total > 60 ? 'error' : stats.total >= 40 ? 'warning' : 'ok'}`}>
-            {stats.total}/60
+          <span className={`deck-count ${stats.total > maxCards ? 'error' : isMain && stats.total >= 40 ? 'warning' : isMain && stats.total < 40 ? 'warning' : 'ok'}`}>
+            {stats.total}/{maxCards}
           </span>
         </div>
         <div className="deck-cards-container">
@@ -544,9 +672,21 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         </div>
         {deckArray.length > 0 && (
           <div className="deck-zone-stats">
-            <span>M: {stats.monsters}</span>
-            <span>S: {stats.spells}</span>
-            <span>T: {stats.traps}</span>
+            {showDetailed && !isMain ? (
+              <>
+                <span>F: {stats.fusion}</span>
+                <span>S: {stats.synchro}</span>
+                <span>X: {stats.xyz}</span>
+                <span>L: {stats.link}</span>
+                <span>R: {stats.ritual}</span>
+              </>
+            ) : (
+              <>
+                <span>M: {stats.monsters}</span>
+                <span>S: {stats.spells}</span>
+                <span>T: {stats.traps}</span>
+              </>
+            )}
           </div>
         )}
       </div>
@@ -562,9 +702,9 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
               <input type="text" className="deck-name-input" placeholder="Nome do Deck" value={deckName} onChange={(e) => setDeckName(e.target.value)} />
             </div>
             
-            <DeckZone title="Main Deck (40-60)" deckArray={mainDeck} zoneId="main-deck-zone" stats={stats} onEmptyClick={() => setMobileDeckModal(true)} isMobile={isMobile} />
-            <DeckZone title="Extra Deck (0-15)" deckArray={extraDeck} zoneId="extra-deck-zone" stats={getDeckStats(extraDeck)} onEmptyClick={() => setMobileDeckModal(true)} isMobile={isMobile} />
-            <DeckZone title="Side Deck (0-15)" deckArray={sideDeck} zoneId="side-deck-zone" stats={getDeckStats(sideDeck)} onEmptyClick={() => setMobileDeckModal(true)} isMobile={isMobile} />
+            <DeckZone title="Main Deck (40-60)" deckArray={mainDeck} zoneId="main-deck-zone" stats={stats} onEmptyClick={() => setMobileDeckModal(true)} isMobile={isMobile} showDetailed={false} />
+            <DeckZone title="Extra Deck (0-15)" deckArray={extraDeck} zoneId="extra-deck-zone" stats={extraStats} onEmptyClick={() => setMobileDeckModal(true)} isMobile={isMobile} showDetailed={true} />
+            <DeckZone title="Side Deck (0-15)" deckArray={sideDeck} zoneId="side-deck-zone" stats={sideStats} onEmptyClick={() => setMobileDeckModal(true)} isMobile={isMobile} showDetailed={false} />
 
             <div className="deck-rules-info">
               <h4>Regras do Deck</h4>
@@ -572,15 +712,16 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
                 <li className={stats.total < 40 ? 'rule-error' : stats.total <= 60 ? 'rule-ok' : 'rule-error'}>
                   Main Deck: {stats.total}/60 {stats.total < 40 ? '(Mínimo 40!)' : stats.total > 60 ? '(Máximo 60!)' : '✓'}
                 </li>
-                <li className={extraDeck.length <= 15 ? 'rule-ok' : 'rule-error'}>Extra Deck: {extraDeck.length}/15</li>
-                <li className={sideDeck.length <= 15 ? 'rule-ok' : 'rule-error'}>Side Deck: {sideDeck.length}/15</li>
+                <li className={extraStats.total <= 15 ? 'rule-ok' : 'rule-error'}>Extra Deck: {extraStats.total}/15</li>
+                <li className={sideStats.total <= 15 ? 'rule-ok' : 'rule-error'}>Side Deck: {sideStats.total}/15</li>
                 <li>Cópias por carta: máx 3</li>
               </ul>
             </div>
 
             <div className="deck-actions">
               <button className="btn btn-primary" onClick={saveDeck}>Salvar Deck</button>
-              <button className="btn" onClick={exportDeck}>Exportar</button>
+              <button className="btn" onClick={exportDeck}>Exportar .txt</button>
+              <button className="btn" onClick={exportDeckJson}>Exportar .json</button>
               <button className="btn" onClick={() => fileInputRef.current?.click()}>Importar</button>
               <input type="file" ref={fileInputRef} onChange={importDeck} accept=".json" style={{ display: 'none' }} />
               <button className="btn btn-danger" onClick={clearDeck}>Limpar</button>
@@ -633,17 +774,25 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
             </div>
             <div className="search-results-count">{filteredCards.length} cartas encontradas</div>
             <div className="library-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem' }}>
-              {paginatedCards.map(card => (
-                <DeckLibraryCard 
-                  key={card.id} 
-                  card={card} 
-                  onAdd={(c) => addToDeck(c)}
-                  onRemove={removeFromDeck}
-                  isInDeck={deckIdSet.has(card.id)}
-                  deckType={getCardDeckType(card.id)}
-                  onClick={setModalCard}
-                />
-              ))}
+              {paginatedCards.map(card => {
+                const inDeck = deckIdSet.has(card.id)
+                const deckCard = deck.find(d => d.id === card.id)
+                const qty = deckCard?.qty || 0
+                return (
+                  <DeckLibraryCard 
+                    key={card.id} 
+                    card={card} 
+                    onAdd={(c) => addToDeck(c)}
+                    onIncrement={incrementInDeck}
+                    onDecrement={decrementInDeck}
+                    onRemove={removeFromDeck}
+                    isInDeck={inDeck}
+                    qty={qty}
+                    deckType={getCardDeckType(card.id)}
+                    onClick={setModalCard}
+                  />
+                )
+              })}
             </div>
             {totalPages > 1 && (
               <div className="pagination">
@@ -695,8 +844,6 @@ function App() {
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
-
-  useEffect(() => { loadCards(); loadSavedDecks() }, [])
 
   const enrichCard = (card) => {
     const ptName = card.text?.pt?.name || card.text?.en?.name || Object.values(card.text || {})[0]?.name || 'Unknown'
@@ -761,10 +908,7 @@ function App() {
     if (saved) setSavedDecks(JSON.parse(saved))
   }
 
-  const getAttributeClass = (attr) => {
-    const attrs = { 'light': 'attr-light', 'dark': 'attr-dark', 'water': 'attr-water', 'fire': 'attr-fire', 'earth': 'attr-earth', 'wind': 'attr-wind', 'divine': 'attr-divine' }
-    return attrs[attr?.toLowerCase()] || ''
-  }
+  useEffect(() => { loadCards(); loadSavedDecks() }, [])
 
   const getAttributeName = (attr) => {
     const attrs = { 'light': 'Luz', 'dark': 'Trevas', 'water': 'Água', 'fire': 'Fogo', 'earth': 'Terra', 'wind': 'Vento', 'divine': 'Divino' }
