@@ -106,6 +106,13 @@
   margin-top: 0.75rem;
 }
 
+.history-video-hint-video {
+  color: var(--ymagenta);
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-top: 0.75rem;
+}
+
 .history-whatsapp {
   margin-top: 1.5rem;
   padding-top: 1.25rem;

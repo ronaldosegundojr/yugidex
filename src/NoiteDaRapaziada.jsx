@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { isAuthorized, authorize, setAuthorized } from './noiteAuth'
 import './NoiteDaRapaziada.css'
@@ -28,6 +28,64 @@ const ALBUM_DATA = {
 
 const WHATSAPP_GROUP_URL = 'https://chat.whatsapp.com/K2ikO8MIIeY2BHJrSIFkGM'
 const NOITE_VIDEO_URL = '/videos/noite_da_rapaziada.mp4'
+
+function NoiteVideo() {
+  const videoRef = useRef(null)
+  const [playFailed, setPlayFailed] = useState(false)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const tryPlay = () => {
+      video.muted = true
+      const p = video.play()
+      if (p !== undefined) {
+        p.then(() => {
+          video.muted = false
+          const sp = video.play()
+          if (sp !== undefined) sp.catch(() => {})
+        }).catch(() => {
+          setPlayFailed(true)
+        })
+      }
+    }
+
+    const onUserInteraction = () => tryPlay()
+
+    tryPlay()
+    document.addEventListener('click', onUserInteraction, { once: true })
+    document.addEventListener('keydown', onUserInteraction, { once: true })
+
+    return () => {
+      document.removeEventListener('click', onUserInteraction)
+      document.removeEventListener('keydown', onUserInteraction)
+    }
+  }, [])
+
+  return (
+    <>
+      <video
+        ref={videoRef}
+        className="noite-video"
+        src={NOITE_VIDEO_URL}
+        controls
+        autoPlay
+        muted
+        playsInline
+        loop
+        preload="auto"
+      >
+        Seu navegador não suporta a reprodução de vídeo.
+      </video>
+      {playFailed && (
+        <p className="history-video-hint-video">
+          O navegador bloqueou o autoplay com som. Clique no play do vídeo para assistir com som.
+        </p>
+      )}
+    </>
+  )
+}
 
 function NoiteDaRapaziada() {
   const [showAlbum, setShowAlbum] = useState(null)
@@ -144,16 +202,8 @@ function NoiteDaRapaziada() {
           </p>
           <div className="history-video">
             <h3 className="history-video-title">🎬 Vídeo da Noite</h3>
-            <video
-              className="noite-video"
-              src={NOITE_VIDEO_URL}
-              controls
-              playsInline
-              preload="metadata"
-            >
-              Seu navegador não suporta a reprodução de vídeo.
-            </video>
-            <p className="history-video-hint">Clique em play para assistir e ative o som.</p>
+            <NoiteVideo />
+            <p className="history-video-hint">O vídeo começa automaticamente; ative o som se necessário.</p>
           </div>
           <div className="history-whatsapp">
             <a
