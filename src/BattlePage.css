@@ -28,7 +28,33 @@
 .battle-arena-bg { display: none; }
 
 /* =========================================================
-   2. SELECTION SCREEN (STRICT RESPONSIVE MOBILE CENTERING)
+   2. SINGLE PLAYER CENTERED WRAPPER & INTERMEDIARY SPACER
+   ========================================================= */
+.single-player-wrapper {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+/* Componente Intermediário de Espaçamento com Distância Precisa */
+.lp-controls-spacer {
+  height: 35px;
+  width: 100%;
+  pointer-events: none;
+}
+
+.lp-controls-spacer-duo {
+  height: 15px;
+  width: 100%;
+  pointer-events: none;
+}
+
+/* =========================================================
+   3. SELECTION SCREEN (STRICT RESPONSIVE MOBILE CENTERING)
    ========================================================= */
 .battle-selection {
   width: 100vw;
@@ -158,7 +184,7 @@
 }
 
 /* =========================================================
-   3. SIDE AUDIO PLAYER COMPONENT
+   4. SIDE AUDIO PLAYER COMPONENT
    ========================================================= */
 .side-audio-player {
   position: fixed;
@@ -249,7 +275,7 @@
 }
 
 /* =========================================================
-   4. LP TEMPLATE STYLES
+   5. LP TEMPLATE STYLES
    ========================================================= */
 .anime-purple-scoreboard {
   background: linear-gradient(135deg, #1c2035 0%, #0c0d18 100%);
@@ -375,7 +401,7 @@
 }
 
 /* =========================================================
-   5. TOP NAV HEX BUTTONS
+   6. TOP NAV HEX BUTTONS
    ========================================================= */
 .ygo-header-bar {
   display: flex;
@@ -415,15 +441,13 @@
 }
 
 /* =========================================================
-   6. CENTER LP DISPLAY
+   7. CENTER LP DISPLAY
    ========================================================= */
 .battle-single-center {
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  margin: 0.5rem 0;
 }
 
 .lp-display-container {
@@ -499,10 +523,9 @@
 }
 
 /* =========================================================
-   7. BOTTOM CONTROLS BAR
+   8. BOTTOM CONTROLS BAR
    ========================================================= */
 .battle-single-bottom {
-  padding: 0.5rem 0.5rem 1rem 0.5rem;
   display: flex;
   justify-content: center;
   z-index: 10;
@@ -570,7 +593,7 @@
 .ygo-circle-btn:active { transform: scale(0.95); }
 
 /* =========================================================
-   8. MODALS
+   9. MODALS
    ========================================================= */
 .ygo-calc-overlay {
   position: fixed;
@@ -740,7 +763,7 @@
 .duo-center-floating-bar { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 20; display: flex; gap: 0.4rem; }
 
 /* =========================================================
-   9. PERFECT MOBILE CENTERING ADJUSTMENTS
+   10. MOBILE CENTERING
    ========================================================= */
 @media (max-width: 600px) {
   .battle-selection {

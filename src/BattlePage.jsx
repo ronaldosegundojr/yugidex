@@ -170,7 +170,6 @@ function LPControls({ selectedValue, setSelectedValue, onAdd, onSubtract, onCust
   )
 }
 
-/* SIDE AUDIO PLAYER COMPONENT WITH LOOP SUPPORT */
 function SideAudioPlayer({ onClose }) {
   const [trackIndex, setTrackIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -665,16 +664,17 @@ function SinglePlayerBattle({ onBack, currentTemplate, setTemplate }) {
         <button className="ygo-nav-hex" onClick={() => setSettingsOpen(true)} title="Configurações">⚙️</button>
       </div>
 
-      <div className="battle-single-center">
+      <div className="single-player-wrapper">
         <LPDisplay
           lp={player.lp}
           animClass={player.animClass}
           change={player.change}
           currentTemplate={currentTemplate}
         />
-      </div>
 
-      <div className="battle-single-bottom">
+        {/* Componente Intermediário de Espaçamento Ideal */}
+        <div className="lp-controls-spacer" />
+
         <LPControls
           selectedValue={player.selectedValue}
           setSelectedValue={player.setSelectedValue}
@@ -736,6 +736,7 @@ function DuoPlayerBattle({ onBack, currentTemplate, setTemplate }) {
             label="P1"
             currentTemplate={currentTemplate}
           />
+          <div className="lp-controls-spacer-duo" />
           <LPControls
             selectedValue={player1.selectedValue}
             setSelectedValue={player1.setSelectedValue}
@@ -764,6 +765,7 @@ function DuoPlayerBattle({ onBack, currentTemplate, setTemplate }) {
             label="P2"
             currentTemplate={currentTemplate}
           />
+          <div className="lp-controls-spacer-duo" />
           <LPControls
             selectedValue={player2.selectedValue}
             setSelectedValue={player2.setSelectedValue}
