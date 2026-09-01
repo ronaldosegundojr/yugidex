@@ -1,12 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { isAuthorized, authorize, setAuthorized } from './noiteAuth'
 import './NoiteDaRapaziada.css'
-
-const ALLOWED_NAMES = [
-  'yan', 'ronaldo', 'ju', 'bia', 'bianca', 'arthur', 'guto', 'gustavo',
-  'luiz gustavo', 'pietro', 'spider', 'peterson', 'vinicius', 'bruna',
-  'cirineu', 'maira', 'yugi', 'kaiba'
-]
 
 const ALBUM_DATA = {
   '15-07-2026': {
@@ -31,39 +26,15 @@ const ALBUM_DATA = {
   }
 }
 
+const WHATSAPP_GROUP_URL = 'https://chat.whatsapp.com/K2ikO8MIIeY2BHJrSIFkGM'
+const NOITE_VIDEO_URL = '/videos/noite_da_rapaziada.mp4'
+
 function NoiteDaRapaziada() {
-  const [authenticated, setAuthenticated] = useState(false)
   const [showAlbum, setShowAlbum] = useState(null)
   const [albumPhotos, setAlbumPhotos] = useState([])
   const [previews, setPreviews] = useState({})
-  const [viewPhoto, setViewPhoto] = useState(null)
+  const [viewPhotoIndex, setViewPhotoIndex] = useState(null)
   const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    const handleAuth = () => {
-      const name = prompt('Qual é o seu primeiro nome?')
-      if (!name) {
-        alert('Acesso negado')
-        navigate('/')
-        return
-      }
-      
-      const normalizedName = name.toLowerCase().trim()
-      const isAllowed = ALLOWED_NAMES.some(allowed => 
-        allowed.toLowerCase() === normalizedName
-      )
-      
-      if (isAllowed) {
-        setAuthenticated(true)
-      } else {
-        alert('Acesso negado')
-        navigate('/')
-      }
-    }
-    
-    handleAuth()
-  }, [navigate])
 
   const fetchPhotos = async (date) => {
     try {
@@ -80,7 +51,6 @@ function NoiteDaRapaziada() {
   }
 
   useEffect(() => {
-    if (!authenticated) return
     const loadAllPreviews = async () => {
       const results = {}
       await Promise.all(
@@ -91,7 +61,41 @@ function NoiteDaRapaziada() {
       setPreviews(results)
     }
     loadAllPreviews()
-  }, [authenticated])
+  }, [])
+
+  const showPrevPhoto = useCallback(() => {
+    setViewPhotoIndex(prev =>
+      prev !== null && albumPhotos.length > 0
+        ? (prev - 1 + albumPhotos.length) % albumPhotos.length
+        : prev
+    )
+  }, [albumPhotos.length])
+
+  const showNextPhoto = useCallback(() => {
+    setViewPhotoIndex(prev =>
+      prev !== null && albumPhotos.length > 0
+        ? (prev + 1) % albumPhotos.length
+        : prev
+    )
+  }, [albumPhotos.length])
+
+  useEffect(() => {
+    if (viewPhotoIndex === null) return
+    const onKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        showPrevPhoto()
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault()
+        showNextPhoto()
+      } else if (e.key === 'Escape') {
+        e.preventDefault()
+        setViewPhotoIndex(null)
+      }
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [viewPhotoIndex, showPrevPhoto, showNextPhoto])
 
   const openAlbum = async (date) => {
     setShowAlbum(date)
@@ -109,10 +113,7 @@ function NoiteDaRapaziada() {
   const closeAlbum = () => {
     setShowAlbum(null)
     setAlbumPhotos([])
-  }
-
-  if (!authenticated) {
-    return null
+    setViewPhotoIndex(null)
   }
 
   return (
@@ -141,6 +142,33 @@ function NoiteDaRapaziada() {
             Abaixo estão os registros de cada um dos encontros para termos um histórico 
             e não perdermos isso.
           </p>
+          <div className="history-video">
+            <h3 className="history-video-title">🎬 Vídeo da Noite</h3>
+            <video
+              className="noite-video"
+              src={NOITE_VIDEO_URL}
+              controls
+              playsInline
+              preload="metadata"
+            >
+              Seu navegador não suporta a reprodução de vídeo.
+            </video>
+            <p className="history-video-hint">Clique em play para assistir e ative o som.</p>
+          </div>
+          <div className="history-whatsapp">
+            <a
+              className="whatsapp-btn"
+              href={WHATSAPP_GROUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="whatsapp-icon">💬</span>
+              Entrar no grupo da Noite da Rapaziada
+            </a>
+            <p className="whatsapp-hint">
+              Fale com um dos criadores para te adicionarem na lista de autorizados.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -207,7 +235,7 @@ function NoiteDaRapaziada() {
             ) : (
               <div className="album-photos-grid">
                 {albumPhotos.map((photo, index) => (
-                  <div key={index} className="album-photo-item" onClick={() => setViewPhoto(photo)}>
+                  <div key={index} className="album-photo-item" onClick={() => setViewPhotoIndex(index)}>
                     <img 
                       src={photo} 
                       alt={`${showAlbum} - Foto ${index + 1}`}
@@ -222,17 +250,67 @@ function NoiteDaRapaziada() {
         </div>
       )}
 
-      {viewPhoto && (
-        <div className="photo-viewer-overlay" onClick={() => setViewPhoto(null)}>
-          <button className="photo-viewer-close" onClick={() => setViewPhoto(null)} title="Fechar">&times;</button>
+      {viewPhotoIndex !== null && albumPhotos[viewPhotoIndex] && (
+        <div
+          className="photo-viewer-overlay"
+          onClick={() => setViewPhotoIndex(null)}
+        >
+          <button className="photo-viewer-close" onClick={() => setViewPhotoIndex(null)} title="Fechar">&times;</button>
+
+          <button
+            className="photo-nav photo-nav-prev"
+            onClick={(e) => { e.stopPropagation(); showPrevPhoto() }}
+            title="Anterior (←)"
+          >&#8249;</button>
+
           <div className="photo-viewer" onClick={(e) => e.stopPropagation()}>
-            <img src={viewPhoto} alt="Foto maximizada" />
-            <span className="photo-viewer-hint">Clique fora ou no &times; para fechar</span>
+            <img
+              src={albumPhotos[viewPhotoIndex]}
+              alt={`Foto ${viewPhotoIndex + 1}`}
+            />
+            <span className="photo-viewer-hint">
+              {viewPhotoIndex + 1} / {albumPhotos.length} · use ← → para navegar · fora ou &times; para fechar
+            </span>
           </div>
+
+          <button
+            className="photo-nav photo-nav-next"
+            onClick={(e) => { e.stopPropagation(); showNextPhoto() }}
+            title="Próxima (→)"
+          >&#8250;</button>
         </div>
       )}
     </div>
   )
 }
 
-export default NoiteDaRapaziada
+export default function NoiteAuthGuard() {
+  const [authorized, setAuthorizedState] = useState(() => isAuthorized())
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (authorized) return
+
+    let disposed = false
+    const timer = setTimeout(() => {
+      const name = window.prompt('Qual é o seu primeiro nome?')
+      if (disposed) return
+      if (!name || !authorize(name)) {
+        window.alert('Acesso negado')
+        navigate('/', { replace: true })
+        return
+      }
+      setAuthorized()
+      setAuthorizedState(true)
+    }, 0)
+
+    return () => {
+      disposed = true
+      clearTimeout(timer)
+    }
+  }, [authorized, navigate])
+
+  if (!authorized) return null
+
+  return <NoiteDaRapaziada />
+}

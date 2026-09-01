@@ -73,6 +73,78 @@
   color: var(--ygold-light);
 }
 
+.history-video {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--gold-dark);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.history-video-title {
+  color: var(--gold);
+  font-size: 1.15rem;
+  font-family: 'Cinzel', serif;
+  margin-bottom: 0.75rem;
+}
+
+.noite-video {
+  width: 100%;
+  max-width: 720px;
+  max-height: 70vh;
+  border-radius: 10px;
+  border: 2px solid var(--gold);
+  box-shadow: 0 10px 30px rgba(212, 168, 87, 0.3);
+  background: #000;
+}
+
+.history-video-hint {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-style: italic;
+  margin-top: 0.75rem;
+}
+
+.history-whatsapp {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--gold-dark);
+  text-align: center;
+}
+
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.6rem;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 50px;
+  text-decoration: none;
+  margin: 0 auto;
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+  transition: all 0.3s ease;
+}
+
+.whatsapp-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.55);
+}
+
+.whatsapp-icon {
+  font-size: 1.4rem;
+}
+
+.whatsapp-hint {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-style: italic;
+  margin-top: 0.75rem;
+}
+
 .albums-section h2 {
   color: var(--gold);
   font-size: 1.8rem;
@@ -386,6 +458,43 @@
   color: var(--text-muted);
   font-size: 0.85rem;
   font-style: italic;
+}
+
+.photo-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3002;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid var(--gold-dark);
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--gold);
+  font-size: 2.4rem;
+  font-weight: bold;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 18px rgba(212, 168, 87, 0.35);
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.photo-nav:hover {
+  background: rgba(212, 168, 87, 0.25);
+  border-color: var(--gold);
+  box-shadow: 0 0 26px rgba(212, 168, 87, 0.6);
+}
+
+.photo-nav-prev {
+  left: 1rem;
+}
+
+.photo-nav-next {
+  right: 1rem;
 }
 
 .photo-viewer-close {
