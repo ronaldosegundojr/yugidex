@@ -200,6 +200,22 @@ body::before {
 
 .view.active {
   display: block;
+  background: linear-gradient(135deg, var(--yblack-light) 0%, var(--ynavy-dark) 100%);
+  border: 1px solid var(--gold-dark);
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.view.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ygold), var(--ymagenta), var(--ypurple));
+  border-radius: 12px 12px 0 0;
 }
 
 @keyframes fadeIn {
@@ -1377,8 +1393,10 @@ body::before {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--gold-dark);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--yblack-light) 0%, var(--ynavy-dark) 100%);
+  border: 1px solid var(--gold-dark);
 }
 
 .group-header .group-title {
