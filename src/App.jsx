@@ -881,6 +881,7 @@ function App() {
   const [mobileDeckModal, setMobileDeckModal] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [scannerOpen, setScannerOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768)
@@ -1036,13 +1037,35 @@ function App() {
               <img src="/yugidex-icon.png" alt="Yugidex" className="logo-icon" />
               <h1>Yugioh <span>Dex</span></h1>
             </div>
-            <nav className="nav-tabs">
-              <Link to="/" className="nav-tab">Cartas</Link>
-              <Link to="/deck" className="nav-tab">Monte seu Deck</Link>
-              <Link to="/batalha" className="nav-tab">Pontos de Vida</Link>
-              <Link to="/noite-da-rapaziada" className="nav-tab">Noite da Rapaziada</Link>
-            </nav>
+            {isMobile ? (
+              <>
+                <button
+                  className={`hamburger-btn ${menuOpen ? 'open' : ''}`}
+                  onClick={() => setMenuOpen(prev => !prev)}
+                  aria-label="Menu"
+                  aria-expanded={menuOpen}
+                >
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </button>
+                <nav className={`nav-tabs mobile-menu ${menuOpen ? 'open' : ''}`}>
+                  <Link to="/" className="nav-tab" onClick={() => setMenuOpen(false)}>Cartas</Link>
+                  <Link to="/deck" className="nav-tab" onClick={() => setMenuOpen(false)}>Monte seu Deck</Link>
+                  <Link to="/batalha" className="nav-tab" onClick={() => setMenuOpen(false)}>Pontos de Vida</Link>
+                  <Link to="/noite-da-rapaziada" className="nav-tab" onClick={() => setMenuOpen(false)}>Noite da Rapaziada</Link>
+                </nav>
+              </>
+            ) : (
+              <nav className="nav-tabs">
+                <Link to="/" className="nav-tab">Cartas</Link>
+                <Link to="/deck" className="nav-tab">Monte seu Deck</Link>
+                <Link to="/batalha" className="nav-tab">Pontos de Vida</Link>
+                <Link to="/noite-da-rapaziada" className="nav-tab">Noite da Rapaziada</Link>
+              </nav>
+            )}
           </div>
+          {isMobile && menuOpen && <div className="mobile-menu-backdrop" onClick={() => setMenuOpen(false)} />}
         </header>
 
         <main className="main-content">

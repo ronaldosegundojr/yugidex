@@ -780,6 +780,18 @@
   .top-nav-wrapper {
     margin-top: 0.5rem;
   }
+
+  /* Single player: agrupa o placar + controles no centro da tela */
+  .single-player-wrapper {
+    justify-content: center;
+    gap: 2rem;
+    padding: 0.5rem 0;
+  }
+
+  .lp-controls-spacer {
+    height: 0;
+  }
+
   .battle-selection {
     justify-content: center !important;
     align-items: center !important;

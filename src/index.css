@@ -923,12 +923,14 @@ body::before {
 
 @media (max-width: 768px) {
   .header {
-    padding: 1rem;
+    padding: 0.75rem 1rem;
   }
 
   .header-content {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
   }
 
   .logo h1 {
@@ -942,6 +944,93 @@ body::before {
   .nav-tab {
     padding: 0.5rem 1rem;
     font-size: 0.8rem;
+  }
+
+  /* Hamburger button */
+  .hamburger-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: 1px solid var(--gold-dark);
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 120;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger-btn span {
+    display: block;
+    width: 24px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger-btn.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .hamburger-btn.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger-btn.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* Mobile overlay menu */
+  .nav-tabs.mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: linear-gradient(180deg, var(--egypt-dark) 0%, var(--egypt-medium) 100%);
+    border-bottom: 2px solid var(--gold);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    padding: 0.5rem;
+    z-index: 110;
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+
+  .nav-tabs.mobile-menu.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-tabs.mobile-menu .nav-tab {
+    text-align: center;
+    padding: 1rem;
+    border: none;
+    border-bottom: 1px solid var(--gold-dark);
+    width: 100%;
+  }
+
+  .nav-tabs.mobile-menu .nav-tab:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-menu-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 105;
   }
 
   .main-content {
