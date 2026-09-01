@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { DndContext, DragOverlay, useSensor, useSensors, PointerSensor, useDraggable, useDroppable } from '@dnd-kit/core'
 import { YGOCard, YGOCardMini } from './YGOCard'
 import CardScanner from './CardScanner'
+import BattlePage from './BattlePage'
 import './YGOCard.css'
 
 const ITEMS_PER_PAGE = 60
@@ -1037,6 +1038,7 @@ function App() {
             <nav className="nav-tabs">
               <Link to="/" className="nav-tab">Cartas</Link>
               <Link to="/deck" className="nav-tab">Monte seu Deck</Link>
+              <Link to="/batalha" className="nav-tab">Pontos de Vida</Link>
             </nav>
           </div>
         </header>
@@ -1045,6 +1047,7 @@ function App() {
           <Routes>
             <Route path="/" element={<CardsView cards={cards} filteredCards={filteredCards} filteredByType={filteredByType} currentPage={currentPage} setCurrentPage={setCurrentPage} deck={deck} setModalCard={setModalCard} searchTerm={searchTerm} setSearchTerm={setSearchTerm} typeFilter={typeFilter} setTypeFilter={setTypeFilter} raceFilter={raceFilter} setRaceFilter={setRaceFilter} attrFilter={attrFilter} setAttrFilter={setAttrFilter} races={races} lang={lang} setLang={setLang} onOpenScanner={() => setScannerOpen(true)} />} />
             <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} isMobile={isMobile} setMobileDeckModal={setMobileDeckModal} deckIdSet={deckIdSet} onOpenScanner={() => setScannerOpen(true)} />} />
+            <Route path="/batalha" element={<BattlePage />} />
           </Routes>
         </main>
 
