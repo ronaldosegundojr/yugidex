@@ -5,7 +5,7 @@ import { YGOCard, YGOCardMini } from './YGOCard'
 import CardScanner from './CardScanner'
 import './YGOCard.css'
 
-const ITEMS_PER_PAGE = 60
+const ITEMS_PER_PAGE = 48
 
 function useDebounce(value, delay) {
   const [debounced, setDebounced] = useState(value)
@@ -122,11 +122,32 @@ const normalizeText = (text) => {
   return mapped.join(' ')
 }
 
-const SimpleCard = ({ card, onClick }) => (
-  <div className="simple-card" onClick={() => onClick(card)}>
-    <img src={card._image} alt={card._ptName} loading="lazy" />
-  </div>
-)
+const SimpleCard = ({ card, onClick }) => {
+  const [imgSrc, setImgSrc] = useState(card._image)
+  const [imgError, setImgError] = useState(false)
+  const [imgLoaded, setImgLoaded] = useState(false)
+  
+  return (
+    <div className="simple-card" onClick={() => onClick(card)}>
+      {!imgLoaded && !imgError && (
+        <div className="card-image-placeholder" />
+      )}
+      <img 
+        src={imgSrc} 
+        alt={card._ptName} 
+        loading="lazy"
+        style={{ opacity: imgLoaded ? 1 : 0, transition: 'opacity 0.2s ease' }}
+        onLoad={() => setImgLoaded(true)}
+        onError={() => {
+          if (!imgError && imgSrc.includes('ygoprodeck')) {
+            setImgError(true)
+            setImgSrc(imgSrc.replace('/images/cards/', '/images/cards_cropped/'))
+          }
+        }}
+      />
+    </div>
+  )
+}
 
 const MemoSimpleCard = SimpleCard
 
@@ -209,7 +230,7 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
         filteredCards.length === 0 ? (
           <div className="no-cards"><h3>Nenhuma carta encontrada</h3><p>Tente ajustar seus filtros de busca</p></div>
         ) : (
-          <>
+          <React.Fragment>
             <div className="cards-section">
               {allCardTypes.map(({ key, label, type }) => {
                 const group = filteredByType[type]
@@ -240,7 +261,7 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
                 <button className="page-btn" disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)}>&raquo;</button>
               </div>
             )}
-          </>
+          </React.Fragment>
         )
       ) : (
         <div className="cards-section">
@@ -274,22 +295,11 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
   )
 }
 
-function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, setMobileDeckModal, deckIdSet, onOpenScanner }) {
-  const [activeId, setActiveId] = useState(null)
-  const [deckName, setDeckName] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
-  const fileInputRef = useRef(null)
-
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
-  )
-
-  const mainDeck = deck.filter(c => c.deckType === 'main' || !c.deckType)
-  const extraDeck = deck.filter(c => c.deckType === 'extra')
-  const sideDeck = deck.filter(c => c.deckType === 'side')
-
-  const DeckLibraryCard = ({ card, onAdd, onIncrement, onDecrement, isInDeck, qty, onClick }) => {
+const DeckLibraryCard = ({ card, onAdd, onIncrement, onDecrement, isInDeck, qty, onClick }) => {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: card.id })
+    const [imgSrc, setImgSrc] = useState(card._image)
+    const [imgError, setImgError] = useState(false)
+    const [imgLoaded, setImgLoaded] = useState(false)
     
     const style = transform ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` } : undefined
     
@@ -302,11 +312,26 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         {...attributes}
         onClick={() => onClick(card)}
       >
-        <img src={card._image} alt={card._ptName} loading="lazy" />
+        {!imgLoaded && !imgError && (
+          <div className="card-image-placeholder" />
+        )}
+        <img 
+          src={imgSrc} 
+          alt={card._ptName} 
+          loading="lazy"
+          style={{ opacity: imgLoaded ? 1 : 0, transition: 'opacity 0.2s ease' }}
+          onLoad={() => setImgLoaded(true)}
+          onError={() => {
+            if (!imgError && imgSrc.includes('ygoprodeck')) {
+              setImgError(true)
+              setImgSrc(imgSrc.replace('/images/cards/', '/images/cards_cropped/'))
+            }
+          }}
+        />
         <div className="deck-library-card-name">{card._ptName}</div>
         <div className="deck-library-controls">
           {isInDeck ? (
-            <>
+            <React.Fragment>
               <button 
                 className="deck-library-btn decrement" 
                 onClick={(e) => { e.stopPropagation(); onDecrement(card.id) }}
@@ -321,7 +346,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
               >
                 +1
               </button>
-            </>
+            </React.Fragment>
           ) : (
             <button className="deck-library-btn add" onClick={(e) => { e.stopPropagation(); onAdd(card) }}>
               + Adicionar
@@ -331,6 +356,70 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
       </div>
     )
   }
+
+const MobileDeckCardItem = ({ card, inDeck, qty, setDeck, deck }) => {
+    const [imgSrc, setImgSrc] = useState(card._image)
+    const [imgError, setImgError] = useState(false)
+    const [imgLoaded, setImgLoaded] = useState(false)
+    
+    const handleClick = () => {
+      if (inDeck && qty >= 3) { alert('Máximo 3 cópias!'); return }
+      const cardType = card.cardType
+      const deckType = ['fusion', 'synchro', 'xyz', 'link', 'ritual'].includes(cardType) ? 'extra' : 'main'
+      setDeck(prev => {
+        const existing = prev.find(c => c.id === card.id)
+        if (existing) {
+          if (existing.qty < 3) return prev.map(c => c.id === card.id ? { ...c, qty: c.qty + 1 } : c)
+          return prev
+        }
+        const totalCards = prev.reduce((sum, c) => sum + c.qty, 0)
+        if (totalCards >= 60) { alert('Deck cheio! (máx 60)'); return prev }
+        return [...prev, { ...card, qty: 1, deckType }]
+      })
+    }
+    
+    return (
+      <div key={card.id} className="mobile-deck-card-item" onClick={handleClick}>
+        {!imgLoaded && !imgError && (
+          <div className="card-image-placeholder-small" />
+        )}
+        <img 
+          src={imgSrc} 
+          alt="" 
+          loading="lazy"
+          style={{ opacity: imgLoaded ? 1 : 0, transition: 'opacity 0.2s ease' }}
+          onLoad={() => setImgLoaded(true)}
+          onError={() => {
+            if (!imgError && imgSrc.includes('ygoprodeck')) {
+              setImgError(true)
+              setImgSrc(imgSrc.replace('/images/cards/', '/images/cards_cropped/'))
+            }
+          }}
+        />
+        <div className="mobile-deck-card-info">
+          <span className="mobile-deck-card-name">{card._ptName}</span>
+          <span className="mobile-deck-card-type">{card.cardType}</span>
+        </div>
+        <button className={`mobile-deck-card-btn ${inDeck ? 'remove' : 'add'}`}>
+          {inDeck ? `${qty}/3` : '+'}
+        </button>
+      </div>
+    )
+  }
+
+function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, setMobileDeckModal, deckIdSet, onOpenScanner }) {
+  const [activeId, setActiveId] = useState(null)
+  const [deckName, setDeckName] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const fileInputRef = useRef(null)
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
+  )
+
+  const mainDeck = deck.filter(c => c.deckType === 'main' || !c.deckType)
+  const extraDeck = deck.filter(c => c.deckType === 'extra')
+  const sideDeck = deck.filter(c => c.deckType === 'side')
 
   const filteredCards = useMemo(() => {
     if (!cards.length) return []
@@ -591,57 +680,14 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
   const importDeck = (event) => {
     const file = event.target.files?.[0]
     if (!file) return
-    const isJson = file.name.endsWith('.json')
-    const isTxt = file.name.endsWith('.txt')
-    if (!isJson && !isTxt) { alert('Apenas arquivos .json ou .txt são suportados!'); return }
-    
     const reader = new FileReader()
     reader.onload = (e) => {
       try {
-        let data = { main: [], extra: [], side: [], name: '' }
-        const content = e.target.result
-        
-        if (isJson) {
-          data = JSON.parse(content)
-        } else {
-          // Parse TXT format exported by this app
-          const lines = content.split('\n')
-          let currentSection = ''
-          let deckName = ''
-          
-          for (const line of lines) {
-            const trimmed = line.trim()
-            if (trimmed.startsWith('NOME DO DECK:')) {
-              deckName = trimmed.replace('NOME DO DECK:', '').trim()
-            } else if (trimmed === '--- MAIN DECK') {
-              currentSection = 'main'
-            } else if (trimmed === '--- EXTRA DECK') {
-              currentSection = 'extra'
-            } else if (trimmed === '--- SIDE DECK') {
-              currentSection = 'side'
-            } else if (trimmed.startsWith('QUANTIDADE NO DECK:')) {
-              const qty = parseInt(trimmed.replace('QUANTIDADE NO DECK:', '').trim())
-              const nameLineIdx = lines.indexOf(line) - 2
-              if (nameLineIdx >= 0) {
-                const nameLine = lines[nameLineIdx].trim()
-                if (nameLine.startsWith('NOME DA CARTA:')) {
-                  const cardName = nameLine.replace('NOME DA CARTA:', '').trim()
-                  const card = cards.find(c => c._ptName === cardName || c.text?.en?.name === cardName)
-                  if (card) {
-                    data[currentSection].push({ id: card.id, qty })
-                    data.name = deckName
-                  }
-                }
-              }
-            }
-          }
-        }
-        
+        const data = JSON.parse(e.target.result)
         const buildDeckArray = (arr) => arr.map(c => {
           const card = cards.find(card => card.id === c.id)
           return card ? { ...card, qty: c.qty } : null
         }).filter(Boolean)
-        
         const newDeck = [
           ...buildDeckArray(data.main || []).map(c => ({ ...c, deckType: 'main' })),
           ...buildDeckArray(data.extra || []).map(c => ({ ...c, deckType: 'extra' })),
@@ -650,10 +696,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         setDeck(newDeck)
         setDeckName(data.name || 'Deck Importado')
         alert('Deck importado com sucesso!')
-      } catch (err) { 
-        console.error(err)
-        alert('Erro ao importar deck! Verifique o formato do arquivo.') 
-      }
+      } catch { alert('Erro ao importar deck!'); }
     }
     reader.readAsText(file)
     event.target.value = ''
@@ -669,10 +712,30 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
   const sideStats = getDetailedDeckStats(sideDeck)
   const activeCard = activeId ? cards.find(c => c.id === activeId) : null
 
-  const DeckCard = ({ card, qty, onClick, onRemove }) => (
+  const DeckCard = ({ card, qty, onClick, onRemove }) => {
+    const [imgSrc, setImgSrc] = useState(card._image)
+    const [imgError, setImgError] = useState(false)
+    const [imgLoaded, setImgLoaded] = useState(false)
+    
+    return (
     <div className="deck-card-item">
       <div className="deck-card-image-wrapper" onClick={() => onClick(card)}>
-        <img src={card._image} alt={card._ptName} loading="lazy" />
+        {!imgLoaded && !imgError && (
+          <div className="card-image-placeholder" />
+        )}
+        <img 
+          src={imgSrc} 
+          alt={card._ptName} 
+          loading="lazy"
+          style={{ opacity: imgLoaded ? 1 : 0, transition: 'opacity 0.2s ease' }}
+          onLoad={() => setImgLoaded(true)}
+          onError={() => {
+            if (!imgError && imgSrc.includes('ygoprodeck')) {
+              setImgError(true)
+              setImgSrc(imgSrc.replace('/images/cards/', '/images/cards_cropped/'))
+            }
+          }}
+        />
         {qty > 1 && <span className="deck-card-qty">{qty}</span>}
         <div className="deck-card-tooltip">
           <div className="tooltip-name">{card._ptName}</div>
@@ -719,19 +782,19 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         {deckArray.length > 0 && (
           <div className="deck-zone-stats">
             {showDetailed && !isMain ? (
-              <>
+              <React.Fragment>
                 <span>F: {stats.fusion}</span>
                 <span>S: {stats.synchro}</span>
                 <span>X: {stats.xyz}</span>
                 <span>L: {stats.link}</span>
                 <span>R: {stats.ritual}</span>
-              </>
+              </React.Fragment>
             ) : (
-              <>
+              <React.Fragment>
                 <span>M: {stats.monsters}</span>
                 <span>S: {stats.spells}</span>
                 <span>T: {stats.traps}</span>
-              </>
+              </React.Fragment>
             )}
           </div>
         )}
@@ -768,8 +831,8 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
               <button className="btn btn-primary" onClick={saveDeck}>Salvar Deck</button>
               <button className="btn" onClick={exportDeck}>Exportar .txt</button>
               <button className="btn" onClick={exportDeckJson}>EXPORTAR DECK (JSON)</button>
-              <button className="btn" onClick={() => fileInputRef.current?.click()}>IMPORTAR DECK (JSON/TXT)</button>
-              <input type="file" ref={fileInputRef} onChange={importDeck} accept=".json,.txt" style={{ display: 'none' }} />
+              <button className="btn" onClick={() => fileInputRef.current?.click()}>IMPORTAR DECK (JSON)</button>
+              <input type="file" ref={fileInputRef} onChange={importDeck} accept=".json" style={{ display: 'none' }} />
               <button className="btn btn-danger" onClick={clearDeck}>Limpar</button>
             </div>
 
@@ -890,7 +953,8 @@ function App() {
   const enrichCard = (card) => {
     const ptName = card.text?.pt?.name || card.text?.en?.name || Object.values(card.text || {})[0]?.name || 'Unknown'
     const enName = card.text?.en?.name || ''
-    const image = card.images?.[0]?.card || card.images?.[0]?.art || ''
+    const images = card.images?.[0] || {}
+    const image = images.art || images.card || ''
     const allNames = Object.values(card.text || {}).map(t => t?.name || '').filter(Boolean).join(' ')
     const normalizedNames = normalizeText(allNames)
     
@@ -1083,7 +1147,7 @@ function App() {
                     return (
                       <div className="deck-modal-actions" style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                         {qty > 0 ? (
-                          <>
+                          <React.Fragment>
                             <button 
                               className="btn" 
                               style={{ flex: 1 }}
@@ -1109,7 +1173,7 @@ function App() {
                             >
                               +1
                             </button>
-                          </>
+                          </React.Fragment>
                         ) : (
                           <button 
                             className="btn btn-primary" 
@@ -1131,7 +1195,7 @@ function App() {
                         )}
                       </div>
                     )
-                  })()}
+                  })}
                 </div>
               </div>
             </div>
@@ -1171,34 +1235,20 @@ function App() {
               {filteredCards.slice(0, 30).map(card => {
                 const inDeck = deckIdSet.has(card.id)
                 const qty = deck.find(d => d.id === card.id)?.qty || 0
+                
                 return (
-                  <div key={card.id} className="mobile-deck-card-item" onClick={() => {
-                    if (inDeck && qty >= 3) { alert('Máximo 3 cópias!'); return }
-                    const deckType = ['fusion', 'synchro', 'xyz', 'link', 'ritual'].includes(card.cardType) ? 'extra' : 'main'
-                    setDeck(prev => {
-                      const existing = prev.find(c => c.id === card.id)
-                      if (existing) {
-                        if (existing.qty < 3) return prev.map(c => c.id === card.id ? { ...c, qty: c.qty + 1 } : c)
-                        return prev
-                      }
-                      const totalCards = prev.reduce((sum, c) => sum + c.qty, 0)
-                      if (totalCards >= 60) { alert('Deck cheio! (máx 60)'); return prev }
-                      return [...prev, { ...card, qty: 1, deckType }]
-                    })
-                  }}>
-                    <img src={card._image} alt="" />
-                    <div className="mobile-deck-card-info">
-                      <span className="mobile-deck-card-name">{card._ptName}</span>
-                      <span className="mobile-deck-card-type">{card.cardType}</span>
-                    </div>
-                    <button className={`mobile-deck-card-btn ${inDeck ? 'remove' : 'add'}`}>
-                      {inDeck ? `${qty}/3` : '+'}
-                    </button>
-                  </div>
+                  <MobileDeckCardItem
+                    key={card.id}
+                    card={card}
+                    inDeck={inDeck}
+                    qty={qty}
+                    deck={deck}
+                    setDeck={setDeck}
+                  />
                 )
               })}
-            </div>
-          </div>
+</div>
+           </div>
         </div>
 
         {scannerOpen && (
