@@ -1045,16 +1045,9 @@ function App() {
                   aria-label="Menu"
                   aria-expanded={menuOpen}
                 >
-                  <img
-                    src="/hamburguer.png"
-                    alt="Abrir menu"
-                    className={`hamburger-open-icon ${menuOpen ? 'hidden' : ''}`}
-                  />
-                  <img
-                    src="/click-hamburguer.png"
-                    alt="Fechar menu"
-                    className={`hamburger-close-icon ${menuOpen ? '' : 'hidden'}`}
-                  />
+                  <span></span>
+                  <span></span>
+                  <span></span>
                 </button>
                 <nav className={`nav-tabs mobile-menu ${menuOpen ? 'open' : ''}`}>
                   <Link to="/" className="nav-tab" onClick={() => setMenuOpen(false)}>Cartas</Link>
