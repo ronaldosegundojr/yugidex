@@ -35,6 +35,8 @@ function NoiteDaRapaziada() {
   const [authenticated, setAuthenticated] = useState(false)
   const [showAlbum, setShowAlbum] = useState(null)
   const [albumPhotos, setAlbumPhotos] = useState([])
+  const [previews, setPreviews] = useState({})
+  const [viewPhoto, setViewPhoto] = useState(null)
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
@@ -63,32 +65,45 @@ function NoiteDaRapaziada() {
     handleAuth()
   }, [navigate])
 
-  const loadAlbumPhotos = async (date) => {
-    setLoading(true)
+  const fetchPhotos = async (date) => {
     try {
       const response = await fetch(`/fotos-noite-rapaziada/${date}/manifest.json`)
       if (response.ok) {
         const data = await response.json()
-        setAlbumPhotos(data.photos || [])
-      } else {
-        const files = ALBUM_DATA[date]?.photos || 0
-        const photos = []
-        for (let i = 1; i <= files; i++) {
-          photos.push(`/fotos-noite-rapaziada/${date}/WhatsApp Image 2026-07-13 at 23.09.09 (${i}).jpeg`)
-        }
-        setAlbumPhotos(photos)
+        return data.photos || []
       }
+      return []
     } catch (error) {
       console.error('Erro ao carregar fotos:', error)
-      setAlbumPhotos([])
-    } finally {
-      setLoading(false)
+      return []
     }
   }
 
-  const openAlbum = (date) => {
+  useEffect(() => {
+    if (!authenticated) return
+    const loadAllPreviews = async () => {
+      const results = {}
+      await Promise.all(
+        Object.keys(ALBUM_DATA).map(async (date) => {
+          results[date] = await fetchPhotos(date)
+        })
+      )
+      setPreviews(results)
+    }
+    loadAllPreviews()
+  }, [authenticated])
+
+  const openAlbum = async (date) => {
     setShowAlbum(date)
-    loadAlbumPhotos(date)
+    if (previews[date]) {
+      setAlbumPhotos(previews[date])
+      return
+    }
+    setLoading(true)
+    const photos = await fetchPhotos(date)
+    setAlbumPhotos(photos)
+    setPreviews(prev => ({ ...prev, [date]: photos }))
+    setLoading(false)
   }
 
   const closeAlbum = () => {
@@ -132,22 +147,46 @@ function NoiteDaRapaziada() {
       <div className="albums-section">
         <h2>📸 Álbuns por Data</h2>
         <div className="albums-grid">
-          {Object.entries(ALBUM_DATA).map(([date, album]) => (
-            <div 
-              key={date} 
-              className="album-card"
-              onClick={() => openAlbum(date)}
-            >
-              <div className="album-cover">
-                <span className="album-date">{date}</span>
-                <span className="album-photo-count">{album.photos} fotos</span>
+          {Object.entries(ALBUM_DATA).map(([date, album]) => {
+            const albumPreview = previews[date] || []
+            return (
+              <div 
+                key={date} 
+                className="album-card"
+                onClick={() => openAlbum(date)}
+              >
+                <div className="album-cover">
+                  <div className={`album-preview-area ${albumPreview.length ? 'has-photos' : ''}`}>
+                    {albumPreview.length > 0 ? (
+                      <div className="album-preview-grid">
+                        {albumPreview.slice(0, 6).map((src, i) => (
+                          <div key={i} className="album-preview-photo">
+                            <img 
+                              src={src} 
+                              alt=""
+                              loading="lazy"
+                              onError={(e) => { e.target.style.visibility = 'hidden' }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="album-preview-placeholder">📸</div>
+                    )}
+                  </div>
+                  <div className="album-cover-overlay">
+                    <span className="album-date">{date}</span>
+                    <span className="album-photo-count">{album.photos} fotos</span>
+                  </div>
+                  <div className="album-open-hint">📂 Abrir álbum</div>
+                </div>
+                <div className="album-info">
+                  <h3>{album.title}</h3>
+                  <p>{album.description}</p>
+                </div>
               </div>
-              <div className="album-info">
-                <h3>{album.title}</h3>
-                <p>{album.description}</p>
-              </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
 
@@ -168,7 +207,7 @@ function NoiteDaRapaziada() {
             ) : (
               <div className="album-photos-grid">
                 {albumPhotos.map((photo, index) => (
-                  <div key={index} className="album-photo-item">
+                  <div key={index} className="album-photo-item" onClick={() => setViewPhoto(photo)}>
                     <img 
                       src={photo} 
                       alt={`${showAlbum} - Foto ${index + 1}`}
@@ -179,6 +218,16 @@ function NoiteDaRapaziada() {
                 ))}
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {viewPhoto && (
+        <div className="photo-viewer-overlay" onClick={() => setViewPhoto(null)}>
+          <button className="photo-viewer-close" onClick={() => setViewPhoto(null)} title="Fechar">&times;</button>
+          <div className="photo-viewer" onClick={(e) => e.stopPropagation()}>
+            <img src={viewPhoto} alt="Foto maximizada" />
+            <span className="photo-viewer-hint">Clique fora ou no &times; para fechar</span>
           </div>
         </div>
       )}
