@@ -282,6 +282,7 @@ function DesignModal({ currentTemplate, setTemplate, onClose }) {
 }
 
 function HistoryModal({ history, onClose }) {
+  const hasPlayers = history.some(item => item.player)
   return (
     <div className="ygo-calc-overlay" onClick={onClose}>
       <div className="ygo-history-modal" onClick={e => e.stopPropagation()}>
@@ -294,7 +295,12 @@ function HistoryModal({ history, onClose }) {
             <p className="empty-history">Nenhuma alteração de LP registrada ainda.</p>
           ) : (
             history.map((item, idx) => (
-              <div key={idx} className="history-item">
+              <div key={idx} className={`history-item ${item.player === 'Jogador 2' ? 'player-two' : item.player ? 'player-one' : ''}`}>
+                {hasPlayers && (
+                  <span className={`history-player ${item.player === 'Jogador 2' ? 'p2' : 'p1'}`}>
+                    {item.player === 'Jogador 2' ? 'P2' : 'P1'}
+                  </span>
+                )}
                 <span className="history-index">#{idx + 1}</span>
                 <span className={`history-val ${item.change > 0 ? 'pos' : 'neg'}`}>
                   {item.change > 0 ? `+${item.change}` : item.change} LP
@@ -366,7 +372,7 @@ function YuGiOhCalculatorModal({ currentLp, setLp, triggerChange, onClose }) {
     const half = Math.floor(currentLp / 2)
     const diff = currentLp - half
     setLp(half)
-    triggerChange(-diff)
+    triggerChange(-diff, half)
     onClose()
   }
 
@@ -374,7 +380,7 @@ function YuGiOhCalculatorModal({ currentLp, setLp, triggerChange, onClose }) {
     const double = currentLp * 2
     const diff = double - currentLp
     setLp(double)
-    triggerChange(diff)
+    triggerChange(diff, double)
     onClose()
   }
 
@@ -384,16 +390,25 @@ function YuGiOhCalculatorModal({ currentLp, setLp, triggerChange, onClose }) {
     const num = parseInt(inputValue, 10)
     if (operator === '+') {
       const val = isNaN(num) ? 0 : num
-      setLp(prev => prev + val)
-      triggerChange(val)
+      setLp(prev => {
+        const next = prev + val
+        triggerChange(val, next)
+        return next
+      })
     } else if (operator === '-') {
       const val = isNaN(num) ? 0 : num
-      setLp(prev => Math.max(0, prev - val))
-      triggerChange(-val)
+      setLp(prev => {
+        const next = Math.max(0, prev - val)
+        triggerChange(-val, next)
+        return next
+      })
     } else if (inputValue !== '') {
       const val = parseInt(inputValue, 10)
-      setLp(prev => Math.max(0, prev - val))
-      triggerChange(-val)
+      setLp(prev => {
+        const next = Math.max(0, prev - val)
+        triggerChange(-val, next)
+        return next
+      })
     }
     onClose()
   }
@@ -583,7 +598,7 @@ function SoundPanel({ onClose }) {
   )
 }
 
-function usePlayerState(initialLp) {
+function usePlayerState(initialLp, playerName = 'P1') {
   const [lp, setLp] = useState(initialLp)
   const [selectedValue, setSelectedValue] = useState(100)
   const [animClass, setAnimClass] = useState('')
@@ -594,7 +609,7 @@ function usePlayerState(initialLp) {
 
   useEffect(() => { setLp(initialLp); }, [initialLp])
 
-  const triggerChange = useCallback((amount) => {
+  const triggerChange = useCallback((amount, newLp) => {
     if (amount === 0) return
     const cls = amount > 0 ? 'lp-animating-up' : 'lp-animating-down'
     setAnimClass(cls)
@@ -602,28 +617,32 @@ function usePlayerState(initialLp) {
     setChange({ value: amount, id: changeIdRef.current })
     playSoundInstant('point-drop')
 
-    setLp(curr => {
-      setHistory(h => [...h, {
-        change: amount,
-        resultLp: curr,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
-      }])
-      return curr
-    })
+    setHistory(h => [...h, {
+      player: playerName,
+      change: amount,
+      resultLp: newLp,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+    }])
 
     setTimeout(() => setAnimClass(''), 300)
-  }, [])
+  }, [playerName])
 
   const add = useCallback((val) => {
     const v = val || selectedValue
-    setLp(prev => prev + v)
-    triggerChange(v)
+    setLp(prev => {
+      const next = prev + v
+      triggerChange(v, next)
+      return next
+    })
   }, [selectedValue, triggerChange])
 
   const subtract = useCallback((val) => {
     const v = val || selectedValue
-    setLp(prev => Math.max(0, prev - v))
-    triggerChange(-v)
+    setLp(prev => {
+      const next = Math.max(0, prev - v)
+      triggerChange(-v, next)
+      return next
+    })
   }, [selectedValue, triggerChange])
 
   const reset = useCallback(() => {
@@ -709,8 +728,8 @@ function SinglePlayerBattle({ onBack, currentTemplate, setTemplate }) {
 
 function DuoPlayerBattle({ onBack, currentTemplate, setTemplate }) {
   const [lpInitial, setLpInitial] = useState(DEFAULT_LP)
-  const player1 = usePlayerState(lpInitial)
-  const player2 = usePlayerState(lpInitial)
+  const player1 = usePlayerState(lpInitial, 'Jogador 1')
+  const player2 = usePlayerState(lpInitial, 'Jogador 2')
   const [soundOpen, setSoundOpen] = useState(false)
   const [diceCoinOpen, setDiceCoinOpen] = useState(false)
   const [designOpen, setDesignOpen] = useState(false)
