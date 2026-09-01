@@ -652,16 +652,20 @@ function SinglePlayerBattle({ onBack, currentTemplate, setTemplate }) {
 
   return (
     <div className="battle-arena" style={{ background: currentTemplate.bgGradient }}>
-      <div className="ygo-header-bar">
-        <button className="ygo-nav-hex" onClick={onBack} title="Voltar">↩</button>
-        <button className="ygo-nav-hex" onClick={() => setSoundOpen(true)} title="Sons">🎵</button>
-        <button className="ygo-nav-hex" onClick={() => setDesignOpen(true)} title="Design & Modelos">🎨</button>
+      {/* Componente Intermediário Superior (Aproxima os botões da barra de navegação) */}
+      <div className="top-nav-wrapper">
+        <div className="ygo-header-bar">
+          <button className="ygo-nav-hex" onClick={onBack} title="Voltar">↩</button>
+          <button className="ygo-nav-hex" onClick={() => setSoundOpen(true)} title="Sons">🎵</button>
+          <button className="ygo-nav-hex" onClick={() => setDesignOpen(true)} title="Design & Modelos">🎨</button>
 
-        <button className="ygo-nav-hex center-hex" onClick={() => setDiceCoinOpen(true)} title="Dado & Moeda">🎲🪙</button>
+          <button className="ygo-nav-hex center-hex" onClick={() => setDiceCoinOpen(true)} title="Dado & Moeda">🎲🪙</button>
 
-        <button className="ygo-nav-hex" onClick={player.reset} title="Resetar LP">⟲</button>
-        <button className="ygo-nav-hex" onClick={() => setHistoryOpen(true)} title="Histórico">📖</button>
-        <button className="ygo-nav-hex" onClick={() => setSettingsOpen(true)} title="Configurações">⚙️</button>
+          <button className="ygo-nav-hex" onClick={player.reset} title="Resetar LP">⟲</button>
+          <button className="ygo-nav-hex" onClick={() => setHistoryOpen(true)} title="Histórico">📖</button>
+          <button className="ygo-nav-hex" onClick={() => setSettingsOpen(true)} title="Configurações">⚙️</button>
+        </div>
+        <div className="top-controls-spacer" />
       </div>
 
       <div className="single-player-wrapper">
@@ -672,7 +676,6 @@ function SinglePlayerBattle({ onBack, currentTemplate, setTemplate }) {
           currentTemplate={currentTemplate}
         />
 
-        {/* Componente Intermediário de Espaçamento Ideal */}
         <div className="lp-controls-spacer" />
 
         <LPControls
