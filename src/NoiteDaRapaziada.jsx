@@ -23,11 +23,103 @@ const ALBUM_DATA = {
     title: '28/08/2026 - Quarto Encontro',
     description: 'Fechando o mês com chave de ouro',
     photos: 19
+  },
+  '07-09-2026': {
+    title: '07/09/2026 - Quinto Encontro',
+    description: 'Feriado especial para celebrar mais uma noite',
+    photos: 17
   }
 }
 
 const WHATSAPP_GROUP_URL = 'https://chat.whatsapp.com/K2ikO8MIIeY2BHJrSIFkGM'
 const NOITE_VIDEO_URL = '/videos/noite_da_rapaziada.mp4'
+
+const OCCURRED_DATES = new Set([
+  '2026-07-15',
+  '2026-07-27',
+  '2026-08-17',
+  '2026-08-28',
+  '2026-09-07'
+])
+
+const UPCOMING_DATES = new Set([
+  '2026-09-25',
+  '2026-10-09',
+  '2026-10-12'
+])
+
+const WEEKDAY_HEADERS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
+
+const MONTH_TITLES = [
+  'Janeiro', 'Fevereiro', 'Março', 'Abril',
+  'Maio', 'Junho', 'Julho', 'Agosto',
+  'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+]
+
+function CalendarGrid({ month, year }) {
+  const firstDay = new Date(year, month, 1)
+  const daysInMonth = new Date(year, month + 1, 0).getDate()
+  const startOffset = firstDay.getDay()
+  const monthLabel = `${MONTH_TITLES[month]} ${year}`
+
+  const cells = []
+  for (let i = 0; i < startOffset; i++) cells.push(null)
+  for (let d = 1; d <= daysInMonth; d++) cells.push(d)
+
+  return (
+    <div className="calendar-month">
+      <h3 className="calendar-month-title">{monthLabel}</h3>
+      <div className="calendar-weekdays">
+        {WEEKDAY_HEADERS.map(h => <span key={h} className="calendar-weekday">{h}</span>)}
+      </div>
+      <div className="calendar-days">
+        {cells.map((day, i) => {
+          if (day === null) {
+            return <span key={`empty-${i}`} className="calendar-day empty" />
+          }
+          const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+          const isOccurred = OCCURRED_DATES.has(dateStr)
+          const isUpcoming = UPCOMING_DATES.has(dateStr)
+          const marker = isOccurred ? '×' : (isUpcoming ? '○' : '')
+          const cls = `calendar-day${isOccurred ? ' occurred' : ''}${isUpcoming ? ' upcoming' : ''}`
+          return (
+            <span key={dateStr} className={cls}>
+              <span className="calendar-marker">{marker}</span>
+              <span className="calendar-day-num">{day}</span>
+            </span>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+function NoiteCalendar() {
+  return (
+    <div className="calendar-section">
+      <div className="calendar-section-head">
+        <h2>📅 Calendário da Noite</h2>
+        <p className="calendar-subtitle">
+          As noites acontecem preferencialmente às sextas-feiras, de 15 em 15 dias,
+          com raras exceções para feriados. Marque os encontros que você já participou!
+        </p>
+      </div>
+      <div className="calendar-grid-wrapper">
+        {[6, 7, 8, 9].map(m => (
+          <CalendarGrid key={m} month={m} year={2026} />
+        ))}
+      </div>
+      <div className="calendar-legend">
+        <span className="legend-item">
+          <span className="legend-symbol occurred">×</span> Noites que já aconteceram
+        </span>
+        <span className="legend-item">
+          <span className="legend-symbol upcoming">○</span> Próximas noites
+        </span>
+      </div>
+    </div>
+  )
+}
 
 function NoiteVideo() {
   const videoRef = useRef(null)
@@ -221,6 +313,8 @@ function NoiteDaRapaziada() {
           </div>
         </div>
       </div>
+
+      <NoiteCalendar />
 
       <div className="albums-section">
         <h2>📸 Álbuns por Data</h2>
