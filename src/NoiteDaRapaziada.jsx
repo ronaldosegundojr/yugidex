@@ -27,7 +27,8 @@ const ALBUM_DATA = {
   '07-09-2026': {
     title: '07/09/2026 - Quinto Encontro',
     description: 'Feriado especial para celebrar mais uma noite',
-    photos: 17
+    photos: 16,
+    cover: '/fotos-noite-rapaziada/07-09-2026/0.jpg'
   }
 }
 
@@ -329,7 +330,15 @@ function NoiteDaRapaziada() {
               >
                 <div className="album-cover">
                   <div className={`album-preview-area ${albumPreview.length ? 'has-photos' : ''}`}>
-                    {albumPreview.length > 0 ? (
+                    {album.cover ? (
+                      <img
+                        className="album-cover-img"
+                        src={album.cover}
+                        alt=""
+                        loading="lazy"
+                        onError={(e) => { e.target.style.display = 'none' }}
+                      />
+                    ) : albumPreview.length > 0 ? (
                       <div className="album-preview-grid">
                         {albumPreview.slice(0, 6).map((src, i) => (
                           <div key={i} className="album-preview-photo">
