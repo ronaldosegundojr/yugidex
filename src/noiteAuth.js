@@ -18,7 +18,10 @@ const ALLOWED_HASHES = new Set([
   '95ac418899a66ea4859c0b00c1ccb751',
   'f832f73324e65eed25e9f517a1e527bf',
   'db4d80c636475606727b13518e33d5b0',
-  '4b1f08423767b39db280d148327ec990'
+  '4b1f08423767b39db280d148327ec990',
+  '1eaadcf46acfb238f5586249faba3385',
+  'd047243ff6487f932df158e67fd68041',
+  '192c8683c147f5de5c22cb7e3db4efd9'
 ])
 
 export const normalizeName = (name) =>
