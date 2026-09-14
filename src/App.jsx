@@ -379,24 +379,22 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
   }
 
   const addToDeck = (card, deckTypeOverride) => {
-    setDeck(prev => {
-      let deckType = deckTypeOverride
-      if (!deckType) {
-        if (['fusion', 'synchro', 'xyz', 'link', 'ritual'].includes(card.cardType)) {
-          deckType = 'extra'
-        } else {
-          deckType = 'main'
-        }
+    let deckType = deckTypeOverride
+    if (!deckType) {
+      if (['fusion', 'synchro', 'xyz', 'link', 'ritual'].includes(card.cardType)) {
+        deckType = 'extra'
+      } else {
+        deckType = 'main'
       }
-      const existing = prev.find(c => c.id === card.id)
-      if (existing) {
-        if (existing.qty < 3) return prev.map(c => c.id === card.id ? { ...c, qty: c.qty + 1 } : c)
-        return prev
-      }
-      const totalCards = prev.reduce((sum, c) => sum + c.qty, 0)
-      if (totalCards >= 60) { alert('Deck cheio! (máx 60)'); return prev }
-      return [...prev, { ...card, qty: 1, deckType }]
-    })
+    }
+    const existing = deck.find(c => c.id === card.id)
+    if (existing) {
+      if (existing.qty < 3) setDeck(prev => prev.map(c => c.id === card.id ? { ...c, qty: c.qty + 1 } : c))
+      return
+    }
+    const totalCards = deck.reduce((sum, c) => sum + c.qty, 0)
+    if (totalCards >= 60) alert('Deck cheio! (máx 60)')
+    setDeck(prev => [...prev, { ...card, qty: 1, deckType }])
   }
 
   const incrementInDeck = (card) => {
@@ -427,6 +425,16 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
   const saveDeck = () => {
     const name = deckName.trim() || `Deck ${savedDecks.length + 1}`
     if (mainDeck.length === 0) { alert('Adicione cartas ao deck principal!'); return }
+    const mainTotal = mainDeck.reduce((sum, c) => sum + c.qty, 0)
+    const extraTotal = extraDeck.reduce((sum, c) => sum + c.qty, 0)
+    const sideTotal = sideDeck.reduce((sum, c) => sum + c.qty, 0)
+    const violations = []
+    if (mainTotal > 60) violations.push(`Main Deck: ${mainTotal}/60`)
+    if (extraTotal > 15) violations.push(`Extra Deck: ${extraTotal}/15`)
+    if (sideTotal > 15) violations.push(`Side Deck: ${sideTotal}/15`)
+    if (violations.length > 0) {
+      alert(`Deck não poderá ser utilizado em duelos, pois excede o valor permitido:\n\n${violations.join('\n')}\n\nO deck foi salvo mesmo assim, mas lembre-se de ajustá-lo antes de duelar.`)
+    }
     const deckData = {
       id: Date.now(), name,
       main: mainDeck.map(c => ({ id: c.id, qty: c.qty })),
@@ -1148,11 +1156,9 @@ function App() {
                               if (['fusion', 'synchro', 'xyz', 'link', 'ritual'].includes(modalCard.cardType)) {
                                 deckType = 'extra'
                               }
-                              setDeck(prev => {
-                                const totalCards = prev.reduce((sum, c) => sum + c.qty, 0)
-                                if (totalCards >= 60) { alert('Deck cheio! (máx 60)'); return prev }
-                                return [...prev, { ...modalCard, qty: 1, deckType }]
-                              })
+                              const totalCards = deck.reduce((sum, c) => sum + c.qty, 0)
+                              if (totalCards >= 60) alert('Deck cheio! (máx 60)')
+                              setDeck(prev => [...prev, { ...modalCard, qty: 1, deckType }])
                             }}
                           >
                             Adicionar ao Deck
@@ -1203,17 +1209,15 @@ function App() {
                 return (
                   <div key={card.id} className="mobile-deck-card-item" onClick={() => {
                     if (inDeck && qty >= 3) { alert('Máximo 3 cópias!'); return }
+                    const existing = deck.find(d => d.id === card.id)
+                    if (existing) {
+                      if (existing.qty < 3) setDeck(prev => prev.map(c => c.id === card.id ? { ...c, qty: c.qty + 1 } : c))
+                      return
+                    }
                     const deckType = ['fusion', 'synchro', 'xyz', 'link', 'ritual'].includes(card.cardType) ? 'extra' : 'main'
-                    setDeck(prev => {
-                      const existing = prev.find(c => c.id === card.id)
-                      if (existing) {
-                        if (existing.qty < 3) return prev.map(c => c.id === card.id ? { ...c, qty: c.qty + 1 } : c)
-                        return prev
-                      }
-                      const totalCards = prev.reduce((sum, c) => sum + c.qty, 0)
-                      if (totalCards >= 60) { alert('Deck cheio! (máx 60)'); return prev }
-                      return [...prev, { ...card, qty: 1, deckType }]
-                    })
+                    const totalCards = deck.reduce((sum, c) => sum + c.qty, 0)
+                    if (totalCards >= 60) alert('Deck cheio! (máx 60)')
+                    setDeck(prev => [...prev, { ...card, qty: 1, deckType }])
                   }}>
                     <img src={card._image} alt="" />
                     <div className="mobile-deck-card-info">
