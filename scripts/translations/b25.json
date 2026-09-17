@@ -1,0 +1,142 @@
+{
+  "Queen Nereia the Silvercrown": {
+    "name": "Rainha Nereia, a Coroa de Prata",
+    "effect": "3 monstros de Nível 6\nDeve ser Invocado por Invocação-Xyz e não pode ser Invocado por Invocação-Especial por outros meios. Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, enquanto tiver uma Matéria Xyz associada que era originalmente do Tipo Planta, você vence a Partida."
+  },
+  "Sakyo, Swordmaster of the Far East": {
+    "name": "Sakyo, Mestre da Espada do Extremo Oriente",
+    "effect": "A poeira agora assentou sobre esta maior das batalhas.\nSalve suas vitórias."
+  },
+  "The Seal of Orichalcos (UDE promo)": {
+    "name": "O Selo de Oricalcos (promo UDE)",
+    "effect": "Este Card de Magia é imune a negação, destruição e remoção. Aumente o ATK de todos os seus monstros em 500. Você controla uma fileira de trás de monstros que não pode ser atacada enquanto um monstro estiver na fileira da frente. Envie este card da sua mão para o Cemitério para negar e destruir qualquer card. A alma de qualquer Duelista que perder este Duelo é perdida para o vencedor."
+  },
+  "Shelga, the Tri-Warlord": {
+    "name": "Shelga, o Tri-Senhor da Guerra",
+    "effect": "As ondas de choque de batalhas poderosas deformaram a realidade, permitindo que o orgulhoso valente emergisse do Mar Dimensional."
+  },
+  "Shouldering a Destiny": {
+    "name": "Carregar um Destino",
+    "effect": "Quando este card for ativado: você pode adicionar 1 \"Destiny HERO - Plasma\" do seu Deck ou Cemitério à sua mão. Enquanto você controlar \"Destiny HERO - Plasma\", aplique os seguintes efeitos.\n● Você não pode comprar durante a Fase de Compra.\n● Cada \"Destiny HERO - Plasma\" que você controla ganha 100 de ATK para cada monstro nos Cemitérios, não pode ser destruído pelos efeitos de card do seu oponente e, além disso, pode realizar um segundo ataque durante cada Fase de Batalha."
+  },
+  "Skuna, the Leonine Rakan": {
+    "name": "Skuna, o Rakan Leonino",
+    "effect": "Este card não pode ser Invocado por Invocação-Especial. Para Invocar este card por Invocação-Tributo, você deve oferecer 3 monstros do Tipo Besta-Guerreira como Tributo. Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, você vence a Partida."
+  },
+  "Skyfaring Castle of the Black Forest": {
+    "name": "Castelo Celestial da Floresta Negra",
+    "effect": "3+ Monstros de Efeito do Tipo Rocha\nDeve ser Invocado por Invocação-Link. Se este card extra Conectado atacar seu oponente diretamente e reduzir os PV dele a 0, você vence a Partida."
+  },
+  "Slimey Disposition": {
+    "name": "Disposição Gosmenta",
+    "effect": "Uma vez por turno, você pode Invocar por Invocação-Especial 1 \"Humanoid Slime\" ou 1 \"Worm Drake\" do seu Cemitério em Posição de Ataque, mas ele não pode ser oferecido como Tributo, exceto para a Invocação-Tributo de um monstro Besta Divina. Uma vez por turno, você pode descartar 1 card e, depois, Invocar por Invocação-Fusão 1 \"Humanoid Worm Drake\" usando \"Worm Drake\" ou \"Humanoid Slime\" do seu campo como 1 das Matérias de Fusão e a outra matéria do seu Deck."
+  },
+  "Slimey Slimes": {
+    "name": "Gosmas Gosmentas",
+    "effect": "Uma vez por turno, durante sua Fase Principal, você pode destruir 1 \"Jam Breeding Machine\" que você controla e 1 Magia/Armadilha que seu oponente controla. Uma vez por turno, durante sua Fase de Apoio, se você Invocou \"Revival Jam\" por Invocação-Especial pelo efeito dele mesmo neste turno, compre 3 cards."
+  },
+  "Stalked by the Rare Hunters": {
+    "name": "Perseguido pelos Caçadores Raros",
+    "effect": "Uma vez por Duelo, durante sua Fase Final, descarte 1 card e, depois, escolha 1 monstro no Cemitério do seu oponente que foi destruído e enviado para lá neste turno e Baixe-o no seu campo."
+  },
+  "Stardust Divinity": {
+    "name": "Divindade Poeira de Estrelas",
+    "effect": "1 Regulador de LUZ + 2 ou mais monstros do Tipo Fada não-Reguladores\nEste card não pode ser Invocado por Invocação-Especial, exceto por Invocação-Sincro. Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, você vence a Partida."
+  },
+  "Straight out of Neo Space!": {
+    "name": "Direto do Espaço Neo!",
+    "effect": "Se somente seu oponente controlar um monstro, você pode Invocar por Invocação-Especial 1 \"Elemental HERO Neos\" da sua mão e, além disso, pelo resto deste turno, você não pode Invocar por Invocação-Especial, exceto monstros \"Elemental HERO\" ou \"Neo-Spacian\". Durante sua Fase Final, se um Monstro de Fusão que você controla for devolvido ao seu Deck Adicional, você pode Invocar por Invocação-Especial 1 \"Elemental HERO Neos\" do seu Deck."
+  },
+  "A Terrible Fate": {
+    "name": "Um Destino Terrível",
+    "effect": "Uma vez por Duelo, durante sua Fase Final, ofereça 1 monstro Mago com a face para cima que você controla como Tributo e, depois, seu oponente destrói 1 card que ele controla ou envia 1 card da mão dele para o Cemitério (a escolha dele)."
+  },
+  "Token (Dr. Crowler and \"Ancient Gear Golem\")": {
+    "name": "Ficha (Dr. Crowler e \"Ancient Gear Golem\")",
+    "effect": "Este card de Dr. Crowler & Ancient Gear Golem pode ser usado como qualquer Ficha.\n\n\"Eu nunca pensei que seria capaz de mostrar isso a um estudante...\""
+  },
+  "Token (Shay and \"Raidraptor - Ultimate Falcon\")": {
+    "name": "Ficha (Shay e \"Raidraptor - Ultimate Falcon\")",
+    "effect": "Este card de Shay & Raidraptor - Ultimate Falcon pode ser usado como qualquer Ficha.\n\n\"Você já viu meus Falcões Blaze, Revolution e Satellite, mas agora vai testemunhar o próximo passo evolutivo no meu arsenal aéreo! Vá! Evolução Xyz Rank-Up! Levante-se! Raidraptor - Ultimate Falcon!\""
+  },
+  "Token (Yugi Muto and \"Gandora-X the Dragon of Demolition\")": {
+    "name": "Ficha (Yugi Muto e \"Gandora-X the Dragon of Demolition\")",
+    "effect": "Este card de Yugi Muto & Gandora-X, o Dragão da Demolição pode ser usado como qualquer Ficha.\n\n\"Liberte-se da sua prisão de ferro, Gandora-X the Dragon of Demolition!\""
+  },
+  "Token (Yugi Muto and \"Silent Magician\" and \"Silent Swordsman\")": {
+    "name": "Ficha (Yugi Muto e \"Silent Magician\" e \"Silent Swordsman\")",
+    "effect": "Este card de Yugi Muto & Silent Magician / Silent Swordsman pode ser usado como qualquer Ficha.\n\n\"Este é de longe o Duelo mais difícil da minha vida. Não só porque o Faraó é um Duelista tão grande, mas porque vencer este Duelo significa perder meu amigo mais próximo.\""
+  },
+  "Token (Yusaku)": {
+    "name": "Ficha (Yusaku)",
+    "effect": "Este card pode ser usado como qualquer Ficha."
+  },
+  "Token (Zuzu and \"Bloom Diva the Melodious Choir\")": {
+    "name": "Ficha (Zuzu e \"Bloom Diva the Melodious Choir\")",
+    "effect": "Este card de Zuzu & Bloom Diva the Melodious Choir pode ser usado como qualquer Ficha.\n\n\"Juntas, vocês cantarão um dueto sensacional que formará um monstro ainda mais Melodioso! Eu Invoco por Invocação-Fusão a Bloom Diva the Melodious Choir!\""
+  },
+  "The Twin Kings, Founders of the Empire": {
+    "name": "Os Reis Gêmeos, Fundadores do Império",
+    "effect": "Não pode ser Invocado por Invocação-Especial, exceto por Invocação-Pêndulo. Requer 3 Tributos do Tipo Besta para ser Invocado por Invocação-Normal (não pode ser Baixado por Invocação-Normal). Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, enquanto você não controlar outros monstros, você vence a Partida."
+  },
+  "Tyr, the Vanquishing Warlord": {
+    "name": "Tyr, o Senhor da Guerra que Subjuga",
+    "effect": "Este card não pode ser Invocado por Invocação-Especial. Para Invocar este card por Invocação-Tributo, você deve oferecer 3 monstros do Tipo Fada como Tributo. Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, você vence a Partida."
+  },
+  "Ultimate Wizardry": {
+    "name": "Feitiçaria Suprema",
+    "effect": "Quando você ativar esta Habilidade, coloque até 1 Marcador de Magia em cada monstro Mago com a face para cima que você controla no qual você possa colocar um Marcador de Magia. Uma vez por turno, durante sua Fase Principal, você pode colocar 1 Marcador de Magia em um monstro Mago com a face para cima que você controla no qual você possa colocar um Marcador de Magia."
+  },
+  "Whale of a Tale": {
+    "name": "História de Baleia",
+    "effect": "Descarte 1 card da sua mão e adicione 1 \"Fortress Whale\" ou \"Fortress Whale's Oath\" do seu Deck à sua mão. Monstros \"Fortress Whale\" que você controla ganham o seguinte efeito:\n● Seu oponente não pode escolher como alvo monstros de ÁGUA com a face para cima que você controla com Cards de Magia/Armadilha ou efeitos."
+  },
+  "Wise Man Neos": {
+    "name": "Neos, o Homem Sábio",
+    "effect": "\"Elemental HERO Neos\" e Monstros de Fusão que mencionem \"Elemental HERO Neos\" como matéria ganham o seguinte efeito.\n● Antes do cálculo de dano, se este card batalhar com um monstro do oponente: você pode causar dano ao seu oponente igual à metade do ATK original desse monstro do oponente."
+  },
+  "The 10th Yu-Gi-Oh! Championship Series Japan": {
+    "name": "A 10ª Série do Campeonato Yu-Gi-Oh! do Japão",
+    "effect": "Maior número de participantes em um torneio de card game - Guinness World Records® conquistado em Tóquio no domingo, 28 de abril de 2024."
+  },
+  "Creator of Hope": {
+    "name": "Criador de Esperança",
+    "effect": "No início da sua Fase de Compra, se seus PV estiverem mais baixos que os do seu oponente e este card estiver no Cemitério porque foi destruído, enquanto estava sob sua posse, por um card do oponente e enviado para lá desde a sua última Fase de Compra: você pode declarar \"Estou sentindo o fluxo!\"; coloque 1 card do seu Deck no topo do seu Deck."
+  },
+  "Creator of Miracles": {
+    "name": "Criador de Milagres",
+    "effect": "Você pode declarar \"Campo ZEXAL!\" e escolher 1 Monstro Xyz \"Number C39\" que você controla; ele pode atacar diretamente neste turno e, além disso, se você ativou os efeitos de \"Creator of Hope\" e \"Winning Formula\" durante este Duelo, aplique o seguinte neste turno.\n● Quando o monstro alvo causar dano de batalha ao seu oponente, você vence o Duelo."
+  },
+  "Darkness/Monster A": {
+    "name": "Trevas/Monstro A",
+    "effect": "Você pode escolher 1 monstro que você controla; dê o controle do alvo a 1 jogador oponente e, depois, Invoque por Invocação-Especial 1 monstro do Deck desse jogador oponente no seu campo, ignorando as condições de Invocação dele.\n-Eu Invoco \"Darkness Outsider\"!-"
+  },
+  "Darkness/Monster B": {
+    "name": "Trevas/Monstro B",
+    "effect": "Não pode ser Invocado por Invocação-Normal/Baixado. Quando um monstro declarar um ataque: você pode Invocar este card por Invocação-Especial da sua mão. Uma vez por turno: você pode escolher 1 jogador; faça os PV desse jogador se tornarem 4000. Uma vez por turno: você pode devolver todos os Cards de Magia/Armadilha no campo para a mão.\n-Eu Invoco \"Darkness Neosphere\"!-"
+  },
+  "Darkness/Spell A": {
+    "name": "Trevas/Magia A",
+    "effect": "Efeito Impresso\nUma vez por turno, este card não pode ser destruído por efeitos de card. Quando este card for ativado: você pode Baixar 1 \"Darkness/Trap A\", \"Darkness/Trap B\", \"Darkness/Trap C\", \"Darkness/Trap D\" e \"Darkness/Trap E\" diretamente da sua mão ou Deck. A ativação e o efeito de Cards de Armadilha Contínua que você controla não podem ser negados.-Eu ativo \"Darkness\"!-Efeito Oculto\nUma vez por turno: você pode devolver todos os outros Cards de Magia/Armadilha no campo para a mão."
+  },
+  "Darkness/Trap A": {
+    "name": "Trevas/Armadilha A",
+    "effect": "Ative este card escolhendo como alvo 1 \"Darkness/Trap B\" Baixado nas suas Zonas de Magias & Armadilhas; force a ativação dele. Seu oponente não pode ativar Cards de Magia/Armadilha em resposta à ativação deste card.-Eu ativo \"Infinity\"!-"
+  },
+  "Darkness/Trap B": {
+    "name": "Trevas/Armadilha B",
+    "effect": "Ative somente pelo efeito de \"Darkness/Trap A\". Seu oponente não pode ativar Cards de Magia/Armadilha em resposta à ativação deste card. Se você controlar \"Darkness/Trap A\", aplique o seguinte efeito.\n● Ative o primeiro efeito de todos os \"Darkness/Trap C\", \"Darkness/Trap D\" e \"Darkness/Trap E\" Baixados nas suas Zonas de Magias & Armadilhas em qualquer ordem.-Eu ativo \"Zero\"!-"
+  },
+  "Darkness/Trap C": {
+    "name": "Trevas/Armadilha C",
+    "effect": "Ative somente pelo efeito de \"Darkness/Trap B\". Quando você ativar este card: você pode banir 1 card que seu oponente controla. Cada vez que outro Card de Armadilha Contínua \"Darkness\" for ativado, você pode banir 1 card que seu oponente controla.-Eu ativo \"Darkness 1\"!-"
+  },
+  "Darkness/Trap D": {
+    "name": "Trevas/Armadilha D",
+    "effect": "Ative somente pelo efeito de \"Darkness/Trap B\". Quando este card for ativado: 1 monstro que você controla ganha 4000 de ATK. Cada vez que outro Card de Armadilha Contínua \"Darkness\" for ativado, 1 monstro que você controla ganha 4000 de ATK.-Eu ativo \"Darkness 2\"!-"
+  },
+  "Darkness/Trap E": {
+    "name": "Trevas/Armadilha E",
+    "effect": "Ative somente pelo efeito de \"Darkness/Trap B\". Quando este card for ativado: cause 2000 de dano a 1 jogador oponente. Cada vez que outro Card de Armadilha Contínua \"Darkness\" for ativado, cause 2000 de dano a 1 jogador oponente.-Eu ativo \"Darkness 3\"!-"
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "Life Shaver": {
+    "name": "Raspador de Vida",
+    "effect": "Você só pode controlar 1 \"Life Shaver\". Uma vez por turno, durante a Fase Final do seu oponente: coloque 1 marcador neste card. Durante a Fase Principal ou de Batalha, se este card tiver marcador(es): você pode enviar este card para o Cemitério e, depois, faça seu oponente descartar tantos cards quanto possível, até o número de marcadores que estavam neste card."
+  },
+  "Light Bringer Lucifer": {
+    "name": "Portador da Luz Lúcifer",
+    "effect": "Eu sou o governante de toda a criação sentado no trono supremo... que haja luz!"
+  },
+  "Light of Destruction": {
+    "name": "Luz da Destruição",
+    "effect": "Quando um efeito de card do oponente enviar um ou mais cards do Deck dele para o Cemitério, envie os 3 cards do topo do Deck dele para o Cemitério."
+  },
+  "Lightning Punisher": {
+    "name": "Punidor de Raios",
+    "effect": "Depois que uma Corrente com 3 ou mais Elos resolver, destrua 1 card no lado do campo do seu oponente. Este efeito não pode ser ativado se vários cards/efeitos com o mesmo nome foram ativados nessa Corrente."
+  },
+  "Lightning Tricorn": {
+    "name": "Tricórnio Relâmpago",
+    "effect": "1 Regulador + 1 ou mais monstros do Tipo Besta não-Reguladores\nSe este card for destruído por um card do seu oponente (em batalha ou por efeito de card), você pode selecionar 1 \"Thunder Unicorn\" ou \"Voltic Bicorn\" no seu Cemitério e Invocá-lo por Invocação-Especial."
+  },
+  "Lightray Madoor": {
+    "name": "Madoor do Raio de Luz",
+    "effect": "Se 3 ou mais dos seus monstros de LUZ estiverem banidos, você pode Invocar este card por Invocação-Especial (da sua mão). Uma vez por turno, este card não pode ser destruído em batalha."
+  },
+  "Lineage of Destruction": {
+    "name": "Linhagem da Destruição",
+    "effect": "Ative somente durante um turno em que você destruiu um monstro em Posição de Defesa que seu oponente controlava. Selecione 1 monstro de Nível 8 que você controla. Durante este turno, o monstro selecionado pode atacar duas vezes."
+  },
+  "Linear Accelerator Cannon": {
+    "name": "Canhão de Aceleração Linear",
+    "effect": "Ofereça 1 monstro como Tributo e cause dano ao seu oponente igual à metade do ATK original desse monstro. Se você ativar este card, não pode ativar nenhum outro Card de Magia neste turno."
+  },
+  "Little Trooper": {
+    "name": "Pequeno Soldado",
+    "effect": "Se este card for destruído em batalha: você pode Invocar por Invocação-Especial 1 monstro do Tipo Guerreiro de Nível 2 ou menos do seu Deck em Posição de Defesa com a face para baixo."
+  },
+  "Lock Cat": {
+    "name": "Gato de Fechadura",
+    "effect": "Quando este card for Invocado por Invocação-Normal, você pode selecionar 1 monstro do Tipo Besta de Nível 1 no seu Cemitério e Invocá-lo por Invocação-Especial em Posição de Defesa com a face para cima. Os efeitos dele são negados."
+  },
+  "Looking into the Future": {
+    "name": "Olhando para o Futuro",
+    "effect": "Durante sua Fase Principal, você pode olhar os 3 cards do topo do seu Deck e devolvê-los em qualquer ordem. Você não pode ativar Cards de Magia no turno em que usar esta Habilidade. Vire este card no final do turno em que ativou esta Habilidade."
+  },
+  "Low Blow": {
+    "name": "Golpe Baixo",
+    "effect": "Ative esta Habilidade durante sua Fase Principal. Você pode fazer 1 monstro no campo perder 500 de ATK/DEF até o final deste turno. Esta Habilidade só pode ser usada uma vez por Duelo."
+  },
+  "Lucky Pied Piper": {
+    "name": "Flautista da Sorte",
+    "effect": "Este card é considerado um Monstro Normal enquanto estiver com a face para cima no campo ou no Cemitério. Enquanto este card estiver com a face para cima no campo, você pode Invocá-lo por Invocação-Normal para que ele seja considerado um Monstro de Efeito com este efeito:\n● Quando este card destruir um monstro do oponente em batalha e enviá-lo para o Cemitério, compre 1 card."
+  },
+  "Lucky Punch": {
+    "name": "Soco da Sorte",
+    "effect": "Uma vez por turno, quando um monstro do oponente declarar um ataque: você pode jogar uma moeda 3 vezes. Se o resultado for 3 caras, compre 3 cards, mas se o resultado for 3 coroas, destrua este card. Se este card com a face para cima no campo for destruído: você perde 6000 PV."
+  },
+  "Lunar Queen Elzaim": {
+    "name": "Rainha Lunar Elzaim",
+    "effect": "Uma criatura adorável guardada pela lua. Sua cortina lunar pode bloquear praticamente qualquer ataque."
+  },
+  "Machine Angel Ascension": {
+    "name": "Ascensão do Anjo de Máquina",
+    "effect": "Uma vez por turno, durante sua Fase Principal, você pode usar 1 destas Habilidades, mas cada uma só pode ser usada uma vez por Duelo:\n● Descarte 1 Magia e, depois, adicione 1 Monstro de Ritual \"Cyber Angel\" ou 1 Magia de Ritual \"Machine Angel\" do seu Deck à sua mão.\n● Embaralhe 1 Monstro de Ritual \"Cyber Angel\" ou 1 Magia de Ritual \"Machine Angel\" do seu Cemitério no Deck."
+  },
+  "Machine Attacker": {
+    "name": "Atacante de Máquina",
+    "effect": "Esta máquina, criada para liderar cargas em território inimigo, ceifa inimigos investindo."
+  },
+  "Madolche Cruffssant": {
+    "name": "Magidoce Cruffssant",
+    "effect": "Quando este card na sua posse for destruído por um card do seu oponente (em batalha ou por efeito de card) e enviado para o seu Cemitério: embaralhe este card no Deck. Uma vez por turno: você pode escolher 1 card \"Madolche\" com a face para cima que você controla, exceto este card; devolva-o para a mão e, se isso acontecer, aumente o Nível deste card em 1 e o ATK em 300."
+  },
+  "Madolche Lesson": {
+    "name": "Lição Magidoce",
+    "effect": "Escolha 1 monstro \"Madolche\" no seu Cemitério; embaralhe o alvo no Deck e, se isso acontecer, todos os monstros \"Madolche\" que você controla atualmente ganham 800 de ATK e DEF e, depois, você pode embaralhar 1 outro monstro do seu Cemitério no Deck."
+  },
+  "Madolche Marmalmaide": {
+    "name": "Magidoce Docinho de Marmelada",
+    "effect": "Quando este card na sua posse for destruído por um card do seu oponente (em batalha ou por efeito de card) e enviado para o seu Cemitério: embaralhe este card no Deck. Quando este card for virado com a face para cima: você pode escolher 1 Card de Magia/Armadilha \"Madolche\" no seu Cemitério; adicione o alvo à sua mão."
+  },
+  "Madolche Waltz": {
+    "name": "Valsa Magidoce",
+    "effect": "Cada vez que um monstro \"Madolche\" que você controla atacar ou for atacado, depois do cálculo de dano: cause 300 de dano ao seu oponente."
+  },
+  "Madolchepalooza": {
+    "name": "Festa Magidoce",
+    "effect": "Invoque por Invocação-Especial qualquer número de monstros \"Madolche\" da sua mão, mas embaralhe-os no Deck durante a Fase Final."
+  },
+  "Magi Magi ☆ Magician Gal": {
+    "name": "Magi Magi ☆ Garota Mágica",
+    "effect": "2 monstros Mago de Nível 6\nUma vez por turno: você pode desassociar 1 matéria deste card e banir 1 card da sua mão e, depois, ativar 1 destes efeitos;\n● Escolha 1 monstro que seu oponente controla; assuma o controle dele até a Fase Final.\n● Escolha 1 monstro no Cemitério do seu oponente; Invoque-o por Invocação-Especial."
+  },
+  "Magical Thorn": {
+    "name": "Espinho Mágico",
+    "effect": "Quando um ou mais cards da mão do seu oponente forem descartados para o Cemitério, cause 500 pontos de dano aos PV dele para cada card que foi descartado."
+  },
+  "Magical Trick Mirror": {
+    "name": "Espelho Mágico de Truques",
+    "effect": "Quando um monstro do oponente declarar um ataque: escolha 1 Magia no Cemitério do seu oponente; Baixe-a no seu campo. Você pode banir este card do seu Cemitério e enviar 1 \"Monster Reborn\" da sua mão ou campo com a face para baixo para o Cemitério; Invoque por Invocação-Especial 1 \"Obelisk the Tormentor\" do seu Cemitério em Posição de Defesa e, se você ativou este efeito durante o turno do seu oponente, todos os monstros que seu oponente controla e que podem atacar devem atacar esse monstro com a face para cima, neste turno, enquanto você o controlar."
+  },
+  "Magician's Act": {
+    "name": "Ato do Mágico",
+    "effect": "Ative 1 das seguintes Habilidades no início do Duelo:\n● Adicione 1 \"Dark Magician\" do seu Deck à sua mão e, depois, embaralhe 1 card da sua mão no Deck.\n● Embaralhe 1 \"Dark Magician\" da sua mão no Deck e, depois, compre 1 card.\nDurante sua Fase Principal, você pode oferecer como Tributo 1 monstro cujo nome original seja \"Dark Magician\" para comprar 2 cards.\nCada uma destas Habilidades só pode ser usada uma vez por Duelo."
+  },
+  "Magna-Slash Dragon": {
+    "name": "Dragão Corte Magna",
+    "effect": "Você pode enviar 1 Card de Magia Contínua com a face para cima que você controla para o Cemitério para destruir 1 Card de Magia ou Armadilha que seu oponente controla."
+  },
+  "Magnetic Attraction": {
+    "name": "Atração Magnética",
+    "effect": "Aplique a(s) seguinte(s) Habilidade(s):\n● Quando um monstro \"Magnet Warrior\" de Nível 4 ou menos for Invocado por Invocação-Normal, você pode adicionar 1 monstro \"Magnet Warrior\" de Nível 4 ou menos com um nome diferente do seu Deck à sua mão.\n● Você pode revelar 2 monstros \"Magnet Warrior\" de Nível 4 ou menos com nomes diferentes da sua mão e, se isso acontecer, adicione 1 \"Valkyrion the Magna Warrior\" do seu Deck à sua mão.\nCada uma destas Habilidades só pode ser usada uma vez por Duelo."
+  },
+  "Maize Token": {
+    "name": "Ficha de Milho",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Sweet Corn\"."
+  },
+  "Majestic Mech - Senku": {
+    "name": "Mec Majestoso - Senku",
+    "effect": "Quando este card causar Dano de Batalha ao seu oponente por um ataque direto: compre 1 card. Durante a Fase Final do turno em que este card foi Invocado: envie-o para o Cemitério."
+  },
+  "Majioshaleon": {
+    "name": "Majioshaleon",
+    "effect": "Seu oponente não pode selecionar este card como alvo de ataque enquanto controlar qualquer Card de Magia/Armadilha. Durante a batalha entre este card atacante e um monstro em Posição de Defesa cuja DEF seja menor que o ATK deste card, cause a diferença como Dano de Batalha ao seu oponente."
+  },
+  "Malefic Claw Stream": {
+    "name": "Corrente da Garra Maléfica",
+    "effect": "Ative somente se você controlar um monstro \"Malefic\" com a face para cima. Selecione 1 monstro que seu oponente controla e destrua-o."
+  },
+  "Malfunction": {
+    "name": "Mau Funcionamento",
+    "effect": "Pague 500 PV. Negue a ativação de um Card de Armadilha e devolva-o à posição original."
+  },
+  "Malice Ascendant": {
+    "name": "Malícia Ascendente",
+    "effect": "Durante a Fase de Apoio do seu oponente, envie 1 card do topo do Deck dele para o Cemitério para cada \"Malice Ascendant\" no seu Cemitério."
+  },
+  "Malus Token": {
+    "name": "Ficha de Malus",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"The Golden Apples\". O ATK e a DEF desta Ficha são cada um iguais à quantidade de PV ganhos pelo efeito de \"The Golden Apples\"."
+  },
+  "Man Beast of Ares": {
+    "name": "Homem-Besta de Ares",
+    "effect": "Depois que uma Corrente (de 2 ou mais Elos) resolver, este card ganha 500 de ATK."
+  },
+  "Masked Chopper": {
+    "name": "Picador Mascarado",
+    "effect": "Se este card destruir um monstro do oponente em batalha, cause 2000 de dano ao seu oponente."
+  },
+  "Master of the Flaming Dragonswords": {
+    "name": "Mestre das Espadas Flamejantes de Dragão",
+    "effect": "Quando um monstro for Invocado por Invocação-Normal no seu lado do campo, exceto \"Master of the Flaming Dragonswords\": você pode aumentar o Nível desse monstro em 1 e este card ganha 300 de ATK até a Fase Final."
+  },
+  "Mech Bass": {
+    "name": "Baixo Mecânico",
+    "effect": "Este monstro carrega um devastador canhão de plasma em suas costas poderosas."
+  }
+}

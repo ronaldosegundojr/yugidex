@@ -1,0 +1,246 @@
+{
+  "Token (Yuma and \"Number 39: Utopia Beyond\")": {
+    "name": "Ficha (Yuma e \"Number 39: Utopia Beyond\")",
+    "effect": "Este card pode ser usado como qualquer Ficha.\n\nYuma: \"Juro pelos deuses do céu e da terra! Vou lutar até o fim para agarrar o futuro!\""
+  },
+  "Token (Yuma and \"Number C39: Utopia Ray Victory\")": {
+    "name": "Ficha (Yuma e \"Number C39: Utopia Ray Victory\")",
+    "effect": "Este card pode ser usado como qualquer Ficha.\n\nYuma: \"Acredite nos laços com seus amigos e sinta o fluxo!\""
+  },
+  "Token (Yuri and \"Starving Venom Fusion Dragon\")": {
+    "name": "Ficha (Yuri e \"Starving Venom Fusion Dragon\")",
+    "effect": "Este card pode ser usado como qualquer Ficha.\n\nYuri: \"Apareça! Dragão venenoso de presas famintas! Starving Venom Fusion Dragon!\""
+  },
+  "Token": {
+    "name": "Ficha",
+    "effect": "Este card pode ser usado como qualquer Ficha.\n\n\n\n2019 é o 20º Aniversário do Yu-Gi-Oh! Official Card Game.\nSomos verdadeiramente gratos a todos os Duelistas.\nDe antes para agora, e de agora para o futuro ― Duel Standby!!"
+  },
+  "Token (Yuto and \"Dark Rebellion Xyz Dragon\")": {
+    "name": "Ficha (Yuto e \"Dark Rebellion Xyz Dragon\")",
+    "effect": "Este card pode ser usado como qualquer Ficha.\n\nYuto: \"Destrua a geleira com suas presas! Desobediência Relâmpago da Rebelião!!\""
+  },
+  "Token (Yuya and \"Performapals\" and \"Hippos\")": {
+    "name": "Ficha (Yuya e \"Performapals\" e \"Hippos\")",
+    "effect": "Este card pode ser usado como qualquer Ficha.\n\nYuya: \"Senhoras e senhores~!!Vocês estão prestes a testemunhar um Duel-entretenimento autêntico de Yuya Sakaki!\""
+  },
+  "Token (Yuya and \"Stargazer Magician\" and \"Timegazer Magician\")": {
+    "name": "Ficha (Yuya e \"Stargazer Magician\" e \"Timegazer Magician\")",
+    "effect": "Este card pode ser usado como qualquer Ficha.\n\nYuya: \"Mago que entende espaço e tempo! Proteja-me com seus poderes precisos!\nMago que entende os céus! Sele o inimigo vingativo com seus poderes profundos!\""
+  },
+  "Token (Yuya and Odd-Eyes Pendulum Dragon)": {
+    "name": "Ficha (Yuya e Dragão Pêndulo de Olhos Ímpares)",
+    "effect": "Este card pode ser usado como qualquer Ficha.\n\nYuya: \"Balance, pêndulo da minha alma! Desenhe um arco de luz no céu!!\""
+  },
+  "Token (Zane and \"Cyber End Dragon\")": {
+    "name": "Ficha (Zane e \"Cyber End Dragon\")",
+    "effect": "Este card pode ser usado como qualquer Ficha.\n\nZane: \"Enquanto eu sentir o brilho deste momento, eu não irei silenciosamente para a escuridão da morte...\neste momento durará pela eternidade!!\""
+  },
+  "Token (ZEXAL and \"Ultimate Dragonic Utopia Ray\")": {
+    "name": "Ficha (ZEXAL e \"Ultimate Dragonic Utopia Ray\")",
+    "effect": "Este card pode ser usado como qualquer Ficha.\n\nZEXAL: \"Nos Duelos dos Duelistas mais fortes, nada é coincidência!Até os cards comprados são criados pelos Duelistas! Compra Reluzente!!\""
+  },
+  "Token (Zuzu)": {
+    "name": "Ficha (Zuzu)",
+    "effect": "Este card pode ser usado como qualquer Ficha.\n\nZuzu: \"Vou mostrar meu brilho agora mesmo!\""
+  },
+  "Tomohiro the Mountain Warrior": {
+    "name": "Tomohiro, o Guerreiro da Montanha",
+    "effect": "Você pode oferecer 1 monstro como Tributo; cause 500 de dano ao seu oponente.\n\"Perder uma vitória é frustrante! Da próxima vez, mire em ser o campeão!\""
+  },
+  "Valley Token": {
+    "name": "Ficha do Vale",
+    "effect": "Este card pode ser usado como qualquer Ficha."
+  },
+  "Winning Formula": {
+    "name": "Fórmula da Vitória",
+    "effect": "Se somente seu oponente controlar um monstro: declare \"A Fórmula da Vitória está completa!\"; Invoque por Invocação-Especial 1 Monstro Xyz \"Number\" do seu Deck Adicional, exceto um monstro \"Number C\", e depois associe este card a ele como matéria."
+  },
+  "Yasushi the Skull Knight": {
+    "name": "Yasushi, o Cavaleiro Caveira",
+    "effect": "\"Ultimate Offering\" + \"Witch of the Black Forest\"\n\"O caminho para a vitória é lutar com a cabeça fria!\""
+  },
+  "Z-ONE/Trap B": {
+    "name": "Z-ONE/Armadilha B",
+    "effect": "Ative este card enviando 1 \"Z-ONE/Trap A\" que você controla para o Cemitério. Uma vez por turno, durante sua Fase Principal: você pode Invocar por Invocação-Especial 1 monstro \"Z-ONE\" da sua mão, exceto \"Z-ONE/Monster E\", ignorando as condições de Invocação dele. Durante cada uma das suas Fases de Apoio: destrua todos os monstros \"Z-ONE\" e \"Timelord\" que você controla. A ativação e o efeito deste card não podem ser negados.-Eu ativo \"Máquina Infinita\"!-"
+  },
+  "Z-ONE/Monster A": {
+    "name": "Z-ONE/Monstro A",
+    "effect": "Não pode ser Invocado por Invocação-Normal/Baixado. Quando este card for Invocado por Invocação-Especial: Invoque por Invocação-Especial 1 \"Ficha de Hailon, o Timelord\" (ATK 0/DEF 0) e 1 \"Ficha de Kamion, o Timelord\" (ATK 0/DEF 0). Estas Fichas e este card ganham estes efeitos.\n● Não podem ser destruídos em batalha ou por um efeito de card do oponente e, além disso, você não sofre dano de batalha de ataques envolvendo este card.\n● No final da Fase de Batalha, se este card atacou ou foi atacado: reduza à metade os PV do seu oponente.-Eu Invoco \"Michion, o Timelord\"!-"
+  },
+  "Z-ONE/Monster B": {
+    "name": "Z-ONE/Monstro B",
+    "effect": "Não pode ser Invocado por Invocação-Normal/Baixado. Quando este card for Invocado por Invocação-Especial: Invoque por Invocação-Especial 1 \"Ficha de Sadion, o Timelord\" (ATK 0/DEF 0) e 1 \"Ficha de Raphion, o Timelord\" (ATK 0/DEF 0). Estas Fichas e este card ganham estes efeitos.\n● Não podem ser destruídos em batalha ou por um efeito de card do oponente e, além disso, você não sofre dano de batalha de ataques envolvendo este card.\n● No final da Fase de Batalha, se este card atacou ou foi atacado: embaralhe todos os cards que seu oponente controla no Deck.-Eu Invoco \"Gabrion, o Timelord\"!-"
+  },
+  "Z-ONE/Monster E": {
+    "name": "Z-ONE/Monstro E",
+    "effect": "Efeito Impresso\nNão pode ser Invocado por Invocação-Normal/Baixado. O ATK de todos os outros monstros \"Z-ONE\" e \"Timelord\" que você controla se torna 4000. O ATK deste card é igual ao ATK combinado de todos os monstros \"Z-ONE\" e \"Timelord\" que você controla.-Eu Invoco \"Sephylon, o Timelord Supremo\"!-Efeito Oculto\nSe este card seria destruído, você pode destruir 1 outro monstro \"Z-ONE\" ou \"Timelord\" que você controla em vez disso."
+  },
+  "Z-ONE/Monster D": {
+    "name": "Z-ONE/Monstro D",
+    "effect": "Não pode ser destruído em batalha ou por um efeito de card do oponente e, além disso, você não sofre dano de batalha de ataques envolvendo este card. No final da Fase de Batalha, se este card atacou ou foi atacado: cause 4000 de dano a 1 jogador oponente.-Eu Invoco \"Sandaion, o Timelord\"!-"
+  },
+  "Z-ONE/Trap A": {
+    "name": "Z-ONE/Armadilha A",
+    "effect": "Você pode ativar este card da sua mão. Uma vez por turno, durante sua Fase Principal: você pode Invocar por Invocação-Especial 1 monstro \"Z-ONE\" da sua mão, exceto \"Z-ONE/Monster E\", ignorando as condições de Invocação dele. Durante cada uma das suas Fases de Apoio: destrua todos os monstros \"Z-ONE\" e \"Timelord\" que você controla. A ativação e o efeito deste card não podem ser negados.-Eu ativo \"Máquina Vazia\"!-"
+  },
+  "Z-ONE/Monster C": {
+    "name": "Z-ONE/Monstro C",
+    "effect": "Não pode ser Invocado por Invocação-Normal/Baixado. Quando este card for Invocado por Invocação-Especial: Invoque por Invocação-Especial 1 \"Ficha de Metaion, o Timelord\" (ATK 0/DEF 0) e 1 \"Ficha de Zaphion, o Timelord\" (ATK 0/DEF 0). Estas Fichas e este card ganham estes efeitos.\n● Não podem ser destruídos em batalha ou por um efeito de card do oponente e, além disso, você não sofre dano de batalha de ataques envolvendo este card.\n● No final da Fase de Batalha, se este card atacou ou foi atacado: embaralhe todos os cards do Cemitério do seu oponente no Deck.-Eu Invoco \"Lazion, o Timelord\"!-"
+  },
+  "Z-ONE/Trap C": {
+    "name": "Z-ONE/Armadilha C",
+    "effect": "Ative este card enviando 1 \"Z-ONE/Trap B\" que você controla para o Cemitério; Invoque por Invocação-Especial 1 monstro \"Z-ONE\" da sua mão ou Deck, ignorando as condições de Invocação dele. A ativação e o efeito deste card não podem ser negados.-Eu ativo \"Luz Infinita\"!-"
+  },
+  "Token (Quattro and \"Puppet Parade\")": {
+    "name": "Ficha (Quattro e \"Puppet Parade\")",
+    "effect": "Este card de Quattro & Puppet Parade pode ser usado como qualquer Ficha.\n\n\"Bem, se eu não era seu amigo no passado, então eu serei seu pior pesadelo no presente!\""
+  },
+  "Odd-Eyes Solblaze Dragon": {
+    "name": "Dragão Solflamejante de Olhos Ímpares",
+    "effect": "1 Regulador + 1+ monstros não-Reguladores\nSe este card for Invocado por Invocação-Especial: você pode Invocar por Invocação-Especial 1 Monstro Pêndulo com a face para cima do seu Deck Adicional, mas você não pode Invocar por Invocação-Especial, exceto Monstros Pêndulo, enquanto controlar esse monstro com a face para cima. Se este card estiver no seu Cemitério: você pode banir 2 outros monstros (Fusão/Sincro/Xyz/Pêndulo) do seu Cemitério; Invoque este card por Invocação-Especial. Você só pode usar 1 efeito de \"Odd-Eyes Solblaze Dragon\" por turno e apenas uma vez nesse turno."
+  },
+  "Fireworks Celebration": {
+    "name": "Celebração de Fogos de Artifício",
+    "effect": "Ative este card colocando 5 Marcadores de Celebração nele. Se um ou mais monstros forem Invocados por Invocação-Especial do Deck Adicional e/ou um ou mais cards forem enviados do Deck para o Cemitério, por um efeito de Magia/Armadilha: remova 1 Marcador de Celebração deste card e, depois, se não houver Marcadores de Celebração nele, destrua-o e, se isso acontecer, ganhe 4000 PV e, depois, Baixe 1 Armadilha \"Celebration\" do seu Deck ou Cemitério e, depois, se você tiver 1 ou menos cards no seu Deck, você vence o Duelo."
+  },
+  "Meteor Swarm Entry Dragon": {
+    "name": "Dragão de Entrada da Chuva de Meteoros",
+    "effect": "\"Meteor Drake\" + 1 monstro de Nível 6 ou mais de Atributo TERRA ou Atributo TREVAS"
+  },
+  "Anotherverse Solaria": {
+    "name": "Solaria do Outroverso",
+    "effect": "O deus estelar de outro mundo, abrigando seu sol de crepúsculo. Suas chamas congeladas deixam um rastro queimado através das dimensões, sempre buscando novo poder."
+  },
+  "Maliss C GWC-06": {
+    "name": "Maliss C GWC-06",
+    "effect": "Você pode ativar este card no turno em que ele foi Baixado, ao banir 1 monstro \"Maliss\" com a face para cima que você controla. Invoque por Invocação-Especial 1 dos seus monstros \"Maliss\" que estiver banido ou no seu Cemitério e, depois, se você controlar um Monstro Link \"Maliss\", você pode ganhar PV igual ao ATK original desse monstro Invocado por Invocação-Especial. Você só pode ativar 1 \"Maliss GWC-06\" por turno."
+  },
+  "Ryzeal Cross": {
+    "name": "Cruz Ryzeal",
+    "effect": "Você não pode Invocar por Invocação-Xyz monstros com o mesmo nome que um card que você controla. Você pode escolher 2 cards \"Ryzeal\" no seu Cemitério, exceto \"Ryzeal Cross\"; coloque-os no fundo do Deck em qualquer ordem e, depois, compre 1 card. Você só pode usar este efeito de \"Ryzeal Cross\" uma vez por turno. Uma vez por turno, quando um efeito de monstro ativado pelo seu oponente resolver, você pode desassociar 1 matéria de um Monstro Xyz \"Ryzeal\" que você controla e, se isso acontecer, negue esse efeito."
+  },
+  "Dragon of Illumination, Sanctuary's Shield": {
+    "name": "Dragão da Iluminação, Escudo do Santuário",
+    "effect": "Não pode ser Invocado por Invocação-Especial. Requer 3 Tributos do tipo Dragão para ser Invocado por Invocação-Normal (não pode ser Baixado por Invocação-Normal). Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, você vence a Partida."
+  },
+  "Elttaes, the MASTER of DUELS": {
+    "name": "Elttaes, o MESTRE dos DUELOS",
+    "effect": "Não pode ser Invocado por Invocação-Especial. Requer 3 Tributos Ciberso para ser Invocado por Invocação-Normal (não pode ser Baixado por Invocação-Normal). Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, você vence a Partida."
+  },
+  "Spenta, the Magistus Sealer": {
+    "name": "Spenta, o Selador Magistus",
+    "effect": "Você pode descartar este card e, depois, ativar 1 destes efeitos;\n● Adicione 1 monstro \"Magistus\" do seu Deck à sua mão, exceto \"Spenta, the Magistus Sealer\".\n● Reduza à metade o ATK de 1 monstro que seu oponente controla até o final deste turno.\nVocê pode banir este card do seu Cemitério e, depois, escolher 1 monstro com a face para cima que você controla; equipe 1 monstro \"Magistus\" do seu Deck Adicional ou Cemitério a ele como uma Magia de Equipamento. Você só pode usar cada efeito de \"Spenta, the Magistus Sealer\" uma vez por turno."
+  },
+  "Token (The Gore and \"Gouki The Great Ogre\")": {
+    "name": "Ficha (The Gore e \"Gouki The Great Ogre\")",
+    "effect": "Este card de The Gore & Gouki The Great Ogre pode ser usado como qualquer Ficha.\n\n\"E isso completa minha volta por cima.\""
+  },
+  "Token (Yami Marik and \"The Winged Dragon of Ra - Immortal Phoenix\")": {
+    "name": "Ficha (Yami Marik e \"The Winged Dragon of Ra - Immortal Phoenix\")",
+    "effect": "Este card pode ser usado como qualquer Ficha.\n\nYami Marik: \"Contemplem... a fênix que atrai vocês para a escuridão está dançando... Immortal Phoenix!!\""
+  },
+  "Steam Knight - BULLauncher": {
+    "name": "Cavaleiro a Vapor - BULLançador",
+    "effect": "\"BULLauncher\" é uma máquina de apoio especializada em bombardeio e combate diurno que não apenas tem o constantemente refinado \"Coc-OS\" e \"Armadura BFS\", mas também tem 3 \"Empacotadores de Foil\" instalados dentro dela sob ordens de \"Madera\" após repetidas tentativas e erros. Ao instalar um \"Fuzil de Carne\" ou outros armamentos, ela pode ser usada como apoio de médio e longo alcance para os \"Cavaleiros a Vapor\" e suas operações. Além disso, \"BULLançador\" pode ser combinada com \"WINGear\", que se especializa em combate aéreo de alta velocidade, e \"BOARms\", que se especializa em combate corpo a corpo e de assalto, para fazer o alto-calórico \"Steam Jushin - BW\" descer sobre este mundo."
+  },
+  "Festiballoon": {
+    "name": "Balão de Festa",
+    "effect": "Se este card batalhar com um monstro, nenhum dos dois pode ser destruído por essa batalha. Cada vez que um monstro declarar um ataque, este card ganha 1000 de ATK. Durante sua Fase Principal: você pode fazer este card perder exatamente 5000 de ATK e, se isso acontecer, destrua todos os outros cards no campo. Você só pode usar este efeito de \"Festiballoon\" uma vez por turno."
+  },
+  "Secret Stash Slipshod Squirrel": {
+    "name": "Esquilo Trapalhão do Esconderijo Secreto",
+    "effect": "Durante a Fase Principal (Efeito Rápido): você pode escolher até 3 Magias/Armadilhas no seu Cemitério; bana-as e, se isso acontecer, embaralhe-as no Deck durante a Fase Final do próximo turno. Durante sua Fase de Apoio: você pode escolher 1 das suas Magias/Armadilhas banidas; Baixe-a. Você só pode usar cada efeito de \"Secret Stash Slipshod Squirrel\" uma vez por turno."
+  },
+  "Bazoo the Soul Eater Beast": {
+    "name": "Bazoo, a Besta Devoradora de Almas",
+    "effect": "3 monstros de Nível 4\nQualquer Matéria Xyz desassociada de um monstro é banida em vez de ser enviada para o Cemitério. Uma vez por Corrente, se um ou mais Cards de Monstro forem enviados para o Cemitério (exceto durante a Etapa de Dano): você pode desassociar 1 matéria deste card. Se a(s) última(s) matéria(s) for desassociada deste card (exceto durante a Etapa de Dano): você pode escolher 3 cards no(s) Cemitério(s); associe-os a este card como matéria."
+  },
+  "Shateki": {
+    "name": "Shateki",
+    "effect": "Você pode descartar 1 card e, depois, escolher 1 monstro que seu oponente controla que tenha Nível; lance um dado de seis lados e aplique este efeito com base no resultado.\n● Maior que o Nível do monstro alvo: destrua o monstro alvo e, depois, você pode adicionar 1 monstro com o mesmo Nível original do seu Deck à sua mão e, além disso, você não pode ativar o efeito de \"Shateki\" pelo resto deste turno.\n● Igual ou menor que o Nível do monstro alvo: reduza o Nível do monstro alvo em 1."
+  },
+  "Shadow Trouble": {
+    "name": "Problema Sombrio",
+    "effect": "Escolha 1 card com a face para cima que seu oponente controla; aplique este efeito com base no número de cards com esse nome no Cemitério do seu oponente.\n● 1: destrua-o.\n● 2: bana-o.\n● 3+: bana-o e, além disso, todos os cards com esse nome do campo e Cemitério do seu oponente, com a face para baixo."
+  },
+  "Sky God Revelation": {
+    "name": "Revelação do Deus do Céu",
+    "effect": "Quando um monstro de Nível 10 com ATK ? for Invocado por Invocação-Normal no seu campo, cada duelista pode comprar até ter 6 cards na mão. Uma vez por turno, durante sua Fase Principal, você pode ativar 1 destas Habilidades:\n● Revele 1 \"Slifer the Sky Dragon\" na sua mão, coloque-o no fundo do Deck e, depois, compre 1 card.\n● Uma vez por Duelo, descarte 1 card e, depois, adicione 1 \"Slifer the Sky Dragon\" do seu Deck à sua mão."
+  },
+  "Ever Faithful Companions": {
+    "name": "Companheiros Sempre Fiéis",
+    "effect": "Se somente seu oponente controlar um monstro, você pode Invocar por Invocação-Especial 1 \"Dark Magician\" ou 1 \"Dark Magician Girl\" da sua mão. Uma vez por Duelo, enquanto você controlar um monstro cujo nome original seja \"Dark Magician\" ou \"Dark Magician Girl\", você pode adicionar 1 \"Dark Magician\" ou 1 card que o mencione do seu Deck à sua mão."
+  },
+  "Fear of the Dark": {
+    "name": "Medo do Escuro",
+    "effect": "Enquanto \"Dark Necrofear\" estiver com a face para cima no seu campo, cards \"Destiny Board\" e \"Spirit Message\" que você controla não são afetados pelos efeitos de card do seu oponente. Se um card \"Spirit Message\" seria colocado no seu campo com \"Destiny Board\", você pode Invocá-lo por Invocação-Especial como um Monstro Normal (Demônio/TREVAS/Nível 1/ATK 0/DEF 0) em vez disso. Ele não pode ser escolhido como alvo de ataques, mas não impede seu oponente de atacar você diretamente. Uma vez por turno, você pode revelar 1 card \"Spirit Message\" na sua mão e colocá-lo no fundo do Deck e, depois, compre 1 card."
+  },
+  "Malevolence of the Millennium Ring": {
+    "name": "Malevolência do Anel do Milênio",
+    "effect": "Uma vez por turno, se você controlar um monstro Demônio, você pode ativar 1 destas Habilidades (mas você só pode usar cada uma destas Habilidades uma vez por Duelo):\n● Envie 1 monstro Demônio do seu Deck para o Cemitério e, depois, perca PV igual ao Nível original dele x 200.\n● Descarte 1 monstro Demônio, perca PV igual ao Nível original dele x 200 e, depois, compre 1 card."
+  },
+  "Executive Privilege": {
+    "name": "Privilégio Executivo",
+    "effect": "\"Obelisk the Tormentor\" pode atacar todos os monstros que seu oponente controla, uma vez cada. Uma vez por turno, durante sua Fase Principal, você pode ativar 1 destas Habilidades:\n● Revele 1 \"Obelisk the Tormentor\" e 1 \"Blue-Eyes White Dragon\" na sua mão, coloque-os no fundo do Deck em qualquer ordem e, depois, compre 2 cards.\n● Uma vez por Duelo, descarte 1 card e, depois, adicione 1 \"Obelisk the Tormentor\" do seu Deck à sua mão."
+  },
+  "As I Predicted...!": {
+    "name": "Como Eu Previ...!",
+    "effect": "Durante sua Fase de Compra, em vez de realizar sua compra normal, você pode olhar os 2 cards do topo do seu Deck, adicionar 1 à sua mão e enviar o outro para o Cemitério. Se isso acontecer, pule sua próxima Fase de Batalha. Aplique as seguintes Habilidades:\n● Somente você precisa de 15 ou mais cards no seu Cemitério para ativar \"Exchange of the Spirit\".\n● Se você tiver 15 ou mais cards no seu Cemitério, você pode banir 1 \"Exchange of the Spirit\" do seu Cemitério para ativar o efeito dele."
+  },
+  "Symbol of Pride": {
+    "name": "Símbolo do Orgulho",
+    "effect": "Durante sua Fase Principal, você pode Invocar por Invocação-Tributo 1 \"Blue-Eyes White Dragon\" ao oferecer 1 monstro Invocado por Invocação-Tributo como Tributo, além de sua Invocação-Normal/Baixada. Você pode descartar 1 Magia e, depois, aplicar 1 destas Habilidades (mas você só pode usar cada uma destas Habilidades uma vez por Duelo):\n● Se você controlar um \"Blue-Eyes White Dragon\", destrua todos os monstros que seu oponente controla e, além disso, \"Blue-Eyes White Dragon\" que você controla não pode declarar ataque neste turno.\n● Invoque por Invocação-Fusão 1 \"Blue-Eyes Ultimate Dragon\" usando monstros da sua mão ou campo como matéria e, se isso acontecer, ele não é afetado pelos efeitos de card do seu oponente até o final deste turno."
+  },
+  "Keeper of the Valley": {
+    "name": "Guardião do Vale",
+    "effect": "Uma vez por Duelo, você pode descartar 1 card para adicionar 1 Magia/Armadilha que mencione \"Necrovalley\" do seu Cemitério à sua mão. Aplique a seguinte Habilidade:\n● O seu Cemitério não é afetado por \"Necrovalley\"."
+  },
+  "Battle City Slugger": {
+    "name": "Rebatedor da Cidade de Batalha",
+    "effect": "Todos os monstros Guerreiro que você controla ganham 100 de ATK para cada monstro Guerreiro que você controla. Uma vez por turno, durante sua Fase Principal, você pode ativar 1 destas Habilidades:\n● Revele 1 \"Gilford the Lightning\", \"Insect Queen\", \"Jinzo\" ou \"The Legendary Fisherman\" na sua mão, coloque-o no fundo do Deck e, depois, compre 1 card.\n● Uma vez por Duelo, descarte 1 card e, depois, adicione 1 \"Gilford the Lightning\" do seu Deck à sua mão e, depois, você pode Invocar por Invocação-Tributo 1 monstro Guerreiro, além de sua Invocação-Normal/Baixada."
+  },
+  "Red-Eye Inferno": {
+    "name": "Inferno de Olhos Vermelhos",
+    "effect": "Você pode Invocar por Invocação-Tributo \"Red-Eyes Black Dragon\" com 1 Tributo a menos para cada monstro que seu oponente controla. Você pode descartar 1 Magia e, depois, aplicar 1 destas Habilidades (mas você só pode usar cada uma destas Habilidades uma vez por Duelo):\n● Se você controlar um \"Red-Eyes Black Dragon\", cause 800 de dano ao seu oponente e, além disso, \"Red-Eyes Black Dragon\" que você controla não pode declarar ataque neste turno.\n● Invoque por Invocação-Fusão 1 Monstro de Fusão que mencione \"Red-Eyes Black Dragon\" como matéria, usando monstros da sua mão ou campo como matéria e, se isso acontecer, ele não pode ser destruído pelos efeitos de card do seu oponente até o final deste turno."
+  },
+  "Royal Temple of the Kings": {
+    "name": "Templo Real dos Reis",
+    "effect": "\"Royal Temple of the Kings\" não é afetado pelos efeitos de card do seu oponente. \"Mystical Beast of Serket\" não pode ser destruído pelo próprio efeito. Uma vez por turno: você pode pagar 500 PV; neste turno, você pode ativar um Card de Armadilha Contínua com um efeito que se Invoca por Invocação-Especial como um monstro, no turno em que ele foi Baixado."
+  },
+  "Deserts Peril": {
+    "name": "Perigo dos Desertos",
+    "effect": "Duas vezes por Duelo, você pode aplicar a seguinte Habilidade:\n● Vire todos os monstros que você controla com a face para baixo e embaralhe-os na sua Zona de Monstro Principal e, depois, você pode mudar a posição de batalha de 1 monstro que você controla. Esta Habilidade só pode ser usada uma vez por turno."
+  },
+  "Advent of Ra": {
+    "name": "Advento de Ra",
+    "effect": "Quando você Invocar \"The Winged Dragon of Ra\" por Invocação-Tributo, o ATK/DEF originais dele se tornam o ATK/DEF originais combinados dos monstros oferecidos como Tributo para a Invocação dele. Uma vez por turno, durante sua Fase Principal, você pode ativar 1 destas Habilidades:\n● Revele 1 monstro \"The Winged Dragon of Ra\" na sua mão, coloque-o no fundo do Deck e, depois, compre 1 card.\n● Uma vez por Duelo, você pode descartar 1 card e, depois, adicionar 1 monstro \"The Winged Dragon of Ra\" do seu Deck à sua mão."
+  },
+  "Pulling the Strings": {
+    "name": "Puxando as Cordas",
+    "effect": "Aplique as seguintes Habilidades:\n● Uma vez por turno, você pode dar o controle de 1 monstro com a face para cima que você controla ao seu oponente e, se isso acontecer, ele não pode ser oferecido como Tributo.\n● Uma vez por Duelo, durante a Fase Final do seu oponente, você pode destruir 1 monstro que seu oponente controla do qual você é o dono e, se isso acontecer, cause 500 de dano ao seu oponente e, além disso, pelo resto deste Duelo, você não sofre dano de cards seus."
+  },
+  "Tribal Unity": {
+    "name": "Unidade Tribal",
+    "effect": "Monstros \"Harpie\" também são tratados como monstros \"Amazoness\" e vice-versa, enquanto estiverem no campo ou Cemitério. Uma vez por Duelo, você pode descartar 1 monstro para fazer 1 monstro \"Harpie\" ou \"Amazoness\" que você controla ganhar ATK igual ao Nível do monstro descartado x 200."
+  },
+  "Harpie's Kaleidoscope": {
+    "name": "Caleidoscópio das Harpias",
+    "effect": "Monstros \"Harpie Lady Sisters\" que você controla não podem ser destruídos pelos efeitos de Monstro ou Armadilha do seu oponente e, além disso, eles ganham o seguinte efeito:\n● Uma vez por turno, durante sua Fase Principal: você pode colocar 2 monstros Besta Alada de VENTO do seu Cemitério no fundo do Deck em qualquer ordem e, depois, escolher 1 monstro que seu oponente controla; devolva-o para a mão."
+  },
+  "Battle City Bestie": {
+    "name": "Querida da Cidade de Batalha",
+    "effect": "Aplique as seguintes Habilidades:\n● Você não sofre dano de batalha durante o seu turno.\n● Uma vez por turno, durante sua Fase Final, se seu oponente ativou um card ou efeito neste turno, compre 1 card."
+  },
+  "Even the Odds": {
+    "name": "Emparelhe as Chances",
+    "effect": "Durante sua Fase Principal, você pode adicionar 1 card do seu Deck à sua mão e, depois, colocar 1 card da sua mão no fundo do Deck. Esta Habilidade só pode ser usada uma vez por Duelo."
+  },
+  "See Me Rolling": {
+    "name": "Veja-me Rolando",
+    "effect": "Uma vez por Duelo, você pode adicionar 1 card com um efeito que exija um lançamento de dado do seu Deck à sua mão e, depois, colocar 1 card da sua mão no fundo do Deck. Aplique a seguinte Habilidade:\n● Uma vez por turno, quando você lançar um dado para um card ou efeito, você pode relançar o resultado uma vez."
+  },
+  "Noah's Arc": {
+    "name": "Arca de Noé",
+    "effect": "Uma vez por Duelo, você pode adicionar 1 \"Shinato, King of a Higher Plane\" ou \"Shinato's Ark\" do seu Deck à sua mão e, depois, colocar 1 card da sua mão no fundo do Deck. Aplique as seguintes Habilidades:\n● Uma vez por turno, se você controlar um monstro Espírito de Nível 5 ou mais ou \"Shinato, King of a Higher Plane\", você pode adicionar 1 monstro Espírito do seu Cemitério à sua mão.\n● Durante o seu turno, você pode Invocar por Invocação-Normal 1 monstro Espírito com o mesmo nome original que um monstro que foi Invocado por Invocação-Normal durante seu turno anterior, além de sua Invocação-Normal neste turno."
+  }
+}

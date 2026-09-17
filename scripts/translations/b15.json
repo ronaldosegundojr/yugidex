@@ -1,0 +1,150 @@
+{
+  "One-Eyed Skill Gainer": {
+    "name": "Ganhador de Habilidade de Um Olho",
+    "effect": "3 monstros de Nível 4\nVocê pode desassociar 1 Matéria Xyz deste card para escolher 1 Monstro Xyz com a face para cima que seu oponente controla; o nome e o efeito original deste card se tornam os mesmos desse monstro. Este efeito só pode ser usado uma vez enquanto este card estiver com a face para cima no campo."
+  },
+  "Oni-Gami Combo": {
+    "name": "Combo Oni-Gami",
+    "effect": "Escolha 1 Monstro Xyz com a face para cima que você controla e desassocie todas as Matérias Xyz dele; neste turno, o alvo pode atacar duas vezes durante a mesma Fase de Batalha."
+  },
+  "Option Hunter": {
+    "name": "Caçador de Opções",
+    "effect": "Ative somente quando um monstro que você controla for destruído em batalha e enviado para o Cemitério. Ganhe PV iguais ao ATK original do monstro destruído."
+  },
+  "Order of the Queen": {
+    "name": "Ordem da Rainha",
+    "effect": "Enquanto você controlar \"Amazoness Queen\", negue os efeitos de Monstros de Efeito destruídos em batalha com monstros \"Amazoness\" atacantes que você controla."
+  },
+  "Oscillo Hero": {
+    "name": "Herói Oscilo",
+    "effect": "Um estranho guerreiro de outra dimensão."
+  },
+  "Out of the Blue": {
+    "name": "Do Nada",
+    "effect": "Destrua este card se seu oponente ativar um card ou efeito que escolha um ou mais cards no Cemitério como alvo. Quando este card for destruído por este efeito e enviado para o Cemitério, seu oponente embaralha todos os cards do Cemitério dele no Deck."
+  },
+  "Over Capacity": {
+    "name": "Capacidade Excedida",
+    "effect": "Quando seu oponente Invocar um monstro por Invocação-Especial: bana todos os monstros de Nível 2 ou menos com a face para cima no campo."
+  },
+  "Over Limit": {
+    "name": "Além do Limite",
+    "effect": "Pague 500 PV. Invoque por Invocação-Especial dos Cemitérios de ambos os duelistas tantos Monstros Normais quanto possível com 1000 ou menos de ATK que foram destruídos em batalha neste turno."
+  },
+  "Overlay Eater": {
+    "name": "Devorador de Sobreposição",
+    "effect": "Você pode banir este card do seu Cemitério; pegue 1 Matéria Xyz de um monstro que seu oponente controla e associe-a a um Monstro Xyz que você controla como Matéria Xyz."
+  },
+  "Overlay Owl": {
+    "name": "Coruja Sobreposta",
+    "effect": "Uma vez por turno: você pode pagar 600 PV; desassocie 1 Matéria Xyz de um monstro no campo."
+  },
+  "Overmind Archfiend": {
+    "name": "Arquidemônio da Mente Suprema",
+    "effect": "1 Regulador do Tipo Psíquico + 2 ou mais monstros não-Reguladores do Tipo Psíquico\nUma vez por turno, você pode selecionar 1 monstro do Tipo Psíquico no seu Cemitério e removê-lo do jogo. Quando este card for enviado do campo para o Cemitério, Invoque por Invocação-Especial tantos monstros quanto possível que foram removidos do jogo por este efeito."
+  },
+  "Overwind": {
+    "name": "Vento Excessivo",
+    "effect": "Escolha 1 monstro \"Wind-Up\" com a face para cima que você controla; o ATK e a DEF dele são dobrados e ele retorna para a mão durante a Fase Final. Você só pode ativar 1 \"Overwind\" por turno."
+  },
+  "Oyster Token": {
+    "name": "Ficha de Ostra",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Oyster Meister\"."
+  },
+  "Painful Return": {
+    "name": "Retorno Doloroso",
+    "effect": "Seu oponente escolhe 1 monstro no seu Cemitério. Durante a Fase Final, adicione esse monstro à sua mão."
+  },
+  "Pandaborg": {
+    "name": "Pandaborg",
+    "effect": "Quando este card for destruído em batalha e enviado para o Cemitério, você pode pagar 800 PV para Invocar por Invocação-Especial 1 monstro do Tipo Psíquico de Nível 4 do seu Deck."
+  },
+  "Parallel Selection": {
+    "name": "Seleção Paralela",
+    "effect": "Ative somente quando um Monstro Sincro que você controla for destruído por um card do seu oponente (em batalha ou por efeito de card) e enviado para o Cemitério. Selecione 1 dos seus Cards de Magia removidos do jogo e adicione-o à sua mão."
+  },
+  "Paralyzing Chain": {
+    "name": "Corrente Paralisante",
+    "effect": "Quando um ou mais cards forem enviados do Deck do seu oponente para o Cemitério por um efeito de card, cause 300 de dano ao seu oponente."
+  },
+  "Past Image": {
+    "name": "Imagem do Passado",
+    "effect": "Se você controlar um monstro do Tipo Psíquico com a face para cima: escolha 1 monstro que seu oponente controla; bana-o. Durante a próxima Fase de Apoio, ele retorna para o lado do campo do oponente na mesma Posição de Batalha."
+  },
+  "Peeking Goblin": {
+    "name": "Goblin Espião",
+    "effect": "Seu oponente revela os 3 cards do topo do Deck dele. Escolha 1 para colocar no fundo do Deck e coloque os outros dois no topo do Deck em qualquer ordem."
+  },
+  "Perditious Puppeteer": {
+    "name": "Marionetista Perverso",
+    "effect": "Uma vez por turno: você pode descartar 1 card; ganhe o controle de todos os monstros de Nível 3 ou menos com a face para cima que seu oponente controla, até a Fase Final. Esses monstros não podem ativar seus efeitos e não podem ser oferecidos como Tributo nem usados como Monstro Matéria Sincro."
+  },
+  "Pestilence": {
+    "name": "Peste",
+    "effect": "Equipe apenas a um monstro do Tipo Guerreiro, Besta-Guerreira ou Mago. O ATK dele se torna 0. Durante cada uma das suas Fases de Apoio, cause 500 de dano ao controlador do monstro equipado."
+  },
+  "Phalanx Pike": {
+    "name": "Lança em Falange",
+    "effect": "O monstro equipado ganha 900 de ATK para cada card em qualquer Cemitério que tenha o mesmo nome que ele."
+  },
+  "Phantasm Spiral Token": {
+    "name": "Ficha de Espiral Fantasmagórica",
+    "effect": "Invocada pelo efeito de \"Pacifis, the Phantasm City\"."
+  },
+  "Phantom Bounzer": {
+    "name": "Bounzer Fantasma",
+    "effect": "Se este card no campo for destruído e enviado para o Cemitério: você pode adicionar 2 cards \"Bounzer\" do seu Deck à sua mão."
+  },
+  "Phantom Dragonray Bronto": {
+    "name": "Bronto, o Dragão Raio Fantasma",
+    "effect": "Este card é considerado um Monstro Normal enquanto estiver com a face para cima no campo ou no Cemitério. Enquanto este card estiver com a face para cima no campo, você pode Invocá-lo por Invocação-Normal para que ele seja considerado um Monstro de Efeito com este efeito:\n● O ATK original deste card se torna 2300. Se este card atacar, ele é mudado para Posição de Defesa no final da Fase de Batalha. A posição de batalha deste card não pode ser mudada até o final do seu próximo turno, exceto por um efeito de card."
+  },
+  "Phantom Magician": {
+    "name": "Mágico Fantasma",
+    "effect": "Quando este card for destruído em batalha e enviado para o Cemitério: você pode Invocar por Invocação-Especial 1 monstro \"HERO\" com 1000 ou menos de ATK do seu Deck em Posição de Defesa com a face para cima."
+  },
+  "Phantom Token": {
+    "name": "Ficha Fantasma",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Number 48: Shadow Lich\"."
+  },
+  "Photon Generator Unit": {
+    "name": "Unidade Geradora de Fótons",
+    "effect": "Ofereça 2 \"Cyber Dragons\" como Tributo. Invoque por Invocação-Especial 1 \"Cyber Laser Dragon\" da sua mão, Deck ou Cemitério."
+  },
+  "Plant Token": {
+    "name": "Ficha de Planta",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Bamboo Scrap\"."
+  },
+  "Plasma Ball": {
+    "name": "Bola de Plasma",
+    "effect": "Este card pode atacar seu oponente diretamente. Quando este card causar Dano de Batalha ao seu oponente por um ataque direto: destrua este card."
+  },
+  "Poison Chain": {
+    "name": "Corrente de Veneno",
+    "effect": "Durante a Fase Final do seu turno, se você não atacou, você pode fazer seu oponente enviar do topo do Deck dele para o Cemitério um número de cards igual ao número de monstros \"Iron Chain\" com a face para cima que você controla."
+  },
+  "Poison Mummy": {
+    "name": "Múmia Venenosa",
+    "effect": "VIRE: cause 500 de dano ao seu oponente."
+  },
+  "Poisonous Snake Token": {
+    "name": "Ficha de Cobra Venenosa",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Cobra Jar\". Quando esta Ficha for destruída como resultado de batalha, cause 500 pontos de dano aos PV do seu oponente."
+  },
+  "Poisonous Winds": {
+    "name": "Ventos Venenosos",
+    "effect": "Monstros de VENTO não podem ser Invocados por Invocação-Especial. Todos os monstros de VENTO com a face para cima no campo perdem 500 de ATK."
+  },
+  "Poki Draco": {
+    "name": "Poki Draco",
+    "effect": "Quando este card for Invocado por Invocação-Normal: você pode adicionar 1 \"Poki Draco\" do seu Deck à sua mão."
+  },
+  "Potato & Chips": {
+    "name": "Batata e Chips",
+    "effect": "Batata e Chips sempre se dão bem. Eles ficam sempre no quarto comendo batatas fritas. As de sabor Consommé também são deliciosas. As de sabor Norishio também são deliciosas. A vida deliciosa de Batata e Chips."
+  },
+  "Power Bond (Skill Card)": {
+    "name": "Ligação de Poder (Skill Card)",
+    "effect": "Ative esta Habilidade durante sua Fase Principal. Descarte 1 card e, depois, Invoque por Invocação-Fusão 1 Monstro de Fusão Máquina do seu Deck Adicional, usando monstros da sua mão ou campo como matéria. Se isso acontecer, ele ganha ATK igual ao seu ATK original até o final deste turno, mas não pode atacar seu oponente diretamente neste turno. Durante a Fase Final deste turno, você sofre dano igual à quantidade de ATK ganha no momento da Invocação."
+  }
+}

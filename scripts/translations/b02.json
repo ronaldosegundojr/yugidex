@@ -1,0 +1,150 @@
+{
+  "Big Inflate Dragon": {
+    "name": "Dragão Inflador Gigante",
+    "effect": "Se este card for Invocado por Invocação-Normal: você pode banir os 50 cards do topo do seu Deck, com a face para baixo; o ATK deste card se torna 10.000 até o final deste turno."
+  },
+  "Big One Warrior": {
+    "name": "Grande Guerreiro Um",
+    "effect": "Durante sua Fase Principal, você pode enviar 1 monstro de Nível 1, exceto este card, da sua mão para o Cemitério para Invocar este card por Invocação-Especial da sua mão."
+  },
+  "Blackwing - Black Crest Token": {
+    "name": "Asanegra - Ficha de Crista Negra",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Black Wing Revenge\"."
+  },
+  "Blackwing - Jetstream the Blue Sky": {
+    "name": "Asanegra - Jato do Céu Azul",
+    "effect": "Durante o cálculo de dano, você pode enviar este card da sua mão para o Cemitério para evitar que um monstro \"Blackwing\" que você controla seja destruído por esta batalha."
+  },
+  "Blackwing - Jin the Rain Shadow": {
+    "name": "Asanegra - Jin, a Sombra da Chuva",
+    "effect": "Se este card batalhar um monstro com a face para cima cuja DEF seja igual ou menor que o ATK deste card, destrua esse monstro no início da Etapa de Dano (sem cálculo de dano)."
+  },
+  "Blade Bounzer": {
+    "name": "Bounzer de Lâminas",
+    "effect": "Uma vez por turno, se este card atacar e seu oponente controlar um monstro no final da Etapa de Dano: você pode descartar 1 card; este card pode atacar um monstro do oponente mais uma vez durante esta Fase de Batalha."
+  },
+  "Blasting Fuse": {
+    "name": "Fusível Explosivo",
+    "effect": "Se todas as zonas da coluna deste card estiverem ocupadas, enquanto este card estiver Baixado: destrua todos os cards nesta coluna."
+  },
+  "Blaze Accelerator Deployment (Skill Card)": {
+    "name": "Implantação do Acelerador de Labareda (Card de Habilidade)",
+    "effect": "Uma vez por turno, você pode mudar o nome de 1 \"Blaze Accelerator\" que você controla para \"Tri-Blaze Accelerator\". Esta Habilidade pode ser usada duas vezes por Duelo."
+  },
+  "Blind Spot Strike": {
+    "name": "Golpe no Ponto Cego",
+    "effect": "Selecione 1 monstro em Posição de Defesa com a face para cima que seu oponente controla e 1 monstro em Posição de Ataque com a face para cima que você controla. O monstro que você controla ganha ATK igual à DEF do monstro do oponente, até a Fase Final."
+  },
+  "Blizzard Princess": {
+    "name": "Princesa da Nevasca",
+    "effect": "Você pode Invocar este card por Invocação-Tributo com a face para cima em Posição de Ataque ao oferecer 1 monstro do Tipo Mago como Tributo. Depois que este card for Invocado por Invocação-Normal, seu oponente não pode ativar Cards de Magia/Armadilha pelo resto do turno."
+  },
+  "Blocker": {
+    "name": "Bloqueador",
+    "effect": "Construído a partir de vários componentes, este monstro pode lançá-los em um ataque de pinça."
+  },
+  "Blue Medicine": {
+    "name": "Medicina Azul",
+    "effect": "Aumente seus PV em 400 pontos."
+  },
+  "Boneheimer": {
+    "name": "Boneheimer",
+    "effect": "Este monstro vagueia pelos mares, sugando até a última gota de qualquer criatura que encontrar."
+  },
+  "Boss Rush": {
+    "name": "Investida do Chefe",
+    "effect": "Você não pode Invocar por Invocação-Normal nem Baixar. Durante a Fase Final do turno em que um monstro \"B.E.S.\" ou \"Big Core\" for destruído e enviado para o Cemitério, você pode Invocar por Invocação-Especial 1 monstro \"B.E.S.\" ou 1 \"Big Core\" do seu Deck."
+  },
+  "Bottomless Shifting Sand": {
+    "name": "Areia Movediça Sem Fim",
+    "effect": "No final do turno do seu oponente, destrua o(s) monstro(s) com a face para cima com o maior ATK no campo. Durante sua própria Fase de Apoio, se você tiver 4 cards ou menos na sua mão, este card é destruído."
+  },
+  "Boulder Tortoise": {
+    "name": "Tartaruga Rocha",
+    "effect": "Uma tartaruga de pedra quase indestrutível."
+  },
+  "Bounzer Guard": {
+    "name": "Guarda Bounzer",
+    "effect": "Escolha 1 monstro \"Bounzer\" com a face para cima que você controla; neste turno, ele não pode ser alvo de outros efeitos de card, nem ser destruído em batalha. Neste turno, se um monstro do oponente atacar, ele deve escolher esse monstro como alvo do ataque se ele ainda estiver no campo."
+  },
+  "Brain Hazard": {
+    "name": "Perigo Mental",
+    "effect": "Selecione 1 dos seus monstros do Tipo Psíquico removidos do jogo e Invoque-o por Invocação-Especial. Quando este card for removido do campo, destrua esse monstro. Quando esse monstro for destruído, destrua este card."
+  },
+  "Breakthrough!": {
+    "name": "Avançada!",
+    "effect": "Selecione 1 monstro \"Six Samurai\" que você controla. Se o monstro selecionado destruir um monstro do oponente em batalha, \"Great Shogun Shien\" e todos os monstros \"Six Samurai\" que você controla podem atacar seu oponente diretamente durante a Fase de Batalha deste turno."
+  },
+  "Bright Future": {
+    "name": "Futuro Brilhante",
+    "effect": "Escolha 2 dos seus monstros do Tipo Psíquico banidos; devolva ambos os alvos para o Cemitério e compre 1 card."
+  },
+  "Bubble Blaster": {
+    "name": "Blaster de Bolhas",
+    "effect": "Você só pode equipar este card a \"Elemental Hero Bubbleman\". Aumente o ATK do monstro equipado em 800 pontos. Se o monstro equipado seria destruído em resultado de batalha, em vez disso, destrua este card e faça o Dano de Batalha ao controlador do monstro equipado ser 0."
+  },
+  "Bubble Crash": {
+    "name": "Quebra-Bolhas",
+    "effect": "Este card só pode ser ativado quando qualquer duelista tiver 6 ou mais cards no campo e/ou na mão. O(s) duelista(s) então seleciona(m) e envia(m) cards para seus respectivos Cemitérios até que a quantidade restante no campo e na mão seja 5."
+  },
+  "Bunilla": {
+    "name": "Coelha",
+    "effect": "Esta coelhinha adora doces! Ela está em busca da cenoura mais doce do mundo e só quer mordiscar cenouras hoje, amanhã e no dia depois de amanhã!"
+  },
+  "Burgeoning Whirlflame": {
+    "name": "Turbilhão de Chamas Crescente",
+    "effect": "Quando um Card de Armadilha for ativado: envie 1 monstro \"Laval\" da sua mão para o Cemitério; negue a ativação e destrua-o. Se este card estiver no Cemitério: você pode banir 2 monstros de FOGO do seu Cemitério; adicione este card à sua mão."
+  },
+  "Burgundy the Magic Elf": {
+    "name": "Borgonha, o Elfo Mágico",
+    "effect": "Se um ou mais cards forem descartados da mão do seu oponente por efeito de card (exceto durante a Etapa de Dano): você pode causar 400 de dano ao seu oponente para cada card descartado. Quando este card for destruído em batalha e enviado para o Cemitério: você pode descartar 1 card aleatório da mão do seu oponente. Você só pode usar cada efeito de \"Burgundy the Magic Elf\" uma vez por turno."
+  },
+  "Burst Return": {
+    "name": "Rajada de Retorno",
+    "effect": "Se você controlar um \"Elemental HERO Burstinatrix\" com a face para cima: devolva todos os monstros \"Elemental HERO\" com a face para cima no campo para a mão, exceto \"Elemental HERO Burstinatrix\"."
+  },
+  "Buster Blaster": {
+    "name": "Blaster Destruidor",
+    "effect": "Uma vez por turno, você pode: escolher 1 monstro com a face para cima que você controla; equipe este card no alvo, OU: desequipe este card e Invoque-o por Invocação-Especial com a face para cima em Posição de Ataque. Enquanto estiver equipado por este efeito, o monstro equipado perde 500 de ATK e DEF. Se o monstro equipado destruir um monstro do oponente em batalha: destrua todos os monstros com a face para cima no campo com o mesmo Tipo de Monstro que o monstro destruído. (Um monstro só pode estar equipado com 1 Monstro União por vez. Se o monstro equipado seria destruído, em vez disso, destrua este card.)"
+  },
+  "Buten": {
+    "name": "Buten",
+    "effect": "Durante sua Fase Principal: você pode banir este card do Cemitério para escolher 1 monstro do Tipo Fada de LUZ de Nível 4 ou menos com a face para cima que você controla; ele é considerado um monstro Regulador enquanto estiver com a face para cima no campo."
+  },
+  "Byroad Sacrifice": {
+    "name": "Sacrifício de Atalho",
+    "effect": "Ative apenas se um monstro no seu lado do campo for destruído em batalha. Invoque por Invocação-Especial 1 \"Cyber Ogre\" da sua mão."
+  },
+  "Card Ejector": {
+    "name": "Ejetor de Cards",
+    "effect": "Uma vez por turno: você pode escolher 1 card no Cemitério do seu oponente; bana o alvo."
+  },
+  "Card of Sacrifice": {
+    "name": "Card do Sacrifício",
+    "effect": "Compre 2 cards se o ATK combinado de todos os seus monstros com a face para cima em Posição de Ataque (mínimo 2) for menor que o ATK do monstro com a face para cima de menor ATK do seu oponente. Você não pode Invocar nem mudar a Posição de Batalha no turno em que ativar este card."
+  },
+  "Carrierroid": {
+    "name": "Carrierroide",
+    "effect": "Quando um oponente ativa o efeito de um card que escolhe como alvo e destrói um ou mais Cards de Magia ou Armadilha que você controla, você pode descartar 1 card para negar a ativação e destruir o card."
+  },
+  "Ceremonial Token": {
+    "name": "Ficha Cerimonial",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Offering to the Immortals\". Esta Ficha não pode ser oferecida como Tributo, exceto para a Invocação-Tributo de um monstro \"Earthbound Immortal\", e não pode ser usada como Monstro-Matéria Sincro."
+  },
+  "Chain Material": {
+    "name": "Matéria em Corrente",
+    "effect": "Sempre que você Invocar por Invocação-Fusão um monstro neste turno, você pode banir, do seu lado do campo, Deck, mão ou Cemitério, os Monstros-Matéria de Fusão listados no Card do Monstro de Fusão e usá-los como Monstros-Matéria de Fusão. Você não pode atacar no turno em que este card for ativado. Se você usou este efeito para uma Invocação-Fusão, o(s) Monstro(s) de Fusão Invocado(s) é(são) destruído(s) durante a Fase Final."
+  },
+  "Chain Whirlwind": {
+    "name": "Turbilhão em Corrente",
+    "effect": "Ative apenas quando um card no campo for destruído por um efeito de card. Selecione 2 Cards de Magia/Armadilha no campo e destrua-os."
+  },
+  "Change of Hero - Reflector Ray": {
+    "name": "Mudança de Herói - Raio Refletor",
+    "effect": "Quando um Monstro de Fusão \"Elemental HERO\" que você controla for destruído em batalha e enviado para o Cemitério: cause dano ao seu oponente igual ao Nível original dele x 300."
+  },
+  "Chemistry in Motion": {
+    "name": "Química em Movimento",
+    "effect": "Uma vez por turno, você pode colocar 1 marcador neste card e, depois, aplicar o efeito apropriado dependendo do número de marcadores neste card.\n1: Descarte 1 monstro Dinossauro e, depois, adicione 1 monstro Dinossauro com um Atributo diferente do seu Deck à sua mão.\n2: Invoque por Invocação-Normal 1 monstro Dinossauro de VENTO ou ÁGUA da sua mão.\n3: Os nomes de todos os monstros Dinossauro de ÁGUA que você controla atualmente se tornam \"Hydrogeddon\" (até o final deste turno) e, depois, adicione 1 \"Bonding - H2O\" do seu Deck ou Cemitério à sua mão.\n4: Remova todos os marcadores deste card e, depois, mude os Atributos/Tipos de todos os monstros com a face para cima que seu oponente controla atualmente para FOGO/Piro, até o final deste turno."
+  }
+}

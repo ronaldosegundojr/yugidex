@@ -1,0 +1,194 @@
+{
+  "Karakuri Gold Dust": {
+    "name": "Pó de Ouro Karakuri",
+    "effect": "Ative somente durante a Fase de Batalha. Selecione 2 monstros \"Karakuri\" com a face para cima em Posição de Ataque. Mude 1 dos monstros selecionados para Posição de Defesa e o outro ganha ATK igual ao ATK do monstro mudado para Posição de Defesa, até a Fase Final."
+  },
+  "Karakuri Klock": {
+    "name": "Relógio Karakuri",
+    "effect": "Ative somente quando um monstro \"Karakuri\" com a face para cima em Posição de Defesa for selecionado como alvo de ataque. Destrua todos os monstros com a face para cima que seu oponente controla."
+  },
+  "Karakuri Muso mdl 818 \"Haipa\"": {
+    "name": "Karakuri Muso mdl 818 \"Haipa\"",
+    "effect": "Este card deve atacar se puder. Quando este card com a face para cima em Posição de Ataque for selecionado como alvo de ataque, mude-o para Posição de Defesa. Se este card atacar, ele é mudado para Posição de Defesa no final da Fase de Batalha."
+  },
+  "Karakuri Ninja mdl 339 \"Sazank\"": {
+    "name": "Karakuri Ninja mdl 339 \"Sazank\"",
+    "effect": "Este card deve atacar se puder. Quando este card com a face para cima em Posição de Ataque for selecionado como alvo de ataque, mude-o para Posição de Defesa. Quando este card for virado com a face para cima, selecione 1 monstro com a face para cima no campo e envie-o para o Cemitério. Durante o turno em que este card for virado com a face para cima, ele pode atacar seu oponente diretamente."
+  },
+  "Karakuri Ninja mdl 7749 \"Nanashick\"": {
+    "name": "Karakuri Ninja mdl 7749 \"Nanashick\"",
+    "effect": "Este card deve atacar se puder. Quando este card com a face para cima for selecionado como alvo de ataque, mude a posição de batalha dele. Quando este card for Invocado por Invocação-Normal, você pode comprar um número de cards igual ao número de monstros \"Karakuri\" com a face para cima em Posição de Defesa que você controla."
+  },
+  "Karakuri Ninja mdl 919 \"Kuick\"": {
+    "name": "Karakuri Ninja mdl 919 \"Kuick\"",
+    "effect": "Este card deve atacar se puder. Quando este card com a face para cima for selecionado como alvo de ataque, mude a posição de batalha dele. Quando este card destruir um monstro do oponente em batalha e enviá-lo para o Cemitério, selecione 1 monstro \"Karakuri\" de Nível 4 ou menos no seu Cemitério e Invoque-o por Invocação-Especial em Posição de Defesa com a face para cima."
+  },
+  "Karakuri Showdown Castle": {
+    "name": "Castelo do Confronto Karakuri",
+    "effect": "Quando um monstro \"Karakuri\" com a face para cima que você controla seleciona um monstro com a face para cima do oponente como alvo de ataque, você pode mudar a posição de batalha do alvo. Quando este card com a face para cima no campo for destruído e enviado para o Cemitério, você pode selecionar 1 monstro \"Karakuri\" de Nível 4 ou mais no seu Cemitério e Invocá-lo por Invocação-Especial."
+  },
+  "Karakuri Soldier mdl 236 \"Nisamu\"": {
+    "name": "Karakuri Soldado mdl 236 \"Nisamu\"",
+    "effect": "Este card deve atacar se puder. Quando este card com a face para cima em Posição de Ataque for selecionado como alvo de ataque, mude-o para Posição de Defesa. Quando este card for destruído em batalha e enviado para o Cemitério, você pode Invocar por Invocação-Especial 1 monstro \"Karakuri\" de Nível 4 ou menos do seu Deck em Posição de Ataque com a face para cima."
+  },
+  "Karakuri Strategist mdl 248 \"Nishipachi\"": {
+    "name": "Karakuri Estrategista mdl 248 \"Nishipachi\"",
+    "effect": "Este card deve atacar se puder. Quando este card com a face para cima em Posição de Ataque for selecionado como alvo de ataque, mude-o para Posição de Defesa. Quando este card for Invocado por Invocação-Normal ou Especial, selecione 1 monstro no campo e mude a posição de batalha dele."
+  },
+  "Karakuri Trick House": {
+    "name": "Casa de Truques Karakuri",
+    "effect": "Ative somente quando a posição de batalha de um monstro \"Karakuri\" com a face para cima que você controla for mudada. Selecione 1 card no campo e destrua-o."
+  },
+  "Karakuri Watchdog mdl 313 \"Saizan\"": {
+    "name": "Karakuri Cão de Guarda mdl 313 \"Saizan\"",
+    "effect": "Este card deve atacar se puder. Quando este card com a face para cima for selecionado como alvo de ataque, mude a posição de batalha dele. Quando você sofrer Dano de Batalha de uma batalha envolvendo este card, todos os monstros \"Karakuri\" com a face para cima que você controla ganham 800 de ATK e DEF até a Fase Final. Enquanto este card estiver em Posição de Ataque com a face para cima, ele não pode ser destruído em batalha."
+  },
+  "Kayenn, the Master Magma Blacksmith": {
+    "name": "Kayenn, o Mestre Ferreiro de Magma",
+    "effect": "Você pode banir este card do seu Cemitério; todos os monstros \"Laval\" com a face para cima que você controla atualmente ganham 400 de ATK."
+  },
+  "Key Mace": {
+    "name": "Maça de Chave",
+    "effect": "Os corações dos inimigos vão derreter ao ver a fofura desta pequena fada."
+  },
+  "Key Mace #2": {
+    "name": "Maça de Chave n.º 2",
+    "effect": "Este demônio desperta o pior em todos."
+  },
+  "Key Man the Key Warrior": {
+    "name": "Key Man, o Guerreiro de Chave",
+    "effect": "Uma vez por turno, durante sua Fase Principal: você pode fazer este card se tornar Nível 3 até a Fase Final."
+  },
+  "King Pyron": {
+    "name": "Rei Píron",
+    "effect": "Este card é considerado um Monstro Normal enquanto estiver com a face para cima no campo ou no Cemitério. Enquanto este card estiver com a face para cima no campo, você pode Invocá-lo por Invocação-Normal para que ele seja considerado um Monstro de Efeito com este efeito:\n● Uma vez por turno, você pode causar 1000 de dano ao seu oponente."
+  },
+  "Koa'ki Meiru Bergzak": {
+    "name": "Koa'ki Meiru Bergzak",
+    "effect": "Durante cada uma das suas Fases Finais, destrua este card, a menos que você envie 1 \"Iron Core of Koa'ki Meiru\" da sua mão para o Cemitério ou revele 1 monstro do Tipo Guerreiro na sua mão. Se este card destruir um monstro do oponente em batalha, ele pode atacar novamente em seguida."
+  },
+  "Koa'ki Meiru Boulder": {
+    "name": "Rocha Koa'ki Meiru",
+    "effect": "Quando este card for destruído em batalha e enviado para o Cemitério, você pode adicionar 1 \"Iron Core of Koa'ki Meiru\" ou 1 monstro \"Koa'ki Meiru\" de Nível 4 ou menos do seu Deck à sua mão."
+  },
+  "Koa'ki Meiru Ghoulungulate": {
+    "name": "Goulungulate Koa'ki Meiru",
+    "effect": "Durante cada uma das suas Fases Finais, destrua este card, a menos que você envie 1 \"Iron Core of Koa'ki Meiru\" da sua mão para o Cemitério ou revele 1 monstro do Tipo Zumbi na sua mão. Se um monstro \"Koa'ki Meiru\" que você controla seria destruído em batalha ou por um efeito de card, você pode remover do jogo 1 monstro \"Koa'ki Meiru\" no seu Cemitério em vez disso."
+  },
+  "Koa'ki Meiru Gravirose": {
+    "name": "Rosa Gravitacional Koa'ki Meiru",
+    "effect": "Durante cada uma das suas Fases Finais, destrua este card, a menos que você envie 1 \"Iron Core of Koa'ki Meiru\" da sua mão para o Cemitério ou revele 1 monstro do Tipo Planta na sua mão. Durante cada uma das suas Fases de Apoio, você pode enviar 1 monstro de Nível 3 ou menos do seu Deck para o seu Cemitério."
+  },
+  "Koa'ki Meiru Prototype": {
+    "name": "Protótipo Koa'ki Meiru",
+    "effect": "Se um monstro \"Koa'ki Meiru\" com a face para cima no campo seria destruído durante a Fase Final, você pode destruir este card em vez disso. Quando um monstro \"Koa'ki Meiru\" com a face para cima no campo for destruído durante a Fase Final, você pode Invocar por Invocação-Especial 1 \"Ficha de Koa'ki Meiru\" (Tipo Rocha/TERRA/Nível 4/ATK 1800/DEF 1800)."
+  },
+  "Koa'ki Meiru Rooklord": {
+    "name": "Senhor da Torre Koa'ki Meiru",
+    "effect": "Durante cada uma das suas Fases Finais, destrua este card, a menos que você envie 1 \"Iron Core of Koa'ki Meiru\" da sua mão para o Cemitério ou revele 1 monstro do Tipo Guerreiro na sua mão. Você pode Invocar este card por Invocação-Tributo ao oferecer 1 monstro \"Koa'ki Meiru\" como Tributo. Quando este card for Invocado por Invocação-Normal, você pode remover do jogo 1 card \"Koa'ki Meiru\" no seu Cemitério para destruir até 2 cards que seu oponente controla."
+  },
+  "Koa'ki Meiru Token": {
+    "name": "Ficha de Koa'ki Meiru",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Koa'ki Meiru Prototype\"."
+  },
+  "Koa'ki Ring": {
+    "name": "Anel Koa'ki",
+    "effect": "Revele 1 \"Iron Core of Koa'ki Meiru\" na sua mão para selecionar 1 monstro com a face para cima no campo. Destrua esse monstro e ambos os duelistas sofrem 1000 de dano."
+  },
+  "Koalo-Koala": {
+    "name": "Koalo-Koala",
+    "effect": "\"Sea Koala\" + \"Tree Otter\"\nVocê pode enviar 1 monstro do Tipo Besta da sua mão para o Cemitério para escolher 1 monstro que seu oponente controla; destrua-o."
+  },
+  "Kunoichi": {
+    "name": "Kunoichi",
+    "effect": "Quando o controle deste card com a face para cima mudar, seu novo controlador descarta 1 card aleatório."
+  },
+  "Lady of D.": {
+    "name": "Dama do D.",
+    "effect": "Seu oponente não pode escolher monstros do Tipo Dragão com a face para cima que você controla como alvo de ataques. Se este card no campo seria destruído em batalha ou por um efeito de card, você pode enviar 1 monstro do Tipo Dragão da sua mão para o Cemitério em vez disso."
+  },
+  "Lady Panther": {
+    "name": "Dama Pantera",
+    "effect": "Ofereça este card com a face para cima como Tributo para devolver 1 dos seus monstros destruídos em batalha durante este turno para o topo do seu Deck."
+  },
+  "Lancer Dragonute": {
+    "name": "Lanceiro Dragúnio",
+    "effect": "Se este card atacar um monstro em Posição de Defesa, cause Dano de Batalha perfurante ao seu oponente."
+  },
+  "Lancer Lindwurm": {
+    "name": "Lanceiro Lindwurm",
+    "effect": "Se este card atacar um monstro em Posição de Defesa, cause Dano de Batalha perfurante ao seu oponente."
+  },
+  "Land of the Ojamas (Skill Card)": {
+    "name": "Terra dos Ojamás (Skill Card)",
+    "effect": "Uma vez por turno: você pode enviar 1 card \"Ojama\" da sua mão para o Cemitério; Invoque por Invocação-Especial 1 monstro \"Ojama\" do seu Cemitério. Enquanto você controlar um monstro \"Ojama\", troque o ATK/DEF originais de todos os monstros no campo."
+  },
+  "Laval Blaster": {
+    "name": "Blaster Laval",
+    "effect": "Quando este card for Invocado por Invocação-Normal, se você tiver um monstro \"Laval\" no seu Cemitério que não seja \"Laval Blaster\": você pode escolher um número de 1 a 5 e, depois, enviar esse número de cards do topo do seu Deck para o Cemitério; este card ganha 200 de ATK para cada monstro \"Laval\" enviado para o Cemitério para ativar este efeito."
+  },
+  "Laval Burner": {
+    "name": "Queimador Laval",
+    "effect": "Se você tiver 3 ou mais monstros \"Laval\" com nomes diferentes no seu Cemitério, você pode Invocar este card por Invocação-Especial (da sua mão)."
+  },
+  "Laval Coatl": {
+    "name": "Coatl Laval",
+    "effect": "Se você tiver 3 ou mais monstros \"Laval\" com nomes diferentes no seu Cemitério, você pode Invocar este card por Invocação-Especial (da sua mão)."
+  },
+  "Laval Dual Slasher": {
+    "name": "Cortador Duplo Laval",
+    "effect": "1 Regulador + 1 ou mais monstros de FOGO não-Reguladores\nEste card ganha efeitos com base no número de monstros \"Laval\" no seu Cemitério:\n● 2+: Uma vez por turno, se este card atacar um monstro em Posição de Defesa, ele pode atacar novamente em seguida.\n● 3+: Se este card atacar um monstro em Posição de Defesa, cause Dano de Batalha perfurante ao seu oponente."
+  },
+  "Laval Forest Sprite": {
+    "name": "Duende da Floresta Laval",
+    "effect": "Quando este card for enviado do campo para o Cemitério: todos os monstros \"Laval\" com a face para cima que você controla atualmente ganham 200 de ATK para cada monstro \"Laval\" no seu Cemitério, até a Fase Final."
+  },
+  "Laval Judgment Lord": {
+    "name": "Senhor do Julgamento Laval",
+    "effect": "Uma vez por turno: você pode banir 1 monstro \"Laval\" do seu Cemitério; cause 1000 de dano ao seu oponente. \"Laval Judgment Lord\" não pode declarar um ataque no turno em que este efeito for ativado."
+  },
+  "Laval Lakeside Lady": {
+    "name": "Dama da Margem do Lago Laval",
+    "effect": "Se este card estiver no seu Cemitério e você tiver 3 ou mais monstros \"Laval\" com nomes diferentes no seu Cemitério: você pode banir este card e 1 outro monstro \"Laval\" do seu Cemitério para escolher 1 card Baixado que seu oponente controla; destrua o alvo."
+  },
+  "Laval Magma Cannoneer": {
+    "name": "Canhoneiro de Magma Laval",
+    "effect": "Até duas vezes por turno: você pode enviar 1 monstro de FOGO da sua mão para o Cemitério; cause 500 de dano ao seu oponente."
+  },
+  "Laval Miller": {
+    "name": "Moleiro Laval",
+    "effect": "Quando este card for destruído em batalha e enviado para o Cemitério: você pode enviar 2 monstros \"Laval\" do seu Deck para o Cemitério."
+  },
+  "Laval Stennon": {
+    "name": "Stennon Laval",
+    "effect": "1 Regulador + 1 ou mais monstros de FOGO não-Reguladores\nQuando este card for Invocado por Invocação-Sincro: envie 1 card da sua mão para o Cemitério. Durante o turno de qualquer duelista, quando este card for alvo de um efeito de card: você pode banir 1 monstro \"Laval\" do seu Cemitério; negue a ativação e, se isso acontecer, destrua o card que escolheu este card como alvo."
+  },
+  "Laval the Greater": {
+    "name": "Laval, o Maior",
+    "effect": "1 Regulador + 1 ou mais monstros de FOGO não-Reguladores\nQuando este card for Invocado por Invocação-Sincro: envie 1 card da sua mão para o Cemitério. Se este card seria destruído por um efeito de card, você pode banir 1 monstro \"Laval\" do seu Cemitério em vez disso."
+  },
+  "Laval Token": {
+    "name": "Ficha de Laval",
+    "effect": "Este card pode ser usado como qualquer Ficha."
+  },
+  "Legendary Dueling Field": {
+    "name": "Campo de Duelo Lendário",
+    "effect": "Um campo de batalha para aqueles que acreditam nos Decks que construíram, para aqueles que nunca viram as costas para nenhum inimigo, para aqueles corajosos o suficiente para lutar até o fim e realizar rituais que decidem vencedores e perdedores. Dizem que quando eles unem seus corações com os corações de seus cards por meio de laços e dão um passo à frente jurando por seu orgulho e suas almas, podem abrir um caminho que continua em direção ao futuro ainda não terminado."
+  },
+  "Legendary Wind-Up Key": {
+    "name": "Chave de Dá Corda Lendária",
+    "effect": "Mude todos os monstros \"Wind-Up\" com a face para cima que você controla para Posição de Defesa com a face para baixo."
+  },
+  "Lekunga Token": {
+    "name": "Ficha de Lekunga",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Lekunga\"."
+  },
+  "Level Modulation": {
+    "name": "Modulação de Nível",
+    "effect": "Seu oponente compra 2 cards. Invoque por Invocação-Especial 1 monstro \"LV\" do seu Cemitério, ignorando as condições de Invocação. O monstro Invocado por Invocação-Especial por este efeito não pode atacar, nem ativar ou aplicar seu efeito neste turno."
+  },
+  "Level Tuning": {
+    "name": "Afinação de Nível",
+    "effect": "Reduza o Nível de todos os monstros com a face para cima que você controla em 1, até a Fase Final."
+  }
+}

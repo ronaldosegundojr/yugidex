@@ -1,0 +1,46 @@
+{
+  "Don Thousand/Monster A": {
+    "name": "Dom Mil/Monstro A",
+    "effect": "Não pode ser Invocado por Invocação-Especial. Deve ser Invocado por Invocação-Normal/Baixado ao oferecer 1 Ficha \"Number\" como Tributo. Uma vez por turno: você pode oferecer todos os outros monstros que você controla como Tributo; cause dano a 1 oponente igual ao ATK combinado dos monstros oferecidos como Tributo.-Eu Invoco \"Number C1: Numeron Chaos Gate Sunya\"!-"
+  },
+  "Don Thousand/Monster B": {
+    "name": "Dom Mil/Monstro B",
+    "effect": "Não pode ser Invocado por Invocação-Normal/Baixado. Deve ser Invocado por Invocação-Especial por \"Don Thousand/Spell C\" e não pode ser Invocado por Invocação-Especial por outros meios. No final da Fase de Batalha: destrua o máximo de monstros que seu oponente controla e, depois, você pode Invocar todos os monstros destruídos por este efeito por Invocação-Especial no seu lado do campo em Posição de Defesa com a face para cima. Se este card seria destruído, você pode destruir 1 outro monstro que você controla em vez disso.\n-Eu Invoco \"Number C1000: Numerounius\"!-"
+  },
+  "Don Thousand/Monster C": {
+    "name": "Dom Mil/Monstro C",
+    "effect": "Não pode ser Invocado por Invocação-Normal/Baixado. Deve ser Invocado por Invocação-Especial (da sua mão) quando um \"Don Thousand/Monster B\" que você controla for destruído e não pode ser Invocado por Invocação-Especial por outros meios. Este card não pode ser destruído por efeitos de card e, além disso, não pode declarar um ataque. Seu oponente deve escolher este card como alvo de ataques e, durante a Fase Final dele, se ele não o fez, ele perde o Duelo.\n-Eu Invoco \"Number iC1000: Numerounius Numerounia\"!-"
+  },
+  "Don Thousand/Spell A": {
+    "name": "Dom Mil/Magia A",
+    "effect": "Efeito Impresso\nAté duas vezes por turno, este card não pode ser destruído por efeitos de card.-Eu ativo \"Numeron Network\"!-Efeito Oculto\nDurante o turno de qualquer duelista, se você não controlar outros cards: você pode enviar 1 Card de Magia/Armadilha da sua mão ou Deck para o Cemitério; como resolução do efeito deste card, siga o texto do card enviado como se você o tivesse usado."
+  },
+  "Don Thousand/Spell B": {
+    "name": "Dom Mil/Magia B",
+    "effect": "Invoque por Invocação-Especial 1 \"Ficha de Number 1\", 1 \"Ficha de Number 2\", 1 \"Ficha de Number 3\" e 1 \"Ficha de Number 4\" (ATK 2000/DEF 0). Estas Fichas ganham este efeito.\n● No final da Etapa de Dano, quando este card batalhar, dobre o ATK de todos os Monstros Ficha \"Number\" que você controla atualmente.\n-Eu ativo \"Numeron Calling\"!-"
+  },
+  "Don Thousand/Spell C": {
+    "name": "Dom Mil/Magia C",
+    "effect": "Se um \"Don Thousand/Monster A\" com a face para cima que você controla for destruído: Invoque por Invocação-Especial 1 \"Don Thousand/Monster B\" da sua mão ou Deck.\n-Eu ativo \"Numeron Chaos Ritual\"!-"
+  },
+  "Don Thousand/Trap A": {
+    "name": "Dom Mil/Armadilha A",
+    "effect": "Quando seu oponente Invocaria por Invocação-Especial exatamente 1 monstro enquanto você não controlar outros cards: negue a Invocação-Especial e, se isso acontecer, destrua-o e, depois, escolha 1 monstro no Deck do seu oponente e Invoque-o por Invocação-Especial no lado do campo dele.\n-Eu ativo \"Numeron Xyz Revision\"!-"
+  },
+  "Don Thousand/Trap B": {
+    "name": "Dom Mil/Armadilha B",
+    "effect": "Quando seu oponente ativar um Card de Magia enquanto você não controlar outros cards: negue a ativação e, se isso acontecer, destrua-o e, depois, escolha 1 Card de Magia no Deck do seu oponente e ative-o no lado do campo dele.\n-Eu ativo \"Numeron Spell Revision\"!-"
+  },
+  "Emperor's Key (card)": {
+    "name": "Chave do Imperador (card)",
+    "effect": "Este card pode ser usado como qualquer Ficha ou Marcador.\n\n―Quando uma crise ameaça o mundo, um herói aparecerá para salvá-lo. Isso é o ZEXAL."
+  },
+  "Fiend's Mirror (Normal)": {
+    "name": "Espelho do Demônio (Normal)",
+    "effect": "Um vidro arcano que atrai seus inimigos para o mundo do espelho."
+  },
+  "Masahiro the Dark Clown": {
+    "name": "Masahiro, o Palhaço das Trevas",
+    "effect": "VIRE: Escolha 1 monstro de Virar no seu Cemitério; o efeito deste card se torna o efeito do alvo.\n\"A chave para a vitória é nunca parar de acreditar no seu Deck!\""
+  }
+}

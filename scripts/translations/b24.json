@@ -1,0 +1,146 @@
+{
+  "\"Invitation\" to the Society": {
+    "name": "\"Convite\" para a Sociedade",
+    "effect": "Se o monstro do seu oponente estiver equipado com \"White Veil\" que você controla, assuma o controle desse monstro enquanto ele estiver equipado com \"White Veil\". Você só pode atacar com monstros equipados com \"White Veil\" no turno em que ativar \"White Veil\"."
+  },
+  "Aggiba, the Malevolent Sh'nn S'yo": {
+    "name": "Aggiba, o Sh'nn S'yo Malévolo",
+    "effect": "Este card não pode ser Invocado por Invocação-Especial. Para Invocar este card por Invocação-Tributo, você deve oferecer 3 monstros do Tipo Demônio como Tributo. Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, você vence a Partida."
+  },
+  "Armament of the Lethal Lords": {
+    "name": "Armamento dos Senhores Letais",
+    "effect": "Este card não pode ser Invocado por Invocação-Especial. Este card deve ser Invocado por Invocação-Tributo ao oferecer 3 monstros do Tipo Guerreiro no seu lado do campo como Tributo. Se este card atacar diretamente os PV do seu oponente e os reduzir a 0, o controlador deste card vence a Partida."
+  },
+  "Battle City Siren": {
+    "name": "Sirene da Cidade de Batalha",
+    "effect": "Uma vez por turno, durante sua Fase Principal, você pode mudar a posição de batalha de 1 monstro que seu oponente controla. Neste turno, o primeiro ataque que você declarar deve ter esse monstro como alvo. Esta Habilidade só pode ser usada duas vezes por Duelo."
+  },
+  "A Bountiful Ocean": {
+    "name": "Um Oceano Abundante",
+    "effect": "Enquanto \"Umi\" estiver com a face para cima no campo, aplique o seguinte:\n● Monstros de ÁGUA não-Efeito que você controla não são afetados pelos efeitos de monstros que não sejam de ÁGUA.\n● Uma vez por turno, você pode adicionar 1 monstro de ÁGUA do seu Cemitério à sua mão, mas pelo resto deste turno, você não pode ativar cards ou efeitos, até Invocar por Invocação-Normal esse monstro ou um card com o nome dele."
+  },
+  "Collector": {
+    "name": "Colecionador",
+    "effect": "Uma vez por Duelo, se seu oponente controlar um monstro, descarte 2 cards com tipos de card diferentes (Monstro, Magia, Armadilha) e, depois, adicione 1 card do seu Deck à sua mão do terceiro tipo."
+  },
+  "Cyberdark Scheme": {
+    "name": "Esquema Ciberdark",
+    "effect": "Uma vez por turno, você pode ativar 1 destas Habilidades.\n● Devolva 1 monstro \"Cyberdark\" com a face para cima ou para baixo que você controla para a mão (revele-o se estiver com a face para baixo) e, se isso acontecer, imediatamente depois que esta Habilidade resolver, você pode Invocar por Invocação-Normal 1 monstro \"Cyberdark\".\n● Uma vez por Duelo, envie 1 Card de Monstro da sua Zona de Magias & Armadilhas, equipado a um Monstro de Fusão \"Cyberdark\", para o Cemitério e, depois, equipe 1 monstro que seu oponente controla a esse monstro. Monstros de Fusão \"Cyberdark\" ganham ATK igual ao ATK original do monstro equipado a ele por esta Habilidade."
+  },
+  "Destructive Fate": {
+    "name": "Destino Destrutivo",
+    "effect": "Durante o seu turno, quando você lançaria uma moeda para o efeito de um monstro ou Magia (uma vez por turno para cada tipo de card), você pode perder metade dos seus PV para declarar o(s) resultado(s) em vez disso. Durante a Fase Final do seu 3º turno, vire este card."
+  },
+  "Dig Site Inspection": {
+    "name": "Inspeção do Local de Escavação",
+    "effect": "Uma vez por turno, durante sua Fase de Compra, antes de comprar, você pode escavar o card do topo do seu Deck e colocá-lo no topo ou no fundo do Deck. Depois que você colocar um segundo card no fundo do seu Deck com esta Habilidade, vire este card."
+  },
+  "Dino Brain Immunity": {
+    "name": "Imunidade Cerebral de Dinossauro",
+    "effect": "Aplique as seguintes Habilidades.\n● As posições de batalha de monstros Dinossauro não podem ser mudadas por Cards de Armadilha ou efeitos.\n● Monstros Dinossauro de Nível 7 ou mais no campo não podem ser alvo de Cards de Magia ou efeitos."
+  },
+  "The Dragon Hunting Swordsman": {
+    "name": "O Espadachim Caçador de Dragões",
+    "effect": "Uma vez por Duelo, você pode descartar 1 card e, depois, Invocar por Invocação-Fusão 1 Monstro de Fusão que mencione \"Buster Blader\", usando monstros da sua mão ou campo como matéria. Enquanto o único monstro que você controla for \"Buster Blader\" ou um Monstro de Fusão que o mencione, monstros no Cemitério do seu oponente se tornam Dragões."
+  },
+  "E☆HERO Pit Boss": {
+    "name": "E☆HERO Chefe de Pista",
+    "effect": "3 monstros de Nível 6\nDeve ser Invocado por Invocação-Xyz e não pode ser Invocado por Invocação-Especial por outros meios. Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, enquanto tiver uma Matéria Xyz associada que era originalmente do Tipo Mago, você vence a Partida."
+  },
+  "Food Chain": {
+    "name": "Cadeia Alimentar",
+    "effect": "Uma vez por turno, você pode aplicar 1 destas Habilidades.\n● Destrua 1 monstro Dinossauro ou Réptil que você controla e, depois, Invoque por Invocação-Especial 1 monstro Dinossauro cujo Nível seja 1 maior da sua mão ou Deck.\n● Você pode Invocar por Invocação-Tributo 1 monstro Dinossauro banindo 2 monstros Dinossauro e/ou Réptil do seu Cemitério em vez de oferecer Tributo (ainda é considerado uma Invocação-Tributo)."
+  },
+  "Gatebridgeo the Waterfront Warbeast": {
+    "name": "Gatebridgeo, a Besta de Guerra da Orla",
+    "effect": "Não pode ser Invocado por Invocação-Especial. Requer 3 Tributos Dinossauro para ser Invocado por Invocação-Normal (não pode ser Baixado por Invocação-Normal). Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, você vence a Partida."
+  },
+  "Grandopolis, The Eternal Golden City": {
+    "name": "Grandópolis, a Cidade Dourada Eterna",
+    "effect": "3 monstros de Nível 8\nDeve ser Invocado por Invocação-Xyz e não pode ser Invocado por Invocação-Especial por outros meios. Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, enquanto tiver uma Matéria Xyz associada que era originalmente do Tipo Máquina, você vence a Partida."
+  },
+  "Grizzly, the Red Star Beast": {
+    "name": "Grizzly, a Besta da Estrela Vermelha",
+    "effect": "1 Regulador de TERRA + 2 ou mais monstros do Tipo Besta não-Reguladores\nEste card não pode ser Invocado por Invocação-Especial, exceto por Invocação-Sincro. Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, você vence a Partida."
+  },
+  "Heart of a Warrior": {
+    "name": "Coração de um Guerreiro",
+    "effect": "Uma vez por turno, você pode descartar 1 card e, depois, Invocar por Invocação-Especial 1 Monstro de Fusão não-Efeito Guerreiro de Nível 5 ou menos do seu Deck Adicional. (Isso é considerado uma Invocação-Fusão.) Você não pode Invocar por Invocação-Normal/Baixar no turno em que ativar esta Habilidade."
+  },
+  "Insect Infestation": {
+    "name": "Infestação de Insetos",
+    "effect": "\"Parasite Paracide(s)\" no campo não pode ser oferecido como Tributo. Se todos os monstros no campo forem monstros Inseto, monstros Inseto de Nível 7 ou mais que você controla podem atacar diretamente. Uma vez por Duelo, você pode descartar 1 card e, depois, colocar 1 \"Parasite Paracide\" do seu Cemitério no topo do Deck do seu oponente com a face para cima. Trate-o como se tivesse sido adicionado ao Deck dele pelo efeito desse card."
+  },
+  "Intel from the \"Cosmos\"": {
+    "name": "Informações do \"Cosmos\"",
+    "effect": "Seu oponente deve revelar todos os cards que comprar durante a Fase de Compra dele."
+  },
+  "Iron Grit": {
+    "name": "Fibra de Ferro",
+    "effect": "\"Gearfried the Iron Knight(s)\" que você controla não é afetado por efeitos de card."
+  },
+  "Juno, the Celestial Goddess": {
+    "name": "Juno, a Deusa Celestial",
+    "effect": "Não pode ser Invocado por Invocação-Especial, exceto por Invocação-Pêndulo. Requer 3 Tributos do Tipo Fada para ser Invocado por Invocação-Normal (não pode ser Baixado por Invocação-Normal). Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, enquanto você não controlar outros monstros, você vence a Partida."
+  },
+  "KaibaCorp Research": {
+    "name": "Pesquisa da KaibaCorp",
+    "effect": "Uma vez por Duelo, embaralhe 1 monstro do seu Cemitério no Deck Principal e, depois, envie 1 card da sua mão para o Cemitério. Durante sua próxima Fase de Compra, compre 2 cards em vez de 1."
+  },
+  "Kaiser Eagle, the Heavens' Mandate": {
+    "name": "Águia Kaiser, o Mandato dos Céus",
+    "effect": "3+ Monstros de Efeito do Tipo Besta Alada\nDeve ser Invocado por Invocação-Link. Se este card extra Conectado atacar seu oponente diretamente e reduzir os PV dele a 0, você vence a Partida."
+  },
+  "King Landia the Goldfang": {
+    "name": "Rei Landia, a Presa Dourada",
+    "effect": "3 monstros de Nível 8\nDeve ser Invocado por Invocação-Xyz e não pode ser Invocado por Invocação-Especial por outros meios. Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, enquanto tiver uma Matéria Xyz associada que era originalmente do Tipo Besta-Guerreira, você vence a Partida."
+  },
+  "Kuzunoha, the Onmyojin": {
+    "name": "Kuzunoha, a Onmyoji",
+    "effect": "Não pode ser Invocado por Invocação-Especial, exceto por Invocação-Pêndulo. Requer 3 Tributos do Tipo Mago para ser Invocado por Invocação-Normal (não pode ser Baixado por Invocação-Normal). Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, enquanto você não controlar outros monstros, você vence a Partida."
+  },
+  "Leonardo's Silver Skyship": {
+    "name": "Nave-Céu de Prata de Leonardo",
+    "effect": "\"Suas asas exibem sua glória.\nA prova de suas glórias é contada em lendas.\""
+  },
+  "Lorelei, the Symphonic Arsenal": {
+    "name": "Lorelei, o Arsenal Sinfônico",
+    "effect": "Este card não pode ser Invocado por Invocação-Especial. Para Invocar este card por Invocação-Tributo, você deve oferecer 3 monstros do Tipo Máquina como Tributo. Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, você vence a Partida."
+  },
+  "The Machine Menace": {
+    "name": "A Ameaça das Máquinas",
+    "effect": "Uma vez por Duelo, se seu oponente controlar uma Armadilha com a face para cima, ofereça 1 monstro Máquina ou Psíquico que você controla como Tributo e, depois, Invoque por Invocação-Especial 1 \"Jinzo\" da sua mão ou Cemitério."
+  },
+  "Magician's Scales (Skill Card)": {
+    "name": "Balanças do Mágico (Skill Card)",
+    "effect": "Uma vez por Duelo, você pode oferecer 1 monstro \"Arcana Force\" como Tributo e adicionar 1 Magia Normal do seu Deck à sua mão e, além disso, pelo resto do Duelo, você não pode Invocar nenhum monstro, exceto monstros \"Arcana Force\"."
+  },
+  "Major in Paleontology": {
+    "name": "Graduação em Paleontologia",
+    "effect": "Uma vez por turno, você pode banir 1 card da sua mão com a face para baixo e, depois, coloque 1 Marcador de Escavação nesta Habilidade (máx. 1). Se um ou mais Monstros de Fusão \"Fossil\" com a face para cima que você controla for destruído por efeito de card, você pode colocar 1 Marcador de Escavação nesta Habilidade (máx. 1). Uma vez por turno, durante sua Fase Principal, você pode remover 1 Marcador de Escavação desta Habilidade para Invocar por Invocação-Fusão 1 Monstro de Fusão \"Fossil\" do seu Deck Adicional, banindo as matérias mencionadas nele de qualquer Cemitério (exceto matérias com um requisito específico de Cemitério listado). (Isso é considerado uma Invocação-Fusão com \"Fossil Fusion\".)"
+  },
+  "Malicious Motivation": {
+    "name": "Motivação Maliciosa",
+    "effect": "Uma vez por Duelo, se seu oponente controlar 3 monstros, descarte 1 card e, depois, destrua todos os monstros que seu oponente controla e, além disso, pelo resto deste turno, qualquer dano que seu oponente sofra é reduzido pela metade."
+  },
+  "Masterful Magician, Servant of the Sanctuary": {
+    "name": "Mestre Mágico, Servo do Santuário",
+    "effect": "Não pode ser Invocado por Invocação-Especial. Requer 3 Tributos do Tipo Mago para ser Invocado por Invocação-Normal (não pode ser Baixado por Invocação-Normal). Se este card atacar seu oponente diretamente e reduzir os PV dele a 0, você vence a Partida."
+  },
+  "Mokey Mokey Madness": {
+    "name": "Loucura Mokey Mokey",
+    "effect": "Aplique a seguinte Habilidade.\n● Se todos os monstros que você controla forem monstros \"Mokey Mokey\" (mín. 1), Monstros de Efeito não podem atacar no turno em que forem Invocados.\nUma vez por Duelo, se você controlar 2 ou mais monstros Fada, você pode colocar 1 Magia Contínua \"Mokey Mokey\" do seu Deck com a face para cima na sua Zona de Magias & Armadilhas e, se isso acontecer, destrua 1 monstro que você controla. Uma vez por Duelo, você pode descartar 1 card para Invocar por Invocação-Fusão 1 \"Mokey Mokey King\" do seu Deck Adicional, usando monstros da sua mão ou campo como Matéria de Fusão."
+  },
+  "My Precious Queen!": {
+    "name": "Minha Preciosa Rainha!",
+    "effect": "Você pode Invocar por Invocação-Normal monstros Inseto de Nível 7 com 1 Tributo a menos. Uma vez por turno, durante a Fase Final, você pode Invocar por Invocação-Especial 1 \"Ficha de Monstro Inseto\" (Inseto/TERRA/Nível 1/ATK 100/DEF 100). Esta Ficha não pode ser oferecida como Tributo, exceto para a Invocação-Tributo de um monstro Inseto ou pelos efeitos deles. Você pode oferecer 1 monstro Inseto da sua mão como Tributo em vez disso, ao atacar com monstros \"Insect Queen\" que você controla."
+  },
+  "Now You See Them...": {
+    "name": "Agora Você os Vê...",
+    "effect": "Uma vez por Duelo, se você tiver 2 ou mais \"Dark Magician(s)\" na sua mão, revele sua mão e coloque qualquer número de \"Dark Magician(s)\" da sua mão no fundo do(s) Deck(s) e, depois, compre cards com base em quantos cards você colocou.\n● 1: 1 card.\n● 2: 3 cards.\n● 3: 5 cards."
+  },
+  "Premature Material": {
+    "name": "Matéria Prematura",
+    "effect": "Uma vez por Duelo, perca 800 PV e revele 1 Monstro de Fusão no seu Deck Adicional e, depois, Invoque por Invocação-Especial 1 Monstro Normal do seu Cemitério cujo nome seja mencionado nesse Monstro de Fusão como matéria, mas o ATK/DEF dele se tornam 0."
+  }
+}

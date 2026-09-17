@@ -1,0 +1,26 @@
+{
+  "Throwstone Unit": {
+    "name": "Unidade Arremessadora de Pedras",
+    "effect": "Ofereça 1 monstro do Tipo Guerreiro no seu lado do campo como Tributo para destruir 1 monstro com a face para cima no campo cuja DEF seja igual ou menor que o ATK de \"Throwstone Unit\"."
+  },
+  "Thunder Option Token": {
+    "name": "Ficha de Trovão Opcional",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Blue Thunder T-45\". Esta Ficha não pode ser usada como Tributo para uma Invocação-Tributo."
+  },
+  "Thunder Short": {
+    "name": "Curto-Circuito de Trovão",
+    "effect": "Cause 400 de dano ao seu oponente para cada monstro que ele controla."
+  },
+  "Time Dimension Hole": {
+    "name": "Buraco da Dimensão Temporal",
+    "effect": "Embaralhe seu Deck e, depois, escave o card do topo do seu Deck e, se for um monstro que possa ser Invocado por Invocação-Normal/Baixado, Invoque-o por Invocação-Especial. Se não for, ou não puder ser Invocado por Invocação-Especial, coloque-o no topo ou no fundo do Deck. Você só pode ativar 1 \"Time Dimension Hole\" por turno."
+  },
+  "Timeater": {
+    "name": "Devorador de Tempo",
+    "effect": "Se este card destruir um monstro do oponente em batalha: seu oponente pula a próxima Fase Principal 1 dele."
+  },
+  "Tindangle Token": {
+    "name": "Ficha de Tindangle",
+    "effect": "Este card pode ser usado como uma \"Ficha de Tindangle\".\n\n*Se usado como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa Ficha."
+  }
+}

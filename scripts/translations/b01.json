@@ -1,0 +1,178 @@
+{
+  "Absolute King - Megaplunder": {
+    "name": "Rei Absoluto - Megasaqueadora",
+    "effect": "O rei dos dinossauros que governa a Terra. Seu rugido poderoso faz os inimigos tremerem de medo!"
+  },
+  "Accumulated Fortune": {
+    "name": "Fortuna Acumulada",
+    "effect": "Ative apenas como Elo 4 ou mais alto. Compre 2 cards. Você não pode ativar este card se vários cards/efeitos com o mesmo nome estiverem nessa Corrente."
+  },
+  "Akakieisu": {
+    "name": "Akakieisu",
+    "effect": "Um feiticeiro que profere feitiços que deixam monstros inconscientes."
+  },
+  "Akihiron": {
+    "name": "Akihiron",
+    "effect": "Esta criatura estranha se esconde nos cantos escuros e profundos dos sete mares."
+  },
+  "Amabie": {
+    "name": "Amabie",
+    "effect": "No início da sua Fase Principal 1: você pode revelar este card da sua mão; cada duelista ganha 300 PV."
+  },
+  "Amatsu-Okami of the Divine Peaks": {
+    "name": "Amatsu-Okami dos Picos Divinos",
+    "effect": "3+ Monstros de Efeito Dragão\nDeve ser Invocado por Invocação-Link. Se este card com Link Extra atacar seu oponente diretamente e reduzir os PV dele a 0, você vence a Partida."
+  },
+  "An Unfortunate Report": {
+    "name": "Um Relatório Azarado",
+    "effect": "Seu oponente conduz a Fase de Batalha seguinte dele duas vezes."
+  },
+  "Ancient Ruler Rises": {
+    "name": "O Antigo Governante Ascende",
+    "effect": "Aplique as seguintes Habilidades:\n● Uma vez por turno, você pode enviar 1 monstro Zumbi de Nível 2 do seu Deck para o Cemitério e colocar 1 dos seus \"The First Sarcophagus\", \"The Second Sarcophagus\" ou \"The Third Sarcophagus\" do seu Deck, Cemitério ou banido, com a face para cima na sua Zona de Magias & Armadilhas. (Isto é considerado como colocado pelo efeito de \"The First Sarcophagus\".)\n● Cada \"Spirit of the Pharaoh\" que você controla ganha ATK igual ao número total de \"Pharaoh's Servant\" e \"Pharaonic Protector\" no seu campo e no seu Cemitério x 900."
+  },
+  "Ankuriboh": {
+    "name": "Ankuriboh",
+    "effect": "Quando um monstro do oponente declarar um ataque: você pode descartar este card e, depois, escolher 1 monstro em qualquer Cemitério, exceto este card; Invoque-o por Invocação-Especial no seu campo, mas envie-o para o Cemitério durante a Fase Final. Se este card for destruído em batalha ou por efeito de card e enviado para o Cemitério: você pode adicionar 1 \"Monster Reborn\" do seu Deck ou Cemitério à sua mão durante a Fase Final deste turno. Você só pode usar cada efeito de \"Ankuriboh\" uma vez por turno."
+  },
+  "Anotherverse Dragon": {
+    "name": "Dragão de Outro Verso",
+    "effect": "Este dragão secreto conquistou muitas dimensões, mas só pode ser visto pelo campeão do tempo."
+  },
+  "Anotherverse Gluttonia": {
+    "name": "Glutônia de Outro Verso",
+    "effect": "Uma abominação colossal e malévola, devoradora de diversas dimensões, que molda vários domínios onde apenas os mais poderosos ousam habitar."
+  },
+  "Anteatereatingant": {
+    "name": "Formigueiro",
+    "effect": "Este card não pode ser Invocado por Invocação-Normal nem Baixado. Este card não pode ser Invocado por Invocação-Especial exceto ao enviar 2 Cards de Magia ou Armadilha que você controla para o Cemitério. Você pode destruir 1 Card de Magia ou Armadilha que seu oponente controla. Se você ativar este efeito, este card não pode atacar durante este turno."
+  },
+  "Aqua Dragon": {
+    "name": "Dragão Aqua",
+    "effect": "\"Fairy Dragon\" + \"Amazon of the Seas\" + \"Zone Eater\""
+  },
+  "Archfiend's Conscription": {
+    "name": "Alistamento do Arquidemônio",
+    "effect": "Você não pode Invocar/Baixar monstros que não sejam demônios. Uma vez por turno, durante sua Fase Principal, você pode lançar um dado de seis faces. Se ativar, você perde PV igual ao resultado x 200, mas se o resultado for 2, 3 ou 4, você pode Invocar por Invocação-Especial 1 monstro \"Archfiend\" com Nível igual ao resultado da sua mão, Deck ou Cemitério."
+  },
+  "Archfiend's Promotion": {
+    "name": "Promoção do Arquidemônio",
+    "effect": "Uma vez por turno, durante sua Fase Principal, se você controlar \"Vilepawn Archfiend\" e seu oponente não controlar nenhum card na mesma coluna dele, você pode oferecê-lo como Tributo para Invocar por Invocação-Especial 1 monstro \"Archfiend\" de Nível 8 ou menos da sua mão ou Deck que tenha \"Queen\", \"Bishop\", \"Rook\" ou \"Knight\" no nome dele."
+  },
+  "Arma Knight": {
+    "name": "Cavaleiro Arma",
+    "effect": "Um guerreiro amonito que protegeu os mares ao longo da história."
+  },
+  "Armed and Ready!": {
+    "name": "Armado e Pronto!",
+    "effect": "Uma vez por Duelo, durante sua Fase Principal, você pode enviar 1 monstro \"LV\" que você controla para o Cemitério e, depois, Invocar por Invocação-Especial o monstro \"LV\" mencionado no texto dele da sua mão, Deck ou Cemitério, como se fosse Invocado pelo efeito do monstro enviado."
+  },
+  "Armor Blast": {
+    "name": "Explosão de Armadura",
+    "effect": "Escolha 1 card \"Inzektor\" com a face para cima que você controla e 2 cards com a face para cima que seu oponente controla; destrua-os."
+  },
+  "Armored Bee": {
+    "name": "Abelha Blindada",
+    "effect": "Uma vez por turno: você pode escolher 1 monstro com a face para cima que seu oponente controla; diminua pela metade o ATK do alvo até a Fase Final."
+  },
+  "Army Ant Token": {
+    "name": "Ficha de Formiga do Exército",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Multiplication of Ants\". Esta Ficha não pode ser usada como Tributo para uma Invocação-Tributo."
+  },
+  "Asleep at the Switch": {
+    "name": "Dormindo no Posto",
+    "effect": "Quando seu oponente ganhar PV: escolha 1 monstro que seu oponente controla; destrua o alvo."
+  },
+  "Asmo Token": {
+    "name": "Ficha Asmo",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Darklord Asmodeus\". Esta Ficha não pode ser destruída por efeitos de card."
+  },
+  "Attack Gainer": {
+    "name": "Ganho de Ataque",
+    "effect": "Se este card for enviado para o Cemitério como Monstro-Matéria Sincro, selecione 1 monstro com a face para cima que seu oponente controla. O monstro selecionado do oponente perde 1000 de ATK até a Fase Final."
+  },
+  "Attack Guidance Armor": {
+    "name": "Armadura de Orientação de Ataque",
+    "effect": "Quando um monstro declarar um ataque: ative 1 desses efeitos;\n● Destrua o monstro atacante.\n● Escolha 1 monstro em qualquer campo, exceto o monstro atacante; mude o alvo do ataque para ele e realize o cálculo de dano.\nVocê só pode ativar 1 \"Attack Guidance Armor\" por turno."
+  },
+  "B. Dragon Jungle King": {
+    "name": "B. Dragão Rei da Selva",
+    "effect": "Um dragão negro como carvão encontrado nas selvas mais profundas que normalmente devora árvores."
+  },
+  "B.E.S. Covered Core": {
+    "name": "B.E.S. Núcleo Coberto",
+    "effect": "Quando este card for Invocado por Invocação-Normal, coloque 2 marcadores nele. Este card não pode ser destruído em batalha. Se este card atacar ou for atacado, no final da Etapa de Dano jogue uma moeda e adivinhe. Se você errar, remova 1 marcador. Se este card batalhar sem marcadores, destrua-o no final da Etapa de Dano."
+  },
+  "B.E.S. Tetran": {
+    "name": "B.E.S. Tetrãn",
+    "effect": "Quando este card for Invocado por Invocação-Normal, coloque 3 marcadores nele. Este card não pode ser destruído em batalha. Se este card atacar ou for atacado, remova 1 marcador deste card no final da Etapa de Dano. Se não puder, destrua-o. Uma vez por turno, você pode remover 1 marcador deste card para destruir 1 Card de Magia ou Armadilha no campo."
+  },
+  "Bait Doll": {
+    "name": "Boneca Isca",
+    "effect": "Escolha 1 card Baixado na Zona de Cards de Magia & Armadilha; revele o alvo, force a ativação dele se for um Card de Armadilha e, depois, negue o efeito dele se o momento da ativação estiver incorreto e, se isso acontecer, destrua-o. (Se não for um Card de Armadilha, devolva-o com a face para baixo.) Quando este card resolver, embaralhe-o no Deck em vez de enviá-lo para o Cemitério."
+  },
+  "Barrier Wave": {
+    "name": "Onda de Barreira",
+    "effect": "Ative ao oferecer como Tributo 1 Monstro Sincro quando um monstro do oponente declarar um ataque. Coloque todos os monstros em Posição de Ataque que seu oponente controla em Posição de Defesa. Depois, cause dano ao seu oponente igual à DEF do monstro atacante."
+  },
+  "Batteryman Token": {
+    "name": "Ficha de Homem-Bateria",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Batteryman Solar\"."
+  },
+  "Battle Eagle Token": {
+    "name": "Ficha de Águia de Batalha",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Number 42: Galaxy Tomahawk\". Destrua esta Ficha durante a Fase Final do turno em que ela foi Invocada por Invocação-Especial."
+  },
+  "Battle Instinct": {
+    "name": "Instinto de Batalha",
+    "effect": "Ative apenas quando seu oponente declarar um ataque direto e você não controlar nenhum monstro. Invoque por Invocação-Especial 1 monstro do Tipo Besta de Nível 4 ou menos da sua mão, com a face para cima em Posição de Ataque."
+  },
+  "Battle Tuned": {
+    "name": "Sintonia de Batalha",
+    "effect": "Bana 1 monstro Regulador do seu Cemitério. Escolha 1 monstro com a face para cima que você controla; ele ganha ATK igual ao ATK do monstro banido."
+  },
+  "Beaked Snake": {
+    "name": "Cobra de Bico",
+    "effect": "Este monstro envolve o oponente e bica repetidamente com seu enorme bico."
+  },
+  "Beast Rising": {
+    "name": "Ascensão da Fera",
+    "effect": "Uma vez por turno, você pode banir 1 monstro do Tipo Besta ou Besta-Guerreira com a face para cima que você controla para selecionar 1 outro monstro do Tipo Besta ou Besta-Guerreira com a face para cima que você controla. O monstro selecionado ganha o ATK original do monstro banido para este efeito."
+  },
+  "Beast Striker": {
+    "name": "Golpeador da Fera",
+    "effect": "Uma vez por turno, você pode descartar 1 card para Invocar por Invocação-Especial 1 \"Moja\" do seu Deck."
+  },
+  "Beastking of the Swamps": {
+    "name": "Rei das Feras dos Pântanos",
+    "effect": "Você pode substituir este card por qualquer 1 Monstro-Matéria de Fusão. Quando fizer isso, o(s) outro(s) Monstro(s)-Matéria de Fusão deve(m) estar correto(s)."
+  },
+  "Beasts of Phantom": {
+    "name": "Feras do Fantasma",
+    "effect": "Durante sua Fase Principal, descarte 1 card e, depois, Invoque por Invocação-Fusão 1 \"Chimera the Flying Mythical Beast\" do seu Deck Adicional, usando monstros da sua mão ou do seu campo como Matéria de Fusão. Durante sua Fase Final, se \"Chimera the Flying Mythical Beast\" foi Invocado por Invocação-Fusão neste turno, você pode adicionar 1 monstro \"Phantom Beast\" do seu Cemitério à sua mão. Cada uma destas Habilidades só pode ser usada uma vez por turno."
+  },
+  "Beautiful Beast Trainer": {
+    "name": "Bela Treinadora de Feras",
+    "effect": "Uma rara domadora de feras com um chicote muito perigoso."
+  },
+  "Behold, Gate Guardian!": {
+    "name": "Contemple, Guardião do Portal!",
+    "effect": "Ative esta Habilidade durante sua Fase Principal. Embaralhe sua mão inteira no Deck e, depois, adicione 1 monstro de Nível 11 do seu Deck à sua mão e, se isso acontecer, você pode Invocar por Invocação-Especial até 2 monstros de Nível 7 com Atributos diferentes do seu Deck e/ou Cemitério, mas o ATK/DEF deles se torna 0 e os efeitos deles são negados. Enquanto você controlar \"Gate Guardian\", ele ganha o seguinte efeito.\n● Uma vez enquanto estiver com a face para cima no campo, quando este card for alvo de um ataque: você pode mudar o ATK do monstro atacante para 0, até o final da Etapa de Dano."
+  },
+  "Believe in Your Bro": {
+    "name": "Acredite no seu Parça",
+    "effect": "Uma vez por turno, você pode ativar 1 destas Habilidades com base no(s) monstro(s) com a face para cima que você controla:\n● \"Elemental HERO\": Descarte 1 Armadilha e, depois, adicione 1 monstro Máquina \"roid\" de Nível 6 ou menos do seu Cemitério à sua mão e, depois, você pode destruir 1 monstro que seu oponente controla cujo ATK seja menor ou igual ao do card adicionado.\n● Máquina \"roid\": Descarte 1 Magia e, depois, Invoque por Invocação-Especial 1 monstro Máquina \"roid\" ou \"Elemental HERO\" de Nível 6 ou menos do seu Deck em Posição de Defesa, mas negue os efeitos dele.\n● Ambos: Descarte 1 card e, depois, Invoque por Invocação-Fusão 1 Monstro de Fusão usando apenas monstros \"roid\" e \"Elemental HERO\" que você controla.\nCada uma destas Habilidades só pode ser usada uma vez por Duelo."
+  },
+  "Berserking": {
+    "name": "Fúria Berserk",
+    "effect": "Uma vez por turno, durante sua Fase Principal ou na Fase de Batalha do seu oponente, você pode selecionar 2 monstros do Tipo Besta com a face para cima no campo. Até o final do turno, 1 dos monstros selecionados perde metade do ATK e o outro ganha uma quantidade igual de ATK."
+  },
+  "Beware the Brothers Paradox!": {
+    "name": "Cuidado com os Irmãos Paradoxo!",
+    "effect": "Aplique as seguintes Habilidades:\n● Você pode Invocar por Invocação-Normal monstros de Nível 7 com 1 Tributo a menos.\n● Você pode Invocar por Invocação-Tributo 1 monstro de Nível 7 com a face para cima, além da sua Invocação-Normal/Baixar.\n● Seu oponente não sofre dano de efeito.\n● Você só pode atacar com 1 monstro a cada turno, mas esse monstro pode realizar um segundo ataque contra monstros durante cada Fase de Batalha."
+  },
+  "Bicorn Re'em": {
+    "name": "Bicorne Re'em",
+    "effect": "Se este card for enviado para o Cemitério como Monstro-Matéria Sincro para uma Invocação-Sincro, envie os 2 cards do topo do Deck do seu oponente para o Cemitério."
+  }
+}

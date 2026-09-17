@@ -1,0 +1,102 @@
+{
+  "Power Capsule": {
+    "name": "Cápsula de Poder",
+    "effect": "Selecione 1 \"Victory Viper XX03\" com a face para cima que você controla para ativar este card. Selecione 1 efeito de \"Victory Viper XX03\" e aplique-o como efeito deste card."
+  },
+  "Power Invader": {
+    "name": "Invasor de Poder",
+    "effect": "Se seu oponente controlar 2 ou mais monstros, você pode Invocar este card por Invocação-Normal sem oferecer Tributo."
+  },
+  "Power of Friendship": {
+    "name": "Poder da Amizade",
+    "effect": "Você não sofre dano de efeito dos efeitos de card do seu oponente durante o seu turno."
+  },
+  "Power Pickaxe": {
+    "name": "Picareta de Poder",
+    "effect": "Uma vez por turno, você pode selecionar e remover do jogo 1 monstro no Cemitério do seu oponente cujo Nível seja menor ou igual ao do monstro equipado, e fazer o monstro equipado ganhar 500 de ATK até a Fase Final."
+  },
+  "Power Pro Knight Sisters": {
+    "name": "Irmãs Cavaleiras Power Pro",
+    "effect": "O estádio está aberto e nossas estrelas estão prontas para levá-lo ao jogo de beisebol! É o começo de uma nova lenda do beisebol!\nApresentando: as três navegadoras do mundo Power Pro! À esquerda está Paa-chan, brilhante, enérgica e (geralmente) confiável. À direita temos Waa-chan, calma, séria e sensata (geralmente...). E Namiki está na frente, com o pequeno Chikuwa na bolsa, ajudando a animar todo mundo!'"
+  },
+  "Power Pro Lady Sisters": {
+    "name": "Irmãs Lady Power Pro",
+    "effect": "As três garotas Power Pro são melhores amigas! E a paixão delas por beisebol voa como um home run!\nAoi Hayakawa foi a primeira jogadora mulher da liga. Seu arremesso característico é um submarino chamado The Marine Ball!\nMizuki Tachibana é mais moleca que sua sempai, conhecida pela Magia da Lua Crescente e pelo amor ao pudim vendido no Pawado!\nHijiri Rokudo é uma receptora com um dom raro para beisebol! É melhor amiga de Mizuki desde o ensino fundamental e sua favorita no Pawado é a Kintsuba!'"
+  },
+  "Power Up!": {
+    "name": "Poder para Cima!",
+    "effect": "Ative esta Habilidade durante sua Fase Principal.\nUma vez por Duelo, você pode fazer 1 monstro com a face para cima no campo ganhar 500 de ATK até o final deste turno."
+  },
+  "Power-Up Adapter": {
+    "name": "Adaptador de Poder",
+    "effect": "Depois da ativação, trate este card como um Card de Equipamento e equipe-o a 1 monstro \"Morphtronic\" com a face para cima que você controla. O monstro equipado não pode atacar. Depois, selecione 1 monstro com a face para cima no campo, exceto o monstro equipado. Ele ganha ATK igual ao ATK do monstro equipado."
+  },
+  "Powered Tuner": {
+    "name": "Regulador Energizado",
+    "effect": "Este card ganha 500 de ATK para cada monstro Regulador com a face para cima no campo."
+  },
+  "Powerful Group of Guys": {
+    "name": "Grupo Poderoso de Caras",
+    "effect": "Enquanto você controlar exatamente 1 monstro \"Destiny HERO\" (e nenhum outro monstro), e seu oponente controlar mais monstros que você, Invoque por Invocação-Especial 1 monstro \"Destiny HERO\" da sua mão ou Deck com Nível menor que o monstro que você controla. Você só pode Invocar monstros \"Destiny HERO\" durante o turno em que ativar esta Habilidade. Vire este card no final do turno em que ativou esta Habilidade."
+  },
+  "Pride of the Weak": {
+    "name": "Orgulho dos Fracos",
+    "effect": "Quando um monstro de Nível 2 ou menos que você controla destruir um monstro do oponente em batalha e enviá-lo para o Cemitério, se você não tiver cards na sua mão, compre 2 cards."
+  },
+  "Primordial Soup": {
+    "name": "Sopa Primordial",
+    "effect": "Uma vez por turno, durante sua Fase Principal: você pode embaralhar até 2 monstros \"Evolsaur\" da sua mão no Deck e, depois, comprar o mesmo número de cards. Você só pode controlar 1 \"Primordial Soup\" com a face para cima."
+  },
+  "Princess Curran": {
+    "name": "Princesa Curran",
+    "effect": "Este card não pode ser Invocado por Invocação-Normal ou Baixado. Este card não pode ser Invocado por Invocação-Especial, exceto com \"Trial of the Princesses\". Durante sua Fase de Apoio, cause 600 de dano ao seu oponente para cada monstro que ele controla."
+  },
+  "Princess Pikeru": {
+    "name": "Princesa Pikeru",
+    "effect": "Este card não pode ser Invocado por Invocação-Normal ou Baixado. Este card não pode ser Invocado por Invocação-Especial, exceto com \"Trial of the Princesses\". Durante sua Fase de Apoio, ganhe 800 PV para cada monstro que você controla."
+  },
+  "Professor of Alchemy": {
+    "name": "Professor de Alquimia",
+    "effect": "\"Fichas de Besta de Alquimia\" podem atacar diretamente. Uma vez por turno, durante sua Fase Principal, você pode banir 1 monstro de Nível 4 ou menos da sua mão ou campo com a face para cima para Invocar por Invocação-Especial 1 \"Ficha de Besta de Alquimia\" (Tipo Rocha/Nível 3/ATK 500/DEF 500), com o mesmo Atributo do monstro banido. Ela não pode ser oferecida como Tributo, exceto para a Invocação-Tributo com a face para cima de \"Golden Homunculus\"."
+  },
+  "Psi-Blocker": {
+    "name": "Bloqueador Psi",
+    "effect": "Uma vez por turno: você pode declarar 1 nome de card; cards com esse nome e seus efeitos não podem ser usados até a Fase Final do próximo turno do seu oponente."
+  },
+  "Psi-Impulse": {
+    "name": "Impulso Psi",
+    "effect": "Ofereça 1 monstro do Tipo Psíquico como Tributo. Devolva todos os cards da mão do seu oponente ao Deck. Depois, ele compra 3 cards."
+  },
+  "Psychic Commander": {
+    "name": "Comandante Psíquico",
+    "effect": "Quando um monstro do Tipo Psíquico que você controla batalhar, durante a Etapa de Dano você pode pagar PV em múltiplos de 100 (máx. 500) para fazer o monstro com que ele está batalhando perder essa quantidade de ATK e DEF, até a Fase Final."
+  },
+  "Psychic Feel Zone": {
+    "name": "Zona de Sensação Psíquica",
+    "effect": "Selecione 2 dos seus monstros removidos do jogo (1 Regulador do Tipo Psíquico e 1 não-Regulador do Tipo Psíquico), devolva-os para o Cemitério e Invoque por Invocação-Especial 1 Monstro Sincro do Tipo Psíquico do seu Deck Adicional em Posição de Defesa com a face para cima, cujo Nível seja igual ao Nível total dos monstros devolvidos."
+  },
+  "Psychic Rejuvenation": {
+    "name": "Rejuvenescimento Psíquico",
+    "effect": "Ganhe 1000 PV para cada monstro do Tipo Psíquico com a face para cima que você controla."
+  },
+  "Psychic Soul": {
+    "name": "Alma Psíquica",
+    "effect": "Ofereça 1 monstro do Tipo Psíquico que você controla como Tributo. Ganhe PV iguais ao Nível do monstro oferecido como Tributo x 300."
+  },
+  "Psychic Trigger": {
+    "name": "Gatilho Psíquico",
+    "effect": "Ative somente enquanto seus PV forem menores que os do seu oponente. Selecione 2 monstros do Tipo Psíquico no seu Cemitério. Remova-os do jogo e compre 2 cards."
+  },
+  "Pursuit Chaser": {
+    "name": "Perseguidor Incansável",
+    "effect": "Quando um monstro em Posição de Defesa for destruído em batalha e enviado para o Cemitério, cause 500 de dano ao seu oponente."
+  },
+  "Pyramid Energy": {
+    "name": "Energia da Pirâmide",
+    "effect": "Você pode selecionar e ativar 1 dos seguintes efeitos:\n● Aumente o ATK de todos os monstros com a face para cima no seu lado do campo em 200 pontos até a Fase Final do turno em que este card for ativado.\n● Aumente a DEF de todos os monstros com a face para cima no seu lado do campo em 500 pontos até a Fase Final do turno em que este card for ativado."
+  },
+  "Pyroxene Fusion": {
+    "name": "Fusão de Piroxênio",
+    "effect": "Envie, da sua mão ou do seu lado do campo para o Cemitério, os Monstros Matéria de Fusão listados em um Card de Monstro de Fusão \"Gem-Knight\" e, depois, Invoque por Invocação-Especial esse Monstro de Fusão do seu Deck Adicional. (Esta Invocação-Especial é considerada uma Invocação-Fusão.)"
+  }
+}

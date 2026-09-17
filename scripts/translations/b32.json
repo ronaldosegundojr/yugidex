@@ -1,0 +1,122 @@
+{
+  "Nightmare-Eyes Restrict": {
+    "name": "Restrito dos Olhos do Pesadelo",
+    "effect": "2 monstros com Tipos diferentes (Demônio, Ilusão ou Mago)\nSe este card for Invocado por Invocação-Especial, ou no final da Fase de Batalha, se este card batalhou: você pode equipar 1 monstro que seu oponente controla a este card como uma Magia de Equipamento. Você só pode usar este efeito de \"Nightmare-Eyes Restrict\" uma vez por turno. Ganha ATK igual ao ATK combinado desses monstros equipados. Se este card batalhar um monstro, nenhum deles pode ser destruído por essa batalha. Os monstros do seu oponente não podem atacar monstros, exceto este."
+  },
+  "End of the World Ruler": {
+    "name": "Governante do Fim do Mundo",
+    "effect": "Você pode Invocar este card por Invocação-Ritual com um card \"End of the World\". O nome deste card se torna \"Demise, King of Armageddon\" enquanto estiver na mão ou no campo. Você só pode usar cada um dos seguintes efeitos de \"End of the World Ruler\" uma vez por turno. Você pode revelar este card na sua mão, pagar 2000 PV e banir 1 Magia de Ritual do seu Deck; aplique o efeito de ativação desse card que Invoca por Invocação-Ritual um monstro. Você pode pagar 2000 PV; destrua tantos outros cards no campo quanto possível e, depois, este card ganha 2900 de ATK."
+  },
+  "Arsenal Organization": {
+    "name": "Organização de Arsenal",
+    "effect": "Envie até 2 Magias de Equipamento com nomes diferentes do seu Deck para o Cemitério. Você pode banir este card do seu Cemitério e, depois, escolher 1 monstro com a face para cima que você controla; equipa-o com até 2 Magias de Equipamento com nomes diferentes da sua mão e/ou Cemitério que possam equipá-lo, mas qualquer dano de batalha que ele causar ao seu oponente é reduzido pela metade enquanto estiver equipado com qualquer dessas Magias de Equipamento. Você só pode usar 1 efeito de \"Arsenal Organization\" por turno e apenas uma vez nesse turno."
+  },
+  "B.E.S. Dellinger Core": {
+    "name": "B.E.S. Núcleo Dellinger",
+    "effect": "Você pode revelar 1 outro monstro \"B.E.S.\" na sua mão; Invoque este card por Invocação-Especial da sua mão e, depois, coloque 3 marcadores neste card. Durante a Fase Principal (Efeito Rápido): você pode remover 1 marcador deste card e, depois, ative 1 destes efeitos;\n● Adicione 1 \"Boss Rush\" ou 1 Magia/Armadilha que o mencione do seu Deck à sua mão.\n● Invoque por Invocação-Especial 1 monstro \"B.E.S.\" de Nível 9 ou menos do seu Cemitério.\nVocê só pode usar cada efeito de \"B.E.S. Dellinger Core\" uma vez por turno."
+  },
+  "Boss on Parade": {
+    "name": "Chefão em Desfile",
+    "effect": "Quando este card for ativado: adicione 1 monstro \"B.E.S.\" do seu Deck à sua mão. Uma vez por turno: você pode destruir 1 monstro na sua mão ou no campo e, se isso acontecer, Invoque por Invocação-Especial 1 monstro Máquina de LUZ com 1200 de ATK e 1000 ou menos de DEF do seu Deck para o campo de qualquer duelista. Você pode banir este card do seu Cemitério; coloque 1 \"Boss Rush\" do seu Deck ou Cemitério com a face para cima no seu campo. Você só pode ativar 1 \"Boss on Parade\" por turno."
+  },
+  "Conduction Knight Plasma Magnum": {
+    "name": "Cavaleiro da Condução Plasma Magnum",
+    "effect": "2 monstros Rocha de TERRA\nTodos os monstros com a face para cima no campo se tornam de TERRA. Você só pode usar cada um dos seguintes efeitos de \"Conduction Knight Plasma Magnum\" uma vez por turno. Se este card for Invocado por Invocação-Fusão: você pode adicionar 1 Magia Normal \"Magnet\", Rápida ou de Campo do seu Deck à sua mão. Você pode enviar 1 monstro \"Magna Warrior\" de Nível 8 do seu Deck para o Cemitério; imediatamente depois que este efeito resolver, Invoque por Invocação-Normal 1 monstro \"Magnet Warrior\" de Nível 4 ou menos."
+  },
+  "Gung-ho! Springans!": {
+    "name": "Corra! Springans!",
+    "effect": "2+ monstros \"Springans\" de Nível 4\nSe este card for Invocado por Invocação-Xyz ou enviado para o Cemitério: você pode Invocar por Invocação-Especial 1 \"Springans Captain Sargas\" do seu Deck ou Cemitério. Você pode desassociar 2 matérias deste card; adicione à sua mão ou Invoque por Invocação-Especial 1 dos seguintes monstros do seu Deck.\n● Monstro \"Springans\" ● monstro \"Therion\" ● \"Fallen of Albaz\" ou monstro que o mencione\nVocê só pode usar 1 efeito de \"Gung-ho! Springans!\" por turno e apenas uma vez nesse turno."
+  },
+  "Hecahands": {
+    "name": "Hecamãos",
+    "effect": "(Quando você ativar este card, você também pode enviar 1 outro card que você controla para o Cemitério.) Adicione 1 monstro \"Hecahands\" do seu Deck à sua mão e, depois, se você enviou um card para o Cemitério na ativação, você pode Baixar 1 Magia/Armadilha \"Hecahands\" do seu Deck, exceto \"Hecahands\". Você pode banir este card do seu Cemitério; seu oponente compra 1 card e, depois, ele descarta 1 card. Você só pode usar cada efeito de \"Hecahands\" uma vez por turno."
+  },
+  "Magnet Bonding": {
+    "name": "Ligação Magnética",
+    "effect": "Durante a Fase Principal: ative 1 destes efeitos (mas você só pode usar cada efeito de \"Magnet Bonding\" uma vez por turno);\n● Adicione 1 \"Conduction Warrior Linear Magnum ±\" ou 1 monstro \"Magnet Warrior\" de Nível 4 ou menos do seu Deck à sua mão.\n● Adicione 1 monstro \"Magna Warrior\" de Nível 8 do seu Deck à sua mão.\n● Invoque por Invocação-Fusão 1 Monstro de Fusão Rocha do seu Deck Adicional, embaralhando monstros Rocha da sua mão, campo, Cemitério e/ou zona de banimento no Deck."
+  },
+  "Magnet Warrior Σ－": {
+    "name": "Guerreiro Magnético Σ－",
+    "effect": "Uma vez por turno, quando um ataque for declarado envolvendo 2 monstros de TERRA: você pode negar o ataque. Você só pode usar cada um dos seguintes efeitos de \"Magnet Warrior Σ－\" uma vez por turno. Você pode revelar este card na sua mão; Invoque por Invocação-Fusão 1 Monstro de Fusão do seu Deck Adicional, usando monstros Rocha da sua mão ou do campo, incluindo este card na sua mão. Se este card for Invocado por Invocação-Normal ou Especial: você pode enviar 1 monstro \"Magna Warrior\" de Nível 8 do seu Deck para o seu Cemitério."
+  },
+  "Magnet Warrior Σ＋": {
+    "name": "Guerreiro Magnético Σ＋",
+    "effect": "Enquanto você controlar um monstro de TERRA, os monstros do seu oponente que podem atacar devem atacar monstros de TERRA. Enquanto seu oponente controlar um monstro de TERRA, você escolhe os alvos de ataque dos ataques do seu oponente. Se este card for enviado para o Cemitério: você pode escolher 1 monstro \"Magnet Warrior\" de Nível 4 ou menos no seu Cemitério, exceto \"Magnet Warrior Σ＋\"; adicione-o à sua mão ou Invoque-o por Invocação-Especial. Você só pode usar este efeito de \"Magnet Warrior Σ＋\" uma vez por turno."
+  },
+  "Sheena the Twin Storm Deities of Divine Thunder": {
+    "name": "Sheena, as Gêmeas Deidades das Tempestades do Trovão Divino",
+    "effect": "Quando seu oponente ativar um card ou efeito enquanto você controlar um monstro de VENTO (Efeito Rápido): você pode Invocar este card por Invocação-Especial da sua mão e, depois, aplique este efeito com base no tipo do efeito desse card.\n● Monstro: devolva todos os monstros com a face para cima no campo para a mão, exceto \"Sheena the Twin Storm Deities of Divine Thunder\".\n● Magia/Armadilha: devolva todas as Magias e Armadilhas no campo para a mão.\nVocê só pode usar este efeito de \"Sheena the Twin Storm Deities of Divine Thunder\" uma vez por turno. A primeira vez que este card seria destruído em batalha a cada turno, ele não é destruído."
+  },
+  "Super B.E.S. Metal Slave": {
+    "name": "Super B.E.S. Escravo Metálico",
+    "effect": "Você pode enviar até 5 monstros \"B.E.S.\" de Nível 10 ou menos com nomes diferentes da sua mão e/ou Deck para o Cemitério; Invoque este card por Invocação-Especial da sua mão e, depois, coloque marcadores neste card igual ao número enviado para o Cemitério para ativar este efeito. Você só pode usar este efeito de \"Super B.E.S. Metal Slave\" uma vez por turno. Uma vez por Corrente (Efeito Rápido): você pode remover 1 marcador deste card e, depois, escolher 2 cards com a face para cima no campo, incluindo 1 monstro \"B.E.S.\" que você controla; destrua-os."
+  },
+  "Tellusrion the Magna Warrior": {
+    "name": "Tellusrion, o Guerreiro Magna",
+    "effect": "Não pode ser Invocado por Invocação-Normal/Baixado. Deve ser Invocado por Invocação-Especial (do seu Cemitério) banindo 1 \"Magnet Warrior Σ＋\" e 1 \"Magnet Warrior Σ－\" da sua mão, campo com a face para cima e/ou Cemitério. Uma vez por turno, quando seu oponente ativar um card ou efeito (Efeito Rápido): você pode escolher 1 monstro que seu oponente controla; destrua-o, ou, se você escolheu um monstro de TERRA como alvo na ativação, em vez disso você pode tomar o controle dele. Durante o turno do seu oponente (Efeito Rápido): você pode oferecer este card como Tributo; Invoque por Invocação-Especial 2 dos seus monstros \"Magnet Warrior Σ\" banidos."
+  },
+  "Topologic Blaster Dragon": {
+    "name": "Dragão Blaster Topológico",
+    "effect": "2+ Monstros de Efeito\nVocê não pode Invocar/Baixar monstros em qualquer Zona de Monstro Extra para a qual este card apontar. Se um ou mais monstros forem Invocados por Invocação-Especial em uma zona para a qual um Monstro Link aponta, enquanto este card estiver na Zona de Monstro Extra: aplique 1 destes efeitos, mas você não pode aplicar esse mesmo efeito de \"Topologic Blaster Dragon\" novamente neste turno.\n● Embaralhe todos os outros monstros no campo no Deck.\n● Embaralhe todas as Magias e Armadilhas no campo no Deck.\n● Olhe o Deck Adicional do seu oponente e bana 1 card dele."
+  },
+  "Tri-Brigade Springans Kitt": {
+    "name": "Tri-Brigada Springans Kitt",
+    "effect": "Se você controlar um monstro \"Tri-Brigade\" ou \"Springans\" que não seja \"Tri-Brigade Springans Kitt\": você pode Invocar este card por Invocação-Especial da sua mão. Se este card for enviado para o Cemitério: você pode Invocar por Invocação-Especial 1 dos seguintes monstros do seu Cemitério em Posição de Defesa, exceto \"Tri-Brigade Springans Kitt\".\n● Monstro \"Tri-Brigade\" ● monstro \"Springans\" ● \"Fallen of Albaz\" ou monstro que o mencione\nVocê só pode usar cada efeito de \"Tri-Brigade Springans Kitt\" uma vez por turno."
+  },
+  "Vic Viper Type-L": {
+    "name": "Vic Viper Tipo-L",
+    "effect": "No início da sua Fase de Batalha: você pode ativar 1 destes efeitos;\n● Invoque por Invocação-Especial 1 monstro Máquina da sua mão.\n● Envie 1 monstro Máquina de LUZ de Nível 4 ou menos do seu Deck para o Cemitério.\nSe este card for destruído: você pode escolher 1 monstro Máquina de LUZ no seu Cemitério; Invoque-o por Invocação-Especial e, se o ATK original dele for 1200 ou menos, ele ganha 1200 de ATK. Você só pode usar cada efeito de \"Vic Viper Type-L\" uma vez por turno."
+  },
+  "Artmage Non Finito": {
+    "name": "Arte-Mago Non Finito",
+    "effect": "2 monstros \"Artmage\"\nDeve ser Invocado por Invocação-Fusão, ou por Invocação-Especial (do seu Deck Adicional) ao descartar 1 Magia/Armadilha e oferecer 1 monstro \"Artmage\" de Nível 7 ou mais da sua mão ou do campo como Tributo. Você só pode Invocar \"Artmage Non Finito\" por Invocação-Especial uma vez por turno desta forma, não importando o método. Se este card for Invocado por Invocação-Especial: você pode Baixar 1 Magia/Armadilha \"Artmage\" do seu Deck. Uma vez por turno do seu oponente (Efeito Rápido): você pode Invocar por Invocação-Fusão 1 Monstro de Fusão do seu Deck Adicional, usando monstros que você controla."
+  },
+  "Exosister Bat Mater": {
+    "name": "Exosister Bat Mater",
+    "effect": "Quando este card for ativado: adicione 2 monstros \"Exosister\" do seu Deck à sua mão e, depois, descarte 1 card. Você pode escolher 1 monstro com a face para cima que você controla; imediatamente depois que este efeito resolver, Invoque por Invocação-Normal 1 monstro \"Exosister\" mencionado nesse monstro. Se um ou mais monstros forem enviados para o Cemitério do seu oponente, mesmo durante a Etapa de Dano: você pode fazer seu oponente banir 1 deles. Você só pode usar cada efeito de \"Exosister Bat Mater\" uma vez por turno."
+  },
+  "Exosister Karmael": {
+    "name": "Exosister Karmael",
+    "effect": "2 monstros \"Exosister\" de Nível 4\nSe este card for Invocado por Invocação-Xyz: você pode ativar este efeito; durante a Fase Final deste turno, Baixe 1 Magia/Armadilha \"Exosister\" do seu Deck, Cemitério ou zona de banimento. Quando seu oponente ativar um efeito de monstro ou um Card de Magia/Armadilha Normal (Efeito Rápido): você pode desassociar todas as matérias deste card e, se isso acontecer, o efeito ativado se torna \"Adicione 1 card do Cemitério do seu oponente à mão dele\". Você só pode usar cada efeito de \"Exosister Karmael\" uma vez por turno."
+  },
+  "Ecclesia of the Black Dragon": {
+    "name": "Ecclesia do Dragão Negro",
+    "effect": "1 Regulador + 1+ monstros não-Reguladores\nDurante a Fase Principal (Efeito Rápido): você pode banir este card (até a Fase Final) e, se isso acontecer, Invoque por Invocação-Especial 1 \"Fallen of Albaz\" ou 1 monstro de Nível 4 ou menos que o mencione do seu Deck ou Cemitério. Se este card estiver no seu Cemitério: você pode escolher 1 Monstro de Fusão de Nível 8 no seu Cemitério ou zona de banimento e 1 card no campo; embaralhe ambos e este card no Deck. Você só pode usar cada efeito de \"Ecclesia of the Black Dragon\" uma vez por turno."
+  },
+  "Fallen of the White Dragon": {
+    "name": "Caído do Dragão Branco",
+    "effect": "(Este card é sempre considerado \"Fallen of Albaz\".)\nSe este card estiver na sua mão: você pode enviar 1 monstro que mencione \"Fallen of Albaz\" do seu Deck Adicional para o Cemitério; Invoque este card por Invocação-Especial e, além disso, você não pode Invocar por Invocação-Especial do Deck Adicional pelo resto deste turno, exceto Monstros de Fusão ou Sincro de Nível 8. Se este card for Invocado por Invocação-Normal ou Especial: você pode Invocar por Invocação-Especial 1 monstro \"Ecclesia\" da sua mão, Deck ou Cemitério. Você só pode usar cada efeito de \"Fallen of the White Dragon\" uma vez por turno."
+  },
+  "Rescue-ACE Arbitrator": {
+    "name": "Resgate-ACE Árbitro",
+    "effect": "2+ monstros de FOGO\nVocê só pode Invocar \"Rescue-ACE Arbitrator(s)\" por Invocação-Especial uma vez por turno. Se este card for Invocado por Invocação-Link: você pode adicionar 1 \"Rescue-ACE Hydrant\" ou \"Rescue-ACE HQ\" do seu Deck ou Cemitério à sua mão. Se você ativar um Card de Magia Rápida/Armadilha Normal \"Rescue-ACE\": você pode escolher 1 card que seu oponente controla; destrua-o. Você só pode usar este efeito de \"Rescue-ACE Arbitrator\" duas vezes por turno."
+  },
+  "Rescue-ACE Quick Attacker": {
+    "name": "Resgate-ACE Atacante Rápido",
+    "effect": "Você pode embaralhar 1 outro card \"Rescue-ACE\" da sua mão ou campo com a face para cima no Deck; Invoque este card por Invocação-Especial da sua mão. Você pode oferecer este card como Tributo; adicione 1 monstro \"Rescue-ACE\" do seu Deck à sua mão e, depois, você pode Invocá-lo por Invocação-Especial se apenas seu oponente controlar um monstro e, além disso, você não pode Invocar por Invocação-Especial do Deck Adicional pelo resto deste turno, exceto monstros de FOGO. Você só pode usar cada efeito de \"Rescue-ACE Quick Attacker\" uma vez por turno."
+  },
+  "Dark Staring at the Blue Sky": {
+    "name": "Escuridão Fitando o Céu Azul",
+    "effect": "Se um ou mais monstros forem Invocados por Invocação-Especial do Deck e/ou Deck Adicional por um efeito de monstro ativado do seu oponente, enquanto este card estiver no seu Cemitério: você pode Invocar este card por Invocação-Especial. Quando um efeito de monstro for ativado que inclua um efeito que Invoca um ou mais monstros por Invocação-Especial (Efeito Rápido): você pode banir 1 card da sua mão ou do campo; negue esse efeito e, se isso acontecer, destrua esse card. Durante a Fase Final, se este card estiver atualmente banido e foi banido neste turno: você pode devolver 1 dos seus outros monstros banidos para o Cemitério. Você só pode usar cada efeito de \"Dark Staring at the Blue Sky\" uma vez por turno."
+  },
+  "First Penguin": {
+    "name": "Primeiro Pinguim",
+    "effect": "Se você não controlar monstros com a face para cima, você pode Invocar este card por Invocação-Especial (da sua mão) e, se isso acontecer, ele é tratado como um Regulador. Você pode descartar 1 card e revelar 1 Monstro Sincro de ÁGUA no seu Deck Adicional; adicione 1 monstro de ÁGUA com o mesmo Tipo que o monstro revelado, mas 1 Nível menor, do seu Deck à sua mão e, depois, você pode mudar este card para Posição de Defesa com a face para baixo e, além disso, você não pode Invocar por Invocação-Especial do Deck Adicional pelo resto deste turno, exceto monstros de ÁGUA. Você só pode usar este efeito de \"First Penguin\" uma vez por turno."
+  },
+  "Forbidden Ritual Art": {
+    "name": "Arte de Ritual Proibida",
+    "effect": "Invoque por Invocação-Ritual 1 Monstro de Ritual do seu Cemitério, banindo monstros do seu Cemitério cujos Níveis totais sejam iguais ao Nível dele, mas destrua-o durante a Fase Final. Você pode banir este card do seu Cemitério; uma vez neste turno, quando você Invocar por Invocação-Ritual com um efeito de card que exija o uso de Tributos de monstros, você também pode banir Monstros de Ritual do seu Cemitério como monstros usados para a Invocação-Ritual. Você só pode usar cada efeito de \"Forbidden Ritual Art\" uma vez por turno."
+  },
+  "Shichigosan Shugo": {
+    "name": "Shichigosan Shugo",
+    "effect": "Invoque por Invocação-Especial 1 monstro de Nível/Classe 1 de qualquer Cemitério no seu campo e, se isso acontecer, equipe este card a ele. Uma vez por turno, durante a Fase Final: aumente o Nível/Classe do monstro equipado em 1. Aplique estes efeitos com base no Nível/Classe do monstro equipado.\n● 3+: ele ganha ATK igual ao ATK original dele.\n● 5+: ele não é afetado pelos efeitos ativados do seu oponente.\nUma vez por turno, durante sua Fase de Apoio, se o Nível/Classe do monstro equipado for 7 ou mais: envie todos os cards no campo para o Cemitério."
+  },
+  "Tip of the Tongue Reduction": {
+    "name": "Redução da Ponta da Língua",
+    "effect": "Quando seu oponente ativar um card ou efeito ao declarar exatamente 1 nome de card: negue esse efeito e, depois, você pode adicionar 1 card com esse nome do seu Deck à sua mão. Se este card Baixado sob o controle do seu dono for destruído por um efeito de card do oponente: você pode escolher 1 monstro com a face para cima que seu oponente controla; ele perde 500 de ATK."
+  },
+  "Reeshaddoll Wendicluhu": {
+    "name": "Reeshaddoll Wendicluhu",
+    "effect": "1 monstro \"Shaddoll\" + 1 monstro de VENTO\nPrimeiro deve ser Invocado por Invocação-Fusão. (Efeito Rápido): você pode mudar qualquer número de monstros com a face para baixo no campo para Posição de Defesa com a face para cima e, depois, você pode mudar outros monstros com a face para cima no campo para Posição de Defesa com a face para baixo até o número de monstros de Virar virados com a face para cima. Você só pode usar este efeito de \"Reeshaddoll Wendicluhu\" uma vez por turno. Se este card for enviado para o Cemitério: você pode escolher 1 card \"Shaddoll\" no seu Cemitério; adicione-o à sua mão."
+  }
+}

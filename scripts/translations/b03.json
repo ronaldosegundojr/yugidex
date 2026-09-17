@@ -1,0 +1,174 @@
+{
+  "Chewbone Jr. Token": {
+    "name": "Ficha de Ossinho de Roer",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Chewbone\"."
+  },
+  "Chillin' Outback": {
+    "name": "Relaxando no Outback",
+    "effect": "Uma vez por turno, você pode mudar a posição de batalha de 1 monstro \"Koala\" ou \"Kangaroo\" com a face para cima. Monstros \"Koala\" e \"Kangaroo\" que você controla podem atacar enquanto estiverem com a face para cima em Posição de Defesa. Se isso acontecer, aplique a DEF deles para o cálculo de dano."
+  },
+  "Chronicle Sorceress": {
+    "name": "Feiticeira da Crônica",
+    "effect": "Você pode ativar 1 desses efeitos, baseado nos Atributos no seu Cemitério;\n● LUZ: envie 1 \"Blue-Eyes White Dragon\" ou 1 card que o mencione do seu Deck para o Cemitério, exceto \"Chronicle Sorceress\".\n● TREVAS: envie 1 \"Dark Magician\" ou 1 card que o mencione do seu Deck para o Cemitério, exceto \"Chronicle Sorceress\".\nVocê só pode usar este efeito de \"Chronicle Sorceress\" uma vez por turno."
+  },
+  "Chrysalis Chicky": {
+    "name": "Crisálida Pintainho",
+    "effect": "Você pode oferecer este card como Tributo enquanto \"Neo Space\" estiver no campo para Invocar por Invocação-Especial 1 \"Neo-Spacian Air Hummingbird\" da sua mão ou Deck."
+  },
+  "Chrysalis Larva": {
+    "name": "Crisálida Larva",
+    "effect": "Você pode oferecer este card como Tributo enquanto \"Neo Space\" estiver no campo para Invocar por Invocação-Especial 1 \"Neo-Spacian Flare Scarab\" da sua mão ou Deck."
+  },
+  "Chrysalis Pantail": {
+    "name": "Crisálida Pantail",
+    "effect": "Você pode oferecer este card como Tributo enquanto \"Neo Space\" estiver no campo para Invocar por Invocação-Especial 1 \"Neo-Spacian Dark Panther\" da sua mão ou Deck."
+  },
+  "Chthonian Alliance": {
+    "name": "Aliança Ctônia",
+    "effect": "O monstro equipado ganha 800 de ATK para cada outro monstro com a face para cima no campo que tenha o mesmo nome que ele."
+  },
+  "Chthonian Polymer": {
+    "name": "Polímero Ctônio",
+    "effect": "Ative apenas quando seu oponente Invocar por Invocação-Fusão um Monstro de Fusão. Ofereça 1 monstro como Tributo para assumir o controle desse Monstro de Fusão."
+  },
+  "Chthonian Soldier": {
+    "name": "Soldado Ctônio",
+    "effect": "Quando este card for destruído por um monstro atacante do oponente e enviado para o Cemitério, o Dano de Batalha que você sofreu desta batalha também é causado ao seu oponente."
+  },
+  "Clay Charge": {
+    "name": "Carga de Argila",
+    "effect": "Quando um \"Elemental HERO Clayman\" que você controla for alvo de um ataque (mesmo se estiver com a face para baixo, mas revele-o ao seu oponente nesse caso): destrua o monstro atacante e esse \"Elemental HERO Clayman\" e cause 800 de dano ao seu oponente."
+  },
+  "Clone Token": {
+    "name": "Ficha Clone",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Cloning\". Se o monstro for destruído e enviado para o Cemitério, destrua esta Ficha."
+  },
+  "Cloudian Token": {
+    "name": "Ficha Cloudian",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Cloudian - Sheep Cloud\". Esta Ficha não pode ser oferecida como Tributo para uma Invocação-Tributo, exceto para um monstro \"Cloudian\"."
+  },
+  "Cloudy Skies of Grey": {
+    "name": "Céus Nublados de Cinza",
+    "effect": "Cada vez que um monstro \"Cloudian\" com um ou mais Marcadores de Névoa for destruído, coloque os Marcadores de Névoa dele em outro monstro com a face para cima no campo."
+  },
+  "Cobraman Sakuzy": {
+    "name": "Cobraman Sakuzy",
+    "effect": "Você pode virar este card para Posição de Defesa com a face para baixo uma vez por turno durante sua Fase Principal. Quando este card for virado com a face para cima, olhe todos os Cards de Magia e Armadilha Baixados no lado do campo do seu oponente e, depois, devolva-os à posição original."
+  },
+  "Cocoon Rebirth": {
+    "name": "Renascimento do Casulo",
+    "effect": "Você pode oferecer 1 monstro \"Chrysalis\" com a face para cima que você controla como Tributo para Invocar por Invocação-Especial 1 monstro \"Neo-Spacian\" escrito no texto do card desse card do Cemitério de qualquer duelista."
+  },
+  "Cocoon Veil": {
+    "name": "Véu do Casulo",
+    "effect": "Ative ao oferecer como Tributo 1 monstro \"Chrysalis\" com a face para cima. Neste turno, qualquer dano causado a um duelista por um efeito se torna 0. Invoque por Invocação-Especial 1 monstro \"Neo-Spacian\" escrito no monstro \"Chrysalis\" que você ofereceu como Tributo, da sua mão, Deck ou do Cemitério de qualquer duelista."
+  },
+  "Codarus": {
+    "name": "Codarus",
+    "effect": "Você pode enviar 1 \"Umi\" com a face para cima que você controla para o Cemitério para escolher até 2 cards que seu oponente controla; envie os alvos para o Cemitério."
+  },
+  "Cold Feet": {
+    "name": "Pés Frios",
+    "effect": "Você não pode ativar, Baixar nem usar os efeitos de nenhum Card de Magia/Armadilha neste turno."
+  },
+  "Cold-Blooded Tactician": {
+    "name": "Tático de Sangue Frio",
+    "effect": "Uma vez por turno, durante sua Fase Principal, você pode mudar as posições de batalha de monstros que seu oponente controla, até o número de monstros Réptil com a face para cima que você controla."
+  },
+  "Combined Maneuver - Engage Zero!": {
+    "name": "Manobra Combinada - Engage Zero!",
+    "effect": "2 monstros de LUZ e/ou TREVAS\n(Este card é sempre considerado um card \"Sky Striker Ace\".)\nVocê só pode Invocar por Invocação-Especial \"Combined Maneuver - Engage Zero!(s)\" uma vez por turno. Não pode ser usado como Matéria Link. Se este card for Invocado por Invocação-Especial: você pode escolher 1 monstro no campo com 2500 ou mais de ATK; negue os efeitos dele até o final deste turno. No início da Etapa de Dano, se este card atacar, enquanto você tiver \"Sky Striker Ace - Raye\" e \"Sky Striker Ace - Roze\" no seu Cemitério: você pode destruir todos os monstros que seu oponente controla."
+  },
+  "Commander of Swords": {
+    "name": "Comandante das Espadas",
+    "effect": "Quando seu oponente comprar na compra normal dele na Fase de Compra dele: ele revela o(s) card(s) que comprou e, se algum for Card de Magia ou Armadilha, você aplica 1 desses efeitos.\n● Descarte todos os cards que ele comprou.\n● Destrua 1 Card de Magia ou Armadilha que ele controla."
+  },
+  "Compass Token": {
+    "name": "Ficha de Bússola",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Cosmic Compass\"."
+  },
+  "Compulsory Escape Device": {
+    "name": "Dispositivo de Fuga Compulsório",
+    "effect": "Cada duelista escolhe 1 monstro que controla e, depois, embaralha-o no Deck."
+  },
+  "Consumed By Darkness": {
+    "name": "Consumido pelas Trevas",
+    "effect": "Todos os monstros \"Crystal Beast\" no campo e no Cemitério se tornam de TREVAS. Se um monstro \"Ultimate Crystal\" atacar, negue os efeitos do alvo do ataque durante essa Fase de Batalha. Durante o cálculo de dano, se um monstro \"Crystal Beast\" que você controla batalhar e você sofreria dano: você pode enviar 1 monstro \"Crystal Beast\" do seu Deck para o Cemitério; você não sofre dano de batalha dessa batalha."
+  },
+  "Core Blaster": {
+    "name": "Blaster do Núcleo",
+    "effect": "Equipe apenas a um monstro \"Koa'ki Meiru\". Se ele batalhar um monstro de LUZ ou TREVAS, destrua esse monstro sem aplicar cálculo de dano. Quando o monstro equipado for removido do campo e este card for enviado para o Cemitério, você pode devolver este card para a sua mão."
+  },
+  "Core Overclock": {
+    "name": "Núcleo Sobrecarregado",
+    "effect": "Todos os monstros \"Koa'ki Meiru\" com a face para cima que você controla ganham 500 de ATK. Uma vez por turno, durante sua Fase Principal, você pode descartar 1 \"Iron Core of Koa'ki Meiru\" para que todos os monstros \"Koa'ki Meiru\" com a face para cima que você controla ganhem 1000 de ATK, até a Fase Final."
+  },
+  "Core Transport Unit": {
+    "name": "Unidade de Transporte do Núcleo",
+    "effect": "Uma vez por turno, você pode descartar 1 card para adicionar 1 \"Iron Core of Koa'ki Meiru\" do seu Deck à sua mão."
+  },
+  "Counterforce": {
+    "name": "Contraforça",
+    "effect": "Quando o ataque de um monstro que escolheu como alvo um monstro com a face para cima em Posição de Ataque for negado: cause dano ao seu oponente igual à diferença de ATK entre os 2 monstros."
+  },
+  "Crashbug Road": {
+    "name": "Estrada de Crashbug",
+    "effect": "Cada duelista pode Invocar por Invocação-Especial 1 monstro da sua mão com o mesmo Nível que 1 monstro com a face para cima de Nível 4 ou menos que ele controla."
+  },
+  "Crashbug X": {
+    "name": "Crashbug X",
+    "effect": "Quando este card for Invocado por Invocação-Normal: você pode Invocar por Invocação-Especial 1 \"Crashbug Z\" do seu Deck. Você deve controlar um \"Crashbug Y\" com a face para cima para ativar e resolver este efeito."
+  },
+  "Crashbug Y": {
+    "name": "Crashbug Y",
+    "effect": "Quando este card for Invocado por Invocação-Normal: você pode Invocar por Invocação-Especial 1 \"Crashbug X\" do seu Deck. Você deve controlar um \"Crashbug Z\" com a face para cima para ativar e resolver este efeito."
+  },
+  "Crashbug Z": {
+    "name": "Crashbug Z",
+    "effect": "Quando este card for Invocado por Invocação-Normal: você pode Invocar por Invocação-Especial 1 \"Crashbug Y\" do seu Deck. Você deve controlar um \"Crashbug X\" com a face para cima para ativar e resolver este efeito."
+  },
+  "Creepy Coney": {
+    "name": "Coelho Esquisito",
+    "effect": "VIRE: cause 1000 de dano ao seu oponente para cada Monstro Normal com a face para cima que você controla, exceto Fichas."
+  },
+  "Crimson Sentry": {
+    "name": "Sentinela Carmesim",
+    "effect": "Ofereça este card com a face para cima como Tributo para devolver 1 dos seus monstros destruídos em resultado de batalha durante este turno para o fundo do seu Deck."
+  },
+  "Crystal Transcendence": {
+    "name": "Transcendência de Cristal",
+    "effect": "Você só pode Invocar/Baixar monstros \"Crystal\" e monstros Dragão enquanto esta Habilidade estiver com a face para cima. Uma vez por turno, durante sua Fase Principal, você pode enviar até 3 cards da sua mão para o Cemitério e, depois, escolher esse número de monstros \"Crystal Beast\" com nomes diferentes do seu Deck e colocá-los na sua Zona de Magias & Armadilhas como Cards de Magia Contínua. Esta Habilidade pode ser usada duas vezes por Duelo."
+  },
+  "Cú Chulainn the Awakened": {
+    "name": "Cú Chulainn, o Desperto",
+    "effect": "Este card só pode ser Invocado por Invocação-Ritual com o Card de Magia Ritual \"Emblem of the Awakening\". Uma vez por turno, você pode banir 1 Monstro Normal do seu Cemitério. Este card ganha ATK igual ao ATK desse Monstro Normal, até a Fase de Apoio do seu próximo turno."
+  },
+  "Curse of the Circle": {
+    "name": "Maldição do Círculo",
+    "effect": "Escolha 1 monstro que seu oponente controla; seu oponente não pode oferecê-lo como Tributo nem usá-lo como Monstro-Matéria Sincro."
+  },
+  "Cursed Bill": {
+    "name": "Conta Amaldiçoada",
+    "effect": "Quando o monstro equipado for destruído e este card for enviado para o Cemitério, cause dano ao duelista que controlava o monstro equipado, igual à DEF original do monstro."
+  },
+  "Cyber Blade Fusion": {
+    "name": "Fusão de Lâmina Ciber",
+    "effect": "Uma vez por turno, você pode descartar 1 card para Invocar por Invocação-Fusão 1 \"Cyber Blader\", ao enviar \"Etoile Cyber\" ou \"Blade Skater\" do seu campo para o Cemitério como 1 Matéria de Fusão e a outra matéria da sua mão, campo ou Deck para o Cemitério. Esse \"Cyber Blader\" ganha 400 de ATK. Esta Habilidade pode ser usada duas vezes por Duelo."
+  },
+  "Cyber Esper": {
+    "name": "Esper Ciber",
+    "effect": "Enquanto este card estiver com a face para cima em Posição de Ataque, você pode olhar todos os cards que seu oponente compra."
+  },
+  "Cyber Ouroboros": {
+    "name": "Ciber Uroboros",
+    "effect": "Quando este card for removido do jogo, você pode enviar 1 card da sua mão para o Cemitério para comprar 1 card."
+  },
+  "Cyberdark Style (Skill Card)": {
+    "name": "Estilo Ciberdasco (Card de Habilidade)",
+    "effect": "Uma vez por turno, escolha 3 monstros \"Cyberdark\" do seu Deck. Seu oponente adiciona 1 deles aleatoriamente à sua mão. Embaralhe os outros 2 junto com 1 card da sua mão de volta no Deck e, depois, vire este card. Esta Habilidade pode ser usada até três vezes, uma quando seus PV forem 3000 ou menos, uma quando forem 2000 ou menos e uma quando forem 1000 ou menos."
+  },
+  "Cyclone Boomerang": {
+    "name": "Bumerangue de Ciclone",
+    "effect": "Equipe apenas a \"Elemental HERO Wildheart\". Ele ganha 500 de ATK. Quando o monstro equipado for destruído por um efeito de card e enviado para o Cemitério: destrua todos os Cards de Magia e Armadilha no campo e, depois, cause 100 de dano ao seu oponente para cada Card de Magia/Armadilha destruído por este efeito."
+  }
+}

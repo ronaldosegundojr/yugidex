@@ -1,0 +1,170 @@
+{
+  "Diabolic Dragon Fortress - Draluvice": {
+    "name": "Fortaleza do Dragão Diabólico - Draluvice",
+    "effect": "O destino final da caçadora que continuou a espalhar a mancha de dragão. Agora ela se tornou a fonte da praga, uma fortaleza de pensamentos escuros e perversos em turbilhão e, ironicamente, agora é o alvo da vingança dos outros. Ela não tem como saber que a equipe de ataque diante dela são os sobreviventes de uma vila que uma vez foi dizimada por um dragão."
+  },
+  "NEYMAR JR": {
+    "name": "NEYMAR JR",
+    "effect": "Este card pode ser usado como qualquer Ficha.\n\nVamos jogar eFootball™!"
+  },
+  "Threat Armed Dragon": {
+    "name": "Dragão Armado Ameaça",
+    "effect": "Se este card estiver no seu Cemitério: você pode escolher 1 monstro Dragão que você controla; destrua-o e, se isso acontecer, Invoque este card por Invocação-Especial. Você pode descartar 1 card e, depois, escolher 1 monstro no campo com 2400 ou menos de ATK; destrua-o e, depois, se você destruiu um monstro que você controla, você pode Invocar por Invocação-Especial 1 monstro Dragão da sua mão ou Deck cujo Nível original seja 2 maior que o do monstro destruído. Você só pode usar cada efeito de \"Threat Armed Dragon\" uma vez por turno."
+  },
+  "Token (Axel and \"Volcanic Doomfire\")": {
+    "name": "Ficha (Axel e \"Volcanic Doomfire\")",
+    "effect": "Este card de Axel & Volcanic Doomfire pode ser usado como qualquer Ficha.\n\n\"Certo, Jim, hora de continuar de onde você parou.\""
+  },
+  "Token (Yusei and \"Junk Warrior\")": {
+    "name": "Ficha (Yusei e \"Junk Warrior\")",
+    "effect": "Este card de Yusei & Junk Warrior pode ser usado como qualquer Ficha.\n\n\"Agora eu Regulo meu Junk Synchron com meu Speed Warrior para Invocar por Invocação-Sincro o Junk Warrior! Vamos acelerar!\""
+  },
+  "Token (Pegasus and \"Toon Summoned Skull\")": {
+    "name": "Ficha (Pegasus e \"Toon Summoned Skull\")",
+    "effect": "Este card de Pegasus & Toon Summoned Skull pode ser usado como qualquer Ficha.\n\n\"Meus monstros Toon não podem ser derrotados por pura força bruta.\""
+  },
+  "Forbidden Crown": {
+    "name": "Coroa Proibida",
+    "effect": "Nenhum duelista pode ativar efeitos de monstro em resposta à ativação deste card. Aplique estes efeitos a 1 monstro com a face para cima no campo, até o final deste turno.\n● Os efeitos dele são negados.\n● Ele não pode atacar.\n● Ele não pode ser destruído em batalha ou por efeitos de card.\n● Ele não é afetado pelos efeitos ativados de outros cards, exceto os próprios.\n● Ele não pode ser oferecido como Tributo.\n● Ele não pode ser usado como matéria para uma Invocação-Fusão, Sincro, Xyz ou Link.\nVocê só pode ativar 1 \"Forbidden Crown\" por turno."
+  },
+  "D/D/D Sage King Alfred": {
+    "name": "D/D/D Rei Sábio Alfred",
+    "effect": "2 monstros \"D/D\"\nDurante sua Fase Principal: você pode Invocar por Invocação-Fusão 1 Monstro de Fusão \"D/D/D\" do seu Deck Adicional, embaralhando as matérias dele da sua mão, campo e/ou zona de banimento no Deck. Se este card for banido: você pode escolher Magias/Armadilhas Contínuas \"Dark Contract\" no seu Cemitério e/ou zona de banimento, até o número de monstros \"D/D/D\" que você controla; coloque-as com a face para cima no seu campo. Você só pode usar cada efeito de \"D/D/D Sage King Alfred\" uma vez por turno."
+  },
+  "Mercurium the Living Quicksilver": {
+    "name": "Mercurium, o Mercúrio Vivo",
+    "effect": ""
+  },
+  "Assist★Yummy!": {
+    "name": "Assistência★Gostoso!",
+    "effect": "Uma vez por turno, durante a Fase de Apoio: você pode ganhar 100 PV e, se isso acontecer, seu oponente paga 100 PV. Você só pode usar 1 dos seguintes efeitos de \"Assist★Yummy!\" por turno e apenas uma vez nesse turno. Durante a Fase Principal ou a Fase de Batalha do seu oponente: você pode enviar 2 cards \"Yummy\" com a face para cima que você controla para o Cemitério, incluindo este card; devolva 1 card do campo ou Cemitério para a mão. Você pode banir este card do seu Cemitério; envie 1 card \"Yummy\" do seu Deck para o Cemitério, exceto \"Assist★Yummy!\"."
+  },
+  "Dracotail Shaurus": {
+    "name": "Cauda de Dragão Shaurus",
+    "effect": "1 monstro \"Dracotail\" + 1 monstro na mão\nVocê pode escolher 2 cards \"Dracotail\" no seu Cemitério e 1 card com a face para cima no campo do mesmo tipo (Monstro, Magia ou Armadilha) que 1 deles; embaralhe todos os 3 no Deck. Se 2 ou mais monstros forem enviados para o Cemitério ao mesmo tempo, enquanto este card estiver no seu Cemitério (exceto durante a Etapa de Dano): você pode Invocar este card por Invocação-Especial, mas bana-o quando ele deixar o campo. Você só pode usar cada efeito de \"Dracotail Shaurus\" uma vez por turno."
+  },
+  "K9-X \"Ripper/Millennia\"": {
+    "name": "K9-X \"Ripper/Millennia\"",
+    "effect": "2 monstros de Nível 9\nSe este card atacar um monstro em Posição de Defesa, cause dano de batalha perfurante ao seu oponente. Você só pode usar cada um dos seguintes efeitos de \"K9-X \"Ripper/Millennia\"\" uma vez por turno. Se este card for Invocado por Invocação-Especial por um efeito de Magia/Armadilha \"K9\": você pode escolher até 2 cards no Cemitério do seu oponente e/ou zona de banimento; embaralhe-os no Deck. Quando seu oponente ativar um efeito de monstro (Efeito Rápido): você pode desassociar 2 matérias deste card; negue esse efeito e, depois, destrua todos os cards no campo."
+  },
+  "Radiant Typhoon Elation": {
+    "name": "Euforia de Tufão Radiante",
+    "effect": "Se este card for destruído pelo efeito de \"Mystical Space Typhoon\": você pode Baixar este card. Ative 1 destes efeitos (mas você só pode usar cada um destes efeitos de \"Radiant Typhoon Elation\" uma vez por turno);\n● Invoque por Invocação-Especial 1 monstro \"Radiant Typhoon\" de Nível 6 ou menos do seu Cemitério.\n● Adicione 1 \"Mystical Space Typhoon\" do seu Deck ou Cemitério à sua mão."
+  },
+  "Radiant Typhoon Varuroon, the Sea Spirit": {
+    "name": "Tufão Radiante, Varuroon, o Espírito do Mar",
+    "effect": "2 monstros \"Radiant Typhoon\"\nSe este card for Invocado por Invocação-Link: você pode adicionar 1 \"Mystical Space Typhoon\" do seu Deck ou Cemitério à sua mão. Você pode escolher 2 monstros com a face para cima no campo, incluindo um monstro \"Radiant Typhoon\" que você controla; coloque-os com a face para cima nas Zonas de Magias & Armadilhas dos donos como Magias Contínuas. Se um Card de Magia Rápida for ativado (exceto durante a Etapa de Dano): você pode colocar 1 Armadilha Contínua \"Radiant Typhoon\" do seu Deck ou Cemitério com a face para cima no seu campo. Você só pode usar cada efeito de \"Radiant Typhoon Varuroon, the Sea Spirit\" uma vez por turno."
+  },
+  "Token (Gong and \"Rise to Full Height\")": {
+    "name": "Ficha (Gong e \"Rise to Full Height\")",
+    "effect": "Este card pode ser usado como qualquer Ficha.\n\nGong: \"Viu!? Essa é a essência do Duelo Superpesado Infernal!!\""
+  },
+  "Token (Jesse and \"Crystal Beast Ruby Carbuncle\")": {
+    "name": "Ficha (Jesse e \"Crystal Beast Ruby Carbuncle\")",
+    "effect": "Este card pode ser usado como qualquer Ficha.\n\nJesse: \"Este é o Ruby Carbuncle. Uma criatura lendária!\""
+  },
+  "Assault Lich": {
+    "name": "Lich de Assalto",
+    "effect": "Se este card que você controla seria usado como Matéria Sincro, você pode tratá-lo como um não-Regulador. Você só pode usar cada um dos seguintes efeitos de \"Assault Lich\" uma vez por turno. Se este card for Invocado por Invocação-Normal ou Especial: você pode Invocar por Invocação-Especial 1 monstro que mencione \"Assault Mode Activate\" ou 1 monstro Zumbi de Nível 4 ou menos do seu Cemitério. Se este card for enviado para o Cemitério como Matéria Sincro: você pode adicionar 1 \"Assault Slash\" ou \"Assault Counter\" do seu Deck à sua mão."
+  },
+  "Crimson Blader/Assault Mode": {
+    "name": "Lâmina Carmesim/Modo de Assalto",
+    "effect": "Não pode ser Invocado por Invocação-Normal/Baixado. Deve ser Invocado por Invocação-Especial com \"Assault Mode Activate\". Você pode revelar este card na sua mão; adicione 1 \"Assault Mode Activate\" ou 1 card que o mencione do seu Deck à sua mão e, se isso acontecer, embaralhe este card no Deck. Você só pode usar este efeito de \"Crimson Blader/Assault Mode\" uma vez por turno. Seu oponente não pode ativar os efeitos de monstros de Nível 5 ou mais Invocados por Invocação-Especial do Deck Adicional. Se este card for destruído: você pode Invocar por Invocação-Especial 1 \"Crimson Blader\" do seu Cemitério."
+  },
+  "Duel Evolution - Assault Zone": {
+    "name": "Evolução de Duelo - Zona de Assalto",
+    "effect": "Quando este card for ativado: você pode adicionar 1 monstro que mencione \"Assault Mode Activate\" do seu Deck ou Cemitério à sua mão. Monstros \"/Assault Mode\" não podem ser destruídos em batalha ou pelos efeitos de card do seu oponente durante o turno em que são Invocados por Invocação-Especial. Você pode pagar 2000 PV; uma vez neste turno, você pode ativar \"Assault Mode Activate\" ao oferecer um Monstro Sincro no Deck Adicional como Tributo. Você só pode usar este efeito de \"Duel Evolution - Assault Zone\" uma vez por turno. Você só pode ativar 1 \"Duel Evolution - Assault Zone\" por turno."
+  },
+  "Junk Warrior/Assault Mode": {
+    "name": "Guerreiro Sucata/Modo de Assalto",
+    "effect": "Não pode ser Invocado por Invocação-Normal/Baixado. Deve ser Invocado por Invocação-Especial com \"Assault Mode Activate\". Ganha 1000 de ATK para cada monstro \"/Assault Mode\" que você controla e, além disso, se este card batalhar com um monstro, qualquer dano de batalha que ele causar ao seu oponente é dobrado. Não é afetado pelos efeitos de monstro ativados do seu oponente. Se este card for destruído: você pode escolher 1 \"Junk Warrior\" no seu Cemitério; devolva-o para o Deck Adicional e, depois, você pode Invocá-lo por Invocação-Especial (isso é considerado uma Invocação-Sincro)."
+  },
+  "Night Wing Priestess": {
+    "name": "Sacerdotisa de Asa Noturna",
+    "effect": "1 Regulador + 1+ monstros não-Reguladores\nSe este card for Invocado por Invocação-Especial: você pode Baixar 1 \"Assault Mode Activate\" da sua mão, Deck ou Cemitério. Ele pode ser ativado neste turno. Você pode descartar 1 card; adicione à sua mão ou Invoque por Invocação-Especial 1 monstro que mencione \"Assault Mode Activate\" do seu Deck e, além disso, você não pode Invocar por Invocação-Especial do Deck Adicional pelo resto deste turno, exceto Monstros Sincro. Você só pode usar cada efeito de \"Night Wing Priestess\" uma vez por turno."
+  },
+  "WAKE CUP! Erl": {
+    "name": "COPA DESPERDIÇADA! Erl",
+    "effect": "VIRE: você pode enviar cards com a face para cima que seu oponente controla para o Cemitério, até o número de monstros de Virar que você controla.\nSe este card estiver na sua mão: você pode descartar 1 outro monstro de Virar e, se isso acontecer, Invoque este card por Invocação-Especial em Posição de Ataque ou Posição de Defesa com a face para baixo. Durante sua Fase Final: você pode escolher 1 monstro de Virar no seu Cemitério; Invoque-o por Invocação-Especial em Posição de Defesa com a face para baixo. Você só pode usar cada efeito de \"WAKE CUP! Erl\" uma vez por turno."
+  },
+  "Token (Yusei and \"Shooting Star Dragon\")": {
+    "name": "Ficha (Yusei e \"Shooting Star Dragon\")",
+    "effect": "Este card pode ser usado como qualquer Ficha.\n\n~Estado Inabalável―― Mente Clara~"
+  },
+  "DoomZ Changer": {
+    "name": "Trocador DoomZ",
+    "effect": "Destrua 1 card \"DoomZ\" na sua mão, Deck ou campo com a face para cima, exceto \"DoomZ Changer\". Se este card for destruído por efeito de card: você pode adicionar 1 card \"DoomZ\" do seu Cemitério à sua mão, exceto \"DoomZ Changer\" e, depois, você pode Invocar por Invocação-Especial 1 monstro \"DoomZ\" da sua mão. Você só pode usar cada efeito de \"DoomZ Changer\" uma vez por turno."
+  },
+  "Elvennotes ~Homecoming Parallelism~": {
+    "name": "Elvennotes ~Paralelismo do Retorno~",
+    "effect": "O monstro na sua Zona de Monstro Principal central não pode ser destruído por efeitos de card. Você pode enviar 1 monstro da sua mão ou campo para o Cemitério; Invoque por Invocação-Especial 1 monstro \"Elvennotes\" com um Atributo original diferente do seu Deck em Posição de Defesa e, além disso, você não pode Invocar por Invocação-Especial do Deck Adicional pelo resto deste turno, exceto Monstros Sincro. Você só pode usar este efeito de \"Elvennotes ~Homecoming Parallelism~\" uma vez por turno."
+  },
+  "Elvennotes ~Maddening Rhapsodia~": {
+    "name": "Elvennotes ~Rapsódia Enlouquecedora~",
+    "effect": "Enquanto você tiver um monstro na sua Zona de Monstro Principal central, os monstros do seu oponente não podem atacar, exceto para atacar esse monstro. Você pode enviar 1 monstro da sua mão ou campo para o Cemitério e, depois, escolher 1 monstro \"Elvennotes\" com um Atributo original diferente no seu Cemitério; Invoque-o por Invocação-Especial e, depois, se você controlar um Monstro Sincro, você pode negar os efeitos de 1 card com a face para cima que seu oponente controla até o final deste turno. Você só pode usar este efeito de \"Elvennotes ~Maddening Rhapsodia~\" uma vez por turno."
+  },
+  "Elvennotes ~Oracle Aristeia~": {
+    "name": "Elvennotes ~Oráculo Aristeia~",
+    "effect": "Você não pode ativar os seguintes efeitos de \"Elvennotes ~Oracle Aristeia~\" na mesma Corrente. Uma vez por turno: você pode escolher 1 monstro com a face para cima que você controla; mova esse monstro que você controla para outra das suas Zonas de Monstro Principal. Quando seu oponente ativar um Card de Magia/Armadilha e você controlar 3 ou mais monstros \"Elvennotes\": você pode negar esse efeito e, depois, se você controlar um Monstro Sincro, você pode destruir esse card. Você só pode usar este efeito de \"Elvennotes ~Oracle Aristeia~\" uma vez por turno."
+  },
+  "Elvennotes ~Reunion Tercet~": {
+    "name": "Elvennotes ~Terceto de Reunião~",
+    "effect": "Seu oponente não pode escolher o monstro na sua Zona de Monstro Principal central como alvo de efeitos de card. Este card ganha estes efeitos com base no(s) Atributo(s) do monstro na sua Zona de Monstro Principal central.\n● FOGO/TERRA: se seu Monstro Sincro atacar um monstro em Posição de Defesa, cause dano de batalha perfurante ao seu oponente.\n● ÁGUA/VENTO: outras Magias/Armadilhas com a face para cima que você controla não podem ser destruídas pelos efeitos de card do seu oponente.\n● LUZ/TREVAS: você não sofre dano de batalha."
+  },
+  "Elvennotes Dyina": {
+    "name": "Elvennotes Dyina",
+    "effect": "Você pode Invocar este card por Invocação-Especial (da sua mão) na sua Zona de Monstro Principal central. Você só pode Invocar \"Elvennotes Dyina\" por Invocação-Especial uma vez por turno desta forma. Você só pode usar cada um dos seguintes efeitos de \"Elvennotes Dyina\" uma vez por turno. Durante sua Fase Principal: você pode colocar 1 Magia Contínua \"Elvennotes\" do seu Deck com a face para cima no seu campo. Durante o turno do seu oponente (Efeito Rápido): você pode trocar os locais deste card na sua Zona de Monstro Principal e o do monstro na sua Zona de Monstro Principal central e, depois, você pode banir 1 card aleatório da mão do seu oponente com a face para cima até a Fase Final."
+  },
+  "Elvennotes Fortona": {
+    "name": "Elvennotes Fortona",
+    "effect": "Você pode Invocar este card por Invocação-Especial (da sua mão) na sua Zona de Monstro Principal central. Você só pode Invocar \"Elvennotes Fortona\" por Invocação-Especial uma vez por turno desta forma. Você só pode usar cada um dos seguintes efeitos de \"Elvennotes Fortona\" uma vez por turno. Durante sua Fase Principal: você pode colocar 1 Armadilha Contínua \"Elvennotes\" da sua mão ou Deck com a face para cima no seu campo. Durante o turno do seu oponente (Efeito Rápido): você pode trocar os locais deste card na sua Zona de Monstro Principal e o do monstro na sua Zona de Monstro Principal central e, depois, você pode devolver 1 Magia/Armadilha com a face para cima no campo para a mão."
+  },
+  "Elvennotes Lucina": {
+    "name": "Elvennotes Lucina",
+    "effect": "Você pode Invocar este card por Invocação-Especial (da sua mão) na sua Zona de Monstro Principal central. Você só pode Invocar \"Elvennotes Lucina\" por Invocação-Especial uma vez por turno desta forma. Você só pode usar cada um dos seguintes efeitos de \"Elvennotes Lucina\" uma vez por turno. Durante sua Fase Principal: você pode adicionar 1 monstro \"Elvennotes\" do seu Deck à sua mão, exceto \"Elvennotes Lucina\". Durante o turno do seu oponente (Efeito Rápido): você pode trocar os locais deste card na sua Zona de Monstro Principal e o do monstro na sua Zona de Monstro Principal central e, depois, você pode devolver 1 monstro de Nível 6 ou menos que seu oponente controla para a mão."
+  },
+  "Elvennotes Power Patron": {
+    "name": "Patrona do Poder Elvennotes",
+    "effect": "Você não pode Invocar por Invocação-Especial do Deck Adicional, exceto Monstros Sincro. Você só pode usar cada um dos seguintes efeitos de \"Elvennotes Power Patron\" uma vez por turno. Durante a Fase Principal (Efeito Rápido): você pode escolher o monstro na sua Zona de Monstro Principal central; aumente o Nível dele em 3 (até o final deste turno) e, depois, imediatamente depois que este efeito resolver, você pode Invocar por Invocação-Sincro 1 monstro \"Elvennotes\" ou \"Junora the Power Patron of Tuning\". Se este card for enviado para o Cemitério como Matéria Sincro: você pode adicionar 1 card \"Elvennotes\" do seu Deck à sua mão."
+  },
+  "Elvennotes Seraphim Stlitzia": {
+    "name": "Serafim Stlitzia Elvennotes",
+    "effect": "1 Regulador + 1+ monstros não-Reguladores\nO ATK original deste card se torna 3000 enquanto estiver na Zona de Monstro Principal central. Durante a Fase Principal (Efeito Rápido): você pode Invocar por Invocação-Especial 1 monstro \"Elvennotes\" de Nível 6 ou menos da sua mão ou Cemitério e, depois, você pode diminuir os Níveis de todos os monstros de Nível 4 ou mais atualmente no campo em 3 até o final deste turno e, além disso, você não pode Invocar por Invocação-Especial do Deck Adicional pelo resto deste turno, exceto Monstros Sincro. Você só pode usar este efeito de \"Elvennotes Seraphim Stlitzia\" uma vez por turno."
+  },
+  "Junora the Power Patron of Tuning": {
+    "name": "Junora, a Patrona do Poder das Regulações",
+    "effect": "1 Regulador + 2 monstros não-Reguladores\nPara a Invocação-Sincro deste card, você pode tratar 1 monstro na sua Zona de Monstro Principal central como um Regulador. Se este card for Invocado por Invocação-Sincro: você pode negar os efeitos de todos os cards com a face para cima que seu oponente controla atualmente. (Efeito Rápido): você pode ativar este efeito; todos os monstros que seu oponente controla atualmente nas mesmas colunas que os seus monstros \"Elvennotes\" não podem ser usados como matéria para uma Invocação-Fusão, Sincro, Xyz ou Link até o final deste turno. Você só pode usar este efeito de \"Junora the Power Patron of Tuning\" uma vez por turno."
+  },
+  "Theorealize Liberation": {
+    "name": "Libertação Teorrealizar",
+    "effect": "Se você controlar \"Medius the Pure\": adicione à sua mão ou Invoque por Invocação-Especial 1 monstro do seu Deck com 300 de ATK/200 de DEF. Durante sua Fase Principal: você pode banir este card do seu Cemitério e, depois, escolher 1 monstro com a face para cima que você controla; ele é tratado como um Regulador neste turno. Você só pode usar cada efeito de \"Theorealize Liberation\" uma vez por turno."
+  },
+  "Dragunity Quirinus": {
+    "name": "Dragunidade Quirinus",
+    "effect": "Seus monstros \"Dragunity\" não podem ser destruídos em batalha enquanto este card estiver equipado com um Card de Equipamento. Você só pode usar cada um dos seguintes efeitos de \"Dragunity Quirinus\" uma vez por turno. Se este card for Invocado por Invocação-Normal ou Especial: você pode adicionar 1 Magia/Armadilha \"Dragunity\" do seu Deck à sua mão. Você pode escolher 1 outro Card de Monstro \"Dragunity\" que você controla; devolva-o para a mão/Deck Adicional e, depois, você pode Invocar por Invocação-Especial 1 monstro \"Dragunity\" da sua mão."
+  },
+  "Dragunity Lord - Georgius": {
+    "name": "Senhor Dragunidade - Georgius",
+    "effect": "2+ monstros, incluindo um Regulador\nSeu oponente não pode ativar os efeitos de monstros no Cemitério enquanto este card estiver equipado com um card \"Dragunity\". Você só pode usar cada um dos seguintes efeitos de \"Dragunity Lord - Georgius\" uma vez por turno. Se este card for Invocado por Invocação-Link, ou seu oponente Invocar um ou mais monstros por Invocação-Especial: você pode Invocar por Invocação-Especial 1 monstro \"Dragunity\" de Nível 5 ou mais do seu Deck Adicional ou Cemitério. Quando seu oponente ativar um Card de Magia/Armadilha ou efeito (Efeito Rápido): você pode enviar 1 Card de Equipamento que você controla para o Cemitério; negue esse efeito."
+  },
+  "Dragunity Falchion": {
+    "name": "Dragunidade Falchion",
+    "effect": "Você pode banir este card da sua mão ou Cemitério e, depois, escolher 1 monstro \"Dragunity\" que você controla; equipe 1 monstro Dragão \"Dragunity\" do seu Deck ou Cemitério a ele como uma Magia de Equipamento. Você pode enviar este card equipado a um monstro \"Dragunity\" para o Cemitério e, depois, escolher 1 card com a face para cima que seu oponente controla; bana-o. Você só pode usar cada efeito de \"Dragunity Falchion\" uma vez por turno."
+  },
+  "Dragunity Knight - Areus": {
+    "name": "Cavaleiro Dragunidade - Areus",
+    "effect": "1 Regulador + 1+ Monstros Sincro não-Reguladores\nVocê pode escolher cards com a face para cima que seu oponente controla, até o número de Cards de Monstro com a face para cima na sua Zona de Magias & Armadilhas; negue os efeitos deles até o final deste turno. Este é um Efeito Rápido se este card estiver equipado com um Card de Equipamento. Enquanto este card estiver equipado a um monstro: você pode Invocar este card por Invocação-Especial e, depois, você pode Invocar por Invocação-Especial 1 Regulador \"Dragunity\" do seu Cemitério. Você só pode usar cada efeito de \"Dragunity Knight - Areus\" uma vez por turno."
+  },
+  "Nightmare Hand": {
+    "name": "Mão do Pesadelo",
+    "effect": "Envie 1 monstro Ilusão do seu Deck para o Cemitério. Durante sua Fase Principal, se você controlar um monstro Ilusão de Nível 5 ou mais: você pode banir este card do seu Cemitério e, depois, escolher 1 monstro no Cemitério do seu oponente; Invoque-o por Invocação-Especial no seu campo, mas bana-o durante a Fase Final do próximo turno. Você só pode usar 1 efeito de \"Nightmare Hand\" por turno e apenas uma vez nesse turno."
+  },
+  "Riot": {
+    "name": "Motim",
+    "effect": "Escolha 1 monstro em Posição de Defesa com a face para baixo no campo; devolva-o para a mão e, depois, o duelista que o adicionou à mão pode Invocar por Invocação-Especial 1 monstro da mão dele em Posição de Defesa com a face para baixo. Quando um monstro do oponente declarar um ataque: você pode banir este card do seu Cemitério; mude 1 monstro em Posição de Defesa com a face para baixo no campo para Posição de Ataque. Você só pode usar cada efeito de \"Riot\" uma vez por turno."
+  },
+  "Zaren the Chainbound Dragon": {
+    "name": "Zaren, o Dragão Acorrentado",
+    "effect": "1 Regulador + 1+ Monstros Sincro\nSe este card que você controla seria usado como Matéria Sincro, você pode tratá-lo como um não-Regulador. Quando um card ou efeito for ativado em resposta a uma ativação de card ou efeito (Efeito Rápido): você pode ativar 1 destes efeitos;\n● Negue esse efeito e, se isso acontecer, destrua esse card.\n● Negue os efeitos do card que foi respondido e, se isso acontecer, destrua esse card.\nVocê só pode usar este efeito de \"Zaren the Chainbound Dragon\" uma vez por turno."
+  }
+}

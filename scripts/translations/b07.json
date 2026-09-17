@@ -1,0 +1,122 @@
+{
+  "Gachi Gachi Gantetsu": {
+    "name": "Gachi Gachi Gantetsu",
+    "effect": "2 monstros de Nível 2\nSe este card com a face para cima seria destruído, em vez disso, você pode desassociar 1 Matéria Xyz deste card. Monstros com a face para cima que você controla ganham 200 de ATK e DEF para cada Matéria Xyz associada a este card."
+  },
+  "Gadget Hauler": {
+    "name": "Transportador de Gadgets",
+    "effect": "Uma vez por turno, você pode enviar qualquer número de monstros \"Morphtronic\" da sua mão para o Cemitério para que este card ganhe 800 de ATK para cada um."
+  },
+  "Gadget Soldier": {
+    "name": "Soldado Gadget",
+    "effect": "Um guerreiro máquina livre de ferrugem, nascido para batalhar."
+  },
+  "Gagaga Head": {
+    "name": "Cabeça Gagaga",
+    "effect": "Se apenas seu oponente controlar um monstro, você pode Invocar este card por Invocação-Normal sem oferecer Tributo como um monstro de Nível 4. Quando este card for Invocado por Invocação-Normal: você pode escolher até 2 monstros \"Gagaga\" no seu Cemitério, exceto \"Gagaga Head\"; Invoque-os por Invocação-Especial e, além disso, você não pode Invocar por Invocação-Especial pelo resto deste turno, exceto por uma Invocação-Xyz que use apenas monstros \"Gagaga\" como matérias. Um Monstro Xyz que foi Invocado usando este card no campo como matéria ganha este efeito.\n● Se ele for Invocado por Invocação-Xyz: compre 1 card."
+  },
+  "Galaxy Queen's Light": {
+    "name": "Luz da Rainha das Galáxias",
+    "effect": "Escolha 1 monstro com a face para cima de Nível 7 ou mais que você controla; os Níveis de todos os outros monstros com a face para cima que você controla atualmente se tornam o Nível atual desse monstro, até a Fase Final."
+  },
+  "Galaxy Storm": {
+    "name": "Tempestade Galáctica",
+    "effect": "Escolha 1 Monstro Xyz com a face para cima no campo que não tenha Matéria Xyz; destrua o alvo."
+  },
+  "Galaxy Wave": {
+    "name": "Onda Galáctica",
+    "effect": "Cada vez que você Invocar por Invocação-Xyz: cause 500 de dano ao seu oponente."
+  },
+  "Gamushara": {
+    "name": "Gamushara",
+    "effect": "Quando um monstro em Posição de Defesa que você controla for alvo de um ataque: mude esse monstro em Posição de Defesa para Posição de Ataque com a face para cima. Depois, se o monstro atacante for destruído por essa batalha e enviado para o Cemitério: cause dano ao seu oponente igual ao ATK original desse monstro no Cemitério."
+  },
+  "Gemini Booster": {
+    "name": "Impulsionador Gêmeos",
+    "effect": "Equipe este card a um monstro Gêmeos que você controla como um Card de Equipamento. Ele ganha 700 de ATK. Quando este card for destruído enquanto estiver equipado e for enviado para o Cemitério, selecione 1 monstro Gêmeos com a face para cima e trate-o como um Monstro de Efeito."
+  },
+  "Gemini Counter": {
+    "name": "Contra Gêmeos",
+    "effect": "Mude 1 monstro Gêmeos com a face para cima que você controla para Posição de Defesa com a face para baixo e negue a ativação de um Card de Magia do oponente e destrua-o."
+  },
+  "Gemini Lancer": {
+    "name": "Lanceiro Gêmeos",
+    "effect": "Este card é considerado um Monstro Normal enquanto estiver com a face para cima no campo ou no Cemitério. Enquanto este card estiver com a face para cima no campo, você pode Invocá-lo por Invocação-Normal para que ele seja considerado um Monstro de Efeito com este efeito:\n● Durante uma batalha entre este card atacante e um monstro em Posição de Defesa cuja DEF seja menor que o ATK deste card, cause a diferença como Dano de Batalha ao seu oponente."
+  },
+  "Generation Force": {
+    "name": "Força de Geração",
+    "effect": "Se você controlar um Monstro Xyz: adicione 1 card \"Xyz\" do seu Deck à sua mão."
+  },
+  "Get Your Game On!": {
+    "name": "Mostre Jogo!",
+    "effect": "Você só pode usar este card se esteve presente no Campeonato Mundial de Yu-Gi-Oh! TRADING CARD GAME de 2007. O ATK de todos os seus monstros \"Elemental Hero\" e \"Neo-Spacian\" no campo é dobrado."
+  },
+  "Ghost Token": {
+    "name": "Ficha Fantasma",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Damage Translation\"."
+  },
+  "Giant Axe Mummy": {
+    "name": "Múmia do Machado Gigante",
+    "effect": "Você pode virar este card para Posição de Defesa com a face para baixo uma vez por turno durante sua Fase Principal. Se o ATK de um monstro no lado do campo do seu oponente que atacar este card em Posição de Defesa com a face para baixo for menor que a DEF deste monstro, o monstro atacante é destruído."
+  },
+  "Gift Fiend Token": {
+    "name": "Ficha de Demônio Presente",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Revival Gift\"."
+  },
+  "Gigarays Gandora the Dragon of Destruction": {
+    "name": "Gandorra Gigarraios, o Dragão da Destruição",
+    "effect": "Não pode ser Invocado por Invocação-Normal/Baixado. Deve primeiro ser Invocado por Invocação-Especial (da sua mão) ao enviar 2 outros monstros da sua mão e/ou campo para o Cemitério. Ganha 300 de ATK para cada card banido. Uma vez por turno: você pode pagar metade dos seus PV; aplique 1 desses efeitos, dependendo do número de monstros \"Gandora\" com nomes diferentes no seu Cemitério.\n● 1: destrua todos os outros cards no campo.\n● 2: bana todos os outros cards no campo.\n● 3+: bana todos os outros cards no campo e nos Cemitérios."
+  },
+  "Gigastone Omega": {
+    "name": "Gigapedeira Ômega",
+    "effect": "Este card não pode ser Invocado por Invocação-Normal nem Baixado. Este card só pode ser Invocado por Invocação-Especial ao banir 2 monstros de TERRA do seu Cemitério. Quando este card com a face para cima que você controla for enviado para o Cemitério por um efeito de card, destrua todos os Cards de Magia e Armadilha que seu oponente controla."
+  },
+  "Gishki Diviner": {
+    "name": "Adivinho Gishki",
+    "effect": "Uma vez por turno: você pode declarar 1 nome de card; revele o card do topo do seu Deck e, se for o card declarado, adicione-o à sua mão. Caso contrário, devolva-o para o topo do Deck."
+  },
+  "Gishki Emilia": {
+    "name": "Emilia Gishki",
+    "effect": "Não pode ser Invocado por Invocação-Especial. Durante a Fase Final do turno em que este card for Invocado por Invocação-Normal ou virado com a face para cima: devolva-o para a mão. Quando este card for Invocado por Invocação-Normal ou virado com a face para cima: negue todos os efeitos de Cards de Armadilha no campo, até a Fase Final. Você deve controlar outro monstro \"Gishki\" com a face para cima para ativar e resolver este efeito."
+  },
+  "Gishki Mollusk": {
+    "name": "Molusco Gishki",
+    "effect": "Quando este card for enviado para o Cemitério por um efeito de card: olhe os 3 cards do topo do seu Deck e, depois, devolva-os todos para o topo ou para o fundo do Deck, em qualquer ordem."
+  },
+  "Give and Take": {
+    "name": "Toma Lá Dá Cá",
+    "effect": "Invoque por Invocação-Especial 1 monstro do seu Cemitério no lado do campo do seu oponente em Posição de Defesa e aumente o Nível de 1 monstro que você controla pelo Nível do monstro Invocado por Invocação-Especial, até a Fase Final."
+  },
+  "Gladiator Beast Lanista": {
+    "name": "Besta Gladiadora Lanista",
+    "effect": "Quando este card for Invocado por Invocação-Especial pelo efeito de um monstro \"Gladiator Beast\": escolha 1 monstro \"Gladiator Beast\" no seu Cemitério; bana o alvo e o nome deste card se torna o nome do alvo até a Fase Final. No final da Fase de Batalha, se este card atacou ou foi atacado: você pode embaralhá-lo no Deck; Invoque por Invocação-Especial 1 monstro \"Gladiator Beast\" do seu Deck, exceto \"Gladiator Beast Lanista\"."
+  },
+  "Gladiator Beast Tygerius": {
+    "name": "Besta Gladiadora Tygerius",
+    "effect": "Este card não pode ser usado como Monstro-Matéria de Fusão. Quando este card for Invocado por Invocação-Especial pelo efeito de um monstro \"Gladiator Beast\", você pode descartar 1 card \"Gladiator Beast\" para adicionar 1 monstro \"Gladiator Beast\" do seu Deck à sua mão."
+  },
+  "Gladiator Lash": {
+    "name": "Chicote Gladiador",
+    "effect": "Ative apenas quando você Invocar por Invocação-Especial um monstro \"Gladiator Beast\". Seu oponente descarta 1 card da escolha dele."
+  },
+  "Gladiator Taming": {
+    "name": "Domando Gladiador",
+    "effect": "Se um monstro \"Gladiator Beast\" com a face para cima estiver no campo, ative 1 desses efeitos:\n● Selecione 1 monstro com a face para cima que seu oponente controla e mude a posição de batalha dele.\n● Selecione 1 monstro \"Gladiator Beast\" com a face para cima que seu oponente controla e assuma o controle dele até a Fase Final."
+  },
+  "Goblin Decoy Squad": {
+    "name": "Esquadrão Isca de Goblins",
+    "effect": "Quando este card causar Dano de Batalha ao seu oponente, você pode comprar 1 card. Se este card atacar, ele é mudado para Posição de Defesa no final da Fase de Batalha. A posição de batalha deste card não pode ser mudada até o final do seu próximo turno, exceto por um efeito de card."
+  },
+  "Goblin Marauding Squad": {
+    "name": "Esquadrão Saqueador de Goblins",
+    "effect": "Quando este card declarar um ataque, seu oponente não pode ativar cards ou efeitos. Se este card atacar, ele é mudado para Posição de Defesa no final da Fase de Batalha e sua posição de batalha não pode ser mudada até a Fase Final do seu próximo turno."
+  },
+  "Goblin Out of the Frying Pan": {
+    "name": "Goblin Fora Sarra",
+    "effect": "Pague 500 PV. Negue a ativação de um Card de Magia e devolva-o para a mão do dono."
+  },
+  "Goblin Pothole Squad": {
+    "name": "Esquadrão de Buracos dos Goblins",
+    "effect": "Quando este card for Invocado por Invocação-Normal, Cards de Armadilha não podem ser ativados. Além disso, Cards de Armadilha \"Trap Hole\" não podem ser ativados quando um monstro for Invocado, exceto \"Dark Trap Hole\"."
+  }
+}

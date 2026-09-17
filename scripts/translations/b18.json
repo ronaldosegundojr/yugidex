@@ -1,0 +1,122 @@
+{
+  "Rodenut": {
+    "name": "Roedor de Nozes",
+    "effect": "Cada vez que seu oponente Invocar um monstro por Invocação-Especial, coloque 1 Marcador de Noz neste card. Você pode remover 1 Marcador de Noz deste card para escolher 1 monstro que seu oponente controla; destrua o alvo."
+  },
+  "Room for Growth": {
+    "name": "Espaço para Crescer",
+    "effect": "Durante sua Fase Principal, você pode aumentar o ATK de 1 monstro de Nível 3 ou menos que você controla em 300 x o Nível dele, até o final deste turno. Vire este card no final do turno em que ativou esta Habilidade."
+  },
+  "Rose Token": {
+    "name": "Ficha de Rosa",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Black Garden\"."
+  },
+  "Royal Writ of Taxation": {
+    "name": "Decreto Real de Tributação",
+    "effect": "Ative somente durante a Fase de Apoio do seu oponente. Selecione 1 card aleatório da mão do seu oponente e olhe-o. A menos que o card selecionado ou um card com o mesmo nome seja Invocado por Invocação-Normal ou ativado até o final do seu próximo turno, cause 1000 de dano ao seu oponente. Se o card selecionado ou um card com o mesmo nome for Invocado por Invocação-Normal ou ativado até o final do seu próximo turno, você sofre 1000 de dano."
+  },
+  "Runaway Karakuri": {
+    "name": "Karakuri Descontrolado",
+    "effect": "Selecione 1 monstro \"Karakuri\" com a face para cima no campo. Até a Fase Final, ele ganha 1000 de ATK, mas o(s) efeito(s) dele é negado."
+  },
+  "Ruthless Denial": {
+    "name": "Negação Impiedosa",
+    "effect": "Selecione 1 monstro que você controla e envie-o para o Cemitério, e envie 1 card aleatório da mão do seu oponente para o Cemitério."
+  },
+  "Ruthless Means": {
+    "name": "Meios Impiedosos",
+    "effect": "Uma vez por Duelo, durante sua Fase Principal, se você controlar um monstro \"Evil HERO\", você pode descartar 1 card para fazer 1 monstro com a face para cima que seu oponente controla perder ATK igual à própria DEF, ou perder DEF igual ao próprio ATK (sua escolha)."
+  },
+  "Saambell the Summoner": {
+    "name": "Saambell, a Evocadora",
+    "effect": "Durante sua Fase Principal: você pode Invocar por Invocação-Especial 1 monstro da sua mão com o mesmo Nível deste card. Este efeito só pode ser usado uma vez enquanto este card estiver com a face para cima no campo."
+  },
+  "Saber Hole": {
+    "name": "Alçapão de Sabre",
+    "effect": "Ative somente enquanto você controlar um monstro \"X-Saber\" com a face para cima. Negue a Invocação de um monstro e destrua-o."
+  },
+  "Sage of Silence": {
+    "name": "Sábio do Silêncio",
+    "effect": "Se este card destruir um monstro do oponente em batalha, seu oponente não pode ativar Cards de Magia durante o próximo turno."
+  },
+  "Sage of Stillness": {
+    "name": "Sábio da Quietude",
+    "effect": "Se este card destruir um monstro do oponente em batalha, seu oponente não pode ativar Cards de Armadilha durante o próximo turno."
+  },
+  "Salvage Warrior": {
+    "name": "Guerreiro de Salvamento",
+    "effect": "Quando este card for Invocado por Invocação-Tributo, você pode Invocar por Invocação-Especial 1 monstro Regulador da sua mão ou Cemitério."
+  },
+  "Samsara Kaiser": {
+    "name": "Kaiser Samsara",
+    "effect": "Quando você Invocar por Invocação-Tributo um monstro ao oferecer este card como Tributo, devolva este card para a sua mão."
+  },
+  "Samurai Sword Baron": {
+    "name": "Barão da Espada Samurai",
+    "effect": "Uma vez por turno, você pode selecionar 1 monstro em Posição de Defesa que seu oponente controla. Mude-o para Posição de Ataque com a face para cima."
+  },
+  "Scarred Warrior": {
+    "name": "Guerreiro Marcado",
+    "effect": "1 Regulador + 1 ou mais monstros não-Reguladores\nSeu oponente não pode escolher monstros do Tipo Guerreiro com a face para cima para ataques, exceto este. Uma vez por turno, se este card seria destruído em batalha, ele não é destruído."
+  },
+  "Scrap Crash": {
+    "name": "Colisão de Sucata",
+    "effect": "Ative somente quando um monstro \"Scrap\" que você controla for destruído e enviado para o Cemitério. Destrua todos os Cards de Magia/Armadilha com a face para cima no campo."
+  },
+  "Scrap Kong": {
+    "name": "Kong de Sucata",
+    "effect": "Quando este card for Invocado por Invocação-Normal, destrua-o. Se este card for destruído pelo efeito de um card \"Scrap\" e enviado para o Cemitério, você pode selecionar 1 monstro \"Scrap\" no seu Cemitério, exceto \"Scrap Kong\", e adicioná-lo à sua mão."
+  },
+  "Scrap Lube": {
+    "name": "Lubrificante de Sucata",
+    "effect": "Selecione 1 monstro \"Scrap\" no seu Cemitério. Invoque esse monstro por Invocação-Especial do Cemitério. Os efeitos dele são negados. Quando este card for removido do campo, destrua esse monstro. Quando esse monstro for removido do campo, destrua este card. Você não pode conduzir sua Fase de Batalha no turno em que ativar este card."
+  },
+  "Scrap Mind Reader": {
+    "name": "Leitor de Mentes de Sucata",
+    "effect": "Uma vez por turno, enquanto este card estiver no seu Cemitério durante sua Fase Principal 2, você pode selecionar 1 monstro \"Scrap\" com a face para cima que você controla, exceto \"Scrap Mind Reader\". Destrua esse monstro e Invoque este card por Invocação-Especial do Cemitério. Se isso acontecer, remova este card do jogo quando ele for removido do campo. Se este card for usado como Monstro Matéria Sincro, todos os outros Monstros Matéria Sincro devem ser monstros \"Scrap\"."
+  },
+  "Scrap Searcher": {
+    "name": "Buscador de Sucata",
+    "effect": "Quando um monstro \"Scrap\" que você controla, exceto \"Scrap Searcher\", for destruído e enviado para o Cemitério enquanto este card estiver no Cemitério, você pode Invocar este card por Invocação-Especial do seu Cemitério. Quando este card for Invocado por Invocação-Especial, destrua todos os monstros com a face para cima que você controla, exceto monstros \"Scrap\"."
+  },
+  "Scrap Shark": {
+    "name": "Tubarão de Sucata",
+    "effect": "Quando o efeito de um Monstro de Efeito ou um Card de Magia/Armadilha for ativado, destrua este card com a face para cima no campo. Se este card for destruído pelo efeito de um card \"Scrap\" e enviado para o Cemitério, você pode enviar 1 monstro \"Scrap\" do seu Deck para o Cemitério."
+  },
+  "Seal of the Ancients": {
+    "name": "Selo dos Anciões",
+    "effect": "Pague 1000 PV. Pegue e veja todos os cards com a face para baixo no lado do campo do seu oponente e, depois, devolva-os às posições originais. (Os efeitos dos cards com a face para baixo não são ativados.)"
+  },
+  "Sealing Ceremony of Katon": {
+    "name": "Cerimônia de Selamento de Katon",
+    "effect": "Uma vez por turno: você pode banir 1 monstro de FOGO do seu Cemitério para escolher 1 card no Cemitério do seu oponente; bana o alvo."
+  },
+  "Sealing Ceremony of Mokuton": {
+    "name": "Cerimônia de Selamento de Mokuton",
+    "effect": "Uma vez por turno: você pode oferecer 1 monstro de TERRA com a face para cima como Tributo e, depois, escolher até 2 cards no Cemitério do oponente; bana os alvos."
+  },
+  "Sealing Ceremony of Raiton": {
+    "name": "Cerimônia de Selamento de Raiton",
+    "effect": "Uma vez por turno: você pode devolver 1 monstro de VENTO com a face para cima que você controla para o fundo do Deck Principal para escolher até 2 cards no Cemitério do seu oponente; bana os alvos."
+  },
+  "Searing Fire Wall": {
+    "name": "Muralha de Fogo Ardente",
+    "effect": "Bana qualquer número de monstros \"Laval\" do seu Cemitério; Invoque por Invocação-Especial um número igual de \"Fichas de Laval\" (Tipo Piro/FOGO/Nível 1/ATK 0/DEF 0) em Posição de Defesa."
+  },
+  "Security Token": {
+    "name": "Ficha de Segurança",
+    "effect": "Este card pode ser usado como uma \"Ficha de Segurança\".\n\n*Se usado como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa Ficha."
+  },
+  "Seed of Deception": {
+    "name": "Semente do Engano",
+    "effect": "Invoque por Invocação-Especial 1 monstro do Tipo Planta de Nível 2 ou menos da sua mão."
+  },
+  "Seed Token": {
+    "name": "Ficha de Semente",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Seed of Flame\". Esta Ficha não pode ser usada como Tributo para uma Invocação-Tributo."
+  },
+  "Self-Mummification": {
+    "name": "Automumificação",
+    "effect": "Selecione 1 monstro que você controla e envie-o para o Cemitério."
+  }
+}

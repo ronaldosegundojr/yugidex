@@ -1,0 +1,194 @@
+{
+  "D.D. Telepon": {
+    "name": "D.D. Telepon",
+    "effect": "Se este card com a face para cima que você controla for banido: você pode banir 1 monstro do Tipo Psíquico com ATK 1500 ou menos do seu Deck. Depois, durante sua próxima Fase de Apoio, se este card ainda estiver banido: Invoque por Invocação-Especial o monstro banido por este efeito."
+  },
+  "D.D. Unicorn Knight": {
+    "name": "D.D. Cavaleiro Unicórnio",
+    "effect": "Este card não pode ser Invocado por Invocação-Normal nem Baixado. Este card só pode ser Invocado por Invocação-Especial se seu oponente controlar um ou mais monstros e você controlar um ou mais monstros Reguladores com a face para cima. Quando este card for Invocado por Invocação-Especial desta forma, você pode selecionar 1 dos seus monstros não-Reguladores de Nível 3 ou menos removidos do jogo e Invocá-lo por Invocação-Especial. O(s) efeito(s) dele é(são) negado(s). Você não pode Invocar por Invocação-Normal nem Baixar no turno em que Invocar este card por Invocação-Especial."
+  },
+  "D2 Shield": {
+    "name": "Escudo D2",
+    "effect": "Selecione 1 monstro com a face para cima em Posição de Defesa que você controla. A DEF dele se torna o dobro da DEF original dele."
+  },
+  "Damage Diet": {
+    "name": "Dieta de Dano",
+    "effect": "Divida pela metade todo dano que você sofrer neste turno. Você pode banir este card do seu Cemitério; divida pela metade todo dano de efeito que você sofrer neste turno. (Você não pode dividir o mesmo dano duas vezes com este efeito.)"
+  },
+  "Damage Polarizer": {
+    "name": "Polarizador de Dano",
+    "effect": "Ative apenas quando um efeito que cause dano for ativado. Negue a ativação e o efeito e cada duelista compra 1 card."
+  },
+  "Damage Vaccine Ω MAX": {
+    "name": "Vacina de Dano Ω MAX",
+    "effect": "Quando você sofrer dano de batalha ou por efeito de card: ganhe PV igual ao dano sofrido."
+  },
+  "Dancing Fairy": {
+    "name": "Fada Dançarina",
+    "effect": "Enquanto este card permanecer com a face para cima em Posição de Defesa no seu lado do campo, aumente seus PV em 1000 pontos durante cada uma das suas Fases de Apoio."
+  },
+  "Dark Blade the Captain of the Evil World": {
+    "name": "Lâmina Negra, o Capitão do Mundo do Mal",
+    "effect": "Uma vez por turno: você pode banir 1 monstro de TREVAS do seu Cemitério para escolher 1 monstro de LUZ de Nível 4 ou menos que seu oponente controla; equipe-o a este card. (Você só pode equipar 1 monstro por vez a este card com este efeito.) Se este card no campo seria destruído, em vez disso, o monstro equipado a ele por este efeito é destruído."
+  },
+  "Dark Bug": {
+    "name": "Besouro das Trevas",
+    "effect": "Quando este card for Invocado por Invocação-Normal, selecione e Invoque por Invocação-Especial 1 monstro Regulador de Nível 3 do seu Cemitério. O(s) efeito(s) desse monstro é(são) negado(s)."
+  },
+  "Dark Creation": {
+    "name": "Criação Sombria",
+    "effect": "Uma vez por Duelo, durante sua Fase Principal, se você tiver 5 ou mais monstros de TREVAS com nomes diferentes no seu Cemitério e não controlar nenhum monstro, você pode banir 1 monstro de TREVAS do seu Cemitério e, depois, Invocar por Invocação-Especial 1 monstro de TREVAS do seu Cemitério."
+  },
+  "Dark Cure": {
+    "name": "Cura Sombria",
+    "effect": "Quando seu oponente Invocar um ou mais monstros, ele ganha PV igual à metade do ATK de 1 dos monstros Invocados da sua escolha."
+  },
+  "Dark Flattop": {
+    "name": "Plató Negro",
+    "effect": "1 Regulador de TREVAS + 1 ou mais monstros Máquina não-Reguladores\nUma vez por turno: você pode escolher 1 monstro \"Reactor\" ou \"Flying Fortress SKY FIRE\" no seu Cemitério; Invoque o alvo por Invocação-Especial, ignorando as condições de Invocação. Se este card for destruído e enviado para o Cemitério: você pode Invocar por Invocação-Especial 1 monstro do Tipo Máquina de Nível 5 ou menos da sua mão."
+  },
+  "Dark Highlander": {
+    "name": "Highlander Negro",
+    "effect": "1 Regulador do Tipo Demônio + 1 ou mais monstros do Tipo Demônio não-Reguladores\nNenhum duelista pode Invocar por Invocação-Sincro. Uma vez por turno: você pode escolher 1 monstro que seu oponente controla equipado com um Card de Equipamento; destrua todos os Cards de Equipamento equipados a esse monstro e, se isso acontecer, cause 400 de dano ao seu oponente para cada card destruído."
+  },
+  "Dark Hunter": {
+    "name": "Caçador Sombrio",
+    "effect": "O efeito deste card muda dependendo do número de monstros de TREVAS no seu Cemitério. ● 1 ou menos: este card perde 400 de ATK. ● 2 a 4: este card ganha 400 de ATK. ● 5 ou mais: você pode enviar este card para o Cemitério para destruir todos os monstros com a face para baixo que seu oponente controla."
+  },
+  "Dark Magician Knight": {
+    "name": "Cavaleiro do Mago Negro",
+    "effect": "Não pode ser Invocado por Invocação-Normal/Baixado. Deve ser Invocado por Invocação-Especial com \"Knight's Title\" e não pode ser Invocado por Invocação-Especial de outras formas. Quando este card for Invocado por Invocação-Especial: escolha 1 card no campo; destrua o alvo."
+  },
+  "Dark Plant": {
+    "name": "Planta Sombria",
+    "effect": "Esta flor mutante extrai seu poder de poluentes e das forças sombrias."
+  },
+  "Dark Scheme": {
+    "name": "Esquema Sombrio",
+    "effect": "Seu oponente pode descartar 1 card para negar o efeito deste card; caso contrário, ambos os duelistas descartam 2 cards e, depois, compram 2 cards."
+  },
+  "Dark Scorpion Burglars": {
+    "name": "Escorpiões Sombrios Arrombadores",
+    "effect": "Quando este card causar Dano de Batalha ao seu oponente: seu oponente envia 1 Card de Magia do Deck dele para o Cemitério."
+  },
+  "Dark Spirit Art - Greed": {
+    "name": "Arte Espiritual Negra - Ganância",
+    "effect": "Ofereça 1 monstro de TREVAS como Tributo. Compre 2 cards. Seu oponente pode negar este efeito ao revelar 1 Card de Magia na mão dele."
+  },
+  "Dark Unity": {
+    "name": "Unidade Sombria",
+    "effect": "Você pode usar \"Super Polymerization\" para Invocar por Invocação-Fusão monstros que normalmente só podem ser Invocados com \"Dark Fusion\". Cada uma das seguintes Habilidades só pode ser usada uma vez por Duelo.\n● Perca 2000 PV e, depois, mude o Tipo de 1 monstro Invocado por Invocação-Especial que seu oponente controla para Rocha.\n● Descarte 1 card e, depois, adicione 1 \"Dark Fusion\" do seu Deck à sua mão."
+  },
+  "Darkworld Shackles": {
+    "name": "Grinaldas do Mundo Sombrio",
+    "effect": "O monstro equipado não pode atacar e o ATK e a DEF dele se tornam 100. Durante cada uma das suas Fases de Apoio: cause 500 de dano ao controlador do monstro equipado."
+  },
+  "Data Acorn Token": {
+    "name": "Ficha de Bolota de Dados",
+    "effect": "Este card pode ser usado como uma \"Ficha de Bolota de Dados\".\n*Se usado como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa Ficha."
+  },
+  "Data Token": {
+    "name": "Ficha de Dados",
+    "effect": "Invocada pelo efeito de \"Link Streamer\"."
+  },
+  "Dawnbreak Gardna": {
+    "name": "Guardião do Amanhecer",
+    "effect": "Este card é considerado um Monstro Normal enquanto estiver com a face para cima no campo ou no Cemitério. Enquanto este card estiver com a face para cima no campo, você pode Invocá-lo por Invocação-Normal para que ele seja considerado um Monstro de Efeito com este efeito:\n● A DEF original deste card se torna 2300."
+  },
+  "Decoyroid": {
+    "name": "Decoyroide",
+    "effect": "Enquanto este card estiver com a face para cima no seu lado do campo, seu oponente não pode selecionar um monstro com a face para cima como alvo de ataque, exceto \"Decoyroid\"."
+  },
+  "Defenders Intersect": {
+    "name": "Interseção de Defensores",
+    "effect": "Ative apenas durante a Fase de Batalha. Os monstros em Posição de Defesa que seu oponente controla mudam para Posição de Ataque com a face para cima e os efeitos deles são negados."
+  },
+  "Degen-Force": {
+    "name": "Força Degenerada",
+    "effect": "Ofereça 1 monstro do Tipo Dinossauro de Nível 4 ou mais como Tributo; Invoque por Invocação-Especial 2 monstros do Tipo Réptil de Nível 3 ou menos da sua mão e/ou Cemitério."
+  },
+  "Delicious Morsel!": {
+    "name": "Bocado Delicioso!",
+    "effect": "Durante a Fase Final, se um monstro Zumbi \"Vampire\" que você controla causou dano de batalha ao seu oponente neste turno, ganhe PV igual à metade do dano de batalha total que seus monstros causaram ao seu oponente neste turno."
+  },
+  "Desperate Tag": {
+    "name": "Substituição Desesperada",
+    "effect": "Se um monstro com a face para cima em Posição de Ataque que você controla for destruído em batalha, durante o cálculo de dano, você pode reduzir o Dano de Batalha desta batalha a 0 e Invocar por Invocação-Especial 1 monstro do Tipo Guerreiro de Nível 4 ou menos da sua mão no final da Etapa de Dano."
+  },
+  "Destiny HERO - Double Dude": {
+    "name": "HERÓI do Destino - Duplo Cara",
+    "effect": "Não pode ser Invocado por Invocação-Especial. Este card pode atacar duas vezes durante cada Fase de Batalha. Durante sua Fase de Apoio, se este card foi destruído desde a sua última Fase de Apoio: você pode Invocar por Invocação-Especial 2 \"Fichas de Duplo Cara\" (Tipo Guerreiro/TREVAS/Nível 4/ATK 1000/DEF 1000). Este card deve estar no seu Cemitério para ativar e resolver este efeito."
+  },
+  "Destiny HERO - Dunker": {
+    "name": "HERÓI do Destino - Enterrador",
+    "effect": "Você pode enviar 1 card \"Destiny HERO\" da sua mão para o Cemitério; cause 500 de dano ao seu oponente."
+  },
+  "Destiny Mirage": {
+    "name": "Miragem do Destino",
+    "effect": "Quando um monstro \"Destiny HERO\" que você controla for destruído e enviado para o Cemitério por um efeito de card do oponente: Invoque por Invocação-Especial, no seu lado do campo, todos os monstros \"Destiny HERO\" que foram destruídos e enviados para qualquer Cemitério neste turno."
+  },
+  "Destruction Jammer": {
+    "name": "Bloqueador de Destruição",
+    "effect": "Descarte 1 card. Negue a ativação de um Card de Magia, Card de Armadilha ou efeito de Monstro de Efeito que destrói um ou mais monstros no campo e destrua esse card."
+  },
+  "Destruction of Destiny": {
+    "name": "Destruição do Destino",
+    "effect": "Envie os 3 cards do topo do seu Deck para o Cemitério e sofra 1000 de dano para cada Card de Magia ou Armadilha enviado para o Cemitério desta forma."
+  },
+  "Destructive Draw": {
+    "name": "Compra Destrutiva",
+    "effect": "Se qualquer duelista não tiver cards na mão no início da Fase de Compra dele, ele pode comprar 1 card a mais além da compra normal. O controlador deste card perde 700 PV durante a Fase Final dele. (Se menos de 700, ele se torna 0 em vez disso.) Quando este card com a face para cima for removido do campo, cause 3000 de dano ao duelista que o controlava."
+  },
+  "Deus Token": {
+    "name": "Ficha Deus",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Darklord Asmodeus\". Esta Ficha não pode ser destruída em batalha."
+  },
+  "Dharma Cannon": {
+    "name": "Canhão Dharma",
+    "effect": "Uma criatura monstruosa cujo corpo é revestido de canhões que nunca erram seus alvos."
+  },
+  "Digging for Gold": {
+    "name": "Escavando por Ouro",
+    "effect": "Ative esta Habilidade durante sua Fase Principal. Você pode banir 3 cards do seu Cemitério e, depois, comprar 1 card. Esta Habilidade só pode ser usada uma vez por Duelo."
+  },
+  "Disciple of the Forbidden Spell": {
+    "name": "Discípulo do Feitiço Proibido",
+    "effect": "Quando este card for Invocado, declare Atributos de Cards de Monstro diferentes iguais ao número de \"Disciple of the Forbidden Spell\" no seu Cemitério. Se este card atacar um monstro que tenha um Atributo declarado, destrua o monstro com o efeito deste card sem aplicar cálculo de dano."
+  },
+  "DNA Checkup": {
+    "name": "Exame de DNA",
+    "effect": "Selecione 1 monstro com a face para baixo que você controla. Seu oponente declara 2 Atributos. Revele o monstro selecionado. Se o Atributo dele for um dos Atributos declarados, seu oponente compra 2 cards. Se não for, você compra 2 cards."
+  },
+  "DOG Fighter Token": {
+    "name": "Ficha de DOG Fighter",
+    "effect": "Invocada pelo efeito de \"Kozmo DOG Fighter\"."
+  },
+  "Doron": {
+    "name": "Doron",
+    "effect": "Este monstro se divide em dois e ataca de lados opostos."
+  },
+  "Double Defender": {
+    "name": "Duplo Defensor",
+    "effect": "Uma vez por turno, quando um monstro do oponente declarar um ataque enquanto você controlar 2 ou mais monstros com a face para cima em Posição de Defesa: você pode escolher o monstro atacante; negue esse ataque."
+  },
+  "Double Dude Token": {
+    "name": "Ficha de Duplo Cara",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Destiny HERO - Double Dude\"."
+  },
+  "Double Evolution Pill": {
+    "name": "Pílula de Dupla Evolução",
+    "effect": "No início da sua Fase de Compra, em vez de comprar um card, você pode pagar 1500 PV para ativar esta Habilidade. Bana 1 monstro Dinossauro e 1 monstro não-Dinossauro da sua mão e/ou Cemitério; Invoque por Invocação-Especial 1 monstro Dinossauro de Nível 7 ou mais da sua mão ou Deck, ignorando as condições de Invocação. Esta Habilidade só pode ser usada uma vez por Duelo."
+  },
+  "Double Payback": {
+    "name": "Revanche Dupla",
+    "effect": "Ative apenas quando você sofrer 1000 ou mais de dano do efeito de um card do seu oponente: coloque 1 Marcador de Revanche neste card para cada 1000 de dano sofrido. Durante a Fase Final do próximo turno do seu oponente: destrua este card e, se isso acontecer, cause 2000 de dano ao seu oponente para cada Marcador de Revanche neste card."
+  },
+  "Double Snare": {
+    "name": "Armadilha Dupla",
+    "effect": "Escolha 1 card com a face para cima no campo que tenha um efeito que negue efeitos de Armadilha; destrua-o."
+  },
+  "Dragon Force": {
+    "name": "Força Dragônica",
+    "effect": "Uma vez por turno, durante sua Fase Principal, você pode banir 1 Monstro Normal Dragão do seu Cemitério para fazer 1 Monstro Normal Dragão que você controla ganhar 200 de ATK x o Nível do monstro banido até o final deste turno e, além disso, se ele atacar um monstro em Posição de Defesa neste turno, cause dano de batalha perfurante ao seu oponente."
+  }
+}

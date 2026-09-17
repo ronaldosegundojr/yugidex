@@ -1,0 +1,122 @@
+{
+  "Dragon Statue": {
+    "name": "Estátua de Dragão",
+    "effect": "Um guerreiro de pedra com o coração de um dragão."
+  },
+  "Dragonic Attack": {
+    "name": "Ataque Dragônico",
+    "effect": "Este card só pode ser usado para equipar monstros do Tipo Guerreiro. O monstro equipado é considerado do Tipo Dragão e aumenta o ATK e a DEF do monstro equipado em 500 pontos."
+  },
+  "Dragonic Guard": {
+    "name": "Guarda Dragônico",
+    "effect": "Cada vez que um monstro for Invocado por Invocação-Normal ou Baixado, coloque 1 Marcador Dragônico neste card. Você pode enviar este card com a face para cima para o Cemitério para Invocar por Invocação-Especial 1 monstro do Tipo Dragão do seu Deck cujo Nível seja menor ou igual ao número de Marcadores Dragônicos neste card."
+  },
+  "Drill Barnacle": {
+    "name": "Craca Perfurante",
+    "effect": "Este card pode atacar seu oponente diretamente. Cada vez que este card causar Dano de Batalha ao seu oponente por um ataque direto: este card ganha 1000 de ATK."
+  },
+  "Dustflame Blast": {
+    "name": "Explosão de Poeira de Chamas",
+    "effect": "Bana todos os monstros \"Laval\" do seu Cemitério; destrua qualquer número de cards no campo, até o número de monstros banidos para a ativação deste card."
+  },
+  "Earth Effigy": {
+    "name": "Efígie de Terra",
+    "effect": "Este card pode ser considerado como 2 Tributos para a Invocação-Tributo de um Monstro Normal de TERRA."
+  },
+  "Earthquake Giant": {
+    "name": "Gigante do Terremoto",
+    "effect": "Uma vez por turno, quando a posição de batalha deste card for mudada, você pode selecionar 1 monstro que seu oponente controla e mudar a posição de batalha dele."
+  },
+  "Eccentric Boy": {
+    "name": "Garoto Excêntrico",
+    "effect": "Ao usar este card como Monstro-Matéria Sincro, o outro Monstro-Matéria Sincro é 1 monstro da sua mão. O Monstro Sincro que usou este card como Monstro-Matéria Sincro não pode ativar seu efeito, o(s) efeito(s) dele é(são) negado(s) e ele é removido do jogo quando removido do campo."
+  },
+  "Edge Hammer": {
+    "name": "Martelo de Lamina",
+    "effect": "Ofereça 1 \"Elemental HERO Bladedge\" como Tributo para escolher 1 monstro que seu oponente controla; destrua o alvo e cause dano ao seu oponente igual ao ATK original do alvo."
+  },
+  "Egotistical Ape": {
+    "name": "Macaco Egoísta",
+    "effect": "Este card não pode ser Invocado por Invocação-Normal nem Baixado. Este card só pode ser Invocado por Invocação-Especial ao enviar 1 monstro do Tipo Besta da sua mão para o Cemitério. Quando este card for Invocado por Invocação-Especial desta forma, você pode ativar 1 desses efeitos: ● Aumente o Nível deste card pelo Nível do monstro do Tipo Besta. ● Diminua o Nível deste card pelo Nível do monstro do Tipo Besta."
+  },
+  "Einherjar Token": {
+    "name": "Ficha Einherjar",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Valkyrie of the Nordic Ascendant\"."
+  },
+  "Elemental Absorber": {
+    "name": "Absorvedor Elemental",
+    "effect": "Bana 1 Card de Monstro da sua mão para ativar este card. Os monstros do seu oponente que tenham o mesmo Atributo que o monstro removido por este efeito não podem declarar um ataque."
+  },
+  "Elemental Recharge": {
+    "name": "Recarga Elemental",
+    "effect": "Ganhe 1000 PV para cada monstro \"Elemental HERO\" com a face para cima que você controla."
+  },
+  "Elements of Thunder, Water, and Wind": {
+    "name": "Elementos do Trovão, da Água e do Vento",
+    "effect": "Ative esta Habilidade enquanto seus PV forem 1000 ou menos. Você pode Invocar por Invocação-Normal \"Suijin\", \"Kazejin\" ou \"Sanga of the Thunder\" sem oferecer Tributo neste turno OU, se você controlar \"Suijin\", \"Kazejin\" e \"Sanga of the Thunder\", você pode aplicar esta Habilidade em vez disso.\n● Envie o máximo de cards no campo para o Cemitério e, depois, Invoque por Invocação-Especial 1 \"Gate Guardian\" do seu Deck, ignorando as condições de Invocação."
+  },
+  "Elephun": {
+    "name": "Elefantinho",
+    "effect": "Quando este card for destruído em batalha e enviado para o Cemitério, você pode selecionar 1 dos seus monstros de Nível 3 ou menos do Tipo Besta, Besta-Guerreira ou Besta Alada que esteja removido do jogo e adicioná-lo à sua mão."
+  },
+  "Emergency Assistance": {
+    "name": "Assistência de Emergência",
+    "effect": "Ative durante sua Fase Principal 2 para Invocar por Invocação-Especial 1 monstro de Nível 4 do seu Cemitério que foi destruído por um efeito de card e enviado para o Cemitério neste turno."
+  },
+  "Emperor of the Land and Sea": {
+    "name": "Imperador da Terra e do Mar",
+    "effect": "Um monstro reptiliano que lança fogo em todas as direções."
+  },
+  "Endless Traps": {
+    "name": "Armadilhas Infinitas",
+    "effect": "Se você tiver exatamente 3 Armadilhas no seu Cemitério, adicione 1 Armadilha do seu Cemitério à sua mão aleatoriamente, embaralhe aleatoriamente 1 Armadilha do seu Cemitério no seu Deck e, depois, bana aleatoriamente 1 Armadilha do seu Cemitério. Esta Habilidade só pode ser usada uma vez por Duelo."
+  },
+  "Energizing Elements": {
+    "name": "Energizando Elementos",
+    "effect": "Você pode declarar FOGO, ÁGUA, TERRA ou VENTO. Neste turno, monstros com o Atributo declarado ganham 500 de ATK e perdem 400 de DEF e, além disso, qualquer dano de batalha que eles causarem é dividido pela metade. Se você não controlar nenhum monstro com o Atributo declarado, vire este card."
+  },
+  "Engine Token": {
+    "name": "Ficha de Motor",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Fiendish Engine Ω\"."
+  },
+  "Equip Shot": {
+    "name": "Disparo de Equipamento",
+    "effect": "Ative apenas durante a Fase de Batalha. Selecione 1 Card de Equipamento equipado a um monstro com a face para cima em Posição de Ataque que você controla e selecione 1 monstro com a face para cima em Posição de Ataque que seu oponente controla. Equipe esse monstro com o Card de Equipamento selecionado. Depois, realize uma batalha entre o seu monstro anteriormente equipado e o monstro selecionado (outros efeitos não podem ser ativados durante esta batalha)."
+  },
+  "ESP Amplifier": {
+    "name": "Amplificador ESP",
+    "effect": "Todos os monstros do Tipo Psíquico com a face para cima que você controlava quando este card foi ativado ganham 300 de ATK para cada um dos seus monstros do Tipo Psíquico removidos do jogo quando este card resolver. Durante a Fase Final, bana todos os monstros que foram afetados por este efeito."
+  },
+  "Esprit Bird Token": {
+    "name": "Ficha de Pássaro Espiritual",
+    "effect": "Este card pode ser usado como uma \"Ficha de Shinobird\".\n*Se usado como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa Ficha."
+  },
+  "Eva Token": {
+    "name": "Ficha Eva",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Zeta Reticulant\"."
+  },
+  "Evil Token": {
+    "name": "Ficha do Mal",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Vicious Claw\"."
+  },
+  "Evo-Branch": {
+    "name": "Evo-Ramo",
+    "effect": "Escolha 1 monstro do Tipo Réptil com a face para cima que você controla; destrua-o e Invoque por Invocação-Especial 1 monstro \"Evoltile\" em Posição de Defesa com a face para baixo do seu Deck."
+  },
+  "Evo-Instant": {
+    "name": "Evo-Instantâneo",
+    "effect": "Ofereça 1 monstro do Tipo Réptil como Tributo; Invoque por Invocação-Especial 1 monstro \"Evolsaur\" do seu Deck."
+  },
+  "Evo-Karma": {
+    "name": "Evo-Carma",
+    "effect": "Quando um ou mais monstros forem Invocados por Invocação-Especial pelo efeito de um monstro \"Evoltile\" que você controla, seu oponente não pode ativar cards ou efeitos."
+  },
+  "Evo-Miracle": {
+    "name": "Evo-Milagre",
+    "effect": "Escolha 1 monstro que foi Invocado por Invocação-Especial pelo efeito de um monstro \"Evoltile\"; neste turno, ele não pode ser destruído em batalha ou por efeitos de card."
+  },
+  "Evo-Price": {
+    "name": "Evo-Preço",
+    "effect": "Uma vez por turno, se um monstro for Invocado por Invocação-Especial pelo efeito de um monstro \"Evoltile\" (exceto durante a Etapa de Dano): você pode escolher 1 card no campo; destrua o alvo."
+  }
+}

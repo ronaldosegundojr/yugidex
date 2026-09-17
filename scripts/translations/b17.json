@@ -1,0 +1,126 @@
+{
+  "Queen Dragun Djinn": {
+    "name": "Rainha Djinn Dragunia",
+    "effect": "2 monstros de Nível 4\nMonstros do Tipo Dragão que você controla não podem ser destruídos em batalha, exceto \"Queen Dragun Djinn\". Uma vez por turno: você pode desassociar 1 Matéria Xyz deste card para escolher 1 monstro do Tipo Dragão de Nível 5 ou mais no seu Cemitério; Invoque o alvo por Invocação-Especial. Ele não pode atacar neste turno e os efeitos dele são negados."
+  },
+  "Quick-Span Knight": {
+    "name": "Cavaleiro Veloz",
+    "effect": "Se este card for enviado para o Cemitério para uma Invocação-Sincro: escolha 1 monstro com a face para cima que seu oponente controla; o alvo perde 500 de ATK."
+  },
+  "Radian Token": {
+    "name": "Ficha de Radian",
+    "effect": "Invocada por Invocação-Especial pelo efeito de \"Radian, o Kaiju Multidimensional\". Não pode ser usada como Monstro Matéria Sincro."
+  },
+  "Radiant Jeral": {
+    "name": "Jeral Radiante",
+    "effect": "Quando este card for enviado para o Cemitério (exceto se destruído em batalha), ganhe 1000 PV se \"The Sanctuary in the Sky\" estiver no campo."
+  },
+  "Rage of the Deep Sea": {
+    "name": "Fúria do Mar Profundo",
+    "effect": "Este card ganha 500 de ATK e DEF para cada monstro do Tipo Peixe, Serpente Marinha ou Aqua no seu Cemitério."
+  },
+  "Rainbow Crystal Collection": {
+    "name": "Coleção de Cristais do Arco-Íris",
+    "effect": "Se um monstro \"Crystal Beast\" com a face para cima que você controla seria destruído, você pode colocar 1 Marcador de Cristalização nele em vez disso. Monstros com Marcadores de Cristalização são considerados Cards de Magia Contínua na sua Zona de Magias & Armadilhas em vez de monstros. Se um card com um Marcador de Cristalização seria Invocado por Invocação-Especial, remova o marcador. Cards com Marcadores de Cristalização podem ser usados como Matéria de Fusão para monstros \"Ultimate Crystal\"."
+  },
+  "Rallis the Star Bird": {
+    "name": "Rallis, o Pássaro Estrela",
+    "effect": "Este card ganha ATK igual ao Nível do monstro com que batalha x 200 durante a Etapa de Dano apenas. Se este card atacar, ele é removido do jogo no final da Etapa de Dano e devolvido ao seu lado do campo em Posição de Ataque com a face para cima no início da Fase de Batalha do seu próximo turno."
+  },
+  "Rampaging Rhynos": {
+    "name": "Rinocerontes Furiosos",
+    "effect": "Uma vez por turno, este card pode se mover para uma Zona de Cards de Monstro desocupada adjacente (horizontal). Se este card atacar o monstro na mesma coluna dele, este card ganha 500 de ATK durante a Etapa de Dano."
+  },
+  "Rapid-Fire Magician": {
+    "name": "Mágico de Disparo Rápido",
+    "effect": "Cause 400 de dano ao seu oponente cada vez que você ativar um Card de Magia Normal."
+  },
+  "Reanimation Wave": {
+    "name": "Onda de Reanimação",
+    "effect": "Ative somente quando o monstro do seu oponente declarar um ataque direto. Selecione 1 Monstro Sincro no seu Cemitério com Nível menor ou igual ao do monstro atacante. O Dano de Batalha que você sofre desse ataque é reduzido pela metade. No final da Etapa de Dano, Invoque por Invocação-Especial o Monstro Sincro selecionado do Cemitério."
+  },
+  "Rebound": {
+    "name": "Ricochete",
+    "effect": "Quando seu oponente ativar um Card de Magia, Card de Armadilha ou efeito de monstro que devolva um ou mais cards do campo para a mão: negue esse efeito e, se isso acontecer, envie 1 card da mão do seu oponente (aleatoriamente) ou do lado do campo dele para o Cemitério. Quando este card Baixado for destruído pelo efeito de um card do seu oponente e enviado para o Cemitério: compre 1 card."
+  },
+  "Red-Headed Oni": {
+    "name": "Oni de Cabelos Vermelhos",
+    "effect": "Quando este card for Invocado por Invocação-Especial do Cemitério pelo efeito de um monstro do Tipo Zumbi: você pode escolher 1 monstro do Tipo Zumbi com a face para cima que você controla; desassocie 1 Matéria Xyz de um monstro no campo e, se isso acontecer, aumente o Nível do monstro alvo em 1 e o ATK dele em 300 (mesmo que as condições de alvo não estejam mais corretas)."
+  },
+  "Reed Butterfly": {
+    "name": "Borboleta Junco",
+    "effect": "Se seu oponente controlar um Monstro Sincro com a face para cima e você não controlar Monstros Sincro com a face para cima, você pode Invocar este card por Invocação-Especial da sua mão."
+  },
+  "Reese the Ice Mistress": {
+    "name": "Reese, a Senhora do Gelo",
+    "effect": "Este card não pode ser destruído em batalha com um monstro de Nível 4 ou mais."
+  },
+  "Regenerating Rose": {
+    "name": "Rosa Regeneradora",
+    "effect": "Quando este card for destruído em batalha e enviado para o Cemitério, você pode Invocar por Invocação-Especial 2 \"Fichas de Rosa Regeneradora\" (Tipo Planta/TREVAS/Nível 3/ATK 1200/DEF 1200)."
+  },
+  "Regenerating Rose Token": {
+    "name": "Ficha de Rosa Regeneradora",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Regenerating Rose\"."
+  },
+  "Reinforced Space": {
+    "name": "Espaço Reforçado",
+    "effect": "Cada Monstro Xyz com a face para cima que você controla ganha 300 de ATK para cada Matéria Xyz associada a ele, até a Fase Final."
+  },
+  "Reptilianne Token": {
+    "name": "Ficha de Reptilianna",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Reptilianne Spawn\"."
+  },
+  "Resonance Device": {
+    "name": "Dispositivo de Ressonância",
+    "effect": "Escolha 2 monstros com a face para cima que você controla com o mesmo Tipo e Atributo; mude o Nível de um deles para o Nível atual do outro, até a Fase Final."
+  },
+  "Return": {
+    "name": "Retorno",
+    "effect": "Quando seu oponente adicionar um ou mais cards do Cemitério à mão dele: ele deve embaralhar 1 desses cards no Deck dele."
+  },
+  "Return of the Doomed": {
+    "name": "Retorno do Condenado",
+    "effect": "Descarte 1 Card de Monstro da sua mão para o Cemitério. Devolva 1 dos seus monstros destruídos e enviados ao seu Cemitério como resultado de batalha durante este turno para a sua mão no final deste turno."
+  },
+  "Reverse of Neos": {
+    "name": "Reverso de Neos",
+    "effect": "Ative somente quando um Monstro de Fusão \"Neos\" com a face para cima que você controla for destruído. Invoque por Invocação-Especial 1 \"Elemental Hero Neos\" do seu Deck em Posição de Ataque. Ele ganha 1000 de ATK e é destruído durante a Fase Final deste turno."
+  },
+  "Revival Gift": {
+    "name": "Presente do Renascimento",
+    "effect": "Selecione 1 monstro Regulador do seu Cemitério e Invoque-o por Invocação-Especial. Os efeitos dele são negados. Invoque por Invocação-Especial 2 \"Fichas de Demônio do Presente\" (Tipo Demônio/TREVAS/Nível 3/ATK 1500/DEF 1500) no lado do campo do seu oponente."
+  },
+  "Revival Golem": {
+    "name": "Golem do Renascimento",
+    "effect": "Se este card for enviado do Deck para o Cemitério: ative 1 destes efeitos;\n● Invoque este card por Invocação-Especial.\n● Adicione este card à sua mão.\nVocê só pode usar este efeito de \"Revival Golem\" uma vez por turno."
+  },
+  "Revoke Fusion": {
+    "name": "Fusão Revogada",
+    "effect": "Descarte 1 \"Polymerization\" para o Cemitério. Envie 1 Monstro de Fusão do seu Deck Adicional para o seu Cemitério e Invoque por Invocação-Especial 1 monstro da sua mão que esteja listado como Monstro Matéria de Fusão nesse card. O monstro Invocado por Invocação-Especial é enviado para o Cemitério durante a Fase Final deste turno."
+  },
+  "Rise of the Fallen": {
+    "name": "Ascensão dos Caídos",
+    "effect": "Ative esta Habilidade durante sua Fase Principal. Invoque por Invocação-Especial 1 monstro Fada de Nível 4 ou menos do seu Cemitério em Posição de Defesa e ganhe PV iguais ao ATK original dele. Esta Habilidade só pode ser usada uma vez por Duelo."
+  },
+  "Ritual Ceremony": {
+    "name": "Cerimônia de Ritual",
+    "effect": "Uma vez por Duelo, durante sua Fase Principal, você pode revelar 1 Monstro de Ritual da sua mão, adicionar 1 Magia de Ritual do seu Deck à sua mão cujo nome seja mencionado nesse Monstro de Ritual e, depois, colocar 1 card da sua mão no fundo do seu Deck."
+  },
+  "Ritual Sealing": {
+    "name": "Selamento de Ritual",
+    "effect": "Destrua 1 Monstro de Ritual com a face para cima no campo."
+  },
+  "Rock Ogre Grotto #2": {
+    "name": "Caverna do Ogro de Rocha n.º 2",
+    "effect": "Um golem formado por rochedos, este monstro transforma seus inimigos em pedra e os esmaga até virar pó."
+  },
+  "Rock Spirit": {
+    "name": "Espírito da Rocha",
+    "effect": "Uma fada dos rochedos que parece uma estátua de cerâmica. É bastante forte tanto em ataque quanto em defesa."
+  },
+  "Rockstone Token": {
+    "name": "Ficha de Pedra de Rocha",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Rockstone Warrior\". Esta Ficha não pode ser usada como Tributo para uma Invocação-Tributo."
+  }
+}

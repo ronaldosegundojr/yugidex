@@ -1,0 +1,146 @@
+{
+  "Smashing Horn": {
+    "name": "Chifre Esmagador",
+    "effect": "Quando um efeito de monstro ou Card de Armadilha for ativado que negue a Invocação Normal ou Especial de um ou mais monstros: negue a ativação e destrua-o."
+  },
+  "Snake Whistle": {
+    "name": "Assobio de Cobra",
+    "effect": "Ative somente quando um monstro do Tipo Réptil que você controla for destruído. Invoque por Invocação-Especial 1 monstro do Tipo Réptil de Nível 4 ou menos do seu Deck."
+  },
+  "Snowdust Giant": {
+    "name": "Gigante de Neve em Pó",
+    "effect": "2 monstros de ÁGUA de Nível 4\nUma vez por turno: você pode desassociar 1 Matéria Xyz deste card; revele qualquer número de monstros de ÁGUA da sua mão e coloque esse número de Marcadores de Gelo em monstros com a face para cima no campo. Monstros que não sejam de ÁGUA no campo perdem 200 de ATK para cada Marcador de Gelo no campo."
+  },
+  "Soaring Eagle Above the Searing Land": {
+    "name": "Águia Voadora Sobre a Terra Ardente",
+    "effect": "Se este card for enviado para o Cemitério para uma Invocação-Sincro: você pode Invocar este card por Invocação-Especial. Você deve ter 3 ou mais monstros \"Laval\" com nomes diferentes no seu Cemitério para ativar e para resolver este efeito. Se este card for Invocado por Invocação-Especial com este efeito, bana-o quando ele deixar o campo."
+  },
+  "Soul Token": {
+    "name": "Ficha de Alma",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Limit Impulse\". Esta Ficha não pode ser oferecida como Tributo, exceto para uma Invocação-Tributo."
+  },
+  "Soul Unseal": {
+    "name": "Desvelamento da Alma",
+    "effect": "Se seu oponente controlar um monstro e você controlar um Monstro Normal: escolha 5 Monstros Normais no seu Deck, adicione 1 deles à sua mão e bana o resto."
+  },
+  "Sound the Retreat!": {
+    "name": "Toque a Retirada!",
+    "effect": "Devolva todos os monstros que você controla para a mão."
+  },
+  "Soundproofed": {
+    "name": "À Prova de Som",
+    "effect": "Este card só pode ser ativado no início da Fase Principal 1, e somente se você não controlar Monstros Sincro com a face para cima. Nenhum duelista pode Invocar por Invocação-Especial um Monstro Sincro até a próxima Fase Final do seu oponente."
+  },
+  "Space Cyclone": {
+    "name": "Ciclone Espacial",
+    "effect": "Desassocie 1 Matéria Xyz de um monstro."
+  },
+  "Space-Time Police": {
+    "name": "Polícia Espaço-Tempo",
+    "effect": "Quando este card for Invocado por Invocação-Especial: escolha 1 card com a face para cima que seu oponente controla; bana o alvo. Quando este card deixar o campo: Baixe o card que foi banido por este efeito no lado do campo do seu oponente."
+  },
+  "Spawn Alligator": {
+    "name": "Filhote de Jacaré",
+    "effect": "Durante a Fase Final do turno em que este card foi Invocado por Invocação-Tributo ao oferecer um monstro do Tipo Réptil como Tributo: escolha 1 monstro que foi usado para a Invocação-Tributo deste card; Invoque-o por Invocação-Especial do Cemitério."
+  },
+  "Spearfish Soldier": {
+    "name": "Soldado Peixe-Agulha",
+    "effect": "Este card ganha 100 de ATK para cada um dos seus monstros banidos do Tipo Peixe, Serpente Marinha e Aqua."
+  },
+  "Speed Bird": {
+    "name": "Pássaro Veloz",
+    "effect": "Quando este card for destruído em batalha e enviado para o Cemitério: você pode escolher 2 monstros de Nível 2 no seu Cemitério; Invoque-os por Invocação-Especial, mas os efeitos deles são negados."
+  },
+  "Spell Calling": {
+    "name": "Chamada de Magia",
+    "effect": "Quando este card com a face para baixo for destruído e enviado para o Cemitério pelo efeito de um Card de Magia ou Armadilha controlado pelo seu oponente, selecione 1 Card de Magia Rápida do seu Deck e Baixe-o após mostrá-lo ao seu oponente."
+  },
+  "Spell of Mask": {
+    "name": "Magia da Máscara",
+    "effect": "Ative a(s) seguinte(s) Habilidade(s):\n● Se um \"The Masked Beast\" Invocado por Invocação-Ritual que você controla for destruído pelo efeito de um card do oponente, você pode Invocar por Invocação-Especial \"Masked Beast Des Gardius\" da sua mão, Deck ou Cemitério, ignorando as condições de Invocação.\n● Você pode oferecer 1 \"Masked Beast Des Gardius\" como Tributo e, depois, adicionar 1 \"The Masked Beast\" e 1 \"Curse of the Masked Beast\" do seu Deck e/ou Cemitério à sua mão.\nCada uma destas Habilidades só pode ser usada uma vez por Duelo."
+  },
+  "Spell of Mask (Skill Card)": {
+    "name": "Magia da Máscara (Skill Card)",
+    "effect": "Ative a(s) seguinte(s) Habilidade(s):\n● Se um \"The Masked Beast\" Invocado por Invocação-Ritual que você controla for destruído pelo efeito de um card do oponente, você pode Invocar por Invocação-Especial \"Masked Beast Des Gardius\" da sua mão, Deck ou Cemitério, ignorando as condições de Invocação.\n● Você pode oferecer 1 \"Masked Beast Des Gardius\" como Tributo e, depois, adicionar 1 \"The Masked Beast\" e 1 \"Curse of the Masked Beast\" do seu Deck e/ou Cemitério à sua mão.\nCada uma destas Habilidades só pode ser usada uma vez por Duelo."
+  },
+  "Spellstone Sorcerer Karood": {
+    "name": "Feiticeiro de Pedra Mágica Karood",
+    "effect": "Uma vez por turno, quando o efeito de outro Card de Monstro for ativado enquanto não houver Marcador de Pedra Mágica neste card, coloque 1 Marcador de Pedra Mágica neste card (máx. 1). Este card ganha 300 de DEF para cada Marcador de Pedra Mágica nele. Uma vez por turno, você pode remover 1 Marcador de Pedra Mágica do seu lado do campo para selecionar 1 card no Cemitério do seu oponente e remover esse card do jogo."
+  },
+  "Spinos Token": {
+    "name": "Ficha de Espinossauro",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Jurrac Spinos\"."
+  },
+  "Spirit Elimination": {
+    "name": "Eliminação de Espíritos",
+    "effect": "Quando monstros no Cemitério forem removidos do jogo, remova monstros no seu lado do campo do jogo como substitutos. Este card permanece ativo até o final do turno em que foi ativado. Os substitutos permanecem removidos do jogo."
+  },
+  "Spirit of the Breeze": {
+    "name": "Espírito da Brisa",
+    "effect": "Enquanto este card permanecer em Posição de Ataque com a face para cima no seu lado do campo, aumente seus PV em 1000 pontos durante cada uma das suas Fases de Apoio."
+  },
+  "Splash Capture": {
+    "name": "Captura com Borrifada",
+    "effect": "Quando seu oponente Invocar por Invocação-Xyz: bana 2 monstros do Tipo Peixe do seu Cemitério para escolher esse Monstro Xyz com a face para cima; assuma o controle do alvo."
+  },
+  "Spring of Rebirth": {
+    "name": "Fonte do Renascimento",
+    "effect": "Aumente seus PV em 500 pontos toda vez que monstros retornarem do campo para a mão do dono."
+  },
+  "St. Joan": {
+    "name": "Santa Joana",
+    "effect": "\"The Forgiving Maiden\" + \"Darklord Marie\""
+  },
+  "Steam Knight - Hamburk": {
+    "name": "Cavaleiro a Vapor - Hamburk",
+    "effect": "Um dos cavaleiros, ele está equipado com a \"Armadura BFS\", feita de aço denso cuidadosamente refinado na fábrica, e o \"Pacote de Papel Alumínio\", um mecanismo especial que pode ser convertido em várias armas dependendo do estado do combate, graças ao seu vínculo com o altamente analítico \"Coc-OS\". Embora \"Hamburk\" esteja equipado com o conjunto habitual de equipamentos, ele é incrivelmente popular graças ao seu estilo de combate extremamente calórico. Seu poder é ainda mais reforçado pelas bênçãos da deusa \"Madera\"."
+  },
+  "Steam Token": {
+    "name": "Ficha de Vapor",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Blackwing - Steam the Cloak\"."
+  },
+  "Steelswarm Genome": {
+    "name": "Genoma Steelswarm",
+    "effect": "Este card pode ser considerado 2 Tributos para a Invocação-Tributo de um monstro \"Steelswarm\"."
+  },
+  "Steelswarm Hercules": {
+    "name": "Hércules Steelswarm",
+    "effect": "Não pode ser Invocado por Invocação-Especial. Requer 3 Tributos \"Steelswarm\" para ser Invocado por Invocação-Normal (não pode ser Baixado por Invocação-Normal). Uma vez por turno: você pode pagar metade dos seus PV; destrua todos os outros cards no campo."
+  },
+  "Steelswarm Longhorn": {
+    "name": "Chifre Longo Steelswarm",
+    "effect": "Uma vez por turno, se este card foi Invocado por Invocação-Tributo ao oferecer um ou mais monstros \"Steelswarm\" como Tributo: você pode pagar 1000 PV para escolher 1 monstro no campo; destrua o alvo."
+  },
+  "Steelswarm Sentinel": {
+    "name": "Sentinela Steelswarm",
+    "effect": "Enquanto este card estiver em Posição de Ataque com a face para cima, monstros Invocados por Invocação-Especial de Nível 5 ou mais no campo não podem ativar seus efeitos."
+  },
+  "Steelswarm Sting": {
+    "name": "Ferrão Steelswarm",
+    "effect": "Quando este card que você controla for enviado para o seu Cemitério: escolha 1 Monstro de Ritual, de Fusão ou Sincro com a face para cima no campo; destrua o alvo."
+  },
+  "Stone Ghost": {
+    "name": "Fantasma de Pedra",
+    "effect": "Com uma cabeça que entra em erupção quando irritada, este monstro lança uma perigosa chuva de rochedos."
+  },
+  "Storm Shooter": {
+    "name": "Atirador de Tempestade",
+    "effect": "Uma vez por turno, você pode selecionar e ativar 1 destes efeitos: ● Mova este card para uma Zona de Cards de Monstro desocupada adjacente (horizontal). ● Devolva 1 Card de Magia, Armadilha ou Monstro no lado do campo do seu oponente na mesma coluna deste card para a mão do dono."
+  },
+  "Stuffed Animal": {
+    "name": "Bicho de Pelúcia",
+    "effect": "Pode parecer um bicho de pelúcia inofensivo, mas sua boca-zíper dá uma mordida mortal."
+  },
+  "Super Crashbug": {
+    "name": "Super Crashbug",
+    "effect": "Não pode ser Invocado por Invocação-Normal ou Baixado. Primeiro deve ser Invocado por Invocação-Especial (da sua mão) em Posição de Defesa com a face para cima, banindo \"Crashbug X\", \"Crashbug Y\" e \"Crashbug Z\" do seu Cemitério. Troque o ATK e a DEF de todos os monstros com a face para cima em Posição de Ataque no campo. Só pode haver 1 \"Super Crashbug\" com a face para cima no campo."
+  },
+  "Super Junior Confrontation": {
+    "name": "Confronto Super Júnior",
+    "effect": "Ative somente quando um monstro do oponente declarar um ataque. Negue a batalha, e 1 monstro com o menor ATK em Posição de Ataque com a face para cima que seu oponente controla batalha contra 1 monstro com a menor DEF em Posição de Defesa com a face para cima que você controla. Depois dessa batalha, encerre a Fase de Batalha."
+  },
+  "Super Roboyarou": {
+    "name": "Super Roboyarou",
+    "effect": "\"Roboyarou\" + \"Robolady\"\nVocê pode Invocar por Invocação-Especial \"Super Robolady\" devolvendo este card do campo para o Deck Adicional. Você não pode usar este efeito durante o mesmo turno em que este monstro for Invocado por Invocação-Especial. Além disso, aumente o ATK deste monstro em 1000 pontos durante a Etapa de Dano quando este monstro batalhar com um monstro."
+  }
+}

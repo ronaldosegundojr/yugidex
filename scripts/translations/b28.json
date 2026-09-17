@@ -1,0 +1,298 @@
+{
+  "Pesanta the Troubadour Deity": {
+    "name": "Pesanta, a Divindade Trovadora",
+    "effect": "Um ser grotesco que se manifesta como resposta a orações piedosas. Dizem que ele recita poemas contendo profecias para o futuro, mas os conteúdos dos ditos poemas são tão profundos e misteriosos que estão além do entendimento."
+  },
+  "Soulicer Crystal": {
+    "name": "Cristal Soulicer",
+    "effect": "Não pode ser destruído por efeitos de card. Você só pode usar cada um dos seguintes efeitos de \"Soulicer Crystal\" uma vez por turno. Se seu oponente controlar 2 ou mais monstros do que você: você pode Invocar este card por Invocação-Especial da sua mão. Você pode escolher 1 Monstro de Efeito que seu oponente controla; negue os efeitos dele."
+  },
+  "Maliss P March Hare": {
+    "name": "Maliss P Lebre de Março",
+    "effect": "Seu oponente não pode escolher como alvo de efeitos de card Monstros Link \"Maliss\" que apontem para este card. Você só pode usar cada um dos seguintes efeitos de \"Maliss March Hare\" uma vez por turno. Durante a Fase Principal, se este card estiver na sua mão (Efeito Rápido): você pode banir 1 outro card \"Maliss\" da sua mão ou Cemitério e, se isso acontecer, Invoque este card por Invocação-Especial. Se este card for banido: você pode pagar 300 PV e, depois, escolher 1 dos seus monstros \"Maliss\" banidos; adicione-o à sua mão."
+  },
+  "Token (Odion and \"Embodiment of Apophis\")": {
+    "name": "Ficha (Odion e \"Embodiment of Apophis\")",
+    "effect": "Este card de Odion & Embodiment of Apophis pode ser usado como qualquer Ficha.\n\n\"Vou jogar Temple of the Kings, um card como nenhum que vocês já viram! A estrutura atrás de mim é o antigo Templo dos Reis. Dentro deste santuário de cinco mil anos estão os maiores tesouros dos Reis do Egito!\""
+  },
+  "Token (Supreme King Jaden and \"Supreme King's Castle\")": {
+    "name": "Ficha (Supreme King Jaden e \"Supreme King's Castle\")",
+    "effect": "Este card de Supreme King Jaden & Supreme King's Castle pode ser usado como qualquer Ficha.\n\n\"Pare de me chamar assim! Eu sou o medo! Eu sou a sua ruína! Eu sou a maldição atemporal! O fim de todas as coisas! Você trouxe isso sobre si mesmo, mortal! Agora aprenda o caminho da escuridão!\""
+  },
+  "Token (Vizor and \"T.G. Blade Blaster\")": {
+    "name": "Ficha (Vizor e \"T.G. Blade Blaster\")",
+    "effect": "Este card de Vizor & T.G. Blade Blaster pode ser usado como qualquer Ficha.\n\n\"É um Monstro Accel Sincro, Tech Genus Blade Blaster. Uma Invocação-Sincro Accel usa um Monstro Regulador Sincro e um Monstro Sincro. E é feita com velocidade relâmpago!\""
+  },
+  "Regenesis": {
+    "name": "Regênese",
+    "effect": "Pegue 1 monstro \"Regenesis\" do seu Deck e adicione-o à sua mão ou envie-o para o Cemitério ou, se você controlar um monstro \"Regenesis\", você pode adicionar 1 monstro com 2500 de ATK e DEF do seu Deck à sua mão em vez disso. Se este card estiver no seu Cemitério, exceto no turno em que foi enviado para lá: você pode bani-lo e, depois, escolher 1 monstro \"Regenesis\" no seu Cemitério; Invoque-o por Invocação-Especial. Você só pode usar cada efeito de \"Regenesis\" uma vez por turno."
+  },
+  "Veiss Shark": {
+    "name": "Tubarão Veiss",
+    "effect": "Se este card for Invocado por Invocação-Normal ou Especial: você pode oferecer 1 monstro Peixe como Tributo; Invoque por Invocação-Especial 1 monstro Peixe \"Shark\" do seu Deck e, além disso, você não pode Invocar por Invocação-Especial pelo resto deste turno, exceto monstros de ÁGUA. Você só pode usar este efeito de \"Veiss Shark\" uma vez por turno. Um Monstro Xyz \"Shark Drake\" que tiver este card como matéria ganha este efeito.\n● Uma vez por turno, quando um Card de Magia/Armadilha ou efeito for ativado (Efeito Rápido): você pode desassociar 2 matérias deste card; negue esse efeito e, se isso acontecer, destrua esse card."
+  },
+  "Saiba the Fighting Swordsmith": {
+    "name": "Saiba, o Espadachim Lutador",
+    "effect": "1 Regulador + 1+ monstros não-Reguladores\nVocê pode escolher 1 monstro Guerreiro de Nível 6 ou menos no seu Cemitério; Invoque-o por Invocação-Especial (mas os efeitos dele são negados) e, além disso, este card não pode ser usado como Matéria Sincro pelo resto deste turno. Durante a Fase Principal do seu oponente, você pode (Efeito Rápido): imediatamente depois que este efeito resolver, Invoque por Invocação-Sincro 1 Monstro Sincro, usando monstros que você controla como matéria, incluindo um monstro Guerreiro. Você só pode usar cada efeito de \"Saiba the Fighting Swordsmith\" uma vez por turno."
+  },
+  "Soul of Gaia the Fierce Knight": {
+    "name": "Alma de Gaia, o Cavaleiro Feroz",
+    "effect": "(Este card é sempre considerado um card \"Millennium\".)\nSe um Card de Monstro de Nível 5 ou mais estiver no campo, você pode Invocar este card por Invocação-Normal sem oferecer Tributo. Se seu oponente Invocar por Invocação-Normal ou Especial um ou mais monstros em Posição de Ataque, aumente o Nível dele em 7 enquanto este monstro estiver no campo. Quando seu oponente ativar um efeito de monstro (Efeito Rápido): você pode enviar 1 outro Card de Monstro de Nível 5 ou mais com a face para cima que você controla para o Cemitério; negue a ativação e, se isso acontecer, destrua esse card. Você só pode usar este efeito de \"Soul of Gaia the Fierce Knight\" uma vez por turno."
+  },
+  "Darkuriboh": {
+    "name": "Kuriboh das Trevas",
+    "effect": "Quando um card ou efeito for ativado que escolha como alvo um Demônio e/ou Monstro(s) de Fusão que você controla, ou quando seu Demônio ou Monstro de Fusão for escolhido como alvo de um ataque (Efeito Rápido): você pode descartar este card e, depois, escolher 1 deles; até o final deste turno, ele não pode ser destruído em batalha ou por efeitos de card e, além disso, os efeitos dele ativados no campo não podem ser negados. Se este card for enviado da mão para o Cemitério por efeito de card: você pode adicionar 1 \"Polymerization\" do seu Deck ou Cemitério à sua mão. Você só pode usar cada efeito de \"Darkuriboh\" uma vez por turno."
+  },
+  "Invoked Magistus Omega": {
+    "name": "Ômega Magistus Invoked",
+    "effect": "\"Aleister the Invoker\" + 1 Monstro de Fusão, Sincro, Xyz ou Link\nSe este card for Invocado por Invocação-Especial: você pode escolher 1 Monstro de Fusão, Sincro, Xyz ou Link no seu Cemitério e 1 monstro no campo; bana-os. Se este card Invocado por Invocação-Fusão for destruído em batalha ou por efeito de card: você pode Invocar por Invocação-Especial 1 monstro Mago de Nível 4 do seu Deck e, depois, você pode equipar este card a ele como uma Magia de Equipamento que concede 1000 de ATK a ele. Você só pode usar cada efeito de \"Invoked Magistus Omega\" uma vez por turno."
+  },
+  "K9 - 17 \"Ripper\"": {
+    "name": "K9 - 17 \"Ripper\"",
+    "effect": "2 monstros de Nível 5\nVocê pode desassociar 1 matéria deste card; adicione 1 card \"K9\" do seu Deck à sua mão e, depois, se seu oponente ativou um efeito de monstro neste turno, você pode Baixar 1 Magia Rápida \"K9\" do seu Deck ou Cemitério. Quando seu oponente ativar um efeito de monstro na mão ou Cemitério (Efeito Rápido): você pode desassociar 1 matéria deste card; negue esse efeito. Você só pode usar cada efeito de \"K9-17 \"Ripper\"\" uma vez por turno."
+  },
+  "Prototype Sky Striker Ace - Amatsu": {
+    "name": "Ás do Golpe do Céu - Protótipo Amatsu",
+    "effect": "1 monstro \"Sky Striker Ace\"\nVocê só pode Invocar \"Protoype Sky Striker Ace - Amatsu\" por Invocação-Especial uma vez por turno. Quando um monstro que seu oponente controla com 2000 ou mais de ATK ativar o efeito dele (Efeito Rápido): você pode fazer o efeito ativado se tornar \"Destrua 1 Monstro Link \"Sky Striker Ace\" que seu oponente controla\". Quando um ataque for declarado envolvendo este card e um monstro do oponente: você pode escolher 1 monstro \"Sky Striker Ace\" que você controla e 1 card que seu oponente controla; destrua-os. Você só pode usar cada efeito de \"Prototype Sky Striker Ace - Amatsu\" uma vez por turno."
+  },
+  "Starship Adjust Plane": {
+    "name": "Plano de Ajuste de Nave Estelar",
+    "effect": "Você pode escolher 1 outro monstro Máquina que você controla; os Níveis de tanto desse monstro como deste card se tornam os Níveis atuais combinados desses 2 monstros até o final deste turno e, além disso, você não pode Invocar por Invocação-Especial do Deck Adicional pelo resto deste turno, exceto Monstros Xyz Máquina. Você só pode usar este efeito de \"Starship Adjust Plane\" uma vez por turno."
+  },
+  "Stinger the Electric Expeller": {
+    "name": "Stinger, o Expulsor Elétrico",
+    "effect": "Um membro da Força de Defesa das Dunas que consegue repelir os invasores estrangeiros, graças aos seus esforços heroicos. Sua espada deve ser empunhada somente para proteger aqueles que ele deseja proteger."
+  },
+  "Uzuhime the Manifested Mikanko": {
+    "name": "Uzuhime, a Mikanko Manifestada",
+    "effect": "2 monstros \"Mikanko\" de Nível 3\nSe este card for Invocado por Invocação-Especial: você pode adicionar 1 Magia de Equipamento do seu Deck ou Cemitério à sua mão. Você só pode usar este efeito de \"Uzuhime the Manifested Mikanko\" uma vez por turno. Não pode ser destruído em batalha e, além disso, seu oponente sofre qualquer dano de batalha que você sofreria de batalhas envolvendo este card. Se este card atacar, no final da Etapa de Dano: você pode desassociar 1 matéria deste card; ele pode realizar outro ataque em sequência."
+  },
+  "Dark Magician of Destruction": {
+    "name": "Mago Negro da Destruição",
+    "effect": "\"Dark Magician\" + 1 monstro de LUZ ou TREVAS\nDeve ser Invocado por Invocação-Fusão ou Invocado por Invocação-Especial (do seu Deck Adicional) ao banir 1 monstro Mago de TREVAS de Nível 6 ou mais que você controla durante o turno em que um Card de Magia ou efeito foi ativado. Você só pode Invocar \"Dark Magician of Destruction\" por Invocação-Especial uma vez por turno desta forma, não importa qual método você use. Se este card for Invocado por Invocação-Especial: você pode adicionar 1 \"Dark Magician\" ou 1 card que o mencione do seu Deck à sua mão. O nome deste card se torna \"Dark Magician\" enquanto estiver no campo ou no Cemitério."
+  },
+  "Hero's Rule 1: Five Freedoms": {
+    "name": "Regra 1 do HERÓI: Cinco Liberdades",
+    "effect": "Escolha até 5 cards em qualquer Cemitério; bana-os. Se este card estiver no seu Cemitério, exceto no turno em que foi enviado para lá: você pode bani-lo e, depois, escolher 1 dos seus monstros \"Elemental HERO\" banidos; Invoque-o por Invocação-Especial, ignorando as condições de Invocação dele. Você só pode usar este efeito de \"Hero's Rule 1: Five Freedoms\" uma vez por turno."
+  },
+  "Chaos Distill": {
+    "name": "Destilação do Caos",
+    "effect": "Qualquer card enviado para o seu Cemitério é banido em vez disso. Você pode ativar 1 destes efeitos;\n● Adicione 1 \"Macro Cosmos\" ou 1 card que o mencione do seu Deck à sua mão, exceto \"Chaos Distill\".\n● Se \"Macro Cosmos\" estiver no campo: bana este card com a face para cima da Zona de Magias & Armadilhas; adicione 1 monstro de LUZ com ATK ? do seu Deck à sua mão.\nVocê só pode usar este efeito de \"Chaos Distill\" uma vez por turno."
+  },
+  "Masked HERO Dusk Crow": {
+    "name": "HERÓI Mascarado Corvo do Crepúsculo",
+    "effect": "Se este card estiver na sua mão: você pode banir 1 monstro \"HERO\" do seu Cemitério; Invoque este card por Invocação-Especial. Se este card for Invocado por Invocação-Normal ou Especial: você pode adicionar 1 monstro \"Masked HERO\" do seu Deck ou Cemitério à sua mão, exceto \"Masked HERO Dusk Crow\". Você só pode usar cada efeito de \"Masked HERO Dusk Crow\" uma vez por turno."
+  },
+  "Conduction Warrior Linear Magnum ±": {
+    "name": "Guerreiro de Condução Magnum Linear ±",
+    "effect": "Não pode ser Invocado por Invocação-Normal/Baixado. Primeiro deve ser Invocado por Invocação-Especial (da sua mão) ao enviar 2 monstros \"Magnet Warrior\" cujo Nível original seja 4 ou menos da sua mão, Deck e/ou campo com a face para cima para o Cemitério. Você só pode Invocar \"Conduction Warrior Linear Magnum ±\" por Invocação-Especial uma vez por turno desta forma. Você pode escolher 1 outro monstro de TERRA no campo; este card ganha ATK igual à metade do ATK desse monstro até o final deste turno. Se este card for destruído e enviado para o Cemitério: adicione-o à sua mão. Você só pode usar cada efeito de \"Conduction Warrior Linear Magnum ±\" uma vez por turno."
+  },
+  "Anotherverse Stratios": {
+    "name": "Stratios do Outroverso",
+    "effect": "Este deus da guerra do outro mundo trilhou inúmeros campos de batalha sob seus pés blindados. Se você quer a glória dele, venha pegá-la!"
+  },
+  "Yu-Gi-Oh! Championship Series Japan": {
+    "name": "Série do Campeonato Yu-Gi-Oh! do Japão",
+    "effect": "Este card pode ser usado como qualquer Ficha."
+  },
+  "Ritual of the Matador": {
+    "name": "Ritual do Toureiro",
+    "effect": "Este card é usado para Invocar \"Archfiend Matador\" por Invocação-Ritual. Você também deve oferecer monstros da sua mão ou campo como Tributo cujo total de Níveis seja 6 ou mais. Você pode banir este card do seu Cemitério; Invoque por Invocação-Especial 1 monstro \"Archfiend\" não-Ritual da sua mão. Você só pode usar este efeito de \"Ritual of the Matador\" uma vez por turno."
+  },
+  "Prima Light": {
+    "name": "Luz Prima",
+    "effect": "Ative 1 destes efeitos;\n● Ofereça 1 monstro Guerreiro de TERRA como Tributo e, se isso acontecer, Invoque por Invocação-Especial 1 monstro Guerreiro de LUZ da sua mão ou Deck.\n● Durante a Fase Principal: imediatamente depois que este efeito resolver, Invoque por Invocação-Normal 1 monstro Guerreiro da sua mão.\nDurante sua Fase Principal: você pode banir este card do seu Cemitério; adicione 1 monstro Guerreiro ou Fada \"Cyber\" do seu Deck à sua mão. Você só pode usar 1 efeito de \"Prima Light\" por turno e apenas uma vez nesse turno."
+  },
+  "Archfiend Matador": {
+    "name": "Toureiro Arquidemônio",
+    "effect": "Você pode Invocar este card por Invocação-Ritual com \"Ritual of the Matador\". Se este card for Invocado por Invocação-Ritual: você pode adicionar 2 cards \"Archfiend\" do seu Deck à sua mão, exceto \"Archfiend Matador\" e, além disso, este card não pode atacar pelo resto deste turno. Você só pode usar este efeito de \"Archfiend Matador\" uma vez por turno. Não pode ser destruído em batalha e, além disso, você não sofre dano de batalha de batalhas envolvendo este card. Depois do cálculo de dano, se este card batalhou com um monstro: destrua esse monstro e, se isso acontecer, cause 1000 de dano ao seu oponente."
+  },
+  "Maiden in Love": {
+    "name": "Donzela Apaixonada",
+    "effect": "Monstros que seu oponente controla e que podem atacar devem atacar este card. Não pode ser destruído em batalha. No final da Etapa de Dano, se este card batalhou com um monstro do oponente: você pode ativar 1 destes efeitos;\n● Coloque 1 Marcador de Donzela em 1 monstro com a face para cima que seu oponente controla.\n● Assuma o controle de 1 monstro do oponente com um Marcador de Donzela."
+  },
+  "Drill Armed Dragon": {
+    "name": "Dragão Armado Broca",
+    "effect": "Você pode enviar este card e 1 outro monstro de VENTO da sua mão para o Cemitério; pelo resto deste turno, todos os monstros Dragão de VENTO que você controla ganham 300 de ATK. Você pode banir qualquer número de monstros Dragão que sejam de Nível 7 ou mais e/ou de VENTO do seu Cemitério; adicione 1 monstro Dragão do seu Deck à sua mão com um Nível igual ao número banido, exceto \"Drill Armed Dragon\". Você só pode usar cada efeito de \"Drill Armed Dragon\" uma vez por turno."
+  },
+  "Einroid": {
+    "name": "Einroid",
+    "effect": "Se este card for destruído em batalha ou por efeito de card: você pode enviar 2 monstros Máquina de Nível 4 ou menos do seu Deck para o Cemitério. Você só pode usar este efeito de \"Einroid\" uma vez por turno."
+  },
+  "Drawbread (card)": {
+    "name": "Drawbread (card)",
+    "effect": "Se você tiver um monstro no seu Cemitério: pague 200 PV; compre 1 card e mostre-o e, depois, se for um monstro, aplique este efeito com base no Atributo dele.\n● Diferente dos monstros no seu Cemitério: compre 1 card.\n● Igual a um monstro no seu Cemitério: descarte 1 card.\nVocê só pode ativar 1 \"Drawbread\" por turno."
+  },
+  "Soul Union": {
+    "name": "União de Almas",
+    "effect": "Escolha 1 monstro com a face para cima no campo e 1 monstro \"Elemental HERO\" no seu Cemitério; esse monstro no campo ganha ATK igual ao ATK desse outro monstro no Cemitério (até o final deste turno) e, depois, se um Monstro Normal \"Elemental HERO\" estiver no seu campo ou Cemitério, você pode Invocar por Invocação-Fusão 1 Monstro de Fusão \"Elemental HERO\" do seu Deck Adicional, banindo as matérias dele do seu Cemitério. Você só pode ativar 1 \"Soul Union\" por turno."
+  },
+  "Nurikabe": {
+    "name": "Nurikabe",
+    "effect": "Se este card estiver no seu Cemitério, exceto no turno em que foi enviado para lá: você pode pagar 1000 PV e, depois, escolher 1 outro monstro Zumbi no seu Cemitério; Invoque-o e este card por Invocação-Especial, mas os efeitos deles são negados e, além disso, bana-os quando eles deixarem o campo. Você só pode usar este efeito de \"Nurikabe\" uma vez por turno."
+  },
+  "Dragonic Warrior": {
+    "name": "Guerreiro Dragônico",
+    "effect": "Você pode descartar 1 card; Invoque por Invocação-Especial 1 monstro Dragão de Nível 4 ou menos da sua mão ou Deck, exceto \"Dragonic Warrior\", mas os efeitos dele são negados. Você só pode usar este efeito de \"Dragonic Warrior\" uma vez por turno."
+  },
+  "Light Water Dragon": {
+    "name": "Dragão de Água da Luz",
+    "effect": "(O nome deste card é sempre considerado \"Water Dragon\".)\nVocê pode banir este card que você controla; Invoque por Invocação-Especial 3 monstros Dinossauro de Nível 5 ou menos (de ÁGUA e/ou VENTO) do seu Deck em Posição de Defesa, mas os efeitos deles são negados e, além disso, você não pode Invocar por Invocação-Especial do Deck Adicional pelo resto deste turno, exceto monstros Dinossauro e Serpente Marinha. Você só pode usar este efeito de \"Light Water Dragon\" uma vez por turno."
+  },
+  "Eucalyptus Mole": {
+    "name": "Toupeira Eucalipto",
+    "effect": "Se este card for Invocado por Invocação-Normal ou Especial: você pode Invocar por Invocação-Especial 1 monstro Besta de Nível 4 ou menos do seu Deck em Posição de Defesa com a face para baixo e, depois, se este card estiver em Posição de Ataque, mude-o para Posição de Defesa. Se este card for destruído: você pode Invocar por Invocação-Especial 1 monstro \"Koala\" ou 1 \"Tree Otter\" do seu Deck e, se isso acontecer, aplique este efeito até o final do próximo turno.\n● Monstros Besta não-Efeito que você controla ganham ATK igual à própria DEF original.\nVocê só pode usar cada efeito de \"Eucalyptus Mole\" uma vez por turno."
+  },
+  "Elemental HERO Thunder Giant - Voltic Thunder": {
+    "name": "HERÓI do Elemento Gigante do Trovão - Trovão Vóltico",
+    "effect": "2 monstros \"Elemental HERO\" com Atributos diferentes\nDeve ser Invocado por Invocação-Fusão. Se este card for Invocado por Invocação-Especial e seu oponente controlar mais cards do que você: você pode destruir todos os outros cards no campo. Você pode oferecer este card que foi Invocado por Invocação-Fusão usando um Monstro Normal como matéria como Tributo e, depois, escolher 1 monstro \"Elemental HERO\" no seu Cemitério; Invoque-o por Invocação-Especial. Você só pode usar cada efeito de \"Elemental HERO Thunder Giant - Voltic Thunder\" uma vez por turno."
+  },
+  "Illusion Gate": {
+    "name": "Portal da Ilusão",
+    "effect": "Pague metade dos seus PV; destrua o máximo de monstros que seu oponente controla e, depois, você pode Invocar por Invocação-Especial 1 monstro do Cemitério do seu oponente no seu campo, ignorando as condições de Invocação dele. Você só pode aplicar este efeito de \"Illusion Gate\" uma vez por Duelo."
+  },
+  "Token (Playmaker and Ai and \"Decode Talker\")": {
+    "name": "Ficha (Playmaker e Ai e \"Decode Talker\")",
+    "effect": "Este card de Playmaker & Ai & Decode Talker pode ser usado como qualquer Ficha.\n\n\"Bem, devo admitir, Playmaker, não vi isso chegando, de forma alguma. Você está realmente dizendo que se divertiu comigo?\"\n\"Estou. E eu sei que você também se divertiu.\""
+  },
+  "Token (Tea and \"Dark Magician Girl\")": {
+    "name": "Ficha (Tea e \"Dark Magician Girl\")",
+    "effect": "Este card de Tea & Dark Magician Girl pode ser usado como qualquer Ficha.\n\n\"Eu sei exatamente quem quero escolher, então confira! Dark Magician Girl é minha Mestre do Deck. Quem é a sua?\""
+  },
+  "Timaeus the United Magidragon": {
+    "name": "Timaeus, o Magidragão Unido",
+    "effect": "\"Dark Magician\" ou \"Dark Magician Girl\" + 1 monstro Dragão ou Mago\nDepois que este card for Invocado por Invocação-Especial, até o final do seu próximo turno, ele não é afetado pelos efeitos de outros cards. Você só pode usar cada um dos seguintes efeitos de \"Timaeus the United Magidragon\" uma vez por turno. Se este card batalhar, durante o cálculo de dano: você pode fazer este card ganhar 100 de ATK para cada Magia nos Cemitérios e na zona de banimento. Durante o turno do seu oponente (Efeito Rápido): você pode escolher 1 Magia/Armadilha no campo; destrua-a."
+  },
+  "The Gaze of Timaeus": {
+    "name": "O Olhar de Timaeus",
+    "effect": "Escolha 1 \"Dark Magician\" ou \"Dark Magician Girl\" que você controla ou está no seu Cemitério; Invoque por Invocação-Fusão 1 Monstro de Fusão do seu Deck Adicional que o mencione como matéria, embaralhando esse monstro no Deck, mas bana-o durante a Fase Final do próximo turno. (Isso é considerado uma Invocação-Especial com \"The Eye of Timaeus\".) Você só pode ativar 1 \"The Gaze of Timaeus\" por turno."
+  },
+  "Masked HERO Furnace": {
+    "name": "HERÓI Mascarado Fornalha",
+    "effect": "Você pode revelar este card na sua mão; adicione 1 \"Mask Change\" ou \"Polymerization\" do seu Deck à sua mão e, depois, descarte 1 card. Você não pode Invocar por Invocação-Especial do Deck Adicional no turno em que ativar este efeito, exceto monstros \"HERO\". Se você Invocar por Invocação-Especial um ou mais Monstros de Fusão \"HERO\" não-FOGO (exceto durante a Etapa de Dano): você pode Invocar este card por Invocação-Especial do seu Cemitério (se estivesse lá quando o monstro foi Invocado) ou da mão (mesmo que não estivesse), mas bana-o quando ele deixar o campo. Você só pode usar cada efeito de \"Masked HERO Furnace\" uma vez por turno."
+  },
+  "Masked HERO Atomic": {
+    "name": "HERÓI Mascarado Atômico",
+    "effect": "Deve ser Invocado por Invocação-Especial com \"Mask Change\". Na primeira vez em que este card seria destruído em batalha ou por efeito de card a cada turno, ele não é destruído. Você só pode usar cada um dos seguintes efeitos de \"Masked HERO Atomic\" uma vez por turno. Se este card for Invocado por Invocação-Especial: você pode escolher 1 monstro \"Masked HERO\" não-FOGO no seu Cemitério ou zona de banimento; Invoque-o por Invocação-Especial em Posição de Defesa, ignorando as condições de Invocação dele. Durante sua Fase Final: você pode escolher 1 Magia Rápida \"Change\" no seu Cemitério; Baixe-a."
+  },
+  "Azamina": {
+    "name": "Azamina",
+    "effect": "\"Queen Azamina\" + 1 Monstro de Fusão ou Sincro\nDeve primeiro ser Invocado por Invocação-Fusão ou Invocado por Invocação-Especial (do seu Deck Adicional) ao oferecer 1 \"Saint Azamina\" que você controla e 1 monstro com a face para cima que seu oponente controla como Tributo. Não pode ser destruído por efeitos de card. Cada vez que seu oponente ativar um card ou efeito, todos os monstros que ele controla perdem 500 de ATK quando isso resolver. Seu oponente não pode ativar os efeitos de monstros com 0 de ATK."
+  },
+  "Dark Magic Amulet": {
+    "name": "Amuleto de Magia Negra",
+    "effect": "Você pode ativar este card no turno em que ele foi Baixado ao revelar 1 monstro Mago na sua mão. Quando um efeito de monstro for ativado em resposta à ativação de um card que mencione \"Dark Magician\" ou ao efeito dele: você pode negar esse efeito e, se isso acontecer, pelo resto deste turno, os efeitos ativados de monstros com o mesmo nome original são negados. Se você Invocar \"Dark Magician\" por Invocação-Especial enquanto este card estiver no seu Cemitério: você pode pagar 2500 PV; Baixe este card."
+  },
+  "Sanaki the Mikanko Devotee": {
+    "name": "Sanaki, a Devota Mikanko",
+    "effect": "Você pode escolher 1 card \"Mikanko\" que você controla; devolva-o para a mão. Se qualquer duelista equipar um ou mais Cards de Equipamento a este card: você pode Invocar por Invocação-Especial 1 monstro \"Mikanko\" não-Ilusão do seu Deck e, além disso, você não pode Invocar por Invocação-Especial do Deck Adicional pelo resto deste turno, exceto monstros \"Mikanko\". Se este card for enviado para o Cemitério: você pode escolher 1 monstro com a face para cima no campo; equipe este card a ele como uma Magia de Equipamento. Você só pode usar cada efeito de \"Sanaki the Mikanko Devotee\" uma vez por turno."
+  },
+  "Mikanko Divine Dance - Futahashira no Uzu no Miko": {
+    "name": "Dança Divina Mikanko - Futahashira no Uzu no Miko",
+    "effect": "Você não pode Invocar por Invocação-Especial do Deck Adicional pelo resto deste turno depois que este card resolver, exceto monstros \"Mikanko\" e, além disso, envie 1 card \"Mikanko\" do seu Deck para o Cemitério, exceto \"Mikanko Divine Dance - Futahashira no Uzu no Miko\" e, depois, você pode Baixar 1 Magia/Armadilha \"Mikanko\" do seu Deck, exceto \"Mikanko Divine Dance - Futahashira no Uzu no Miko\". Você pode banir este card do seu Cemitério e desassociar 1 matéria de um monstro que você controla; Invoque por Invocação-Especial 1 Monstro Ritual \"Mikanko\" da sua mão ou Deck. Você só pode usar 1 efeito de \"Mikanko Divine Dance - Futahashira no Uzu no Miko\" por turno e apenas uma vez nesse turno."
+  },
+  "Enneacraft - Atoriϝ.MAR": {
+    "name": "Enneacraft - Atoriϝ.MAR",
+    "effect": "VIRE: mude todos os monstros que seu oponente controla para Posição de Defesa com a face para baixo. Monstros mudados para Posição de Defesa com a face para baixo por este efeito não podem mudar sua posição de batalha.\nVocê pode revelar este card na sua mão; Invoque por Invocação-Especial 1 monstro da sua mão em Posição de Defesa com a face para baixo. Você não pode Invocar por Invocação-Especial no turno em que ativar este efeito, exceto em Posição de Defesa com a face para baixo. Quando seu oponente ativar um card ou efeito no campo durante o seu turno (Efeito Rápido): você pode mudar este card Baixado para Posição de Defesa com a face para cima; negue a ativação e, se isso acontecer, destrua esse card."
+  },
+  "Hecahands Jawza": {
+    "name": "Hecahands Jawza",
+    "effect": "1 monstro \"Hecahands\" + 1 monstro Ilusão\nDeve primeiro ser Invocado por Invocação-Fusão ou Invocado por Invocação-Especial (do seu Deck Adicional) ao oferecer 1 monstro Ilusão e 1 monstro com a face para cima que você controla do qual seu oponente é o dono como Tributo. Durante sua Fase Principal: você pode adicionar 1 card \"Hecahands\" do seu Deck ou Cemitério à sua mão. Você só pode usar este efeito de \"Hecahands Jawza\" uma vez por turno. Se este card batalhar com um monstro, nenhum dos dois pode ser destruído por essa batalha."
+  },
+  "Killer Tune Red Seal": {
+    "name": "Selo Vermelho Killer Tune",
+    "effect": "\"Killer Tune Reco\" + 1+ Reguladores\nGanha 300 de ATK para cada Regulador nos Cemitérios. Os Níveis de monstros que seu oponente controla com ATK original de 1700 ou menos são aumentados em 1. Durante a Fase Principal (Efeito Rápido): você pode banir 1 Regulador do seu Cemitério e, depois, escolher 1 card com a face para cima que seu oponente controla; negue os efeitos dele até o final deste turno. Você só pode usar este efeito de \"Killer Tune Red Seal\" uma vez por turno."
+  },
+  "Arequus the Shining Mars Saint": {
+    "name": "Arequus, o Santo de Marte Reluzente",
+    "effect": "Se você controlar um card com a face para cima na sua Zona de Magias & Armadilhas, você pode Invocar este card por Invocação-Especial (da sua mão). Você só pode Invocar \"Arequus the Shining Mars Saint\" por Invocação-Especial uma vez por turno desta forma. Você só pode usar cada um dos seguintes efeitos de \"Arequus the Shining Mars Saint\" uma vez por turno. Você pode escolher 1 Magia/Armadilha com a face para cima que você controla; destrua tanto ela como este card e, depois, compre 1 card. Se este card for destruído: você pode escolher 1 Monstro Xyz que você controla; associe este card a ele."
+  },
+  "Decoy": {
+    "name": "Isca",
+    "effect": "Um anjo da felicidade que desce sobre o monte sagrado. Dizem que ele pousa junto com sua parceira para realizar um ritual especial conhecido como Lançamento Cerimonial Inaugural. Depois de encantar a todos com sua elegante pelagem e sua aparência fofa, ele termina o ritual com um toca aqui.\n\nO SHOTIME junto com sua parceira continuará..."
+  },
+  "Gargardo the Necroforger Fiend": {
+    "name": "Gargardo, o Demônio Necroforjador",
+    "effect": "Um monstro pássaro envolto em chamas tremeluzentes, que pode se metamorfosear em todos os tipos de coisas. Depois de alternar entre humano e pássaro, ele esqueceu a própria forma original."
+  },
+  "Token (Yuma and \"Number F0: Utopic Future\")": {
+    "name": "Ficha (Yuma e \"Number F0: Utopic Future\")",
+    "effect": "Este card de Yuma & Number F0: Utopic Future pode ser usado como qualquer Ficha.\n\n\"Forje o caminho do destino! Number of Future 0, Utopic Future!\""
+  },
+  "Token (Yuya and \"Performapal Show Down\")": {
+    "name": "Ficha (Yuya e \"Performapal Show Down\")",
+    "effect": "Este card de Yuya & Performapal Show Down pode ser usado como qualquer Ficha.\n\n\"Bem, pessoal, espero que todos tenham gostado do show, tenho que dizer que acho que honrei o nome Sakaki nessa!\""
+  },
+  "Synchro Fellows": {
+    "name": "Companheiros Sincro",
+    "effect": "Adicione 1 \"Junk Synchron\" e 1 monstro que mencione \"Junk Warrior\" ou \"Stardust Dragon\" do seu Deck à sua mão e, depois, descarte 1 card. Você pode banir este card do seu Cemitério e, depois, escolher 1 Monstro Sincro que você controla; diminua o Nível dele em 1 e, depois, durante sua Fase Principal neste turno, você pode Invocar por Invocação-Normal 1 monstro \"Synchron\", além de sua Invocação-Normal/Baixada (você só pode obter este efeito uma vez por turno). Você só pode ativar 1 \"Synchro Fellows\" por turno."
+  },
+  "Junk Warrior Extreme": {
+    "name": "Guerreiro Sucata Extremo",
+    "effect": "\"Junk Synchron\" + 1+ monstros não-Reguladores\nSe este card for Invocado por Invocação-Sincro: você pode Invocar por Invocação-Especial o máximo de monstros de Nível 2 ou menos do seu Cemitério possível, mas eles não podem ativar seus efeitos neste turno e, além disso, você só pode Invocar por Invocação-Especial mais uma vez pelo resto deste turno. Quando este card destruir um monstro do oponente em batalha: você pode banir este card; Invoque por Invocação-Especial 1 Monstro Sincro \"Junk\" do seu Deck Adicional (isso é considerado uma Invocação-Sincro). Você só pode usar cada efeito de \"Junk Warrior Extreme\" uma vez por turno."
+  },
+  "Anchorbolt Hedgehog": {
+    "name": "Ouriço Pino-Âncora",
+    "effect": "Se você controlar \"Junk Warrior\" ou um monstro que o mencione, exceto \"Anchorbolt Hedgehog\", e este card estiver no seu Cemitério (Efeito Rápido): você pode Invocar este card por Invocação-Especial em Posição de Defesa e, além disso, você não pode Invocar por Invocação-Especial do Deck Adicional pelo resto deste turno, exceto Monstros Sincro. Você só pode usar este efeito de \"Anchorbolt Hedgehog\" uma vez por turno."
+  },
+  "Fullspeed Warrior": {
+    "name": "Guerreiro de Velocidade Total",
+    "effect": "Se este card for Invocado por Invocação-Normal ou Especial: você pode adicionar 1 \"Junk Synchron\" ou 1 Magia/Armadilha que mencione \"Junk Warrior\" do seu Deck à sua mão. Você só pode usar este efeito de \"Fullspeed Warrior\" uma vez por turno. Monstros que mencionem \"Junk Warrior\" e Monstros Sincro com \"Warrior\" nos nomes originais que você controla ganham 900 de ATK somente durante sua Fase de Batalha."
+  },
+  "Drawbread": {
+    "name": "Drawbread",
+    "effect": "Se você tiver um monstro no seu Cemitério: pague 200 PV; compre 1 card e mostre-o e, depois, se for um monstro, aplique este efeito com base no Atributo dele.\n● Diferente dos monstros no seu Cemitério: compre 1 card.\n● Igual a um monstro no seu Cemitério: descarte 1 card.\nVocê só pode ativar 1 \"Drawbread\" por turno."
+  },
+  "Hecahands Yadel": {
+    "name": "Hecahands Yadel",
+    "effect": "Se este card batalhar com um monstro, nenhum dos dois pode ser destruído por essa batalha. Você só pode usar cada um dos seguintes efeitos de \"Hecahands Yadel\" uma vez por turno. Você pode revelar este card na sua mão; embaralhe-o no Deck e, depois, adicione 1 Magia/Armadilha \"Hecahands\" do seu Deck à sua mão. Se este card for enviado para o Cemitério: você pode escolher 1 Magia/Armadilha \"Hecahands\" no seu Cemitério; Baixe-a."
+  },
+  "Hecahands Goddus": {
+    "name": "Hecahands Goddus",
+    "effect": "Se este card batalhar com um monstro, nenhum dos dois pode ser destruído por essa batalha. Você só pode usar cada um dos seguintes efeitos de \"Hecahands Goddus\" uma vez por turno. Se um ou mais cards forem adicionados à mão do seu oponente (exceto durante a Fase de Compra ou a Etapa de Dano): você pode Invocar este card por Invocação-Especial da sua mão. Durante a Fase Principal do seu oponente (Efeito Rápido): você pode escolher 1 monstro no Cemitério do seu oponente; Invoque-o por Invocação-Especial no seu campo, mas bana-o quando ele deixar o campo."
+  },
+  "Hecahands Xeno": {
+    "name": "Hecahands Xeno",
+    "effect": "3 monstros \"Hecahands\"\nSe este card batalhar com um monstro, nenhum dos dois pode ser destruído por essa batalha. Você só pode usar cada um dos seguintes efeitos de \"Hecahands Xeno\" uma vez por turno. Durante a Fase Principal (Efeito Rápido): você pode olhar 2 cards com a face para baixo aleatórios no Deck Adicional do seu oponente e, se isso acontecer, você pode Invocar 1 deles por Invocação-Especial no seu campo. Se este card Invocado por Invocação-Fusão sob o controle do dono for destruído por um efeito de card do oponente: você pode assumir o controle de qualquer número de monstros que ele controla."
+  },
+  "Hecahands Breus": {
+    "name": "Hecahands Breus",
+    "effect": "Se este card batalhar com um monstro, nenhum dos dois pode ser destruído por essa batalha. Você só pode usar cada um dos seguintes efeitos de \"Hecahands Breus\" uma vez por turno. Se um ou mais cards forem adicionados à mão do seu oponente (exceto durante a Fase de Compra ou a Etapa de Dano): você pode Invocar este card por Invocação-Especial da sua mão. Durante sua Fase Principal: você pode olhar 1 card aleatório na mão do seu oponente e, se for um monstro, você pode Invocá-lo por Invocação-Especial no seu campo."
+  },
+  "Yad al Hecahands": {
+    "name": "Yad al Hecahands",
+    "effect": "Quando seu oponente ativar um Card de Magia/Armadilha e você controlar um monstro \"Hecahands\": negue a ativação e, se isso acontecer, destrua esse card e, depois, você pode Baixar a Magia/Armadilha destruída no seu campo. Você só pode ativar 1 \"Yad al Hecahands\" por turno."
+  },
+  "Hecahands Tartarus": {
+    "name": "Hecahands Tártaro",
+    "effect": "Ative 1 destes efeitos (mas você só pode usar cada efeito de \"Hecahands Tartarus\" uma vez por turno);\n● Se você controlar um monstro \"Hecahands\": escolha 1 Magia/Armadilha que seu oponente controla; devolva-a para a mão.\n● Invoque por Invocação-Fusão 1 Monstro de Fusão \"Hecahands\" do seu Deck Adicional, banindo as matérias dele do seu campo e/ou Cemitério. Se você usar um ou mais monstros com a face para cima que você controla dos quais seu oponente é o dono, você pode tratá-los como um monstro \"Hecahands\"."
+  },
+  "Hecahands Ibel": {
+    "name": "Hecahands Ibel",
+    "effect": "Se este card batalhar com um monstro, nenhum dos dois pode ser destruído por essa batalha. Você só pode usar cada um dos seguintes efeitos de \"Hecahands Ibel\" uma vez por turno. Você pode revelar este card na sua mão; embaralhe-o no Deck e, depois, Invoque por Invocação-Especial 1 monstro \"Hecahands\" do seu Deck em Posição de Defesa, exceto \"Hecahands Ibel\". Se este card for enviado para o Cemitério: você pode escolher 1 monstro \"Hecahands\" no seu Cemitério, exceto \"Hecahands Ibel\"; Invoque-o por Invocação-Especial."
+  },
+  "Hecahands Gygas": {
+    "name": "Hecahands Gygas",
+    "effect": "Se este card batalhar com um monstro, nenhum dos dois pode ser destruído por essa batalha. Você só pode usar cada um dos seguintes efeitos de \"Hecahands Gygas\" uma vez por turno. Se um ou mais cards forem adicionados à mão do seu oponente (exceto durante a Fase de Compra ou a Etapa de Dano): você pode Invocar este card por Invocação-Especial da sua mão. Durante sua Fase Principal: você pode escavar os 3 cards do topo do Deck do seu oponente, você pode Invocar por Invocação-Especial 1 monstro escavado e, além disso, embaralhe o resto de volta no Deck."
+  },
+  "Ipt al Hecahands": {
+    "name": "Ipt al Hecahands",
+    "effect": "Quando seu oponente ativar um efeito de monstro e você controlar um monstro \"Hecahands\": negue a ativação e, se isso acontecer, destrua esse monstro e, depois, você pode Invocá-lo por Invocação-Especial no seu campo. Você só pode ativar 1 \"Ipt al Hecahands\" por turno."
+  },
+  "Dogmatika Chaplain": {
+    "name": "Capelão Dogmatika",
+    "effect": "Se um monstro Invocado por Invocação-Especial do Deck Adicional estiver no campo: você pode Invocar este card por Invocação-Especial da sua mão. Se este card for Invocado por Invocação-Especial da mão: você pode fazer cada duelista enviar 1 monstro do Deck Adicional dele para o Cemitério. Se este card for enviado para o Cemitério: você pode escolher 1 card \"Dogmatika\" no seu Cemitério, exceto \"Dogmatika Chaplain\"; adicione-o à sua mão. Você só pode usar cada efeito de \"Dogmatika Chaplain\" uma vez por turno."
+  },
+  "Trap of the Poisonous Scorpion": {
+    "name": "Armadilha do Escorpião Venenoso",
+    "effect": "Quando um monstro do oponente declarar um ataque: destrua-o e, depois, cause 300 de dano ao seu oponente."
+  },
+  "WINDS OF VICTORY": {
+    "name": "VENTOS DA VITÓRIA",
+    "effect": "O monstro equipado ganha 300 de ATK e, além disso, ele se torna VENTO."
+  },
+  "Hecahands (card)": {
+    "name": "Hecahands (card)",
+    "effect": "(Quando você ativar este card, você também pode enviar 1 outro card que você controla para o Cemitério.) Adicione 1 monstro \"Hecahands\" do seu Deck à sua mão e, depois, se você enviou um card para o Cemitério na ativação, você pode Baixar 1 Magia/Armadilha \"Hecahands\" do seu Deck, exceto \"Hecahands\". Você pode banir este card do seu Cemitério; seu oponente compra 1 card e, depois, ele descarta 1 card. Você só pode usar cada efeito de \"Hecahands\" uma vez por turno."
+  }
+}

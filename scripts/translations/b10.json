@@ -1,0 +1,58 @@
+{
+  "Infestation Ripples": {
+    "name": "Ondulações de Infestação",
+    "effect": "Pague 500 PV para escolher 1 monstro \"Steelswarm\" de Nível 4 ou menos no seu Cemitério; Invoque-o por Invocação-Especial do Cemitério."
+  },
+  "Infestation Tool": {
+    "name": "Ferramenta de Infestação",
+    "effect": "Envie 1 monstro \"Steelswarm\" do seu Deck para o Cemitério para escolher 1 monstro \"Steelswarm\" com a face para cima que você controla; ele ganha 800 de ATK até a Fase Final."
+  },
+  "Influence Dragon": {
+    "name": "Dragão da Influência",
+    "effect": "Uma vez por turno: você pode escolher 1 monstro com a face para cima que você controla; ele se torna do Tipo Dragão até a Fase Final."
+  },
+  "Informer Spider": {
+    "name": "Aranha Informante",
+    "effect": "Quando este card for enviado do campo para o Cemitério por um efeito de card, assuma o controle de 1 monstro em Posição de Defesa que seu oponente controla."
+  },
+  "Inzektor Ant": {
+    "name": "Formiga Inzektor",
+    "effect": "Uma vez por turno: você pode equipar 1 monstro \"Inzektor\" da sua mão ou Cemitério a este card. Enquanto este card estiver equipado a um monstro, o Nível desse monstro é aumentado em 3 e, além disso, ele ganha ATK e DEF iguais ao ATK e à DEF deste card. Se o monstro equipado seria destruído, você pode destruir este Card de Equipamento em vez disso."
+  },
+  "Inzektor Axe - Zektahawk": {
+    "name": "Machado Inzektor - Zektahawk",
+    "effect": "Equipe apenas a um monstro \"Inzektor\". Ele ganha 1000 de ATK. Quando o monstro equipado declarar um ataque, seu oponente não pode ativar Cards de Magia/Armadilha."
+  },
+  "Inzektor Crossbow - Zektarrow": {
+    "name": "Besta Inzektor - Zektarrow",
+    "effect": "Equipe apenas a um monstro \"Inzektor\". Ele ganha 500 de ATK. Seu oponente não pode ativar cards ou efeitos em resposta à ativação dos efeitos do monstro equipado."
+  },
+  "Inzektor Earwig": {
+    "name": "Tesourinha Inzektor",
+    "effect": "Uma vez por turno: você pode equipar 1 monstro \"Inzektor\" da sua mão ou Cemitério a este card. Enquanto este card estiver equipado a um monstro, esse monstro ganha ATK e DEF iguais ao ATK e à DEF deste card. Quando este card for enviado para o Cemitério enquanto estiver equipado a um monstro: o monstro ao qual este card estava equipado ganha 1000 de ATK, até a Fase Final."
+  },
+  "Inzektor Firefly": {
+    "name": "Vaga-lume Inzektor",
+    "effect": "Uma vez por turno: você pode equipar 1 monstro \"Inzektor\" da sua mão ou Cemitério a este card. Se um card \"Inzektor\" equipar a este card: você pode olhar todos os cards Baixados que seu oponente controla. Enquanto este card estiver equipado a um monstro, o Nível desse monstro é aumentado em 1 e, além disso, ele ganha ATK e DEF iguais ao ATK e à DEF deste card."
+  },
+  "Inzektor Gauntlet": {
+    "name": "Manopla Inzektor",
+    "effect": "Escolha 1 monstro \"Inzektor\" com a face para cima que você controla; equipe este card no alvo. Ele ganha 1000 de DEF e não pode ser destruído pelos efeitos de card do seu oponente."
+  },
+  "Inzektor Giga-Cricket": {
+    "name": "Grilo Giga Inzektor",
+    "effect": "Se este card estiver no seu Cemitério: você pode banir 1 monstro do Tipo Inseto do seu Cemitério para escolher 1 monstro \"Inzektor\" com a face para cima que você controla; equipe este card do Cemitério ao alvo. Este efeito de \"Inzektor Giga-Cricket\" só pode ser usado uma vez por turno. Enquanto este card estiver equipado a um monstro, o ATK original desse monstro se torna 2000 e, se ele atacar um monstro em Posição de Defesa, cause Dano de Batalha perfurante ao seu oponente."
+  },
+  "Inzektor Giga-Weevil": {
+    "name": "Gorgulho Giga Inzektor",
+    "effect": "Você pode escolher 1 monstro \"Inzektor\" com a face para cima que você controla; equipe este card da sua mão ao alvo. Enquanto este card estiver equipado a um monstro, a DEF original desse monstro se torna 2600. Se este card for enviado para o Cemitério enquanto estiver equipado a um monstro: você pode escolher 1 monstro \"Inzektor\" no seu Cemitério; Invoque o alvo por Invocação-Especial. Este efeito de \"Inzektor Giga-Weevil\" só pode ser usado uma vez por turno."
+  },
+  "Inzektor Orb": {
+    "name": "Orbe Inzektor",
+    "effect": "Escolha 1 monstro \"Inzektor\" com a face para cima que você controla; equipe este card ao alvo. Ele ganha 500 de ATK e DEF. Quando exatamente 1 monstro \"Inzektor\" que você controla for alvo de um efeito de card (exceto durante a Etapa de Dano): você pode enviar este Card de Equipamento para o Cemitério; negue esse efeito."
+  },
+  "Iris, the Earth Mother": {
+    "name": "Íris, a Mãe da Terra",
+    "effect": "Depois que uma Corrente com 3 ou mais Elos resolver, compre 1 card. Este efeito não pode ser ativado se vários cards/efeitos com o mesmo nome foram ativados nessa Corrente."
+  }
+}

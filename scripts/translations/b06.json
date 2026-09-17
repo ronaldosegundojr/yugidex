@@ -1,0 +1,158 @@
+{
+  "Evolsaur Cerato": {
+    "name": "Evolssauro Cerato",
+    "effect": "Quando este card for Invocado por Invocação-Especial pelo efeito de um monstro \"Evoltile\": ele ganha 200 de ATK. Se este card foi Invocado por Invocação-Especial pelo efeito de um monstro \"Evoltile\", cada vez que este card destruir um monstro do oponente em batalha: você pode adicionar 1 monstro \"Evoltile\" do seu Deck à sua mão."
+  },
+  "Evolsaur Darwino": {
+    "name": "Evolssauro Darwino",
+    "effect": "Quando este card for Invocado por Invocação-Especial pelo efeito de um monstro \"Evoltile\": você pode escolher 1 monstro com a face para cima no campo; aumente o Nível do alvo em até 2."
+  },
+  "Evolsaur Diplo": {
+    "name": "Evolssauro Diplo",
+    "effect": "Quando este card for Invocado por Invocação-Especial pelo efeito de um monstro \"Evoltile\": escolha 1 Card de Magia/Armadilha que seu oponente controla; destrua o alvo."
+  },
+  "Evolsaur Elias": {
+    "name": "Evolssauro Elias",
+    "effect": "Quando este card for Invocado por Invocação-Especial pelo efeito de um monstro \"Evoltile\": você pode Invocar por Invocação-Especial 1 monstro do Tipo Dinossauro de FOGO de Nível 6 ou menos da sua mão."
+  },
+  "Evolsaur Pelta": {
+    "name": "Evolssauro Pelta",
+    "effect": "Quando este card for Invocado por Invocação-Especial pelo efeito de um monstro \"Evoltile\": ele ganha 500 de DEF. Se este card foi Invocado por Invocação-Especial pelo efeito de um monstro \"Evoltile\" e, depois, for destruído em batalha: você pode adicionar 1 monstro \"Evoltile\" do seu Deck à sua mão."
+  },
+  "Evolsaur Terias": {
+    "name": "Evolssauro Terias",
+    "effect": "Quando este card for Invocado por Invocação-Especial pelo efeito de um monstro \"Evoltile\": este card perde 500 de ATK."
+  },
+  "Evolsaur Vulcano": {
+    "name": "Evolssauro Vulcano",
+    "effect": "Quando este card for Invocado por Invocação-Especial pelo efeito de um monstro \"Evoltile\": você pode escolher 1 monstro \"Evolsaur\" no seu Cemitério; Invoque o alvo por Invocação-Especial. Ele não pode declarar um ataque."
+  },
+  "Evoltile Elginero": {
+    "name": "Evoltil Elginero",
+    "effect": "Quando este card no campo for oferecido como Tributo e enviado para o Cemitério: compre 1 card e, depois, você pode embaralhar 1 monstro do Tipo Dinossauro da sua mão no Deck e, depois, adicionar 1 monstro \"Evoltile\" do seu Deck à sua mão."
+  },
+  "Evoltile Gephyro": {
+    "name": "Evoltil Gephyro",
+    "effect": "Quando este card for destruído em batalha e enviado para o Cemitério: você pode escolher 1 monstro \"Evolsaur\" no seu Cemitério; Invoque o alvo por Invocação-Especial."
+  },
+  "Evoltile Lagosucho": {
+    "name": "Evoltil Lagosucho",
+    "effect": "Quando este card for Invocado por Invocação-Normal: você pode enviar 1 monstro \"Evolsaur\" do seu Deck para o Cemitério. Quando este card for virado com a face para cima: você pode Invocar por Invocação-Especial 1 monstro \"Evoltile\" do seu Deck."
+  },
+  "Evoltile Odonto": {
+    "name": "Evoltil Odonto",
+    "effect": "Quando este card for Invocado por Invocação-Normal: você pode Invocar por Invocação-Especial 1 monstro \"Evolsaur\" da sua mão."
+  },
+  "Evoltile Pleuro": {
+    "name": "Evoltil Pleuro",
+    "effect": "Se este card que você controla for destruído e enviado para o seu Cemitério: você pode Invocar por Invocação-Especial 1 monstro \"Evolsaur\" da sua mão."
+  },
+  "Evoltile Westlo": {
+    "name": "Evoltil Oeste",
+    "effect": "VIRE: Invoque por Invocação-Especial 1 monstro \"Evolsaur\" do seu Deck."
+  },
+  "Evolutionary Bridge": {
+    "name": "Ponte Evolucionária",
+    "effect": "Quando um monstro que você controla for alvo de um ataque: escolha 1 monstro \"Evoltile\" no seu Cemitério; Invoque o alvo por Invocação-Especial e, depois, mude o alvo do ataque para esse monstro e realize o cálculo de dano."
+  },
+  "Explosive Urchin": {
+    "name": "Ouriço Explosivo",
+    "effect": "Ative apenas quando seu oponente ativar um Card de Armadilha. Durante sua Fase de Apoio: cause 1000 de dano ao seu oponente. Seu oponente deve controlar um Card de Armadilha com a face para cima para você ativar e resolver este efeito. Durante a sua 3ª Fase Final depois da ativação, envie este card para o Cemitério."
+  },
+  "Extra Gate": {
+    "name": "Portal Adicional",
+    "effect": "Declare um Nível entre 1 e 12; seu oponente bane 1 monstro desse Nível do Deck Adicional dele. Se seu oponente não tiver um monstro desse Nível no Deck Adicional dele, você descarta 1 card."
+  },
+  "Falling Current": {
+    "name": "Corrente em Queda",
+    "effect": "Escolha 1 monstro com a face para cima que você controla e declare um Nível entre 1 e 3; ele se torna esse Nível."
+  },
+  "Farm Delivery": {
+    "name": "Entrega na Fazenda",
+    "effect": "Se você controlar um Monstro Normal: escolha até 3 dos seus Monstros Normais banidos; embaralhe-os no Deck."
+  },
+  "Feather Shot": {
+    "name": "Disparo de Pena",
+    "effect": "Escolha 1 \"Elemental HERO Avian\" com a face para cima que você controla; durante este turno, o alvo pode atacar um número de vezes igual ao número de monstros que você controla quando este card resolver, mas não pode atacar diretamente e outros monstros que você controla não podem atacar neste turno."
+  },
+  "Fenghuang": {
+    "name": "Fenghuang",
+    "effect": "Não pode ser Invocado por Invocação-Especial. Durante a Fase Final do turno em que este card for Invocado por Invocação-Normal ou virado com a face para cima: devolva-o para a mão. Quando este card for Invocado por Invocação-Normal ou virado com a face para cima: destrua todos os Cards de Magia/Armadilha Baixados que seu oponente controla."
+  },
+  "Fengsheng Mirror": {
+    "name": "Espelho Fengsheng",
+    "effect": "Olhe a mão do seu oponente. Selecione e descarte 1 monstro Espírito para o Cemitério se houver monstros Espírito na mão dele/dela."
+  },
+  "Field-Commander Rahz": {
+    "name": "Comandante de Campo Rahz",
+    "effect": "Quando este card for Invocado por Invocação-Normal ou Especial: escolha 1 monstro do Tipo Guerreiro de Nível 4 ou menos do seu Deck, exceto \"Field-Commander Rahz\", e coloque-o no topo do seu Deck."
+  },
+  "Fiery Fervor": {
+    "name": "Fervor Ardente",
+    "effect": "Escolha 1 monstro com a face para cima que você controla; equipe este card no alvo. Se seu oponente controlar um monstro com ATK maior que o ATK original desse mesmo monstro, o ATK do monstro equipado se torna o dobro do ATK original do monstro equipado, apenas durante a Etapa de Dano."
+  },
+  "Final Inzektion": {
+    "name": "Inzekção Final",
+    "effect": "Envie 5 cards \"Inzektor\" com a face para cima que você controla para o Cemitério; destrua todos os cards que seu oponente controla e, além disso, durante a Fase de Batalha deste turno, seu oponente não pode ativar efeitos de monstro que ativam na mão ou no Cemitério."
+  },
+  "Final Psychic Ogre": {
+    "name": "Ogro Psíquico Final",
+    "effect": "Se este card destruir um monstro do oponente em batalha, você pode pagar 800 PV para selecionar 1 monstro do Tipo Psíquico no seu Cemitério e adicioná-lo à sua mão."
+  },
+  "Fireball Token": {
+    "name": "Ficha de Bola de Fogo",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Goka, the Pyre of Malice\"."
+  },
+  "Fish Rain": {
+    "name": "Chuva de Peixes",
+    "effect": "Quando um monstro do Tipo Peixe, Serpente Marinha ou Aqua com a face para cima no campo for banido: Invoque por Invocação-Especial 1 monstro do Tipo Peixe, Serpente Marinha ou Aqua de Nível 3 ou menos da sua mão. (O(s) monstro(s) banido(s) deve(m) ser do Tipo Peixe, Serpente Marinha ou Aqua mesmo depois de banido(s).)"
+  },
+  "Flametongue the Burning Blade": {
+    "name": "Língua de Fogo, a Lâmina Ardente",
+    "effect": "2 monstros de FOGO\nCards de Magia/Armadilha com a face para cima que você controla não podem ser destruídos pelos efeitos de card do seu oponente. Você pode escolher 1 dos seus monstros de FOGO banidos; adicione-o à sua mão, mas você não pode ativar cards ou os efeitos de cards com esse nome pelo resto deste turno. Você só pode usar este efeito de \"Flametongue the Burning Blade\" uma vez por turno."
+  },
+  "Flashbang": {
+    "name": "Bomba de Luz",
+    "effect": "Ative apenas depois do cálculo de dano quando um monstro que seu oponente controla realizou um ataque direto. Agora é a Fase Final deste turno."
+  },
+  "Flying Penguin": {
+    "name": "Pinguim Voador",
+    "effect": "Um pinguim muito raro que alça voo com orelhas em formato de asas."
+  },
+  "Fog Warning": {
+    "name": "Alerta de Névoa",
+    "effect": "Cada vez que você colocar um ou mais Marcadores de Névoa em um ou mais monstros, dê a ele um Marcador de Névoa adicional."
+  },
+  "Forbidden Cyber Style Technique": {
+    "name": "Técnica Proibida do Estilo Ciber",
+    "effect": "Ative esta Habilidade uma vez por Duelo, se seus PV forem 1500 ou menos e você não controlar nenhum monstro. Reduza seus PV para 50 e, depois, Invoque por Invocação-Especial até 3 monstros Máquina \"Cyber\" da sua mão, Deck e/ou Cemitério. Eles se tornam cada um \"Cyber Dragon\" (Máquina/LUZ/Nível 5/ATK 2100/DEF 1600) e não podem ser oferecidos como Tributo. Pelo resto deste turno, você não pode Invocar/Baixar, exceto por Invocação-Fusão, nem atacar, exceto com Monstros de Fusão. Destrua quaisquer monstros Invocados por esta Habilidade durante sua Fase Final."
+  },
+  "Forced Back": {
+    "name": "Forçado a Voltar",
+    "effect": "Negue a Invocação-Normal ou Invocação-Virar de um monstro e devolva-o para a mão do dono."
+  },
+  "Forged Steel": {
+    "name": "Aço Forjado",
+    "effect": "Uma vez por Duelo, durante sua Fase Principal, você pode mudar o nome de 1 monstro \"Red-Eyes\" ou 1 Monstro Normal Dragão que você controla para \"Red-Eyes Black Dragon\" enquanto ele estiver com a face para cima no campo. Cada \"Red-Eyes Darkness Dragon\" que você controla ganha o seguinte efeito.\n● Uma vez por turno, durante sua Fase Principal: você pode Invocar por Invocação-Especial 1 monstro Dragão do seu Cemitério que possa ser Invocado por Invocação-Normal/Baixado."
+  },
+  "Fox Token": {
+    "name": "Ficha de Raposa",
+    "effect": "Este card pode ser usado como uma \"Ficha de Raposa\".\n\n*Se usado como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa Ficha."
+  },
+  "Fury of Thunder": {
+    "name": "Fúria do Trovão",
+    "effect": "Ative a(s) seguinte(s) Habilidade(s).\n● Durante sua Fase Principal, enquanto você controlar \"Slifer the Sky Dragon\", compre até ter 4 cards na sua mão.\n● Se \"Slifer the Sky Dragon\" for enviado para o Cemitério, você pode embaralhá-lo de volta no seu Deck.\nCada uma destas Habilidades só pode ser usada uma vez por Duelo."
+  },
+  "Fushioh Richie": {
+    "name": "Fushioh Richie",
+    "effect": "Este card não pode ser Invocado por Invocação-Normal nem Baixado. Este card só pode ser Invocado por Invocação-Especial da sua mão ou do seu Deck ao oferecer como Tributo 1 \"Great Dezard\" que tenha cumprido a condição. Você pode virar este card para Posição de Defesa com a face para baixo uma vez por turno durante sua Fase Principal. Enquanto este monstro permanecer com a face para cima no campo, negue a ativação e os efeitos de todos os Cards de Magia e Armadilha que escolham este card como alvo e destrua-os. Quando este card for virado com a face para cima, você pode Invocar por Invocação-Especial 1 monstro do Tipo Zumbi do seu Cemitério."
+  },
+  "Fusion Devourer": {
+    "name": "Devorador de Fusão",
+    "effect": "Se este card batalhar um Monstro de Fusão, o ATK desse Monstro de Fusão se torna 0 apenas durante a Etapa de Dano."
+  },
+  "Fusion Party!": {
+    "name": "Festa de Fusão!",
+    "effect": "Uma vez por Duelo, durante sua Fase Principal, você pode descartar 1 card e, depois, Invocar por Invocação-Fusão 1 Monstro de Fusão do seu Deck Adicional, usando monstros da sua mão ou do campo como matéria."
+  }
+}

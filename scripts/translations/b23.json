@@ -1,0 +1,206 @@
+{
+  "Vylon Hept": {
+    "name": "Hept Vylon",
+    "effect": "Uma vez por turno: você pode escolher 1 Card de Monstro \"Vylon\" que você controla que seja um Card de Equipamento; Invoque o alvo por Invocação-Especial em Posição de Defesa com a face para cima. Bana-o quando ele deixar o campo."
+  },
+  "Vylon Material": {
+    "name": "Material Vylon",
+    "effect": "Equipe apenas a um monstro \"Vylon\". Ele ganha 600 de ATK. Se este card com a face para cima for enviado do campo para o Cemitério: você pode adicionar 1 Card de Magia \"Vylon\" do seu Deck à sua mão."
+  },
+  "Vylon Matter": {
+    "name": "Matéria Vylon",
+    "effect": "Selecione 3 Cards de Magia de Equipamento no seu Cemitério. Devolva-os ao Deck e aplique 1 destes efeitos: ● Compre 1 card. ● Destrua 1 card que seu oponente controla."
+  },
+  "Vylon Omega": {
+    "name": "Ômega Vylon",
+    "effect": "2 Reguladores + 1 monstro \"Vylon\" não-Regulador\nQuando este card for Invocado por Invocação-Sincro: destrua todos os monstros com a face para cima que foram Invocados por Invocação-Normal/Baixados. Uma vez por turno: você pode escolher 1 monstro \"Vylon\" no seu Cemitério; equipe o alvo a este card. Durante o turno de qualquer duelista, quando um efeito de monstro for ativado: você pode enviar 1 Card de Equipamento equipado a este card para o Cemitério; negue a ativação e, se isso acontecer, destrua esse monstro."
+  },
+  "Vylon Pentachloro": {
+    "name": "Pentacloro Vylon",
+    "effect": "Uma vez por turno, você pode: escolher 1 monstro \"Vylon\" com a face para cima que você controla; equipe este card no alvo, OU: desequipe este card e Invoque-o por Invocação-Especial em Posição de Ataque com a face para cima. Enquanto estiver equipado por este efeito, se o monstro equipado destruir um monstro do oponente em batalha: você pode escolher 1 card que seu oponente controla; destrua o alvo. (Um monstro só pode ser equipado com 1 Monstro de União por vez. Se o monstro equipado seria destruído, destrua este card em vez disso.)"
+  },
+  "Vylon Polytope": {
+    "name": "Polítopo Vylon",
+    "effect": "Escolha qualquer número de Cards de Monstro \"Vylon\" que você controla que sejam Cards de Equipamento; Invoque-os por Invocação-Especial em Posição de Defesa com a face para cima. Bana-os quando eles deixarem o campo."
+  },
+  "Vylon Segment": {
+    "name": "Segmento Vylon",
+    "effect": "Equipe apenas a um monstro \"Vylon\". Ele não pode ser alvo dos efeitos de monstro ou dos efeitos de Armadilha do oponente. Se este card com a face para cima no campo for enviado para o Cemitério: você pode adicionar 1 Card de Magia \"Vylon\" do seu Deck à sua mão."
+  },
+  "Vylon Sigma": {
+    "name": "Sigma Vylon",
+    "effect": "1 Regulador de LUZ + 1 ou mais monstros de LUZ não-Reguladores\nQuando este card declarar um ataque, se for o único monstro que você controla: você pode equipar 1 Card de Magia de Equipamento do seu Deck a este card com a face para cima."
+  },
+  "Vylon Sphere": {
+    "name": "Esfera Vylon",
+    "effect": "Se este card for enviado da Zona de Cards de Monstro para o Cemitério: você pode pagar 500 PV para escolher 1 monstro com a face para cima que você controla; equipe este card ao alvo. Você pode enviar este Card de Equipamento para o Cemitério para escolher 1 Card de Magia de Equipamento no seu Cemitério; equipe o alvo ao monstro ao qual este card estava equipado."
+  },
+  "Vylon Stigma": {
+    "name": "Estigma Vylon",
+    "effect": "Uma vez por turno, durante o turno de qualquer duelista: você pode escolher 1 Card de Equipamento \"Vylon\" com a face para cima que você controla e 1 monstro com a face para cima adequado; equipe o primeiro alvo ao segundo alvo."
+  },
+  "Vylon Tesseract": {
+    "name": "Tesserato Vylon",
+    "effect": "Uma vez por turno, você pode: escolher 1 monstro \"Vylon\" com a face para cima que você controla; equipe este card no alvo, OU: desequipe este card e Invoque-o por Invocação-Especial em Posição de Ataque com a face para cima. Enquanto estiver equipado por este efeito, se o monstro equipado destruir um monstro do oponente em batalha: você pode escolher 1 monstro \"Vylon\" de Nível 4 ou menos no seu Cemitério; Invoque o alvo por Invocação-Especial. (Um monstro só pode ser equipado com 1 Monstro de União por vez. Se o monstro equipado seria destruído, destrua este card em vez disso.)"
+  },
+  "Vylon Vanguard": {
+    "name": "Vanguarda Vylon",
+    "effect": "Quando este card for destruído por um efeito de card e enviado para o Cemitério: você pode comprar 1 card para cada Card de Equipamento que estava equipado a este card."
+  },
+  "Wall of Ivy": {
+    "name": "Muralha de Hera",
+    "effect": "VIRE: Invoque por Invocação-Especial 1 \"Ficha de Hera\" (Tipo Planta/TERRA/Nível 1/ATK 0/DEF 0) em Posição de Defesa no lado do campo do seu oponente. Quando esta Ficha for destruída, seu controlador sofre 300 de dano."
+  },
+  "Waltz Token": {
+    "name": "Ficha de Valsa",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Battle Waltz\". Nenhum duelista sofre dano de batalha de batalhas envolvendo esta Ficha."
+  },
+  "Water Element": {
+    "name": "Elemento de Água",
+    "effect": "Um espírito que habita o mar e tira a visão ao encobrir a área com neblina."
+  },
+  "Wattcastle": {
+    "name": "Castelo Watt",
+    "effect": "Qualquer monstro que atacar um monstro \"Watt\" perde 1000 de ATK depois do cálculo de dano."
+  },
+  "Wattkiwi": {
+    "name": "Quiuí Watt",
+    "effect": "Monstros \"Watt\" que você controla não podem ser destruídos em batalha enquanto estiverem atacando."
+  },
+  "Weed Out": {
+    "name": "Erradicar",
+    "effect": "Pague 500 PV. Destrua todos os monstros de Nível 3 em Posição de Ataque com a face para cima."
+  },
+  "Weights & Zenmaisures": {
+    "name": "Pesos e Medidas Zenmai",
+    "effect": "Escolha 2 monstros \"Wind-Up\" com a face para cima que você controla com Níveis diferentes; seu oponente escolhe 1 deles e o Nível do outro monstro se torna o mesmo do monstro escolhido, até a Fase Final. Depois, se seu oponente escolheu o monstro com o Nível menor, você pode comprar 1 card."
+  },
+  "Welcome to the Jungle": {
+    "name": "Bem-vindo à Selva",
+    "effect": "Depois do cálculo de dano, se você sofreu dano de batalha de uma batalha envolvendo um monstro do oponente e seu monstro \"Amazoness\" em Posição de Ataque, o monstro do oponente perde ATK/DEF igual ao ATK do monstro \"Amazoness\" com que batalhou, até o final deste turno."
+  },
+  "Wicked Plant Token": {
+    "name": "Ficha de Planta Cruel",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Des Dendle\"."
+  },
+  "Wicked Token": {
+    "name": "Ficha Cruel",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Statue of the Wicked\"."
+  },
+  "Wild Fire Token": {
+    "name": "Ficha de Fogo Selvagem",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Wild Fire\"."
+  },
+  "Wind Effigy": {
+    "name": "Estátua de Vento",
+    "effect": "Este card pode ser considerado 2 Tributos para a Invocação-Tributo de um Monstro Normal de VENTO."
+  },
+  "Wind-Up Bat": {
+    "name": "Morcego Dá Corda",
+    "effect": "Você pode escolher 1 monstro \"Wind-Up\" no seu Cemitério; mude este card com a face para cima em Posição de Ataque que você controla para Posição de Defesa com a face para cima e adicione o alvo à sua mão. Este efeito só pode ser usado uma vez enquanto este card estiver com a face para cima no campo."
+  },
+  "Wind-Up Carrier Zenmaity": {
+    "name": "Porta-Aviões Dá Corda Zenmaity",
+    "effect": "2 monstros de Nível 3\nUma vez por turno: você pode desassociar 1 Matéria Xyz deste card; Invoque por Invocação-Especial 1 monstro \"Wind-Up\" da sua mão ou Deck. Quando um monstro \"Wind-Up\" com a face para cima no campo for destruído e enviado para o seu Cemitério (exceto durante a Etapa de Dano): você pode desassociar 1 Matéria Xyz deste card para escolher esse monstro; devolva o alvo para a mão."
+  },
+  "Wind-Up Honeybee": {
+    "name": "Abelha Dá Corda",
+    "effect": "Quando este card for destruído em batalha e enviado para o Cemitério: você pode Invocar por Invocação-Especial 1 monstro \"Wind-Up\" de Nível 4 ou menos do seu Deck."
+  },
+  "Wind-Up Knight": {
+    "name": "Cavaleiro Dá Corda",
+    "effect": "Quando um monstro \"Wind-Up\" com a face para cima que você controla for alvo de um ataque: você pode negar o ataque. Este efeito só pode ser usado uma vez enquanto este card estiver com a face para cima no campo."
+  },
+  "Wind-Up Soldier": {
+    "name": "Soldado Dá Corda",
+    "effect": "Durante sua Fase Principal: você pode aumentar o Nível deste card em 1 e o ATK em 400, até a Fase Final. Este efeito só pode ser usado uma vez enquanto este card estiver com a face para cima no campo."
+  },
+  "Wind-Up Warrior": {
+    "name": "Guerreiro Dá Corda",
+    "effect": "Você pode escolher 1 monstro \"Wind-Up\" com a face para cima que você controla; aumente o Nível dele em 1 e o ATK dele em 600, até a Fase Final. Este efeito só pode ser usado uma vez enquanto este card estiver com a face para cima no campo."
+  },
+  "Winged Dragon, Guardian of the Fortress #2": {
+    "name": "Dragão Alado, Guardião da Fortaleza n.º 2",
+    "effect": "As asas deste monstro são capazes de gerar tornados."
+  },
+  "Wingtortoise": {
+    "name": "Tartaruga Alada",
+    "effect": "Quando um monstro do Tipo Peixe, Serpente Marinha ou Aqua com a face para cima que você controla for banido: você pode Invocar este card por Invocação-Especial da sua mão ou Cemitério. (O(s) monstro(s) banido(s) deve(m) ser do Tipo Peixe, Serpente Marinha ou Aqua mesmo depois de banido(s).)"
+  },
+  "Wiseman's Chalice": {
+    "name": "Cálice do Sábio",
+    "effect": "Se você não controlar monstros, selecione 1 monstro no Cemitério do seu oponente. Invoque-o por Invocação-Especial. Durante a Fase Final deste turno, dê o controle desse monstro Invocado por Invocação-Especial ao seu oponente. O monstro não pode ser oferecido como Tributo nem usado como Monstro Matéria Sincro enquanto estiver com a face para cima no campo."
+  },
+  "Wodan the Resident of the Forest": {
+    "name": "Wodan, o Habitante da Floresta",
+    "effect": "Aumente o ATK deste card em 100 pontos para cada monstro do Tipo Planta com a face para cima no campo."
+  },
+  "Woodland Archer": {
+    "name": "Arqueiro da Floresta",
+    "effect": "Este card não pode ser Invocado por Invocação-Normal ou Baixado. Este card não pode ser Invocado por Invocação-Especial, exceto se você tiver 2 ou mais Monstros Normais no seu Cemitério. Você pode oferecer este card como Tributo para adicionar 1 monstro Gêmeos do seu Deck à sua mão."
+  },
+  "Worm Token": {
+    "name": "Ficha de Verme",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Worm Bait\"."
+  },
+  "Xing Zhen Hu Replica": {
+    "name": "Répilca de Xing Zhen Hu",
+    "effect": "Selecione 1 Card de Magia/Armadilha Baixado no campo. Ele não pode ser ativado. Cards e efeitos não podem ser ativados em resposta à ativação deste card."
+  },
+  "Xyz Gift": {
+    "name": "Presente Xyz",
+    "effect": "Se você controlar 2 ou mais Monstros Xyz com a face para cima: desassocie 2 Matérias Xyz de um monstro que você controla e compre 2 cards."
+  },
+  "Xyz Soul": {
+    "name": "Alma Xyz",
+    "effect": "Escolha 1 Monstro Xyz no Cemitério de qualquer duelista; todos os monstros que você controla atualmente ganham ATK igual à Classe dele x 200 e, depois, você pode embaralhá-lo no Deck Adicional. Este aumento de ATK dura até a Fase Final."
+  },
+  "Xyz Veil": {
+    "name": "Véu Xyz",
+    "effect": "Monstros Xyz com a face para cima com Matéria Xyz não podem ser alvo de efeitos de card."
+  },
+  "Xyz Wrath": {
+    "name": "Cólera Xyz",
+    "effect": "Uma vez por turno, quando o efeito de um monstro de Nível 5 ou mais for ativado (exceto durante a Etapa de Dano), e você controlar um Monstro Xyz: você pode descartar 1 card; negue o efeito e, se isso acontecer, destrua esse monstro."
+  },
+  "Yaksha": {
+    "name": "Yaksha",
+    "effect": "Não pode ser Invocado por Invocação-Especial. Durante a Fase Final do turno em que este card for Invocado por Invocação-Normal ou virado com a face para cima: devolva-o para a mão. Quando este card for Invocado por Invocação-Normal ou virado com a face para cima: você pode escolher 1 Card de Magia/Armadilha que seu oponente controla; devolva o alvo para a mão."
+  },
+  "Yamato-no-Kami": {
+    "name": "Yamato-no-Kami",
+    "effect": "Este card não pode ser Invocado por Invocação-Normal ou Baixado. Este card não pode ser Invocado por Invocação-Especial, exceto ao remover do jogo 1 monstro Espírito do seu Cemitério. Este card retorna para a mão do dono durante a Fase Final do turno em que for Invocado por Invocação-Especial. Se este card destruir um monstro do oponente em batalha, você pode destruir 1 Card de Magia ou Armadilha que seu oponente controla."
+  },
+  "Yaranzo": {
+    "name": "Yaranzo",
+    "effect": "Uma caixa de tesouro contendo um monstro que ataca qualquer bandido desprevenido."
+  },
+  "Yashinoki": {
+    "name": "Yashinoki",
+    "effect": "Uma palmeira inteligente que derruba uma saraivada de cocos duros como rocha sobre seus inimigos."
+  },
+  "Yormungarde": {
+    "name": "Yormungarde",
+    "effect": "Uma cobra extremamente longa que habita o mundo do mito."
+  },
+  "Zekt Conversion": {
+    "name": "Conversão Zekt",
+    "effect": "Quando um monstro \"Inzektor\" com a face para cima que você controla for alvo de um ataque: escolha o monstro atacante; equipe o alvo do ataque ao monstro atacante. Assuma o controle do monstro equipado enquanto ele estiver equipado com um monstro \"Inzektor\" por este efeito."
+  },
+  "Zenmailfunction": {
+    "name": "Mau Funcionamento Zenmai",
+    "effect": "Escolha 1 monstro \"Wind-Up\" no seu Cemitério; Invoque-o por Invocação-Especial em Posição de Defesa com a face para cima. O(s) efeito(s) dele é negado e ele não pode ser oferecido como Tributo nem usado como Monstro Matéria Sincro."
+  },
+  "Zenmailstrom": {
+    "name": "Tempestade Zenmai",
+    "effect": "Ofereça 1 monstro \"Wind-Up\" com 1500 ou mais de ATK como Tributo; Invoque por Invocação-Especial 1 monstro \"Wind-Up\" da sua mão e, depois, você pode Invocar por Invocação-Especial 1 monstro \"Wind-Up\" do seu Deck com o mesmo ATK do monstro Invocado por Invocação-Especial por este efeito."
+  },
+  "Zenmairch": {
+    "name": "Marcha Zenmai",
+    "effect": "Escolha 1 monstro \"Wind-Up\" com a face para cima de Nível 4 ou menos que você controla: devolva o alvo para a mão (não importa o Nível) e, depois, Invoque por Invocação-Especial 1 monstro \"Wind-Up\" da mão com o mesmo Nível do monstro devolvido."
+  },
+  "Zero Force": {
+    "name": "Força Zero",
+    "effect": "Ative somente quando um monstro com a face para cima que você controla for removido do jogo. O ATK de todos os monstros com a face para cima no campo se torna 0."
+  }
+}

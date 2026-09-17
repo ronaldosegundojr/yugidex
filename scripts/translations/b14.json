@@ -1,0 +1,70 @@
+{
+  "Mecha Sea Dragon Plesion": {
+    "name": "Plesião, Dragão Marinho Mecânico",
+    "effect": "Se você controlar um monstro do Tipo Serpente Marinha com a face para cima, você pode Invocar este card por Invocação-Normal sem oferecer Tributo. Uma vez por turno: você pode oferecer 1 monstro de ÁGUA como Tributo para escolher 1 card com a face para cima que seu oponente controla; destrua o alvo."
+  },
+  "Mechaleon": {
+    "name": "Mecaleão",
+    "effect": "Este monstro pode se esconder em praticamente qualquer lugar ao adotar as cores do ambiente."
+  },
+  "Memory Crusher": {
+    "name": "Esmagador de Memórias",
+    "effect": "Se este card atacar diretamente com sucesso, cause 100 de dano ao seu oponente para cada card no Deck Adicional dele."
+  },
+  "Mental Seeker": {
+    "name": "Buscador Mental",
+    "effect": "Quando este card removido do jogo for Invocado por Invocação-Especial, revele os 3 cards do topo do Deck do seu oponente. Escolha 1 desses cards e remova-o do jogo. Depois, embaralhe os outros no Deck."
+  },
+  "Mesmeric Control": {
+    "name": "Controle Mesmérico",
+    "effect": "Seu oponente não pode mudar as posições de batalha de monstros durante o próximo turno dele."
+  },
+  "Metabo Globster": {
+    "name": "Globster Metabo",
+    "effect": "Quando você oferecer este card como Tributo para a Invocação-Tributo de um monstro de TREVAS, Invoque por Invocação-Especial 3 \"Fichas de Metabo\" (Tipo Demônio/TREVAS/Nível 1/ATK 0/DEF 0) em Posição de Defesa. Essas Fichas não podem ser oferecidas como Tributo para uma Invocação-Tributo."
+  },
+  "Metabo Token": {
+    "name": "Ficha de Metabo",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Metabo Globster\". Esta Ficha não pode ser usada como Tributo para uma Invocação-Tributo."
+  },
+  "Metallizing Parasite - Soltite": {
+    "name": "Parasita Metalizante - Soltite",
+    "effect": "Uma vez por turno, você pode: escolher 1 monstro com a face para cima que você controla; equipe este card no alvo, OU: desequipe este card e Invoque-o por Invocação-Especial em Posição de Ataque com a face para cima. Enquanto estiver equipado por este efeito, o monstro equipado não pode ser alvo nem destruído pelos efeitos de monstro do seu oponente. (Um monstro só pode ser equipado com 1 Monstro de União por vez. Se o monstro equipado seria destruído em batalha, destrua este card em vez disso.)"
+  },
+  "Meteo the Matchless": {
+    "name": "Meteo, o Incomparável",
+    "effect": "Este card não pode ser Invocado por Invocação-Especial. Este card deve ser Invocado por Invocação-Tributo oferecendo 3 monstros do Tipo Besta-Guerreira no seu lado do campo como Tributo. Se este card atacar diretamente os PV do seu oponente e os reduzir a 0, o controlador deste card vence a Partida."
+  },
+  "Middle Age Mechs": {
+    "name": "Mecs da Idade Média",
+    "effect": "Todos os monstros \"Ancient Gear\" ganham 300 de ATK. Cada vez que um monstro for Invocado por Invocação-Normal/Baixado, coloque 1 marcador neste card. Se você Invocar por Invocação-Tributo um monstro \"Ancient Gear\" com a face para cima, você pode oferecer este card como Tributo em vez disso, se o número de marcadores dele for igual ou maior que o número de Tributos exigidos."
+  },
+  "Midnight Fiend": {
+    "name": "Demônio da Meia-Noite",
+    "effect": "Este monstro só aparece quando um tributo da meia-noite é feito."
+  },
+  "Milla the Temporal Magician": {
+    "name": "Milla, a Mágica Temporal",
+    "effect": "Quando este card for Invocado por Invocação-Normal: escolha 1 card Baixado que seu oponente controla; olhe-o. Seu oponente não pode ativar Cards de Magia/Armadilha em resposta à ativação deste efeito."
+  },
+  "Mind Protector": {
+    "name": "Protetor Mental",
+    "effect": "O controlador deste card deve pagar 500 PV durante cada uma das Fases de Apoio dele. Se não puder, destrua este card. Monstros com 2000 ou menos de ATK não podem declarar um ataque, exceto monstros do Tipo Psíquico."
+  },
+  "Mini Mare Mare Token": {
+    "name": "Ficha de Mini Mare Mare",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Mini Mare Mare\"."
+  },
+  "Minoan Centaur": {
+    "name": "Centauro Minóico",
+    "effect": "Este card não pode ser Invocado por Invocação-Especial. Você pode oferecer este card como Tributo para Invocar por Invocação-Especial 2 Monstros Normais do Tipo Besta-Guerreira de Nível 4 do seu Deck."
+  },
+  "Miracle Kids": {
+    "name": "Crianças Milagrosas",
+    "effect": "Escolha 1 monstro que seu oponente controla; o alvo perde 400 de ATK para cada \"Hero Kid\" no seu Cemitério, até a Fase Final."
+  },
+  "Mirror Ladybug": {
+    "name": "Joaninha do Espelho",
+    "effect": "Se você controlar pelo menos 1 monstro com a face para cima e não tiver monstros no seu Cemitério, você pode Invocar este card por Invocação-Especial da sua mão. Quando este card for Invocado por Invocação-Especial desta forma, o Nível deste card se torna igual ao Nível total de todos os outros monstros que você controla. Se o Nível deste card for maior que 12, destrua este card."
+  }
+}

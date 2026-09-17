@@ -1,0 +1,78 @@
+{
+  "Golden Gearbox": {
+    "name": "Caixa de Engrenagens Dourada",
+    "effect": "Selecione 1 monstro \"Karakuri\" com a face para cima no campo. Ele ganha 500 de ATK e 1500 de DEF, até a Fase Final."
+  },
+  "Grapple Blocker": {
+    "name": "Bloqueador de Agarre",
+    "effect": "Quando este card for Invocado por Invocação-Normal, você pode selecionar 1 monstro que seu oponente controla. O monstro selecionado não pode atacar nem ser oferecido como Tributo, enquanto este card permanecer com a face para cima no campo. Durante cada uma das suas Fases Finais, pague 500 PV ou destrua este card."
+  },
+  "Grass Phantom": {
+    "name": "Fantasma da Grama",
+    "effect": "Este card ganha 500 de ATK para cada \"Grass Phantom\" no seu Cemitério."
+  },
+  "Grasschopper": {
+    "name": "Gafanhoto da Grama",
+    "effect": "Este card é considerado um Monstro Normal enquanto estiver com a face para cima no campo ou no Cemitério. Enquanto este card estiver com a face para cima no campo, você pode Invocá-lo por Invocação-Normal para que ele seja considerado um Monstro de Efeito com este efeito:\n● Este card pode atacar todos os monstros que seu oponente controla uma vez cada."
+  },
+  "Graverobber's Retribution": {
+    "name": "Retribuição do Ladrão de Tumbas",
+    "effect": "Durante cada uma das suas Fases de Apoio, cause 100 pontos de dano aos PV do seu oponente para cada monstro do seu oponente que tenha sido removido do jogo."
+  },
+  "Gravi-Crush Dragon": {
+    "name": "Dragão Esmagador Gravitacional",
+    "effect": "Você pode enviar 1 Card de Magia Contínua com a face para cima que você controla para o Cemitério e, depois, escolher 1 monstro que seu oponente controla; destrua o alvo."
+  },
+  "Gravity Warrior": {
+    "name": "Guerreiro da Gravidade",
+    "effect": "1 Regulador + 1 ou mais monstros não-Reguladores\nQuando este card for Invocado por Invocação-Sincro: ele ganha 300 de ATK para cada monstro com a face para cima que seu oponente controla. Uma vez por turno, durante a Fase de Batalha do seu oponente: você pode escolher 1 monstro em Posição de Defesa que seu oponente controla; mude-o para Posição de Ataque com a face para cima e, além disso, ele deve atacar neste turno, se possível."
+  },
+  "Great Dragon Token": {
+    "name": "Ficha de Grande Dragão",
+    "effect": "Este card pode ser usado como uma \"Ficha de Rei Dragão\".\n\n*Se usado como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa Ficha."
+  },
+  "Great Poseidon Beetle": {
+    "name": "Escaravelho de Poseidon",
+    "effect": "Se este card escolher um monstro com a face para cima em Posição de Ataque do oponente como alvo de ataque e esse monstro não for destruído por essa batalha, este card pode atacar o mesmo monstro novamente em seguida. Este efeito só pode ser usado duas vezes por turno."
+  },
+  "Greed Grado": {
+    "name": "Ganância Grado",
+    "effect": "Ative apenas se você destruiu um Monstro Sincro com a face para cima controlado pelo seu oponente neste turno, em batalha ou por efeito de card. Compre 2 cards."
+  },
+  "Greenkappa": {
+    "name": "Greenkappa",
+    "effect": "VIRE: escolha 2 Cards de Magia/Armadilha Baixados no campo; destrua os alvos."
+  },
+  "Grinder Golem": {
+    "name": "Golem Triturador",
+    "effect": "Não pode ser Invocado por Invocação-Normal nem Baixado. Deve primeiro ser Invocado por Invocação-Especial (da sua mão) no lado do campo do seu oponente ao Invocar por Invocação-Especial 2 \"Fichas de Triturador\" (Tipo Demônio/TREVAS/Nível 1/ATK 0/DEF 0) em Posição de Ataque com a face para cima no seu lado do campo. Se você Invocar este monstro por Invocação-Especial, não pode Invocar por Invocação-Normal nem Baixar um monstro durante o mesmo turno."
+  },
+  "Grinder Token": {
+    "name": "Ficha de Triturador",
+    "effect": "Este card pode ser usado como uma \"Ficha de Triturador\".\n\n*Se usado como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa Ficha."
+  },
+  "Guardians of the Tomb": {
+    "name": "Guardiões do Túmulo",
+    "effect": "Durante a Fase Principal do seu oponente, quando um monstro for Invocado por Invocação-Especial da sua Zona de Magias & Armadilhas para o seu campo enquanto você não tiver cards na sua mão, você pode comprar 1 card e, se isso acontecer, você pode Baixar 1 Magia ou Armadilha da sua mão. Esta Habilidade só pode ser usada uma vez por turno."
+  },
+  "Gundari": {
+    "name": "Gundari",
+    "effect": "Este card não pode ser Invocado por Invocação-Especial. Este card retorna para a mão do dono durante a Fase Final do turno em que é Invocado por Invocação-Normal ou virado com a face para cima. Se este card batalhar um Monstro Sincro, devolva os dois monstros para as mãos dos donos no início da Etapa de Dano (sem cálculo de dano)."
+  },
+  "Guts of Steel": {
+    "name": "Coragem de Aço",
+    "effect": "Selecione 3 monstros \"Scrap\" no seu Cemitério. Seu oponente escolhe 1 deles, você o Invoca por Invocação-Especial no lado do campo de qualquer duelista e remove o restante do jogo."
+  },
+  "Hammer Bounzer": {
+    "name": "Bounzer Martelo",
+    "effect": "Se seu oponente controlar um card e você não controlar nenhum card, você pode Invocar este card por Invocação-Normal sem oferecer Tributo. Se este card atacar um monstro do oponente, enquanto você não controlar Cards de Magia/Armadilha, seu oponente não pode ativar nenhum Card de Magia/Armadilha até o final da Etapa de Dano."
+  },
+  "Hard-sellin' Zombie": {
+    "name": "Zumbi Vendendo Duro",
+    "effect": "Cada vez que um monstro que você controla causar Dano de Batalha ao seu oponente, selecione 1 card no Cemitério do seu oponente e devolva-o para o fundo do Deck dele."
+  },
+  "Heavy Metal Raiders": {
+    "name": "Guerreiros de Heavy Metal",
+    "effect": "A primeira vez que cada monstro Máquina de TREVAS que você controla seria destruído em batalha a cada turno, ele não é destruído e, se você sofreu dano de batalha dessa batalha, ele ganha essa quantidade de ATK depois do cálculo de dano e mantém esse ganho de ATK enquanto este card estiver no campo. Uma vez por turno, se um monstro que você controla originalmente do Tipo Máquina de TREVAS destruir um ou mais cards no campo por batalha ou efeito de card: você pode Invocar por Invocação-Especial 1 monstro do Tipo Máquina de TREVAS da sua mão."
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "Iron Chain Coil": {
+    "name": "Bola de Correntes de Ferro",
+    "effect": "Uma vez por turno, durante sua Fase Principal, você pode equipar este card a 1 monstro com a face para cima que seu oponente controla como um Card de Equipamento OU desequipá-lo para Invocar este card por Invocação-Especial, com a face para cima em Posição de Ataque. Enquanto estiver equipado ao monstro por este efeito, ele perde 500 de ATK e, para cada monstro que você controla que ele atacar, você pode fazer o monstro equipado atacar novamente em seguida."
+  },
+  "Iron Core Armor": {
+    "name": "Armadura de Núcleo de Ferro",
+    "effect": "Equipe apenas a um monstro \"Koa'ki Meiru\". O monstro equipado não pode ser destruído em batalha. Se houver um \"Iron Core of Koa'ki Meiru\" no seu Cemitério e o monstro equipado seria destruído, negue a destruição e destrua este card em vez disso."
+  },
+  "It's Jinzo!": {
+    "name": "É o Jinzo!",
+    "effect": "Invoque por Invocação-Especial 1 \"Jinzo\" da sua mão ou Cemitério. Negue quaisquer efeitos de Armadilha no campo, enquanto esse \"Jinzo\" permanecer com a face para cima no campo."
+  },
+  "It's No Monster, It's a God!": {
+    "name": "Não é Monstro, é um Deus!",
+    "effect": "Uma vez por Duelo, durante sua Fase Principal 1, você pode usar esta Habilidade descartando esta card, e o turno é marcado. Adicione 1 \"Obelisk the Tormentor\", \"Slifer the Sky Dragon\" ou \"The Winged Dragon of Ra\" do seu Deck, Cemitério ou da sua Zona de Banimento para o seu lado do campo. Neste turno, você não pode Invocar monstros por Invocação-Especial."
+  },
+  "Ivy Token": {
+    "name": "Ficha de Hera",
+    "effect": "Este card pode ser usado como uma \"Ficha de Hera\".\n\n*Se usado como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa Ficha."
+  },
+  "Jar Turtle": {
+    "name": "Tartaruga do Pote",
+    "effect": "Este card é considerado um Card de Magia enquanto estiver com a face para baixo (Baixado). Quando for virado com a face para cima, você pode destruir 1 card Baixado no campo com o efeito deste card."
+  },
+  "Jawsman": {
+    "name": "Jawsman",
+    "effect": "Uma vez por turno: você pode escolher 1 monstro com a face para cima que seu oponente controla; ele ganha 300 de ATK e não é destruído em batalha com este card. Se este card destruir um monstro em batalha, ele pode atacar novamente em seguida, durante esta Fase de Batalha."
+  },
+  "Judgment of the Pharaoh": {
+    "name": "Julgamento do Faraó",
+    "effect": "Pague metade dos seus PV. Invoque por Invocação-Especial 1 \"Kuriboh\" da sua mão ou Deck para o seu lado do campo e equipe-o com 1 \"Shadow of the Eyes\" da sua mão ou Deck."
+  },
+  "Junk Gardna": {
+    "name": "Guarda-Sucata",
+    "effect": "Uma vez por turno, você pode selecionar 1 monstro que seu oponente controla e mudar a posição de batalha dele. Este efeito pode ser ativado durante o turno de qualquer duelista. Se este card for enviado do campo para o Cemitério, você pode selecionar 1 monstro no campo e mudar a posição de batalha dele."
+  },
+  "Junk Mail": {
+    "name": "Sucata de Correio",
+    "effect": "Um Monstro Sincro que usou este card como matéria não pode ser destruído em batalha. Se este card estiver no seu Cemitério, exceto no turno em que foi enviado para lá, e você controlar um Monstro Sincro com \"Warrior\", \"Synchron\" ou \"Stardust\" no nome original: você pode Invocar este card por Invocação-Especial, mas bana-o quando ele deixar o campo. Você só pode usar este efeito de \"Junk Mail\" uma vez por turno."
+  },
+  "Jurrac Brachis": {
+    "name": "Braquiossauro Jurrac",
+    "effect": "Enquanto outro monstro \"Jurrac\" com a face para cima estiver no campo, este card não pode ser destruído em batalha."
+  },
+  "Jurrac Dino": {
+    "name": "Dinossauro Jurrac",
+    "effect": "Uma vez durante a Fase Final de cada duelista, se este card destruiu um monstro do oponente em batalha neste turno, você pode oferecer 1 monstro \"Jurrac\" como Tributo para comprar 2 cards."
+  },
+  "Jurrac Monoloph": {
+    "name": "Monolofo Jurrac",
+    "effect": "Este card pode atacar todos os monstros que seu oponente controla, uma vez cada."
+  },
+  "Jurrac Ptera": {
+    "name": "Pterossauro Jurrac",
+    "effect": "Se este card for atacado, devolva o monstro atacante para a mão depois do cálculo de dano e este card ganha DEF igual ao Nível do monstro devolvido x 100."
+  },
+  "Jurrac Token": {
+    "name": "Ficha de Jurrac",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Jurrac Stauriko\". Esta Ficha não pode ser oferecida como Tributo para uma Invocação-Tributo, exceto para um monstro \"Jurrac\"."
+  },
+  "Jutte Fighter": {
+    "name": "Lutador de Jutte",
+    "effect": "Uma vez por turno, você pode mudar 1 monstro com a face para cima em Posição de Ataque que seu oponente controla para Posição de Defesa com a face para cima."
+  },
+  "Kagemusha Raccoon Token": {
+    "name": "Ficha de Guaxinim Kagemusha",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Number 64: Ronin Raccoon Sandayu\". Quando for Invocada, o ATK desta Ficha se torna igual ao ATK atual do monstro no campo com o maior ATK (sua escolha, se empatar)."
+  },
+  "Kaiser Dragon": {
+    "name": "Dragão Kaiser",
+    "effect": "\"Winged Dragon, Guardian of the Fortress #1\" + \"Fairy Dragon\""
+  },
+  "Kanan the Swordmistress": {
+    "name": "Kanan, a Espadachim",
+    "effect": "Uma guerreira armada com espada e escudo, ela flutua levemente e perfura com precisão."
+  }
+}

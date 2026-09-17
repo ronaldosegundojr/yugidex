@@ -1,0 +1,130 @@
+{
+  "Superalloy Beast Raptinus": {
+    "name": "Besta de Superliga Raptinus",
+    "effect": "1 Monstro Gêmeos + 1 Monstro Gêmeos\nTodos os Monstros Gêmeos no campo são considerados Monstros de Efeito e ganham seus efeitos."
+  },
+  "Supreme Arcanite Magician": {
+    "name": "Mágico Arcanita Supremo",
+    "effect": "1 Monstro Sincro do Tipo Mago + 1 monstro do Tipo Mago\nEste monstro só pode ser Invocado por Invocação-Especial por Invocação-Fusão (do Deck Adicional). Quando este card for Invocado por Invocação-Fusão, coloque 2 Marcadores de Magia nele. Este card ganha 1000 de ATK para cada Marcador de Magia nele. Uma vez por turno, você pode remover 1 Marcador de Magia do seu lado do campo para ativar 1 dos seguintes efeitos: ● Selecione 1 card no campo e destrua-o. ● Compre 1 card."
+  },
+  "Surgical Striker - S.P.E.C.T.R.A.": {
+    "name": "Atacante Cirúrgica - S.P.E.C.T.R.A.",
+    "effect": "2+ monstros, incluindo um Monstro Link\n(Este card é sempre considerado como um card \"Sky Striker Ace\".)\nPrimeiro deve ser Invocado por Invocação-Link. Perde 3000 de ATK enquanto você não tiver Magias no seu Cemitério. Quando seu oponente ativar um card ou efeito como Elo 2 ou mais da Corrente (Efeito Rápido): você pode banir 2 Magias da sua mão e/ou Cemitério; negue esse efeito e, depois, você pode destruir 1 card que seu oponente controla. Você só pode usar este efeito de \"Surgical Striker - S.P.E.C.T.R.A.\" uma vez por turno."
+  },
+  "Swallow Flip": {
+    "name": "Giro de Andorinha",
+    "effect": "Negue a ativação do efeito de um Monstro de Efeito que seja ativado quando um monstro for Invocado por Invocação-Especial (incluindo ele mesmo) e destrua-o."
+  },
+  "Sweet Corn": {
+    "name": "Milho Doce",
+    "effect": "Uma vez por turno, durante sua Fase Principal 2: você pode pagar 500 PV; Invoque por Invocação-Especial 1 \"Ficha de Milho\" (Tipo Planta/TERRA/Nível 1/ATK 0/DEF 0)."
+  },
+  "Swift Birdman Joe": {
+    "name": "Joe, o Pássaro Veloz",
+    "effect": "Se você Invocar este card por Invocação-Tributo ao oferecer um monstro de VENTO como Tributo, devolva todos os Cards de Magia e Armadilha no campo para as mãos dos donos."
+  },
+  "Sword Breaker": {
+    "name": "Quebrador de Espadas",
+    "effect": "2 monstros de Nível 6\nUma vez por turno: você pode desassociar 1 Matéria Xyz deste card para declarar 1 Tipo de Monstro; este card ganha o seguinte efeito. No início da Etapa de Dano, se este card batalhar um monstro de um Tipo que foi declarado: destrua esse monstro."
+  },
+  "Symbol of Heritage": {
+    "name": "Símbolo da Herança",
+    "effect": "Ative somente enquanto houver 3 Cards de Monstro com o mesmo nome no seu Cemitério. Selecione 1 desses monstros, Invoque-o por Invocação-Especial e equipe-o com este card. Quando este card for destruído, destrua o monstro equipado."
+  },
+  "Synchar": {
+    "name": "Sincar",
+    "effect": "Esta criatura de duas cabeças cospe explosões de laser em seus inimigos."
+  },
+  "Synchro Deflector": {
+    "name": "Defletor Sincro",
+    "effect": "Ative somente quando um Monstro Sincro com a face para cima que você controla for selecionado como alvo de ataque. Negue o ataque e destrua 1 monstro que seu oponente controla."
+  },
+  "Synchro Fusionist": {
+    "name": "Fusionista Sincro",
+    "effect": "Se este card for enviado para o Cemitério como Monstro Matéria Sincro, você pode adicionar 1 Card de Magia do seu Deck à sua mão com \"Polymerization\" ou \"Fusion\" no nome do card, exceto \"Diffusion Wave-Motion\"."
+  },
+  "Synchro Gift": {
+    "name": "Presente Sincro",
+    "effect": "Selecione 2 monstros com a face para cima que você controla (1 Monstro Sincro e 1 monstro não-Sincro). Até a Fase Final deste turno, reduza o ATK do Monstro Sincro a 0 e o outro monstro ganha ATK igual ao ATK original do Monstro Sincro."
+  },
+  "Synchro Magnet": {
+    "name": "Ímã Sincro",
+    "effect": "Este card não pode ser Invocado por Invocação-Normal ou Baixado. Quando você Invocar por Invocação-Sincro um Monstro Sincro, você pode Invocar este card por Invocação-Especial da sua mão."
+  },
+  "Synchro Soldier": {
+    "name": "Soldado Sincro",
+    "effect": "Uma vez por turno, durante sua Fase Principal 1, você pode selecionar 1 Monstro Sincro com a face para cima que você controla. Remova esse Monstro Sincro com a face para cima que você controla do jogo e cause 600 de dano ao seu oponente. Se você usar este efeito, durante sua próxima Fase de Apoio o monstro removido do jogo retorna ao campo."
+  },
+  "Synchro Strike": {
+    "name": "Golpe Sincro",
+    "effect": "O Monstro Sincro alvo ganha 500 de ATK para cada Monstro Matéria Sincro usado para Invocá-lo, até a Fase Final."
+  },
+  "Takriminos": {
+    "name": "Takriminos",
+    "effect": "Um membro de uma raça de serpentes marinhas que viaja livremente pelo mar."
+  },
+  "Telekinetic Charging Cell": {
+    "name": "Célula de Carga Telecinética",
+    "effect": "Equipe apenas a um monstro do Tipo Psíquico. Você não precisa pagar PV para ativar o(s) efeito(s) dele. Quando o monstro equipado for destruído e este card for enviado para o Cemitério, você pode pagar 1000 PV para devolver este card à sua mão."
+  },
+  "Tenshin": {
+    "name": "Tenshin",
+    "effect": "Este card ganha 400 de ATK para cada monstro de Nível 2 com a face para cima que você controla."
+  },
+  "Test Ape": {
+    "name": "Macaco de Teste",
+    "effect": "Quando este card for destruído em batalha e enviado para o Cemitério, você pode Invocar por Invocação-Especial 1 monstro \"Gladiator Beast\" de Nível 4 ou menos do seu Deck."
+  },
+  "The Dark Door": {
+    "name": "A Porta Sombria",
+    "effect": "Somente 1 monstro pode atacar durante cada Fase de Batalha."
+  },
+  "The Dragon Dwelling in the Deep": {
+    "name": "O Dragão que Habita nas Profundezas",
+    "effect": "Coloque 1 Marcador de Oceano neste card durante a Fase de Apoio de cada duelista. Quando este card for removido do campo, todos os monstros do Tipo Peixe e do Tipo Serpente Marinha que você controla ganham 200 de ATK para cada Marcador de Oceano neste card, até a Fase Final."
+  },
+  "The Gift of Greed": {
+    "name": "O Presente da Ganância",
+    "effect": "Seu oponente compra 2 cards."
+  },
+  "The Illusory Gentleman": {
+    "name": "O Cavalheiro Ilusório",
+    "effect": "Vestindo modas estranhas, este cavalheiro é muito inconstante. Às vezes salva pessoas e outras vezes comete crimes."
+  },
+  "The League of Uniform Nomenclature": {
+    "name": "A Liga da Nomenclatura Uniforme",
+    "effect": "Selecione 1 Monstro Normal de Nível 2 ou menos com a face para cima que você controla para ativar este card. Invoque por Invocação-Especial tantos cards do seu Deck com o mesmo nome do monstro selecionado quanto possível."
+  },
+  "The Legend of Tickets": {
+    "name": "A Lenda dos Ingressos",
+    "effect": "Escolha 1 card no seu Cemitério; coloque-o no topo do Deck durante a Fase Final deste turno e, além disso, compre 2 cards em vez de 1 na sua compra normal durante sua próxima Fase de Compra. Você só pode ativar 1 \"The Legend of Tickets\" por turno."
+  },
+  "The Psychic Duelist": {
+    "name": "O Duelista Psíquico",
+    "effect": "Ative 1 das seguintes Habilidades durante sua Fase Principal, pagando metade dos seus PV.\n● Escolha 1 card Baixado na Zona de Magias & Armadilhas do seu oponente e declare 1 tipo (Monstro, Magia ou Armadilha) e, depois, revele o card com a face para baixo e, se for o tipo de card declarado, ele não pode ser ativado neste turno.\n● Selecione aleatoriamente 1 card na mão do seu oponente e declare 1 tipo (Monstro, Magia ou Armadilha) e, depois, revele esse card e, se for o tipo declarado, cause 500 de dano ao seu oponente.\nCada uma destas Habilidades só pode ser usada uma vez por Duelo."
+  },
+  "The Right Hero for the Job": {
+    "name": "O Herói Certo para o Trabalho",
+    "effect": "Uma vez por Duelo, durante sua Fase Principal, você pode embaralhar 1 monstro \"Elemental HERO\" que você controla no seu Deck Principal e, depois, Invocar por Invocação-Especial 1 monstro \"Elemental HERO\" de Nível 4 ou menos do seu Deck Principal com um nome diferente do card embaralhado."
+  },
+  "The Roids are Alright": {
+    "name": "Os Roids Estão Bem",
+    "effect": "\"Vehicroid Connection Zone\" pode ser usado para Invocar por Invocação-Fusão quaisquer monstros \"roid\" do seu Deck Adicional. Todos os monstros \"roid\" cujo Nível original seja 6 ou menos podem ser Invocados por Invocação-Normal/Baixados sem oferecer Tributo. Se um monstro Máquina \"roid\" não-Fusão que você controla cujo Nível original seja 6 ou menos atacar um monstro do oponente, ele ganha ATK igual ao próprio Nível x 100 durante apenas a Etapa de Dano. Se você controlar um monstro que não seja Máquina, vire este card."
+  },
+  "The Secret of the Bandit": {
+    "name": "O Segredo do Bandido",
+    "effect": "Este card só pode ser ativado durante a Fase Principal 1. Selecione 1 monstro com a face para cima no campo. Cada vez que o monstro selecionado causar Dano de Batalha aos PV do seu oponente neste turno, seu oponente descarta 1 card aleatório."
+  },
+  "The Selection": {
+    "name": "A Seleção",
+    "effect": "Pague 1000 PV. Negue a Invocação de um monstro que tenha o mesmo Tipo de um monstro no campo e destrua-o."
+  },
+  "The Statue of Easter Island": {
+    "name": "A Estátua da Ilha de Páscoa",
+    "effect": "Um monumento de pedra da Ilha de Páscoa que lança rajadas de laser de seus lábios esculpidos na rocha."
+  },
+  "Three-Legged Zombies": {
+    "name": "Zumbis de Três Pernas",
+    "effect": "Um par de esqueletos amigáveis, magro e gordo, que viajam com extrema dificuldade."
+  }
+}

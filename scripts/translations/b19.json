@@ -1,0 +1,70 @@
+{
+  "Senior Silver Ninja": {
+    "name": "Ninja Prata Sênior",
+    "effect": "Quando este card for virado com a face para cima: você pode Invocar por Invocação-Especial qualquer número de monstros \"Ninja\", exceto \"Senior Silver Ninja\", da sua mão e/ou Cemitério em Posição de Defesa com a face para baixo. Só pode haver 1 \"Senior Silver Ninja\" com a face para cima no campo."
+  },
+  "Setting Sun": {
+    "name": "Sol Poente",
+    "effect": "Uma vez por turno, durante sua Fase Principal, se você controlar um monstro cujo ATK seja ? no Deck, você pode banir 1 card da sua mão e, depois, adicionar 1 monstro do seu Deck à sua mão com ATK ?, mas com um nome diferente dos cards que você controla. Monstros \"Helios\" que você controla não podem ser banidos."
+  },
+  "Shapesnatch": {
+    "name": "Shapesnatch",
+    "effect": "Uma gravata borboleta com poder horrível, ataca um oponente controlando outros."
+  },
+  "Shark Cruiser": {
+    "name": "Cruzador Tubarão",
+    "effect": "Se este card com a face para cima que você controla for destruído pelo efeito de um card do seu oponente, você pode Invocar por Invocação-Especial até 2 monstros de ÁGUA de Nível 4 ou menos do seu Deck."
+  },
+  "Shark Stickers": {
+    "name": "Adesivos de Tubarão",
+    "effect": "Quando um monstro do Tipo Peixe, Serpente Marinha ou Aqua for Invocado por Invocação-Normal ou Especial no seu lado do campo: você pode Invocar este card por Invocação-Especial da sua mão. Este card não pode ser usado como Monstro Matéria Sincro."
+  },
+  "Shiba-Warrior Taro": {
+    "name": "Taro, o Guerreiro Shiba",
+    "effect": "Este card não pode ser destruído em batalha. Quando um card no campo for destruído em batalha ou por um efeito de card, devolva este card com a face para cima para a mão do dono."
+  },
+  "Shien's Footsoldier": {
+    "name": "Infantaria de Shien",
+    "effect": "Quando este card for destruído em batalha e enviado para o Cemitério: você pode Invocar por Invocação-Especial 1 monstro \"Six Samurai\" de Nível 3 ou menos do seu Deck."
+  },
+  "Shuttleroid": {
+    "name": "Shuttleroid",
+    "effect": "Quando este card for alvo de um ataque: você pode banir este card. Uma vez por turno, durante sua próxima Fase de Apoio depois que este card foi banido por este efeito: Invoque por Invocação-Especial este card banido. Se for Invocado desta forma: cause 1000 de dano ao seu oponente."
+  },
+  "Silent Abyss": {
+    "name": "Abismo Silencioso",
+    "effect": "Quando este card for destruído em batalha e enviado para o Cemitério, destrua todos os monstros com a face para baixo e os que não sejam de ÁGUA."
+  },
+  "Silent Insect": {
+    "name": "Inseto Silencioso",
+    "effect": "Este card é mudado para Posição de Defesa quando for Invocado por Invocação-Normal ou por Invocação-Virar. Negue os efeitos de todos os Cards de Magia Contínua e Cards de Armadilha Contínuos."
+  },
+  "Silent Strider": {
+    "name": "Passo Silencioso",
+    "effect": "Você pode enviar este card da sua mão para o Cemitério para reduzir o Nível de 1 monstro no campo em 1, até a Fase Final."
+  },
+  "Sinister Seed Token": {
+    "name": "Ficha de Semente Sinistra",
+    "effect": "Invocada por Invocação-Especial com o efeito de \"Sinister Seeds\"."
+  },
+  "Six Strike - Thunder Blast": {
+    "name": "Seis Golpes - Explosão de Trovão",
+    "effect": "Remova 1 Marcador Bushido do seu lado do campo para ativar 1 destes efeitos.\n● Escolha 1 monstro que seu oponente controla; destrua o alvo.\n● Escolha 1 card que seu oponente controla; devolva o alvo para a mão."
+  },
+  "Skull Knight #2": {
+    "name": "Cavaleiro da Caveira n.º 2",
+    "effect": "Se você Invocar por Invocação-Tributo um monstro do Tipo Demônio ao oferecer este monstro como Tributo, Invoque por Invocação-Especial 1 \"Skull Knight #2\" do seu Deck. Depois, embaralhe seu Deck."
+  },
+  "Sky Striker Ace - Camellia": {
+    "name": "Ás da Sky Striker - Camellia",
+    "effect": "2 Monstros de Efeito\nPrimeiro deve ser Invocado por Invocação-Link. Você só pode Invocar por Invocação-Especial \"Sky Striker Ace - Camellia\" uma vez por turno. Uma vez por turno, se você tiver 3 ou menos Magias no seu Cemitério: você pode enviar 1 card \"Sky Striker\" do seu Deck para o Cemitério. Se este card for enviado para o Cemitério: você pode escolher 1 monstro que seu oponente controla; Invoque este card por Invocação-Especial no campo do seu oponente (mas transfira o controle para o dono durante a Fase Final deste turno) e, se isso acontecer, envie o monstro alvo para o Cemitério."
+  },
+  "Slip Summon": {
+    "name": "Invocação Furtiva",
+    "effect": "Ative somente quando seu oponente Invocar um monstro. Invoque por Invocação-Especial 1 monstro de Nível 4 ou menos da sua mão em Posição de Defesa com a face para cima. Devolva-o para a mão do dono durante a Fase Final."
+  },
+  "Small Roid Big City": {
+    "name": "Cidade Grande dos Roids",
+    "effect": "Uma vez por turno: você pode escolher 1 outro card com a face para cima que você controla; destrua-o e, se isso acontecer, adicione 1 card \"roid\" do seu Deck à sua mão. Uma vez por turno, quando um ataque for declarado envolvendo um monstro do oponente e um monstro \"roid\" que você controla: você pode enviar 1 monstro \"roid\" do seu Deck para o Cemitério; troque o ATK e a DEF originais do seu monstro em batalha durante apenas o cálculo de dano."
+  }
+}

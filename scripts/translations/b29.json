@@ -1,0 +1,126 @@
+{
+  "Enneacraft α' \"orgIA\"": {
+    "name": "Enneacraft α' \"orgIA\"",
+    "effect": "VIRE: destrua 1 monstro que seu oponente controla.\nVocê pode revelar este card na sua mão; Invoque por Invocação-Especial 1 monstro da sua mão em Posição de Defesa com a face para baixo. Você não pode Invocar por Invocação-Especial no turno em que ativar este efeito, exceto em Posição de Defesa com a face para baixo. Quando seu oponente ativar um efeito de monstro na mão (Efeito Rápido): você pode mudar este card Baixado para Posição de Defesa com a face para cima; adicione 1 card \"Enneacraft\" do seu Deck à sua mão."
+  },
+  "Enneacraft ϝ' \"tromarIA\"": {
+    "name": "Enneacraft ϝ' \"tromarIA\"",
+    "effect": "VIRE: negue os efeitos de 1 Monstro de Efeito que seu oponente controla até o final deste turno.\nVocê pode revelar este card na sua mão; Invoque por Invocação-Especial 1 monstro da sua mão em Posição de Defesa com a face para baixo. Você não pode Invocar por Invocação-Especial no turno em que ativar este efeito, exceto em Posição de Defesa com a face para baixo. Quando seu oponente ativar um card ou efeito que inclua um efeito que Invoque um ou mais monstros por Invocação-Especial (Efeito Rápido): você pode mudar este card Baixado para Posição de Defesa com a face para cima; adicione 1 card \"Enneacraft\" do seu Deck à sua mão."
+  },
+  "Enneacraft β' \"alazoneIA\"": {
+    "name": "Enneacraft β' \"alazoneIA\"",
+    "effect": "VIRE: bana 1 card aleatório da mão do seu oponente com a face para cima até a Fase Final.\nVocê pode revelar este card na sua mão; Invoque por Invocação-Especial 1 monstro da sua mão em Posição de Defesa com a face para baixo. Você não pode Invocar por Invocação-Especial no turno em que ativar este efeito, exceto em Posição de Defesa com a face para baixo. Quando seu oponente ativar um card ou efeito que inclua um efeito que adicione um ou mais cards do Deck à mão (Efeito Rápido): você pode mudar este card Baixado para Posição de Defesa com a face para cima; adicione 1 card \"Enneacraft\" do seu Deck à sua mão."
+  },
+  "Enneacraft - Aizaβ.LEON": {
+    "name": "Enneacraft - Aizaβ.LEON",
+    "effect": "Você pode revelar este card na sua mão; Invoque por Invocação-Especial 1 monstro da sua mão em Posição de Defesa com a face para baixo. Você não pode Invocar por Invocação-Especial no turno em que ativar este efeito, exceto em Posição de Defesa com a face para baixo. Quando seu oponente ativar um card ou efeito em resposta à ativação do seu card ou efeito (Efeito Rápido): você pode mudar este card Baixado para Posição de Defesa com a face para cima; devolva até 3 cards no campo para a mão. Depois que este card foi virado com a face para cima, enquanto ele estiver na Zona de Monstro, cada vez que um ou mais cards forem adicionados à mão do seu oponente pelo efeito de card dele, cause 900 de dano ao seu oponente para cada um."
+  },
+  "Enneapolis, the Sinquisition City": {
+    "name": "Enneapolis, a Cidade da Inquisição",
+    "effect": "(Este card é sempre considerado um card \"Enneacraft\".)\nUma vez por turno, durante a Fase Final: remova todos os Marcadores de Inquisição do seu campo e, se isso acontecer, cause 900 de dano ao seu oponente para cada um. Você só pode usar cada um dos seguintes efeitos de \"Enneapolis, the Sinquisition City\" uma vez por turno. Você pode escolher qualquer número de Cards de Monstro Pêndulo \"Enneacraft\" que você controla; devolva-os para a mão. Se um ou mais Monstros Pêndulo \"Enneacraft\" que você controla forem virados com a face para cima durante a Fase Principal: você pode devolver 1 deles para a mão ou colocá-lo na sua Zona de Pêndulo."
+  },
+  "Enneacraft θ' \"oknirIA\"": {
+    "name": "Enneacraft θ' \"oknirIA\"",
+    "effect": "VIRE: embaralhe até 3 cards do Cemitério do seu oponente e/ou da zona de banimento no Deck.\nVocê pode revelar este card na sua mão; Invoque por Invocação-Especial 1 monstro da sua mão em Posição de Defesa com a face para baixo. Você não pode Invocar por Invocação-Especial no turno em que ativar este efeito, exceto em Posição de Defesa com a face para baixo. Quando seu oponente ativar um efeito de card no Cemitério ou na zona de banimento (Efeito Rápido): você pode mudar este card Baixado para Posição de Defesa com a face para cima; adicione 1 card \"Enneacraft\" do seu Deck à sua mão."
+  },
+  "Enneacraft - Astaγ.PIXIEA": {
+    "name": "Enneacraft - Astaγ.PIXIEA",
+    "effect": "Você pode revelar este card na sua mão; Invoque por Invocação-Especial 1 monstro da sua mão em Posição de Defesa com a face para baixo. Você não pode Invocar por Invocação-Especial no turno em que ativar este efeito, exceto em Posição de Defesa com a face para baixo. Quando seu oponente ativar um card ou efeito que escolha um ou mais cards que você controla como alvo (Efeito Rápido): você pode mudar este card Baixado para Posição de Defesa com a face para cima; negue esse efeito e, depois, você pode banir 1 card aleatório da mão do seu oponente, com a face para baixo. Depois que este card foi virado com a face para cima, enquanto ele estiver na Zona de Monstro, seu oponente não pode escolher cards no campo ou Cemitério como alvo de efeitos de card."
+  },
+  "Enneacraft - Archaη.TAIL": {
+    "name": "Enneacraft - Archaη.TAIL",
+    "effect": "Você pode revelar este card na sua mão; Invoque por Invocação-Especial 1 monstro da sua mão em Posição de Defesa com a face para baixo. Você não pode Invocar por Invocação-Especial no turno em que ativar este efeito, exceto em Posição de Defesa com a face para baixo. Quando seu oponente ativar um card ou efeito que destruiria um ou mais cards no campo (Efeito Rápido): você pode mudar este card Baixado para Posição de Defesa com a face para cima; monstros e Magias \"Enneacraft\" que você controla não podem ser destruídos por efeitos de card pelo resto deste turno. Depois que este card foi virado com a face para cima, enquanto ele estiver na Zona de Monstro, cada vez que um ou mais monstros forem enviados para o Cemitério do seu oponente, cause 900 de dano ao seu oponente."
+  },
+  "Enneacraft - Release": {
+    "name": "Enneacraft - Liberação",
+    "effect": "Coloque 1 Monstro Pêndulo \"Enneacraft\" do seu Deck na sua Zona de Pêndulo. Se este card estiver no seu Cemitério, exceto no turno em que foi enviado para lá: você pode bani-lo; adicione 1 monstro \"Enneacraft\" com a face para cima do seu Deck Adicional à sua mão. Você só pode ativar 1 \"Enneacraft - Release\" por turno."
+  },
+  "Killer Tune Loudness War": {
+    "name": "Guerra de Volume Killer Tune",
+    "effect": "1 Regulador + 1+ Reguladores\nOutros Reguladores que você controla não podem ser destruídos por efeitos de card e, além disso, seu oponente não pode escolhê-los como alvo de efeitos de card. Quando seu oponente ativar um card ou efeito (Efeito Rápido): você pode banir 1 monstro \"Killer Tune\" do seu Cemitério; aplique o efeito dele que ativa se ele for enviado para o Cemitério como Matéria Sincro. Você só pode usar este efeito de \"Killer Tune Loudness War\" uma vez por turno."
+  },
+  "Killer Tune Mix": {
+    "name": "Mix Killer Tune",
+    "effect": "Se este card no campo seria usado como Matéria Sincro, 1 Regulador na sua mão pode ser usado como 1 das outras matérias. Você só pode usar cada um dos seguintes efeitos de \"Killer Tune Mix\" uma vez por turno. Se este card for Invocado por Invocação-Normal ou Especial: você pode adicionar 1 monstro \"Killer Tune\" do seu Deck ou Cemitério à sua mão, exceto um monstro de Nível 2. Se este card for enviado para o Cemitério como Matéria Sincro: você pode escolher 1 monstro que seu oponente controla; destrua-o."
+  },
+  "Killer Tune Track Maker": {
+    "name": "Criador de Faixas Killer Tune",
+    "effect": "1 Regulador \"Killer Tune\" + 1+ Reguladores\nSe este card no campo seria usado como Matéria Sincro, 1 Regulador na sua mão pode ser usado como 1 das outras matérias. Você só pode usar cada um dos seguintes efeitos de \"Killer Tune Track Maker\" uma vez por turno. Se este card for Invocado por Invocação-Especial: você pode adicionar 1 card \"Killer Tune\" do seu Deck à sua mão. Se este card for enviado para o Cemitério como Matéria Sincro: você pode devolver 1 card que seu oponente controla para a mão."
+  },
+  "Juke Joint \"Killer Tune\"": {
+    "name": "Juke Joint \"Killer Tune\"",
+    "effect": "Durante sua Fase Principal, você pode Invocar por Invocação-Normal 1 Regulador, além de sua Invocação-Normal/Baixada (você só pode obter este efeito uma vez por turno). \"Killer Tune Loudness War\" que você controla ganha 3300 de ATK enquanto seu oponente tiver um Regulador no campo ou Cemitério dele. Você pode oferecer 1 Regulador como Tributo; adicione à sua mão ou Invoque por Invocação-Especial 1 monstro \"Killer Tune\" do seu Deck e, além disso, você não pode Invocar por Invocação-Especial pelo resto deste turno, exceto Reguladores. Você só pode usar este efeito de \"Juke Joint \"Killer Tune\"\" uma vez por turno."
+  },
+  "Killer Tune Playlist": {
+    "name": "Playlist Killer Tune",
+    "effect": "Escolha 1 monstro \"Killer Tune\" no seu campo ou Cemitério; aplique estes efeitos, em sequência e, além disso, você não pode Invocar por Invocação-Especial pelo resto deste turno depois que este card resolver, exceto Reguladores.\n● Aplique o efeito dele que ativa se ele for enviado para o Cemitério como Matéria Sincro.\n● Devolva-o para a mão.\nVocê só pode ativar 2 \"Killer Tune Playlist\" por turno."
+  },
+  "Killer Tune Remix": {
+    "name": "Remix Killer Tune",
+    "effect": "\"Killer Tune Mix\" + 1+ Reguladores\nGanha 1500 de ATK enquanto seu oponente tiver um Regulador no campo ou Cemitério dele. Durante o turno do seu oponente (Efeito Rápido): você pode oferecer este card como Tributo; pegue 2 Reguladores não-Sincro do seu Cemitério, adicione 1 deles à sua mão e, se isso acontecer, Invoque o outro por Invocação-Especial e, depois, imediatamente depois que este efeito resolver, você pode Invocar por Invocação-Sincro 1 Regulador. Você só pode usar este efeito de \"Killer Tune Remix\" uma vez por turno."
+  },
+  "Scrap Warrior": {
+    "name": "Guerreiro Sucata",
+    "effect": "\"Scrap Synchron\" + 1+ monstros não-Reguladores\nSe este card for Invocado por Invocação-Sincro: você pode adicionar à sua mão ou enviar para o Cemitério 1 \"Junk Synchron\" ou 1 card que mencione \"Junk Warrior\" do seu Deck. Você só pode usar este efeito de \"Scrap Warrior\" uma vez por turno. Os efeitos ativados de monstros que mencionem \"Junk Warrior\", e Monstros Sincro com \"Warrior\" nos nomes originais deles, que você controla não podem ser negados, exceto \"Scrap Warrior\"."
+  },
+  "Killer Tune Clip": {
+    "name": "Clipe Killer Tune",
+    "effect": "Se este card no campo seria usado como Matéria Sincro, 1 Regulador na sua mão pode ser usado como 1 das outras matérias. Você só pode usar cada um dos seguintes efeitos de \"Killer Tune Clip\" uma vez por turno. Durante a Fase Principal do seu oponente (Efeito Rápido): você pode Invocar este card por Invocação-Especial da sua mão e, depois, imediatamente depois que este efeito resolver, você pode Invocar por Invocação-Sincro 1 Regulador. Se este card for enviado para o Cemitério como Matéria Sincro: você pode banir 1 card com a face para baixo aleatório do Deck Adicional do seu oponente."
+  },
+  "Killer Tune Reco": {
+    "name": "Reco Killer Tune",
+    "effect": "Se este card no campo seria usado como Matéria Sincro, 1 Regulador na sua mão pode ser usado como 1 das outras matérias. Você só pode usar cada um dos seguintes efeitos de \"Killer Tune Reco\" uma vez por turno. Se este card for Invocado por Invocação-Normal ou Especial: você pode adicionar 1 monstro \"Killer Tune\" do seu Deck ou Cemitério à sua mão, exceto um monstro de Nível 3. Se este card for enviado para o Cemitério como Matéria Sincro: você pode escolher 1 Magia/Armadilha que seu oponente controla; destrua-a."
+  },
+  "Killer Tune Synchro": {
+    "name": "Sincro Killer Tune",
+    "effect": "Adicione 1 card \"Killer Tune\" do seu Deck à sua mão, exceto \"Killer Tune Synchro\" e, depois, imediatamente depois que este efeito resolver, você pode Invocar por Invocação-Sincro 1 Regulador. Pelo resto deste turno depois que este card resolver, você não pode Invocar por Invocação-Especial, exceto Reguladores. Você só pode ativar 2 \"Killer Tune Synchro\" por turno."
+  },
+  "Scrap Synchron": {
+    "name": "Sincron Sucata",
+    "effect": "Para uma Invocação-Sincro, você pode substituir este card por qualquer 1 Regulador \"Synchron\". Você só pode usar cada um dos seguintes efeitos de \"Scrap Synchron\" uma vez por turno. Se você Invocar por Invocação-Sincro um monstro que mencione um Regulador \"Synchron\" como matéria, este card na sua mão também pode ser usado como matéria. Se um ou mais monstros que mencionem \"Junk Warrior\" e/ou um ou mais Monstros Sincro com \"Warrior\" no nome original que você controla seriam destruídos em batalha ou por efeito de card, você pode banir este card do seu campo ou Cemitério em vez disso."
+  },
+  "Enneacraft - Rebirth": {
+    "name": "Enneacraft - Renascimento",
+    "effect": "Embaralhe qualquer número de Cards de Monstro \"Enneacraft\" da sua mão e/ou campo com a face para cima no Deck e, depois, compre cards igual ao número embaralhado. Se seu oponente Invocar por Invocação-Normal ou Especial um ou mais monstros enquanto este card estiver no seu Cemitério (exceto durante a Etapa de Dano): você pode banir este card e, depois, ativar 1 destes efeitos;\n● Invoque por Invocação-Especial 1 monstro \"Enneacraft\" da sua mão em Posição de Defesa com a face para baixo.\n● Mude 1 monstro \"Enneacraft\" em Posição de Defesa com a face para baixo que você controla para Posição de Defesa com a face para cima.\nVocê só pode ativar 1 \"Enneacraft - Rebirth\" por turno."
+  },
+  "Borreload Fatal Flare Dragon": {
+    "name": "Dragão da Labareda Mortal Borreload",
+    "effect": "1 Monstro Link de TREVAS + 1 monstro de TREVAS\nSe este card for Invocado por Invocação-Fusão: você pode adicionar 1 monstro \"Rokket\" do seu Deck à sua mão. Você pode escolher 1 monstro de TREVAS que você controla; equipe 1 Monstro Link de TREVAS do seu Cemitério ou zona de banimento a ele como uma Magia de Equipamento que concede 500 de ATK a ele. Se este card for enviado para o Cemitério como Matéria Link: você pode escolher 1 card no campo; destrua-o. Você só pode usar cada efeito de \"Borreload Fatal Flare Dragon\" uma vez por turno."
+  },
+  "Rokket Loader": {
+    "name": "Carregador Rokket",
+    "effect": "Se este card for Invocado por Invocação-Normal ou Especial: você pode adicionar 1 monstro Dragão de TREVAS de Nível 7 do seu Deck à sua mão e, além disso, você não pode Invocar por Invocação-Especial do Deck Adicional pelo resto deste turno, exceto monstros de TREVAS. Você pode banir este card do seu Cemitério e, depois, escolher 1 monstro com a face para cima no campo; ele se torna TREVAS até o final deste turno. Você só pode usar cada efeito de \"Rokket Loader\" uma vez por turno."
+  },
+  "Rokket Detonator": {
+    "name": "Detonador Rokket",
+    "effect": "Se você controlar um Monstro Link Dragão de TREVAS, você pode Invocar este card por Invocação-Especial (da sua mão). Você só pode Invocar \"Rokket Detonator\" por Invocação-Especial uma vez por turno desta forma. Você pode escolher 1 Card de Monstro Dragão de TREVAS na sua Zona de Magias & Armadilhas; Invoque-o por Invocação-Especial (mas ele não pode atacar e, além disso, os efeitos dele são negados) e, além disso, você não pode Invocar por Invocação-Especial do Deck Adicional pelo resto deste turno, exceto monstros de TREVAS. Você só pode usar este efeito de \"Rokket Detonator\" uma vez por turno."
+  },
+  "Trisborrel Dragon": {
+    "name": "Dragão Trisborreload",
+    "effect": "2+ monstros Dragão de TREVAS, incluindo um monstro \"Rokket\"\nSe este card for Invocado por Invocação-Link: você pode adicionar 1 \"Rapid Trigger\", \"Heavy Interlock\" ou \"Double Trigger\" do seu Deck à sua mão. Você pode escolher 1 card com a face para cima que você controla e 1 monstro Dragão de TREVAS no seu Cemitério; destrua esse card no campo e, se isso acontecer, adicione esse outro monstro do seu Cemitério à sua mão. Você só pode usar cada efeito de \"Trisborrel Dragon\" uma vez por turno."
+  },
+  "Double Trigger": {
+    "name": "Gatilho Duplo",
+    "effect": "Ative 1 destes efeitos (mas você só pode usar cada efeito de \"Double Trigger\" uma vez por turno);\n● Invoque por Invocação-Fusão 1 Monstro de Fusão do seu Deck Adicional, banindo as matérias dele do seu Cemitério, incluindo um monstro \"Rokket\".\n● Invoque por Invocação-Ritual 1 Monstro Ritual da sua mão, banindo monstros do seu Cemitério cujo total de Níveis seja igual ou exceda o Nível desse monstro, incluindo um monstro \"Rokket\"."
+  },
+  "Borrel Reboot": {
+    "name": "Reinicialização Borrel",
+    "effect": "Quando seu oponente ativar um Card de Magia/Armadilha enquanto você controlar um monstro \"Rokket\" ou \"Borrel\": negue a ativação e, se isso acontecer, Baixe esse card. Ele não pode ser ativado neste turno. Você pode ativar este card da sua mão ao pagar metade dos seus PV."
+  },
+  "Hollowrokket Dragon": {
+    "name": "Dragão Rokket Oco",
+    "effect": "Quando o efeito de um Monstro Link for ativado que escolha este card com a face para cima no campo como alvo (Efeito Rápido): você pode destruir este card e, depois, escavar até 6 cards do topo do Deck do seu oponente e, se isso acontecer, bana 1 card escavado e, além disso, coloque o resto no topo do Deck na mesma ordem. Durante a Fase Final, se este card estiver no Cemitério porque foi destruído no campo em batalha ou por efeito de card e enviado para lá neste turno: você pode Invocar por Invocação-Especial 1 monstro \"Rokket\" do seu Deck, exceto \"Hollowrokket Dragon\". Você só pode usar cada efeito de \"Hollowrokket Dragon\" uma vez por turno."
+  },
+  "Borrelshroud Dragon": {
+    "name": "Dragão Mortalha Borrel",
+    "effect": "3+ Monstros de Efeito\nSeu oponente não pode oferecer este card no campo como Tributo. Uma vez por turno, durante a Fase Principal (Efeito Rápido): você pode escolher 1 monstro \"Rokket\" que você controla; negue os efeitos de 1 card com a face para cima que seu oponente controla e, depois, destrua esse monstro. Seu oponente não pode ativar cards ou efeitos em resposta à ativação deste efeito. Uma vez enquanto estiver com a face para cima no campo, no início da Fase de Batalha: você pode Invocar por Invocação-Especial 1 Monstro Link \"Borrel\" de Link-4 ou menos do seu Deck Adicional."
+  },
+  "The Dragon that Devours the Dogma": {
+    "name": "O Dragão que Devora o Dogma",
+    "effect": "\"Fallen of Albaz\" + 1 monstro de LUZ ou TREVAS + 1 Monstro de Efeito\nEnquanto um monstro \"Ecclesia\" estiver no campo ou em qualquer Cemitério, este card ganha 500 de ATK e, além disso, ele não é afetado pelos efeitos de outros cards. Você só pode usar cada um dos seguintes efeitos de \"The Dragon that Devours the Dogma\" uma vez por turno. Se este card for Invocado por Invocação-Especial: você pode embaralhar até 2 cards de qualquer Cemitério e/ou da zona de banimento no Deck. Durante a Fase Final, se este card estiver no Cemitério porque foi enviado para lá neste turno: você pode adicionar 1 card \"Dogmatika\" ou \"Tri-Brigade\" do seu Deck à sua mão."
+  },
+  "Yu-Gi-Oh! Championship Series China": {
+    "name": "Série do Campeonato Yu-Gi-Oh! da China",
+    "effect": "Este card pode ser usado como qualquer Ficha."
+  }
+}
