@@ -1,0 +1,421 @@
+{
+  "Skreech": {
+    "name": "Skreech"
+  },
+  "Skyblaster Token": {
+    "name": "Skyblaster Token",
+    "effect": "Este card pode ser usado como uma \"Ficha de Skyblaster\".\n\n\n*Se usado para outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa Ficha."
+  },
+  "Slime Token": {
+    "name": "Slime Token",
+    "effect": "Este card pode ser usado como uma \"Ficha de Slime\".\n\n\n*Se usado para outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa Ficha."
+  },
+  "Snyffus": {
+    "name": "Snyffus"
+  },
+  "Sogen": {
+    "name": "Sogen"
+  },
+  "Soitsu": {
+    "name": "Soitsu"
+  },
+  "Sorciere de Fleur": {
+    "name": "Sorciere de Fleur"
+  },
+  "Spherous Lady": {
+    "name": "Spherous Lady"
+  },
+  "Spider Token": {
+    "name": "Spider Token",
+    "effect": "Este card pode ser usado como qualquer Ficha."
+  },
+  "Spikebot": {
+    "name": "Spikebot"
+  },
+  "Springans Branga": {
+    "name": "Springans Branga"
+  },
+  "Springans Kitt": {
+    "name": "Springans Kitt"
+  },
+  "Springans Pedor": {
+    "name": "Springans Pedor"
+  },
+  "Springans Rockey": {
+    "name": "Springans Rockey"
+  },
+  "St. Joan": {
+    "name": "St. Joan",
+    "effect": "\"A Donzela Indulgente\" + \"Marie, o Lorde das Trevas\""
+  },
+  "Stonehenge": {
+    "name": "Stonehenge"
+  },
+  "Suijin": {
+    "name": "Suijin"
+  },
+  "Supay": {
+    "name": "Supay"
+  },
+  "Super All In!": {
+    "name": "Super All In!"
+  },
+  "Super Crashbug": {
+    "name": "Super Crashbug"
+  },
+  "Super Koi Koi": {
+    "name": "Super Koi Koi"
+  },
+  "Super Robolady": {
+    "name": "Super Robolady",
+    "effect": "\"Robolady\" + \"Roboyarou\"\nVocê pode Invocar \"Super Roboyarou\" por Invocação-Especial ao devolver este card do campo ao Deck Adicional. Você não pode usar este efeito durante o mesmo turno em que este monstro for Invocado por Invocação-Especial. Além disso, aumente o ATK deste monstro em 1000 pontos durante a Etapa de Dano quando este monstro infligir Dano Direto aos Pontos de Vida do seu oponente."
+  },
+  "Super Roboyarou": {
+    "name": "Super Roboyarou"
+  },
+  "T.A.D.P.O.L.E.": {
+    "name": "T.A.D.P.O.L.E."
+  },
+  "Takriminos": {
+    "name": "Takriminos"
+  },
+  "Takuhee": {
+    "name": "Takuhee"
+  },
+  "Tarai": {
+    "name": "Tarai"
+  },
+  "Tatsunecro": {
+    "name": "Tatsunecro"
+  },
+  "Tatsunoko": {
+    "name": "Tatsunoko"
+  },
+  "Tatsunootoshigo": {
+    "name": "Tatsunootoshigo"
+  },
+  "Tenchi Kaimei": {
+    "name": "Tenchi Kaimei"
+  },
+  "Tenkabito Shien": {
+    "name": "Tenkabito Shien"
+  },
+  "Tenmataitei": {
+    "name": "Tenmataitei"
+  },
+  "Tenshin": {
+    "name": "Tenshin"
+  },
+  "Terra Firma Gravity": {
+    "name": "Terra Firma Gravity",
+    "effect": "Durante a Fase de Batalha do seu oponente, se você controlar \"HERÓI do Elemento Terra Firma\": neste turno, todos os monstros de Nível 4 ou menos que seu oponente controla e que podem atacar um \"HERÓI do Elemento Terra Firma\" com a face para cima que você controla devem atacá-lo e não podem atacar de nenhuma outra forma."
+  },
+  "Teva": {
+    "name": "Teva",
+    "effect": "Quando este card for Invocado por Invocação-Tributo com sucesso, seu oponente não pode declarar um ataque durante o próximo turno dele."
+  },
+  "TG-SX1": {
+    "name": "TG-SX1"
+  },
+  "TG1-EM1": {
+    "name": "TG1-EM1"
+  },
+  "TGX1-HL": {
+    "name": "TGX1-HL"
+  },
+  "TGX3-DX2": {
+    "name": "TGX3-DX2"
+  },
+  "TGX300": {
+    "name": "TGX300"
+  },
+  "That Wacky Magic!": {
+    "name": "That Wacky Magic!",
+    "effect": "Bana todos os Cards de Magia do seu Cemitério; destrua todos os monstros com a face para cima que seu oponente controla com DEF menor ou igual ao número de Cards de Magia que você baniu x 300."
+  },
+  "The Hunter with 7 Weapons": {
+    "name": "The Hunter with 7 Weapons",
+    "effect": "Quando este card for Invocado por Invocação-Normal, declare 1 Tipo de monstro. Quando batalhar com esse Tipo de monstro, aumente o ATK deste card em 1000 pontos durante o cálculo de dano."
+  },
+  "Thelematech Clatis": {
+    "name": "Thelematech Clatis"
+  },
+  "Therion Irregular": {
+    "name": "Therion Irregular"
+  },
+  "Thunder Unicorn": {
+    "name": "Thunder Unicorn",
+    "effect": "1 Regulador do Tipo Besta + 1 ou mais monstros não-Reguladores\nUma vez por turno, durante sua Fase Principal, você pode selecionar 1 monstro com a face para cima que seu oponente controla. Ele perde 500 de ATK para cada monstro que você controla, até a Fase Final. Durante o turno em que este efeito for ativado, nenhum outro monstro pode atacar, exceto este card."
+  },
+  "Tiras, Keeper of Genesis": {
+    "name": "Tiras, o Guardião da Gênese",
+    "effect": "2 monstros de Nível 5\nOs efeitos deste card só podem ser aplicados/resolvidos enquanto ele tiver Matéria Xyz. Este card não pode ser destruído por efeitos de card. No final da Fase de Batalha, se este card atacou ou foi atacado: escolha 1 card que seu oponente controla como alvo; destrua o alvo. Durante cada uma das suas Fases Finais: desassocie 1 Matéria Xyz deste card."
+  },
+  "Togex": {
+    "name": "Togex"
+  },
+  "Tokkosho of Ghost Destroying": {
+    "name": "Tokkosho da Destruição de Fantasmas",
+    "effect": "Quando o monstro equipado infligir Dano de Batalha ao seu oponente, você pode selecionar até 2 monstros no Cemitério do seu oponente e bani-los."
+  },
+  "Tokusano Shinkyojin": {
+    "name": "Tokusano Shinkyojin"
+  },
+  "Tongyo": {
+    "name": "Tongyo"
+  },
+  "Top Runner": {
+    "name": "Corredor de Elite",
+    "effect": "Todos os Monstros Sincro com a face para cima que você controla ganham 600 de ATK."
+  },
+  "Torike": {
+    "name": "Torike"
+  },
+  "Tornado": {
+    "name": "Tornado"
+  },
+  "Tornado Bird": {
+    "name": "Pássaro Tornado",
+    "effect": "VIRAR: Devolva 2 Cards de Magia ou Armadilha no campo para as mãos dos seus donos."
+  },
+  "Toy Magician": {
+    "name": "Mágico de Brinquedo",
+    "effect": "Você pode Baixar este card da sua mão na sua Zona de Magias & Armadilhas como uma Magia. Durante a Fase Final, se este card Baixado na sua Zona de Magias & Armadilhas foi destruído por um efeito de card do oponente e enviado ao Cemitério neste turno: Invoque este card por Invocação-Especial. Se este card for Invocado por Invocação-Virar: destrua Magias e Armadilhas no campo, em número igual ao número de \"Mágicos de Brinquedo\" no campo."
+  },
+  "Trackblack": {
+    "name": "Trackblack"
+  },
+  "Tradetoad": {
+    "name": "Tradetoad",
+    "effect": "Uma vez por turno, você pode oferecer 1 monstro do Tipo Aqua como Tributo para selecionar 1 monstro \"Sapo\" no seu Cemitério, exceto \"Frog the Jam\". Invoque esse monstro do seu Cemitério por Invocação-Especial."
+  },
+  "Tragoedia": {
+    "name": "Tragoedia"
+  },
+  "Transforming Sphere": {
+    "name": "Transforming Sphere",
+    "effect": "Uma vez por turno: você pode escolher 1 monstro com a face para cima em Posição de Defesa que seu oponente controla como alvo; descarte 1 card e equipe o alvo neste card. (Você só pode equipar 1 monstro por vez neste card com este efeito.) Este card ganha o ATK do monstro equipado. Se este card atacar, ele é colocado em Posição de Defesa no final da Fase de Batalha. Durante a Fase Final: o monstro equipado a este card pelo efeito deste card é Invocado por Invocação-Especial no campo do seu oponente, com a face para cima em Posição de Defesa."
+  },
+  "Trap Dustshoot": {
+    "name": "Armadilha de Poeira",
+    "effect": "Ative apenas se seu oponente tiver 4 ou mais cards na mão. Olhe a mão do seu oponente, selecione 1 Card de Monstro nela e devolva esse card ao Deck do seu dono."
+  },
+  "Treasure Map": {
+    "name": "Mapa do Tesouro",
+    "effect": "Você só pode ativar este card em resposta à ativação de um efeito que devolveria este card do campo para a mão. Compre 2 cards do seu Deck e descarte 1 card da sua mão."
+  },
+  "Treaty on Uniform Nomenclature": {
+    "name": "Treaty on Uniform Nomenclature",
+    "effect": "Se você controlar 2 ou mais monstros com a face para cima com o mesmo nome, exceto Fichas: aplique este efeito, dependendo de quantos você controla.\n● Exatamente 2: destrua 1 Card de Magia/Armadilha que seu oponente controla.\n● Exatamente 3: destrua todos os Cards de Magia/Armadilha que seu oponente controla."
+  },
+  "Trent": {
+    "name": "Trent"
+  },
+  "Trial and Tribulation": {
+    "name": "Provação e Tribulação",
+    "effect": "Você só pode ativar 1 \"Provação e Tribulação\" por turno. Durante a Fase Final do turno em que este card foi ativado, aplique este efeito, dependendo do número de monstros que você ofereceu como Tributo do campo e da sua mão neste turno, exceto Fichas.\n● 1: Compre 1 card.\n● 2: Adicione 2 monstros do seu Cemitério à sua mão.\n● 3+: Destrua até 3 cards com a face para cima no campo."
+  },
+  "Tricky Token": {
+    "name": "Tricky Token",
+    "effect": "Invocada por Invocação-Especial pelo efeito de \"Tricky Spell 4\". Esta Ficha não pode declarar ataque."
+  },
+  "Tricular": {
+    "name": "Tricular",
+    "effect": "Quando este card for destruído em batalha e enviado ao Cemitério, você pode Invocar por Invocação-Especial 1 \"Bicular\" da sua mão ou do seu Deck."
+  },
+  "Trigon": {
+    "name": "Trigon"
+  },
+  "Trismagistus": {
+    "name": "Trismagistus"
+  },
+  "Trojan Blast": {
+    "name": "Explosão de Troia",
+    "effect": "Ative apenas quando um efeito de card do oponente transferir o controle de um monstro do seu lado do campo para o dele. Destrua esse 1 monstro e inflija dano ao seu oponente igual ao ATK dele."
+  },
+  "Troposphere": {
+    "name": "Troposfera",
+    "effect": "Se você Invocar este card por Invocação-Tributo, o Tributo deve ser do Tipo Besta Alada. Este card não é afetado pelos efeitos de Cards de Armadilha."
+  },
+  "True Exodia": {
+    "name": "Exodia Verdadeiro",
+    "effect": "Se os únicos monstros no campo forem este card que você controla e 4 Monstros Normais \"Forbidden One\" com nomes diferentes, seu oponente vence o Duelo."
+  },
+  "Tsukuyomi": {
+    "name": "Tsukuyomi"
+  },
+  "Tualatin": {
+    "name": "Tualatin"
+  },
+  "Tuned Magician": {
+    "name": "Mágico Afinado",
+    "effect": "Este card é considerado um Monstro Normal enquanto estiver com a face para cima no campo ou no Cemitério. Enquanto este card estiver com a face para cima no campo, você pode Invocá-lo por Invocação-Normal para que ele seja considerado um Monstro de Efeito com este efeito:\n● Este card é considerado um monstro Regulador."
+  },
+  "Tuner's Barrier": {
+    "name": "Barreira do Regulador",
+    "effect": "Selecione 1 monstro Regulador com a face para cima que você controla. Esse monstro não pode ser destruído em batalha ou por efeitos de card, até a Fase Final do próximo turno."
+  },
+  "Tuner's Scheme": {
+    "name": "Esquema do Regulador",
+    "effect": "Ative apenas quando um Monstro Sincro for Invocado por Invocação-Especial no campo do seu oponente. Assuma o controle desse Monstro Sincro. Bana-o quando ele for destruído. Destrua este card quando esse monstro for removido do campo."
+  },
+  "Turnabout": {
+    "name": "Reviravolta",
+    "effect": "Se houver um monstro com a face para cima no campo cujo Nível atual seja diferente do seu Nível original: coloque todos os monstros no campo em Posição de Defesa com a face para baixo."
+  },
+  "Turtle Bird": {
+    "name": "Turtle Bird",
+    "effect": "Uma tartaruga incomum que não apenas nada em velocidades imensas, mas também pode deslizar pelos céus."
+  },
+  "Turu-Purun": {
+    "name": "Turu-Purun"
+  },
+  "Tsuru-Puru-Purun": {
+    "name": "Tsuru-Puru-Purun"
+  },
+  "Twin Long Rods #1": {
+    "name": "Hastes Longas Gêmeas #1",
+    "effect": "Com braços parecidos com chicotes, esta criatura pode atacar inimigos à distância."
+  },
+  "Twinheaded Beast": {
+    "name": "Besta de Duas Cabeças",
+    "effect": "Este card pode atacar duas vezes durante a mesma Fase de Batalha."
+  },
+  "Tyhone": {
+    "name": "Tyhone"
+  },
+  "Tyhone #2": {
+    "name": "Tyhone #2"
+  },
+  "Tyrant's Tantrum": {
+    "name": "Birra do Tirano",
+    "effect": "Ative oferecendo 2 monstros como Tributo. Seu oponente não pode ativar um Card de Magia a menos que ele também envie 1 Card de Magia do Deck ao Cemitério."
+  },
+  "Tyrant's Throes": {
+    "name": "Agonia do Tirano",
+    "effect": "Ative oferecendo 2 Monstros Normais como Tributo (exceto Fichas). Nenhum dos duelistas pode invocar Monstros de Efeito por Invocação-Normal ou Invocação-Especial."
+  },
+  "Tyrant's Tirade": {
+    "name": "Tyrant's Tirade",
+    "effect": "Ofereça 2 monstros como Tributo. Efeitos de Monstros de Efeito que ativem na mão ou no campo não podem ser ativados."
+  },
+  "Tyrant's Tummyache": {
+    "name": "Tyrant's Tummyache",
+    "effect": "Ative oferecendo 1 monstro como Tributo. Nenhum dos duelistas pode invocar por Invocação-Especial um monstro de Nível 6 ou mais. Se você tiver 3 ou mais cards na sua mão, destrua este card."
+  },
+  "Ulevo": {
+    "name": "Ulevo"
+  },
+  "Ultimate Axon Kicker": {
+    "name": "Chutador de Axônio Definitivo",
+    "effect": "1 Monstro Sincro do Tipo Psíquico + 1 monstro do Tipo Psíquico\nEste monstro só pode ser Invocado por Invocação-Especial por Invocação-Fusão (do Deck Adicional). Este card não pode ser destruído por efeitos de card. Em uma batalha envolvendo este card atacante e um monstro em Posição de Defesa cuja DEF seja menor que o ATK deste card, inflija a diferença como Dano de Batalha ao seu oponente. Quando este card destruir um monstro do oponente em batalha e enviá-lo ao Cemitério, você ganha Pontos de Vida iguais ao ATK do monstro destruído."
+  },
+  "Ultimate Baseball Homerun King": {
+    "name": "Rei do Home Run de Beisebol Definitivo",
+    "effect": "Quando este card destruir um monstro do oponente em batalha: você pode fazer este card ganhar 1000 de ATK."
+  },
+  "Ultimate Tyranno": {
+    "name": "Tirano Definitivo"
+  },
+  "Umbral Horror Mirage Token": {
+    "name": "Ficha de Umbral Horror Mirage",
+    "effect": "Invocada por Invocação-Especial pelo efeito de \"Corrupted Keys\". Quando for Invocada, o ATK desta Ficha se torna igual ao ATK atual do Monstro Xyz escolhido como alvo por \"Corrupted Keys\". Esta Ficha não pode atacar seu oponente diretamente nem ser oferecida como Tributo, exceto para uma Invocação-Tributo. Quando esse Monstro Xyz com a face para cima sair do campo, destrua esta Ficha."
+  },
+  "Umi": {
+    "name": "Umi"
+  },
+  "Umiiruka": {
+    "name": "Umiiruka"
+  },
+  "Under Pressure": {
+    "name": "Sob Pressão",
+    "effect": "Ative esta Habilidade enquanto você controlar \"Hyozanryu\". Uma vez por turno, você pode revelar os 4 cards do topo do seu Deck e, depois, se algum dos seguintes monstros for revelado, aplique as Habilidades apropriadas, em sequência. Em seguida, coloque os cards revelados no fundo do seu Deck em qualquer ordem.\n● \"Carboneddon\": 1 \"Hyozanryu\" que você controla ganha 1000 de ATK até o final deste turno.\n● \"Hydrogeddon\": 1 \"Hyozanryu\" que você controla não é afetado pelos efeitos de monstros do seu oponente, até o final deste turno.\n● \"Oxygeddon\": destrua 1 monstro com a face para cima que seu oponente controla e, depois, inflija 800 de dano ao seu oponente."
+  },
+  "Underworld Egg Clutch": {
+    "name": "Ninhada de Ovos do Submundo",
+    "effect": "Quando um monstro com a face para cima do Tipo Peixe, Serpente Marinha ou Aqua que você controla for banido: adicione à sua mão 1 monstro do Tipo Peixe, Serpente Marinha ou Aqua de Nível 4 ou menos do seu Deck."
+  },
+  "Uni-Horned Familiar": {
+    "name": "Familiar de Chifre Único",
+    "effect": "Quando este card com a face para cima em Posição de Defesa for escolhido como alvo de ataque, você pode banir 1 monstro que você controla, exceto este card, para banir este card. O monstro atacante deve atacar. Durante sua próxima Fase de Apoio, se este card foi banido por este efeito, este card retorna ao campo."
+  },
+  "Unibird": {
+    "name": "Unibird",
+    "effect": "Você pode banir este card com a face para cima e 1 monstro com a face para cima que você controla para selecionar 1 Monstro Sincro no seu Cemitério com um Nível menor ou igual aos Níveis originais somados dos outros 2 monstros. Invoque esse Monstro Sincro por Invocação-Especial."
+  },
+  "Unicorn Beacon": {
+    "name": "Unicorn Beacon",
+    "effect": "Selecione 1 monstro banido de Nível 5 ou menos do Tipo Besta ou do Tipo Besta Alada. Bana 1 card da sua mão e Invoque o monstro selecionado por Invocação-Especial em Posição de Ataque."
+  },
+  "Unicycular": {
+    "name": "Unicycular",
+    "effect": "O terceiro dos irmãos, sucedendo Tricular e Bicular."
+  },
+  "Unifrog": {
+    "name": "Unifrog",
+    "effect": "Este card pode atacar seu oponente diretamente. Quando este card atacar diretamente com sucesso, se você controlar um monstro \"Sapo\" exceto \"Frog the Jam\" ou \"Unifrog\", você pode destruir 1 Magia ou Armadilha que seu oponente controla."
+  },
+  "Union Combination": {
+    "name": "Combinação de União",
+    "effect": "Uma vez por turno, durante sua Fase Principal, você pode colocar 1 card da sua mão no fundo do seu Deck e, depois, Invocar por Invocação-Especial 1 Monstro de Fusão de LUZ do Tipo Máquina do seu Deck Adicional, que não possa ser Invocado por Invocação-Fusão, usando monstros do seu campo ou do seu Cemitério como matéria, ignorando as condições de Invocação dele. Pelo resto deste turno, seu oponente não sofre dano."
+  },
+  "United Front": {
+    "name": "Frente Unida",
+    "effect": "Quando um Card de Armadilha for ativado enquanto você controlar 2 ou mais monstros com a face para cima com o mesmo Nível: negue a ativação e destrua-o."
+  },
+  "Unlocking the Power": {
+    "name": "Desbloqueando o Poder",
+    "effect": "Quando você Invocar por Invocação-Especial \"Uria, Senhor das Chamas Ardentes\", \"Hamon, Senhor do Trovão Fulminante\" ou \"Raviel, Senhor dos Fantasmas\" usando o método mencionado nesse card, você pode usar monstros Demônio com a face para cima, Magias Contínuas e/ou Armadilhas Contínuas que você controla, independentemente do tipo de card que o texto exigir."
+  },
+  "Uraby": {
+    "name": "Uraby"
+  },
+  "Ushi Oni": {
+    "name": "Ushi Oni"
+  },
+  "Utchatzimime Token": {
+    "name": "Ficha de Utchatzimime",
+    "effect": "Invocada por Invocação-Especial pelo efeito de \"Phantasmal Lord Ultimitl Bishbaalkin\"."
+  },
+  "Utopia Buster": {
+    "name": "Utopia Buster"
+  },
+  "V-LAN Token": {
+    "name": "Ficha V-LAN",
+    "effect": "Invocada por Invocação-Especial pelo efeito de \"V-LAN Hydra\"."
+  },
+  "Vague Shadow Token": {
+    "name": "Ficha de Sombra Vaga",
+    "effect": "Invocada por Invocação-Especial pelo efeito de \"Asa Negra - Gofu, a Sombra Vaga\". Esta Ficha não pode ser oferecida como Tributo nem usada como Monstro Matéria Sincro."
+  },
+  "Vampiric Aristocracy": {
+    "name": "Aristocracia Vampírica",
+    "effect": "Uma vez por Duelo, durante sua Fase Principal, você pode mudar o nome de 1 monstro Zumbi \"Vampiro\" que você controla para \"Vampire Lord\" enquanto ele estiver com a face para cima no campo. Cada \"Vampire Genesis\" que você controla ganha o seguinte efeito.\n● Se este card infligir dano de batalha ao seu oponente: você pode escolher 1 card no Cemitério do seu oponente como alvo; Baixe-o no seu campo."
+  },
+  "Vanity's Call": {
+    "name": "Vanity's Call",
+    "effect": "Ative apenas como Elo de Corrente 4 ou maior. Pague metade dos seus Pontos de Vida. Negue a ativação e os efeitos de todos os outros cards na mesma Corrente e destrua-os."
+  },
+  "Variable Form": {
+    "name": "Forma Variável",
+    "effect": "Uma vez por turno, você pode ativar 1 destes efeitos.\n● Escolha 2 monstros \"Inzektor\" com a face para cima que você controla como alvo; equipe um no outro.\n● Escolha 1 monstro \"Inzektor\" que você controla e que seja um Card de Equipamento como alvo; Invoque o alvo por Invocação-Especial com a face para cima em Posição de Defesa."
+  },
+  "Variety Comes Out": {
+    "name": "A Variedade Surge",
+    "effect": "Devolva 1 Monstro Sincro com a face para cima que você controla ao Deck Adicional para selecionar e Invocar por Invocação-Especial 1 ou mais monstros Reguladores do seu Cemitério, cujos Níveis somados sejam iguais ao Nível desse Monstro Sincro. Você não pode Invocar por Invocação-Sincro no turno em que ativar este card."
+  },
+  "Vassal Token": {
+    "name": "Vassal Token",
+    "effect": "Este card pode ser usado como qualquer Ficha."
+  },
+  "Veda Kalanta": {
+    "name": "Veda Kalanta"
+  },
+  "Veda Kalarcanum": {
+    "name": "Veda Kalarcanum"
+  },
+  "Vengeful Servant": {
+    "name": "Servo Vingativo",
+    "effect": "Quando o controle do monstro equipado mudar, inflija dano igual ao ATK original dele ao seu novo controlador."
+  }
+}

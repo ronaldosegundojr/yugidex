@@ -157,6 +157,13 @@ const getTypeLabelPT = (type) => {
   return labels[type] || type
 }
 
+const EXTRA_DECK_TYPES = ['fusion', 'synchro', 'xyz', 'link', 'pendulum']
+
+const isExtraDeckCard = (card) => {
+  const mct = card?.monsterCardTypes
+  return Array.isArray(mct) && mct.some(t => EXTRA_DECK_TYPES.includes(t))
+}
+
 const DEFAULT_EXPORT_OPTIONS = {
   groupDuplicates: true,
   enumerate: true,
@@ -428,13 +435,14 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
   )
 }
 
-function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, setMobileDeckModal, deckIdSet, onOpenScanner }) {
+function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, deckIdSet, onOpenScanner }) {
   const [activeId, setActiveId] = useState(null)
   const [deckName, setDeckName] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [exportModalOpen, setExportModalOpen] = useState(false)
   const [exportOptions, setExportOptions] = useState(DEFAULT_EXPORT_OPTIONS)
   const [libraryOptions, setLibraryOptions] = useState({ groupDuplicates: true, hideInDeck: false, compactGrid: false })
+  const [mobileLibraryOpen, setMobileLibraryOpen] = useState(false)
   const fileInputRef = useRef(null)
 
   const sensors = useSensors(
@@ -525,23 +533,68 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
     const { active, over } = event
     setActiveId(null)
     if (!over) return
-    
-    const card = cards.find(c => c.id === active.id)
+
+    const dragId = String(active.id)
+    const fromDeck = dragId.startsWith('deck:')
+    const parts = dragId.split(':')
+    const baseCardId = fromDeck ? parts[1] : dragId
+    const isSingleCopy = fromDeck && parts.length > 2
+
+    const card = cards.find(c => c.id === baseCardId)
     if (!card) return
 
-    if (over.id === 'main-deck-zone') addToDeck(card, 'main')
-    else if (over.id === 'extra-deck-zone') addToDeck(card, 'extra')
-    else if (over.id === 'side-deck-zone') addToDeck(card, 'side')
+    let targetType = null
+    if (over.id === 'main-deck-zone') targetType = 'main'
+    else if (over.id === 'extra-deck-zone') targetType = 'extra'
+    else if (over.id === 'side-deck-zone') targetType = 'side'
+    if (!targetType) return
+
+    if (targetType === 'extra' && !isExtraDeckCard(card)) {
+      alert('Apenas cartas Fusão, Synchro, XYZ, Link ou Pêndulo podem ficar no Extra Deck.')
+      return
+    }
+
+    if (!fromDeck) {
+      addToDeck(card, targetType)
+      return
+    }
+
+    const entry = deck.find(d => d.id === baseCardId)
+    if (!entry || entry.deckType === targetType) return
+
+    if (isSingleCopy) {
+      setDeck(prev => {
+        let sourceIdx = -1
+        for (let i = prev.length - 1; i >= 0; i--) {
+          if (prev[i].id === baseCardId && prev[i].qty > 0 && prev[i].deckType !== targetType) {
+            sourceIdx = i
+            break
+          }
+        }
+        if (sourceIdx === -1) return prev
+        const next = [...prev]
+        const source = next[sourceIdx]
+        next[sourceIdx] = { ...source, qty: source.qty - 1 }
+        const cleaned = next.filter(d => d.qty > 0)
+        const targetEntry = cleaned.find(d => d.id === baseCardId && d.deckType === targetType)
+        if (targetEntry) {
+          return cleaned.map(d => (d.id === targetEntry.id && d.deckType === targetType) ? { ...d, qty: d.qty + 1 } : d)
+        }
+        return [...cleaned, { ...source, qty: 1, deckType: targetType }]
+      })
+    } else {
+      setDeck(prev => prev.map(d => d.id === baseCardId ? { ...d, deckType: targetType } : d))
+    }
   }
 
   const addToDeck = (card, deckTypeOverride) => {
     let deckType = deckTypeOverride
     if (!deckType) {
-      if (['fusion', 'synchro', 'xyz', 'link', 'ritual'].includes(card.cardType)) {
-        deckType = 'extra'
-      } else {
-        deckType = 'main'
-      }
+      deckType = isExtraDeckCard(card) ? 'extra' : 'main'
+    }
+    if (deckType === 'extra' && !isExtraDeckCard(card)) {
+      alert('Apenas cartas Fusão, Synchro, XYZ, Link ou Pêndulo podem ficar no Extra Deck.')
+      return
     }
     const existing = deck.find(c => c.id === card.id)
     if (existing) {
@@ -805,65 +858,148 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
   const importDeck = (event) => {
     const file = event.target.files?.[0]
     if (!file) return
-    const isJson = file.name.endsWith('.json')
-    const isTxt = file.name.endsWith('.txt')
+    const isJson = file.name.toLowerCase().endsWith('.json')
+    const isTxt = file.name.toLowerCase().endsWith('.txt')
     if (!isJson && !isTxt) { alert('Apenas arquivos .json ou .txt são suportados!'); return }
-    
+
+    if (!cards || cards.length === 0) {
+      alert('As cartas ainda estão sendo carregadas! Por favor, aguarde alguns segundos e tente novamente.')
+      event.target.value = ''
+      return
+    }
+
+    const findCard = (c) => {
+      if (!c) return null
+      if (typeof c === 'string' || typeof c === 'number') {
+        const valStr = String(c).trim()
+        const valLower = valStr.toLowerCase()
+        return cards.find(card => 
+          String(card.id) === valStr ||
+          (card.passwords && card.passwords.some(p => String(p) === valStr)) ||
+          (card._ptName && card._ptName.toLowerCase() === valLower) ||
+          (card.text?.en?.name && card.text.en.name.toLowerCase() === valLower)
+        ) || null
+      }
+
+      const idStr = String(c.id || c.cardId || c.code || c.password || c.konami_id || '').trim()
+      if (idStr) {
+        const byId = cards.find(card => String(card.id) === idStr)
+        if (byId) return byId
+        const byPass = cards.find(card => card.passwords && card.passwords.some(p => String(p) === idStr))
+        if (byPass) return byPass
+      }
+
+      const nameStr = String(c.name || c.cardName || c.title || c._ptName || '').trim().toLowerCase()
+      if (nameStr) {
+        const byName = cards.find(card => 
+          (card._ptName && card._ptName.toLowerCase() === nameStr) ||
+          (card.text?.en?.name && card.text.en.name.toLowerCase() === nameStr)
+        )
+        if (byName) return byName
+      }
+
+      return null
+    }
+
     const reader = new FileReader()
     reader.onload = (e) => {
       try {
-        let data = { main: [], extra: [], side: [], name: '' }
+        let mainRaw = []
+        let extraRaw = []
+        let sideRaw = []
+        let importedDeckName = ''
+
         const content = e.target.result
-        
+
         if (isJson) {
-          data = JSON.parse(content)
+          const parsed = JSON.parse(content)
+          importedDeckName = parsed.name || parsed.deckName || parsed.title || ''
+
+          if (Array.isArray(parsed)) {
+            parsed.forEach(item => {
+              const type = item.deckType || item.section || 'main'
+              if (type === 'extra') extraRaw.push(item)
+              else if (type === 'side') sideRaw.push(item)
+              else mainRaw.push(item)
+            })
+          } else {
+            mainRaw = parsed.main || parsed.main_deck || parsed.mainDeck || parsed.cards || []
+            extraRaw = parsed.extra || parsed.extra_deck || parsed.extraDeck || []
+            sideRaw = parsed.side || parsed.side_deck || parsed.sideDeck || []
+          }
         } else {
-          // Parse TXT format exported by this app
+          // Parse TXT format
           const lines = content.split('\n')
-          let currentSection = ''
-          let deckName = ''
+          let currentSection = 'main'
           
           for (const line of lines) {
             const trimmed = line.trim()
             if (trimmed.startsWith('NOME DO DECK:')) {
-              deckName = trimmed.replace('NOME DO DECK:', '').trim()
-            } else if (trimmed === '--- MAIN DECK') {
+              importedDeckName = trimmed.replace('NOME DO DECK:', '').trim()
+            } else if (trimmed.includes('MAIN DECK')) {
               currentSection = 'main'
-            } else if (trimmed === '--- EXTRA DECK') {
+            } else if (trimmed.includes('EXTRA DECK')) {
               currentSection = 'extra'
-            } else if (trimmed === '--- SIDE DECK') {
+            } else if (trimmed.includes('SIDE DECK')) {
               currentSection = 'side'
             } else if (trimmed.startsWith('QUANTIDADE NO DECK:')) {
-              const qty = parseInt(trimmed.replace('QUANTIDADE NO DECK:', '').trim())
+              const qty = parseInt(trimmed.replace('QUANTIDADE NO DECK:', '').trim()) || 1
               const nameLineIdx = lines.indexOf(line) - 2
               if (nameLineIdx >= 0) {
                 const nameLine = lines[nameLineIdx].trim()
                 if (nameLine.startsWith('NOME DA CARTA:')) {
                   const cardName = nameLine.replace('NOME DA CARTA:', '').trim()
-                  const card = cards.find(c => c._ptName === cardName || c.text?.en?.name === cardName)
-                  if (card) {
-                    data[currentSection].push({ id: card.id, qty })
-                    data.name = deckName
-                  }
+                  const targetObj = { name: cardName, qty }
+                  if (currentSection === 'extra') extraRaw.push(targetObj)
+                  else if (currentSection === 'side') sideRaw.push(targetObj)
+                  else mainRaw.push(targetObj)
                 }
               }
             }
           }
         }
-        
-        const buildDeckArray = (arr) => arr.map(c => {
-          const card = cards.find(card => card.id === c.id)
-          return card ? { ...card, qty: c.qty } : null
-        }).filter(Boolean)
-        
-        const newDeck = [
-          ...buildDeckArray(data.main || []).map(c => ({ ...c, deckType: 'main' })),
-          ...buildDeckArray(data.extra || []).map(c => ({ ...c, deckType: 'extra' })),
-          ...buildDeckArray(data.side || []).map(c => ({ ...c, deckType: 'side' }))
-        ]
+
+        let notFoundCount = 0
+
+        const buildSection = (arr, defaultType) => {
+          const result = []
+          for (const item of arr) {
+            const card = findCard(item)
+            const qty = typeof item === 'object' && item !== null
+              ? (parseInt(item.qty || item.quantity || item.count || item.amount || 1) || 1)
+              : 1
+            if (card) {
+              result.push({ ...card, qty, deckType: defaultType })
+            } else {
+              notFoundCount++
+            }
+          }
+          return result
+        }
+
+        const mainDeckCards = buildSection(mainRaw, 'main')
+        const extraDeckCards = buildSection(extraRaw, 'extra')
+        const sideDeckCards = buildSection(sideRaw, 'side')
+
+        const newDeck = [...mainDeckCards, ...extraDeckCards, ...sideDeckCards]
+
+        if (newDeck.length === 0) {
+          alert('Nenhuma carta válida pôde ser importada do arquivo!')
+          return
+        }
+
         setDeck(newDeck)
-        setDeckName(data.name || 'Deck Importado')
-        alert('Deck importado com sucesso!')
+        setDeckName(importedDeckName || file.name.replace(/\.(json|txt)$/i, '') || 'Deck Importado')
+
+        const mainQty = mainDeckCards.reduce((sum, c) => sum + c.qty, 0)
+        const extraQty = extraDeckCards.reduce((sum, c) => sum + c.qty, 0)
+        const sideQty = sideDeckCards.reduce((sum, c) => sum + c.qty, 0)
+
+        let msg = `Deck importado com sucesso!\n\nMain Deck: ${mainQty} carta(s)\nExtra Deck: ${extraQty} carta(s)\nSide Deck: ${sideQty} carta(s)`
+        if (notFoundCount > 0) {
+          msg += `\n\nAviso: ${notFoundCount} carta(s) não foram encontradas no banco de dados.`
+        }
+        alert(msg)
       } catch (err) { 
         console.error(err)
         alert('Erro ao importar deck! Verifique o formato do arquivo.') 
@@ -881,23 +1017,38 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
   const stats = getDetailedDeckStats(mainDeck)
   const extraStats = getDetailedDeckStats(extraDeck)
   const sideStats = getDetailedDeckStats(sideDeck)
-  const activeCard = activeId ? cards.find(c => c.id === activeId) : null
+  const activeCard = useMemo(() => {
+    if (activeId == null) return null
+    const s = String(activeId)
+    const id = s.startsWith('deck:') ? s.split(':')[1] : s
+    return cards.find(c => c.id === id) || null
+  }, [activeId, cards])
 
-  const DeckCard = ({ card, qty, onClick, onRemove }) => (
-    <div className="deck-card-item">
-      <div className="deck-card-image-wrapper" onClick={() => onClick(card)}>
-        <img src={card._image} alt={card._ptName} loading="lazy" />
-        {qty > 1 && <span className="deck-card-qty">{qty}</span>}
-        <div className="deck-card-tooltip">
-          <div className="tooltip-name">{card._ptName}</div>
-          <div className="tooltip-type">{card.cardType}</div>
-          {card.atk !== undefined && <div className="tooltip-stat">ATK: {card.atk}</div>}
-          {card.def !== undefined && <div className="tooltip-stat">DEF: {card.def}</div>}
+  const DeckCard = ({ card, qty, onClick, onRemove, dragId }) => {
+    const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: dragId })
+    const style = transform ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` } : undefined
+    return (
+      <div
+        className="deck-card-item"
+        ref={setNodeRef}
+        style={style}
+        {...listeners}
+        {...attributes}
+      >
+        <div className="deck-card-image-wrapper" onClick={() => onClick(card)}>
+          <img src={card._image} alt={card._ptName} loading="lazy" />
+          {qty > 1 && <span className="deck-card-qty">{qty}</span>}
+          <div className="deck-card-tooltip">
+            <div className="tooltip-name">{card._ptName}</div>
+            <div className="tooltip-type">{card.cardType}</div>
+            {card.atk !== undefined && <div className="tooltip-stat">ATK: {card.atk}</div>}
+            {card.def !== undefined && <div className="tooltip-stat">DEF: {card.def}</div>}
+          </div>
         </div>
+        <button className="deck-card-remove" onClick={(e) => { e.stopPropagation(); onRemove(card.id) }}>×</button>
       </div>
-      <button className="deck-card-remove" onClick={() => onRemove(card.id)}>×</button>
-    </div>
-  )
+    )
+  }
 
   const DeckZone = ({ title, deckArray, zoneId, stats, onEmptyClick, isMobile, showDetailed = false, groupDuplicates = true }) => {
     const { setNodeRef, isOver } = useDroppable({ id: zoneId })
@@ -925,6 +1076,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
           key={g.entries.map(e => e.id).join('-')}
           card={g.card}
           qty={g.qty}
+          dragId={`deck:${g.card.id}`}
           onClick={setModalCard}
           onRemove={() => removeGroupedCopy(deckArray, g.key)}
         />
@@ -934,6 +1086,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
           key={`${card.id}-${i}`}
           card={card}
           qty={1}
+          dragId={`deck:${card.id}:${i}`}
           onClick={setModalCard}
           onRemove={id => decrementInDeck(id)}
         />
@@ -995,9 +1148,9 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
               <input type="text" className="deck-name-input" placeholder="Nome do Deck" value={deckName} onChange={(e) => setDeckName(e.target.value)} />
             </div>
             
-            <DeckZone title="Main Deck (40-60)" deckArray={mainDeck} zoneId="main-deck-zone" stats={stats} onEmptyClick={() => setMobileDeckModal(true)} isMobile={isMobile} showDetailed={false} groupDuplicates={libraryOptions.groupDuplicates} />
-            <DeckZone title="Extra Deck (0-15)" deckArray={extraDeck} zoneId="extra-deck-zone" stats={extraStats} onEmptyClick={() => setMobileDeckModal(true)} isMobile={isMobile} showDetailed={true} groupDuplicates={libraryOptions.groupDuplicates} />
-            <DeckZone title="Side Deck (0-15)" deckArray={sideDeck} zoneId="side-deck-zone" stats={sideStats} onEmptyClick={() => setMobileDeckModal(true)} isMobile={isMobile} showDetailed={false} groupDuplicates={libraryOptions.groupDuplicates} />
+            <DeckZone title="Main Deck (40-60)" deckArray={mainDeck} zoneId="main-deck-zone" stats={stats} onEmptyClick={() => setMobileLibraryOpen(true)} isMobile={isMobile} showDetailed={false} groupDuplicates={libraryOptions.groupDuplicates} />
+            <DeckZone title="Extra Deck (0-15)" deckArray={extraDeck} zoneId="extra-deck-zone" stats={extraStats} onEmptyClick={() => setMobileLibraryOpen(true)} isMobile={isMobile} showDetailed={true} groupDuplicates={libraryOptions.groupDuplicates} />
+            <DeckZone title="Side Deck (0-15)" deckArray={sideDeck} zoneId="side-deck-zone" stats={sideStats} onEmptyClick={() => setMobileLibraryOpen(true)} isMobile={isMobile} showDetailed={false} groupDuplicates={libraryOptions.groupDuplicates} />
 
             <div className="deck-rules-info">
               <h4>Regras do Deck</h4>
@@ -1035,13 +1188,16 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
             </div>
           </div>
 
-          <div className="card-search-panel">
+          <div className={`card-search-panel ${mobileLibraryOpen ? 'open' : ''}`}>
             <div className="search-panel-header">
               <h3>Biblioteca de Cartas</h3>
-              <div className="lang-toggle">
-                <button className={lang === 'pt' ? 'active' : ''} onClick={() => setLang('pt')}>PT</button>
-                <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>EN</button>
-                <button className={lang === 'ja' ? 'active' : ''} onClick={() => setLang('ja')}>JP</button>
+              <div className="search-panel-header-right">
+                <div className="lang-toggle">
+                  <button className={lang === 'pt' ? 'active' : ''} onClick={() => setLang('pt')}>PT</button>
+                  <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>EN</button>
+                  <button className={lang === 'ja' ? 'active' : ''} onClick={() => setLang('ja')}>JP</button>
+                </div>
+                <button className="library-close" onClick={() => setMobileLibraryOpen(false)}>&times;</button>
               </div>
             </div>
             <div className="search-panel-filters">
@@ -1159,7 +1315,6 @@ function App() {
   const [deckTypeFilter, setDeckTypeFilter] = useState('')
   const [deckLevelFilter, setDeckLevelFilter] = useState('')
   const [lang, setLang] = useState('pt')
-  const [mobileDeckModal, setMobileDeckModal] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [scannerOpen, setScannerOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -1338,7 +1493,7 @@ function App() {
         <main className="main-content">
           <Routes>
             <Route path="/" element={<CardsView cards={cards} filteredCards={filteredCards} filteredByType={filteredByType} currentPage={currentPage} setCurrentPage={setCurrentPage} deck={deck} setModalCard={setModalCard} searchTerm={searchTerm} setSearchTerm={setSearchTerm} typeFilter={typeFilter} setTypeFilter={setTypeFilter} raceFilter={raceFilter} setRaceFilter={setRaceFilter} attrFilter={attrFilter} setAttrFilter={setAttrFilter} races={races} lang={lang} setLang={setLang} onOpenScanner={() => setScannerOpen(true)} />} />
-            <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} isMobile={isMobile} setMobileDeckModal={setMobileDeckModal} deckIdSet={deckIdSet} onOpenScanner={() => setScannerOpen(true)} />} />
+            <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} isMobile={isMobile} deckIdSet={deckIdSet} onOpenScanner={() => setScannerOpen(true)} />} />
             <Route path="/batalha" element={<BattlePage />} />
             <Route path="/noite-da-rapaziada" element={<NoiteDaRapaziada />} />
           </Routes>
@@ -1430,67 +1585,6 @@ function App() {
               </div>
             </div>
           )}
-        </div>
-
-        <div className={`mobile-deck-modal ${mobileDeckModal ? 'active' : ''}`}>
-          <div className="mobile-deck-modal-content">
-            <div className="mobile-deck-modal-header">
-              <h3>Adicionar Carta ao Deck</h3>
-              <button className="modal-close" onClick={() => setMobileDeckModal(false)}>&times;</button>
-            </div>
-            <div className="mobile-deck-modal-search">
-              <input 
-                type="text" 
-                className="search-input" 
-                placeholder="Buscar carta..." 
-                value={deckSearchTerm}
-                onChange={(e) => { setDeckSearchTerm(e.target.value); setCurrentPage(1) }}
-              />
-              <select className="filter-select" value={deckTypeFilter} onChange={(e) => { setDeckTypeFilter(e.target.value); setCurrentPage(1) }}>
-                <option value="">Todos os Tipos</option>
-                <option value="monster">Monstro</option>
-                <option value="spell">Magia</option>
-                <option value="trap">Armadilha</option>
-              </select>
-              <select className="filter-select" value={deckLevelFilter} onChange={(e) => { setDeckLevelFilter(e.target.value); setCurrentPage(1) }}>
-                <option value="">Todos os Níveis</option>
-                <option value="1-3">Nível 1-3</option>
-                <option value="4-6">Nível 4-6</option>
-                <option value="7+">Nível 7+</option>
-                <option value="spell">Magias</option>
-                <option value="trap">Armadilhas</option>
-              </select>
-            </div>
-            <div className="mobile-deck-modal-results">
-              {filteredCards.slice(0, 30).map(card => {
-                const inDeck = deckIdSet.has(card.id)
-                const qty = deck.find(d => d.id === card.id)?.qty || 0
-                return (
-                  <div key={card.id} className="mobile-deck-card-item" onClick={() => {
-                    if (inDeck && qty >= 3) { alert('Máximo 3 cópias!'); return }
-                    const existing = deck.find(d => d.id === card.id)
-                    if (existing) {
-                      if (existing.qty < 3) setDeck(prev => prev.map(c => c.id === card.id ? { ...c, qty: c.qty + 1 } : c))
-                      return
-                    }
-                    const deckType = ['fusion', 'synchro', 'xyz', 'link', 'ritual'].includes(card.cardType) ? 'extra' : 'main'
-                    const totalCards = deck.reduce((sum, c) => sum + c.qty, 0)
-                    if (totalCards >= 60) alert('Deck cheio! (máx 60)')
-                    setDeck(prev => [...prev, { ...card, qty: 1, deckType }])
-                  }}>
-                    <img src={card._image} alt="" />
-                    <div className="mobile-deck-card-info">
-                      <span className="mobile-deck-card-name">{card._ptName}</span>
-                      <span className="mobile-deck-card-type">{card.cardType}</span>
-                    </div>
-                    <button className={`mobile-deck-card-btn ${inDeck ? 'remove' : 'add'}`}>
-                      {inDeck ? `${qty}/3` : '+'}
-                    </button>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
         </div>
 
         {scannerOpen && (

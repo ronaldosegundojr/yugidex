@@ -1249,11 +1249,6 @@ body::before {
   }
 }
 
-.nav-tab {
-  text-decoration: none;
-  display: inline-block;
-}
-
 .deck-page {
   min-height: calc(100vh - 100px);
 }
@@ -1532,7 +1527,34 @@ body::before {
   align-items: center;
   padding-bottom: 0.75rem;
   margin-bottom: 1rem;
-  border-bottom: 1px solid var(--ygold-dark);
+  border-bottom: 1px solid var(--gold-dark);
+}
+
+.search-panel-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.library-close {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(212, 168, 87, 0.12);
+  border: 1px solid var(--gold-dark);
+  border-radius: 6px;
+  color: var(--gold);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.library-close:hover {
+  background: rgba(212, 168, 87, 0.25);
+  color: #fff;
 }
 
 .search-panel-header h3 {

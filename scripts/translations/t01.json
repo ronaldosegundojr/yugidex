@@ -1,0 +1,380 @@
+{
+    "7":  {
+              "name":  "7"
+          },
+    "Abaki":  {
+                  "name":  "Abaki"
+              },
+    "Abare Ushioni":  {
+                          "name":  "Abare Ushioni"
+                      },
+    "Achacha Chanbara":  {
+                             "name":  "Achacha Chanbara"
+                         },
+    "Achichi @Ignister":  {
+                              "name":  "Achichi @Ignister"
+                          },
+    "Agido":  {
+                  "name":  "Agido"
+              },
+    "Aileron":  {
+                    "name":  "Aileron"
+                },
+    "Aitsu":  {
+                  "name":  "Aitsu"
+              },
+    "Akakieisu":  {
+                      "name":  "Akakieisu"
+                  },
+    "Akihiron":  {
+                     "name":  "Akihiron"
+                 },
+    "Al-Lumi\u0027raj":  {
+                             "name":  "Al-Lumi\u0027raj"
+                         },
+    "Alinsection":  {
+                        "name":  "Alinsection"
+                    },
+    "Altergeist Adminia":  {
+                               "name":  "Altergeist Adminia"
+                           },
+    "Altergeist Kidolga":  {
+                               "name":  "Altergeist Kidolga"
+                           },
+    "Amabie":  {
+                   "name":  "Amabie"
+               },
+    "Amano-Iwato":  {
+                        "name":  "Amano-Iwato"
+                    },
+    "Amanokujaki":  {
+                        "name":  "Amanokujaki"
+                    },
+    "Amaterasu":  {
+                      "name":  "Amaterasu"
+                  },
+    "Ameba":  {
+                  "name":  "Ameba"
+              },
+    "Amphibious Bugroth":  {
+                               "name":  "Bugroth Anfíbio",
+                               "effect":  "\"Ground Attacker Bugroth\" + \"Defender of the Sea\""
+                           },
+    "Anchamoufrite":  {
+                          "name":  "Anchamoufrite"
+                      },
+    "Ancient Jar":  {
+                        "name":  "Jarra Antiga",
+                        "effect":  "Uma jarra muito frágil que contém algo antigo e perigoso."
+                    },
+    "Ancient Sorcerer":  {
+                             "name":  "Feiticeiro Antigo",
+                             "effect":  "Armado com uma variedade de varinhas mágicas, esta criatura é capaz de realizar múltiplos ataques."
+                         },
+    "Ankuriboh":  {
+                      "name":  "Ankuriboh"
+                  },
+    "Ansatsu":  {
+                    "name":  "Ansatsu"
+                },
+    "Ante":  {
+                 "name":  "Ante"
+             },
+    "Anti Raigeki":  {
+                         "name":  "Anti Raigeki"
+                     },
+    "Anti-Fusion Device":  {
+                               "name":  "Dispositivo Anti-Fusão",
+                               "effect":  "Destrua 1 Monstro de Fusão com a face para cima no campo."
+                           },
+    "Antialian":  {
+                      "name":  "Antialian"
+                  },
+    "Apocatequil":  {
+                        "name":  "Apocatequil"
+                    },
+    "Aqua Dragon":  {
+                        "name":  "Dragão Aquático",
+                        "effect":  "\"Fairy Dragon\" + \"Amazon of the Seas\" + \"Zone Eater\""
+                    },
+    "Aqua Madoor":  {
+                        "name":  "Aqua Madoor"
+                    },
+    "Aratama":  {
+                    "name":  "Aratama"
+                },
+    "Archlord Kristya":  {
+                             "name":  "Archlord Kristya"
+                         },
+    "Archlord Zerato":  {
+                            "name":  "Archlord Zerato"
+                        },
+    "Arlownay":  {
+                     "name":  "Arlownay"
+                 },
+    "Armaill":  {
+                    "name":  "Armaill"
+                },
+    "Aurora Paragon":  {
+                           "name":  "Paragon Aurora",
+                           "effect":  "Nenhum duelista pode Invocar monstros por Invocação-Especial. Quando outro monstro for Invocado por Invocação-Normal para o lado do campo de qualquer duelista, destrua este card."
+                       },
+    "Avalon":  {
+                   "name":  "Avalon"
+               },
+    "B.E.F. Zelos":  {
+                         "name":  "B.E.F. Zelos"
+                     },
+    "Bachibachibachi":  {
+                            "name":  "Bachibachibachi"
+                        },
+    "Backlinker":  {
+                       "name":  "Backlinker"
+                   },
+    "Baelgrill de Nouvelles":  {
+                                   "name":  "Baelgrill de Nouvelles"
+                               },
+    "Balameuniere de Nouvelles":  {
+                                      "name":  "Balameuniere de Nouvelles"
+                                  },
+    "Baronne de Fleur":  {
+                             "name":  "Baronne de Fleur"
+                         },
+    "Barox":  {
+                  "name":  "Barox"
+              },
+    "Bat":  {
+                "name":  "Morcego",
+                "effect":  "Um morcego mecânico que lança rajadas de suas asas."
+            },
+    "Behegon":  {
+                    "name":  "Behegon"
+                },
+    "Berfomet":  {
+                     "name":  "Berfomet"
+                 },
+    "Bickuribox":  {
+                       "name":  "Bickuribox"
+                   },
+    "Bicular":  {
+                    "name":  "Bicular",
+                    "effect":  "Quando este card for destruído em batalha e enviado ao Cemitério, você pode Invocar por Invocação-Especial 1 \"Unicycular\" da sua mão ou do seu Deck."
+                },
+    "Bio-Mage":  {
+                     "name":  "Bio-Mago",
+                     "effect":  "Um misterioso sacerdote criado como resultado dos mais recentes avanços da biotecnologia."
+                 },
+    "Bitron":  {
+                   "name":  "Bitron"
+               },
+    "Bladefly":  {
+                     "name":  "Bladefly"
+                 },
+    "Blast Asmodian":  {
+                           "name":  "Asmodian da Explosão",
+                           "effect":  "Se algum Card de Magia ou Card de Armadilha for ativado em Corrente, inflija 500 de dano ao seu oponente."
+                       },
+    "Bone Crusher":  {
+                         "name":  "Esmagador de Ossos",
+                         "effect":  "Quando este card for Invocado por Invocação-Especial do seu Cemitério pelo efeito de um monstro do Tipo Zumbi: você pode escolher 1 Card de Magia/Armadilha que seu oponente controla como alvo; destrua o alvo. Durante a Fase Final do turno em que este card foi Invocado por Invocação-Especial: destrua-o."
+                     },
+    "Boneheimer":  {
+                       "name":  "Boneheimer"
+                   },
+    "Boo Koo":  {
+                    "name":  "Boo Koo",
+                    "effect":  "Um mago em forma de livro com uma vasta quantidade de magia escrita em seu interior."
+                },
+    "Bowganian":  {
+                      "name":  "Bowganian"
+                  },
+    "Brinegir":  {
+                     "name":  "Brinegir"
+                 },
+    "Buerillabaisse de Nouvelles":  {
+                                        "name":  "Buerillabaisse de Nouvelles"
+                                    },
+    "Bujin Arasuda":  {
+                          "name":  "Bujin Arasuda"
+                      },
+    "Bujin Hiruko":  {
+                         "name":  "Bujin Hiruko"
+                     },
+    "Bujin Hirume":  {
+                         "name":  "Bujin Hirume"
+                     },
+    "Bujin Mahitotsu":  {
+                            "name":  "Bujin Mahitotsu"
+                        },
+    "Bujin Mikazuchi":  {
+                            "name":  "Bujin Mikazuchi"
+                        },
+    "Bujin Torifune":  {
+                           "name":  "Bujin Torifune"
+                       },
+    "Bujin Yamato":  {
+                         "name":  "Bujin Yamato"
+                     },
+    "Bujingi Pavo":  {
+                         "name":  "Bujingi Pavo"
+                     },
+    "Bujingi Quilin":  {
+                           "name":  "Bujingi Quilin"
+                       },
+    "Bujingi Sinyou":  {
+                           "name":  "Bujingi Sinyou"
+                       },
+    "Bujingi Warg":  {
+                         "name":  "Bujingi Warg"
+                     },
+    "Bujinki Ahashima":  {
+                             "name":  "Bujinki Ahashima"
+                         },
+    "Bujinki Amaterasu":  {
+                              "name":  "Bujinki Amaterasu"
+                          },
+    "Bujintei Kagutsuchi":  {
+                                "name":  "Bujintei Kagutsuchi"
+                            },
+    "Bujintei Susanowo":  {
+                              "name":  "Bujintei Susanowo"
+                          },
+    "Bujintei Tsukuyomi":  {
+                               "name":  "Bujintei Tsukuyomi"
+                           },
+    "Bururu @Ignister":  {
+                             "name":  "Bururu @Ignister"
+                         },
+    "Buten":  {
+                  "name":  "Buten"
+              },
+    "Carboneddon":  {
+                        "name":  "Carboneddon"
+                    },
+    "Cassimolar":  {
+                       "name":  "Cassimolar"
+                   },
+    "Celestia":  {
+                     "name":  "Celestia"
+                 },
+    "Chain Detonation":  {
+                             "name":  "Detonação em Corrente",
+                             "effect":  "Inflija 500 de dano ao seu oponente. Se este card foi ativado como Elo 2 ou 3 da Corrente, adicione este card ao Deck e embaralhe-o. Se este card foi ativado como Elo 4 ou superior da Corrente, devolva este card para a mão."
+                         },
+    "Chain Healing":  {
+                          "name":  "Cura em Corrente",
+                          "effect":  "Ganhe 500 Pontos de Vida. Se este card foi ativado como Elo 2 ou 3 da Corrente, adicione este card ao Deck e embaralhe-o. Se este card foi ativado como Elo 4 ou superior da Corrente, devolva este card para a mão."
+                      },
+    "Chain Thrasher":  {
+                           "name":  "Flagelador em Corrente",
+                           "effect":  "Este card pode atacar 1 vez adicional durante a mesma Fase de Batalha para cada \"Chain Thrasher\" no seu Cemitério."
+                       },
+    "Chakra":  {
+                   "name":  "Chakra"
+               },
+    "Chevalier de Fleur":  {
+                               "name":  "Chevalier de Fleur"
+                           },
+    "Chow Chow Chan":  {
+                           "name":  "Chow Chow Chan"
+                       },
+    "Cobraman Sakuzy":  {
+                            "name":  "Cobraman Sakuzy"
+                        },
+    "Codarus":  {
+                    "name":  "Codarus"
+                },
+    "Combo Fighter":  {
+                          "name":  "Lutador de Combo",
+                          "effect":  "Se uma Corrente (de 2 ou mais Elos) ocorreu na sua Fase Principal 1, este card pode atacar duas vezes durante a Fase de Batalha neste turno."
+                      },
+    "Combo Master":  {
+                         "name":  "Mestre do Combo",
+                         "effect":  "Se uma Corrente (de 2 ou mais Elos) ocorreu na sua Fase Principal 1, este card pode atacar duas vezes durante a Fase de Batalha neste turno."
+                     },
+    "Confiras de Nouvelles":  {
+                                  "name":  "Confiras de Nouvelles"
+                              },
+    "Crashbug X":  {
+                       "name":  "Crashbug X"
+                   },
+    "Crashbug Y":  {
+                       "name":  "Crashbug Y"
+                   },
+    "Crashbug Z":  {
+                       "name":  "Crashbug Z"
+                   },
+    "Cross Counter":  {
+                          "name":  "Cross Counter"
+                      },
+    "Cross Over":  {
+                       "name":  "Cross Over"
+                   },
+    "Cross Porter":  {
+                         "name":  "Carregador Cruzado",
+                         "effect":  "Você pode escolher 1 monstro que você controla como alvo; envie o alvo para o Cemitério e, se isso acontecer, Invoque por Invocação-Especial 1 monstro \"Neo-Spacian\" da sua mão. Quando este card for enviado ao Cemitério: você pode adicionar 1 monstro \"Neo-Spacian\" do seu Deck à sua mão."
+                     },
+    "Crusadia Arboria":  {
+                             "name":  "Crusadia Arboria"
+                         },
+    "Crusadia Draco":  {
+                           "name":  "Crusadia Draco"
+                       },
+    "Crusadia Equimax":  {
+                             "name":  "Crusadia Equimax"
+                         },
+    "Crusadia Krawler":  {
+                             "name":  "Crusadia Krawler"
+                         },
+    "Crusadia Leonis":  {
+                            "name":  "Crusadia Leonis"
+                        },
+    "Crusadia Magius":  {
+                            "name":  "Crusadia Magius"
+                        },
+    "Crusadia Maximus":  {
+                             "name":  "Crusadia Maximus"
+                         },
+    "Crusadia Reclusia":  {
+                              "name":  "Crusadia Reclusia"
+                          },
+    "Crusadia Regulex":  {
+                             "name":  "Crusadia Regulex"
+                         },
+    "Crusadia Spatha":  {
+                            "name":  "Crusadia Spatha"
+                        },
+    "D.D. Telepon":  {
+                         "name":  "D.D. Telepon"
+                     },
+    "D/D Berfomet":  {
+                         "name":  "D/D Berfomet"
+                     },
+    "D/D Lilith":  {
+                       "name":  "D/D Lilith"
+                   },
+    "D/D Orthros":  {
+                        "name":  "D/D Orthros"
+                    },
+    "D/D Pandora":  {
+                        "name":  "D/D Pandora"
+                    },
+    "Daidara-Bocchi":  {
+                           "name":  "Daidara-Bocchi"
+                       },
+    "Daigusto Eguls":  {
+                           "name":  "Daigusto Eguls"
+                       },
+    "Daigusto Emeral":  {
+                            "name":  "Daigusto Emeral"
+                        },
+    "Daigusto Falcos":  {
+                            "name":  "Daigusto Falcos"
+                        },
+    "Daigusto Gulldos":  {
+                             "name":  "Daigusto Gulldos"
+                         },
+    "Daigusto Laplampilica":  {
+                                  "name":  "Daigusto Laplampilica"
+                              }
+}

@@ -1,0 +1,381 @@
+{
+    "Daigusto Phoenix":  {
+                             "name":  "Daigusto Phoenix"
+                         },
+    "Danipon":  {
+                    "name":  "Danipon"
+                },
+    "Danmari @Ignister":  {
+                              "name":  "Danmari @Ignister"
+                          },
+    "Darklon":  {
+                    "name":  "Darklon"
+                },
+    "Darkness Destroyer":  {
+                               "name":  "Darkness Destroyer",
+                               "effect":  "Não pode ser Invocado por Invocação-Especial. Este card pode atacar duas vezes durante cada Fase de Batalha. Se este card atacar um monstro em Posição de Defesa, cause dano de batalha perfurante ao seu oponente."
+                           },
+    "Denko Sekka":  {
+                        "name":  "Denko Sekka"
+                    },
+    "Des Dendle":  {
+                       "name":  "Des Dendle"
+                   },
+    "Des Koala":  {
+                      "name":  "Des Koala"
+                  },
+    "Des Lacooda":  {
+                        "name":  "Des Lacooda"
+                    },
+    "Des Mosquito":  {
+                         "name":  "Des Mosquito"
+                     },
+    "Des Volstgalph":  {
+                           "name":  "Des Volstgalph"
+                       },
+    "Destruction Cyclone":  {
+                                "name":  "Destruction Cyclone",
+                                "effect":  "Quando este card for destruído em batalha e enviado para o Cemitério, destrua todos os monstros com a face para baixo e os monstros que não sejam de VENTO."
+                            },
+    "Deus X-Krawler":  {
+                           "name":  "Deus X-Krawler"
+                       },
+    "Digitron":  {
+                     "name":  "Digitron"
+                 },
+    "Dimensional Inversion":  {
+                                  "name":  "Dimensional Inversion",
+                                  "effect":  "Ative somente quando um ou mais monstros seus forem removidos do jogo por um efeito do oponente. Invoque por Invocação-Especial 1 desses monstros."
+                              },
+    "Dinovatus Docus":  {
+                            "name":  "Dinovatus Docus"
+                        },
+    "Divine Dragon Token":  {
+                                "name":  "Divine Dragon Token",
+                                "effect":  "Este card pode ser usado como uma \"Divine Dragon Token\".\n\n\n*Se for usado para outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa Ficha."
+                            },
+    "Division":  {
+                     "name":  "Division"
+                 },
+    "Dogmatika Ashiyan":  {
+                              "name":  "Dogmatika Ashiyan"
+                          },
+    "Dogmatika Maximus":  {
+                              "name":  "Dogmatika Maximus"
+                          },
+    "Dogmatika Nexus":  {
+                            "name":  "Dogmatika Nexus"
+                        },
+    "Dogu":  {
+                 "name":  "Dogu"
+             },
+    "Doitsu":  {
+                   "name":  "Doitsu"
+               },
+    "Doki Doki":  {
+                      "name":  "Doki Doki"
+                  },
+    "Dokurorider":  {
+                        "name":  "Dokurorider"
+                    },
+    "Dokuroyaiba":  {
+                        "name":  "Dokuroyaiba"
+                    },
+    "Donyoribo @Ignister":  {
+                                "name":  "Donyoribo @Ignister"
+                            },
+    "Doomsday Token":  {
+                           "name":  "Doomsday Token",
+                           "effect":  "Este card pode ser usado como qualquer Ficha."
+                       },
+    "Doppelganger":  {
+                         "name":  "Doppelganger"
+                     },
+    "Dora Dora":  {
+                      "name":  "Dora Dora"
+                  },
+    "Doriado":  {
+                    "name":  "Doriado"
+                },
+    "Doron":  {
+                  "name":  "Doron"
+              },
+    "Dorover":  {
+                    "name":  "Dorover"
+                },
+    "Doshin @Ignister":  {
+                             "name":  "Doshin @Ignister"
+                         },
+    "Dotedotengu":  {
+                        "name":  "Dotedotengu"
+                    },
+    "Dotscaper":  {
+                      "name":  "Dotscaper"
+                  },
+    "Doyon @Ignister":  {
+                            "name":  "Doyon @Ignister"
+                        },
+    "Dr. Frankenderp":  {
+                            "name":  "Dr. Frankenderp"
+                        },
+    "Dragard":  {
+                    "name":  "Dragard"
+                },
+    "Dragonoid Token":  {
+                            "name":  "Dragonoid Token",
+                            "effect":  "Este card pode ser usado como uma \"Dragonoid Token\".\n\n\n*Se for usado para outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa Ficha."
+                        },
+    "Drillago":  {
+                     "name":  "Drillago"
+                 },
+    "Drytron Beta Rastaban":  {
+                                  "name":  "Drytron Beta Rastaban"
+                              },
+    "Drytron Delta Altais":  {
+                                 "name":  "Drytron Delta Altais"
+                             },
+    "Drytron Meteonis DA Draconids":  {
+                                          "name":  "Drytron Meteonis DA Draconids"
+                                      },
+    "Drytron Meteonis Draconids":  {
+                                       "name":  "Drytron Meteonis Draconids"
+                                   },
+    "Drytron Meteonis Quadrantids":  {
+                                         "name":  "Drytron Meteonis Quadrantids"
+                                     },
+    "Drytron Nu II":  {
+                          "name":  "Drytron Nu II"
+                      },
+    "Drytron Zeta Aldhibah":  {
+                                  "name":  "Drytron Zeta Aldhibah"
+                              },
+    "Dual Assembwurm":  {
+                            "name":  "Dual Assembwurm"
+                        },
+    "Duoterion":  {
+                      "name":  "Duoterion"
+                  },
+    "Ecole de Zone":  {
+                          "name":  "Ecole de Zone"
+                      },
+    "Eisbahn":  {
+                    "name":  "Eisbahn"
+                },
+    "Ekibyo Drakmord":  {
+                            "name":  "Ekibyo Drakmord"
+                        },
+    "El Dorado Adelantado":  {
+                                 "name":  "El Dorado Adelantado"
+                             },
+    "Eldeen":  {
+                   "name":  "Eldeen"
+               },
+    "Emblem of the Awakening":  {
+                                    "name":  "Emblem of the Awakening",
+                                    "effect":  "Este card é usado para Invocação-Ritual de \"Cǧ Chulainn the Awakened\". Você também deve oferecer como Tributo monstros do campo ou da sua mão cujo total de Níveis seja igual a 4 ou mais."
+                                },
+    "Emissary of Darkness Token":  {
+                                       "name":  "Emissary of Darkness Token",
+                                       "effect":  "Este card pode ser usado como uma \"Emissary of Darkness Token\".\n\n\n*Se for usado para outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa Ficha."
+                                   },
+    "Eva":  {
+                "name":  "Eva"
+            },
+    "Evigishki Gustkraken":  {
+                                 "name":  "Evigishki Gustkraken"
+                             },
+    "Evigishki Levianima":  {
+                                "name":  "Evigishki Levianima"
+                            },
+    "Evigishki Merrowgeist":  {
+                                  "name":  "Evigishki Merrowgeist"
+                              },
+    "Evigishki Neremanas":  {
+                                "name":  "Evigishki Neremanas"
+                            },
+    "Evoltile Casinerio":  {
+                               "name":  "Evoltile Casinerio",
+                               "effect":  "No final da Fase de Batalha, se este card destruiu um monstro do oponente em batalha: você pode oferecer este card como Tributo; Invoque por Invocação-Especial, do seu Deck, 2 monstros do Tipo Dinossauro de FOGO de Nível 6 ou menos com o mesmo nome. Os efeitos deles são negados e eles são banidos durante a Fase Final."
+                           },
+    "Evolzar Dolkka":  {
+                           "name":  "Evolzar Dolkka"
+                       },
+    "Evolzar Laggia":  {
+                           "name":  "Evolzar Laggia"
+                       },
+    "Evolzar Lars":  {
+                         "name":  "Evolzar Lars"
+                     },
+    "Exodia Necross":  {
+                           "name":  "Exodia Necross"
+                       },
+    "Extraceratops":  {
+                          "name":  "Extraceratops"
+                      },
+    "F.A. Pit Stop":  {
+                          "name":  "F.A. Pit Stop"
+                      },
+    "F.A. Turbo Charger":  {
+                               "name":  "F.A. Turbo Charger"
+                           },
+    "F.A. Whip Crosser":  {
+                              "name":  "F.A. Whip Crosser"
+                          },
+    "Fairy Dragon":  {
+                         "name":  "Fairy Dragon",
+                         "effect":  "Este belo espírito de Dragão guarda uma força oculta."
+                     },
+    "Fairy Guardian":  {
+                           "name":  "Fairy Guardian",
+                           "effect":  "Ofereça este card com a face para cima como Tributo para devolver, para o fundo do seu Deck, 1 Card de Magia enviado para o seu Cemitério pelo efeito de um card do seu oponente durante este turno."
+                       },
+    "Fairy King Truesdale":  {
+                                 "name":  "Fairy King Truesdale",
+                                 "effect":  "Enquanto este card estiver em Posição de Defesa, todos os monstros do Tipo Planta que você controla ganham 500 de ATK e DEF."
+                             },
+    "Feather Wind":  {
+                         "name":  "Feather Wind",
+                         "effect":  "Quando um Card de Magia/Armadilha for ativado enquanto você controla um \"Elemental HERO Avian\" com a face para cima: negue a ativação e destrua-o."
+                     },
+    "Fenghuang":  {
+                      "name":  "Fenghuang"
+                  },
+    "Fenrir":  {
+                   "name":  "Fenrir"
+               },
+    "Fire Eye":  {
+                     "name":  "Fire Eye",
+                     "effect":  "Um olho envolto em chamas que bate as asas para criar rajadas de ar quente."
+                 },
+    "Fireyarou":  {
+                      "name":  "Fireyarou"
+                  },
+    "Flame Ogre":  {
+                       "name":  "Flame Ogre",
+                       "effect":  "Este card não pode ser Invocado por Invocação-Especial. Quando este card for Invocado por Invocação-Normal, compre 1 card."
+                   },
+    "Flamvell Grunika":  {
+                             "name":  "Flamvell Grunika"
+                         },
+    "Flamvell Uruquizas":  {
+                               "name":  "Flamvell Uruquizas"
+                           },
+    "Fleuret de Fleur":  {
+                             "name":  "Fleuret de Fleur"
+                         },
+    "Flint":  {
+                  "name":  "Flint"
+              },
+    "Fluff Token":  {
+                        "name":  "Fluff Token",
+                        "effect":  "Este card pode ser usado como uma \"Fluff Token\".\n\n*Se for usado para outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa Ficha."
+                    },
+    "Foie Glasya de Nouvelles":  {
+                                     "name":  "Foie Glasya de Nouvelles"
+                                 },
+    "Fuh-Rin-Ka-Zan":  {
+                           "name":  "Fuh-Rin-Ka-Zan"
+                       },
+    "Fuhma Shuriken":  {
+                           "name":  "Fuhma Shuriken"
+                       },
+    "Fukubiki":  {
+                     "name":  "Fukubiki"
+                 },
+    "Full House":  {
+                       "name":  "Full House"
+                   },
+    "Fungi of the Musk":  {
+                              "name":  "Fungi of the Musk",
+                              "effect":  "Derrete qualquer coisa que ouse se colocar diante dele."
+                          },
+    "Fushi No Tori":  {
+                          "name":  "Fushi No Tori"
+                      },
+    "Fushioh Richie":  {
+                           "name":  "Fushioh Richie"
+                       },
+    "Fusion Guard":  {
+                         "name":  "Fusion Guard",
+                         "effect":  "Ative somente quando um efeito que cause dano for ativado. Negue a ativação e o efeito e envie, aleatoriamente, 1 Monstro de Fusão do seu Deck Adicional para o Cemitério."
+                     },
+    "Gachi Gachi Gantetsu":  {
+                                 "name":  "Gachi Gachi Gantetsu"
+                             },
+    "Gagagatag":  {
+                      "name":  "Gagagatag"
+                  },
+    "Gagagigo":  {
+                     "name":  "Gagagigo"
+                 },
+    "Galactikuriboh":  {
+                           "name":  "Galactikuriboh"
+                       },
+    "Gamushara":  {
+                      "name":  "Gamushara"
+                  },
+    "Ganigumo":  {
+                     "name":  "Ganigumo"
+                 },
+    "Garnecia Elefantis":  {
+                               "name":  "Garnecia Elefantis"
+                           },
+    "Garoozis":  {
+                     "name":  "Garoozis"
+                 },
+    "Garvas":  {
+                   "name":  "Garvas",
+                   "effect":  "Uma besta maligna que se assemelha a um leão alado."
+               },
+    "Gatchiri @Ignister":  {
+                               "name":  "Gatchiri @Ignister"
+                           },
+    "Gellenduo":  {
+                      "name":  "Gellenduo"
+                  },
+    "Genex Solar":  {
+                        "name":  "Genex Solar"
+                    },
+    "Genin":  {
+                  "name":  "Genin"
+              },
+    "Geo Genex":  {
+                      "name":  "Geo Genex"
+                  },
+    "Gernia":  {
+                   "name":  "Gernia"
+               },
+    "Getsu Fuhma":  {
+                        "name":  "Getsu Fuhma"
+                    },
+    "Giga Gagagigo":  {
+                          "name":  "Giga Gagagigo"
+                      },
+    "Gigantes":  {
+                     "name":  "Gigantes"
+                 },
+    "Giganto":  {
+                    "name":  "Giganto"
+                },
+    "Gigobyte":  {
+                     "name":  "Gigobyte"
+                 },
+    "Gil Garth":  {
+                      "name":  "Gil Garth"
+                  },
+    "Girochin Kuwagata":  {
+                              "name":  "Girochin Kuwagata"
+                          },
+    "Gishki Avance":  {
+                          "name":  "Gishki Avance"
+                      },
+    "Gishki Natalia":  {
+                           "name":  "Gishki Natalia"
+                       },
+    "Gishki Zielgigas":  {
+                             "name":  "Gishki Zielgigas"
+                         },
+    "Goblindbergh":  {
+                         "name":  "Goblindbergh"
+                     }
+}
