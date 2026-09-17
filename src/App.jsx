@@ -1,6 +1,21 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom'
 import { DndContext, DragOverlay, useSensor, useSensors, PointerSensor, useDraggable, useDroppable } from '@dnd-kit/core'
+import {
+  AppBar, Toolbar, Typography, Container, Box, Button, IconButton, Drawer,
+  List, ListItem, ListItemButton, ListItemText, TextField, Select, MenuItem,
+  FormControl, InputLabel, Chip, Pagination, Dialog, DialogTitle, DialogContent,
+  DialogActions, LinearProgress, Tooltip, Badge, Paper, InputAdornment,
+  CircularProgress, Divider, Stack, Grid, Modal
+} from '@mui/material'
+import {
+  Menu as MenuIcon, Close as CloseIcon, Search as SearchIcon,
+  PhotoCamera as CameraIcon, Save as SaveIcon, FileDownload as ExportIcon,
+  FileUpload as ImportIcon, Delete as DeleteIcon, FolderOpen as LoadIcon,
+  FilterList as FilterIcon, Refresh as ResetIcon, Style as CardsIcon,
+  Dashboard as DeckIcon, SportsEsports as BattleIcon, Group as EventIcon,
+  Add as AddIcon, Remove as RemoveIcon
+} from '@mui/icons-material'
 import { YGOCard, YGOCardMini } from './YGOCard'
 import CardScanner from './CardScanner'
 import BattlePage from './BattlePage'
@@ -315,96 +330,198 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
   const hasFilter = searchTerm || typeFilter || raceFilter || attrFilter
 
   return (
-    <section className="view active">
-      <div className="search-container">
-        <div className="search-box">
-          <input 
-            type="text" 
-            className="search-input" 
-            placeholder="Buscar cartas (ex: dragao, blue eyes, dragão)..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <div className="lang-toggle">
-            <button className={lang === 'pt' ? 'active' : ''} onClick={() => setLang('pt')}>PT</button>
-            <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>EN</button>
-            <button className={lang === 'ja' ? 'active' : ''} onClick={() => setLang('ja')}>JP</button>
-          </div>
-        </div>
-        <button className="scanner-open-btn" onClick={onOpenScanner}>
-          <span className="scanner-open-btn-icon">📷</span>
-          <span>Escanear Carta</span>
-        </button>
-        <div className="filter-group">
-          <select className="filter-select" value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}>
-            <option value="">Todos os Tipos</option>
-            <option value="monster">Monstro</option>
-            <option value="spell">Magia</option>
-            <option value="trap">Armadilha</option>
-            <option value="xyz">XYZ</option>
-            <option value="synchro">Synchro</option>
-            <option value="fusion">Fusion</option>
-            <option value="ritual">Ritual</option>
-            <option value="link">Link</option>
-          </select>
-          <select className="filter-select" value={raceFilter} onChange={(e) => setRaceFilter(e.target.value)}>
-            <option value="">Todas as Raças</option>
-            {Array.from(races).sort().map(race => (
-              <option key={race} value={race}>{race}</option>
-            ))}
-          </select>
-          <select className="filter-select" value={attrFilter} onChange={(e) => setAttrFilter(e.target.value)}>
-            <option value="">Todos os Atributos</option>
-            <option value="LIGHT">Luz</option>
-            <option value="DARK">Trevas</option>
-            <option value="WATER">Água</option>
-            <option value="FIRE">Fogo</option>
-            <option value="EARTH">Terra</option>
-            <option value="WIND">Vento</option>
-            <option value="DIVINE">Divino</option>
-          </select>
-        </div>
-      </div>
+    <Box component="section" sx={{ pb: 6 }}>
+      <Paper 
+        elevation={4} 
+        sx={{ 
+          p: { xs: 2, md: 3 }, 
+          mb: 4, 
+          borderRadius: 3, 
+          backgroundColor: 'rgba(20, 45, 102, 0.75)',
+          backdropFilter: 'blur(12px)',
+          border: '1px solid rgba(229, 191, 53, 0.3)'
+        }}
+      >
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} md={5}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              size="small"
+              placeholder="Buscar cartas (ex: dragão, mestre, blue eyes)..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon sx={{ color: 'primary.main' }} />
+                  </InputAdornment>
+                ),
+                endAdornment: searchTerm ? (
+                  <InputAdornment position="end">
+                    <IconButton size="small" onClick={() => setSearchTerm('')} sx={{ color: 'text.secondary' }}>
+                      <CloseIcon fontSize="small" />
+                    </IconButton>
+                  </InputAdornment>
+                ) : null
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              startIcon={<CameraIcon />}
+              onClick={onOpenScanner}
+              sx={{ height: 40, fontWeight: 700 }}
+            >
+              Escanear Carta
+            </Button>
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={4}>
+            <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
+              <Typography variant="body2" sx={{ color: 'text.secondary', mr: 1, fontWeight: 600 }}>
+                Idioma:
+              </Typography>
+              <Chip 
+                label="PT" 
+                color={lang === 'pt' ? 'primary' : 'default'} 
+                onClick={() => setLang('pt')} 
+                clickable 
+                size="small" 
+              />
+              <Chip 
+                label="EN" 
+                color={lang === 'en' ? 'primary' : 'default'} 
+                onClick={() => setLang('en')} 
+                clickable 
+                size="small" 
+              />
+              <Chip 
+                label="JP" 
+                color={lang === 'ja' ? 'primary' : 'default'} 
+                onClick={() => setLang('ja')} 
+                clickable 
+                size="small" 
+              />
+            </Stack>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <FormControl fullWidth size="small">
+              <InputLabel id="type-filter-label" sx={{ color: 'text.secondary' }}>Tipo de Carta</InputLabel>
+              <Select
+                labelId="type-filter-label"
+                value={typeFilter}
+                label="Tipo de Carta"
+                onChange={(e) => setTypeFilter(e.target.value)}
+              >
+                <MenuItem value="">Todos os Tipos</MenuItem>
+                <MenuItem value="monster">Monstro</MenuItem>
+                <MenuItem value="spell">Magia</MenuItem>
+                <MenuItem value="trap">Armadilha</MenuItem>
+                <MenuItem value="xyz">XYZ</MenuItem>
+                <MenuItem value="synchro">Synchro</MenuItem>
+                <MenuItem value="fusion">Fusion</MenuItem>
+                <MenuItem value="ritual">Ritual</MenuItem>
+                <MenuItem value="link">Link</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <FormControl fullWidth size="small">
+              <InputLabel id="race-filter-label" sx={{ color: 'text.secondary' }}>Raça / Família</InputLabel>
+              <Select
+                labelId="race-filter-label"
+                value={raceFilter}
+                label="Raça / Família"
+                onChange={(e) => setRaceFilter(e.target.value)}
+              >
+                <MenuItem value="">Todas as Raças</MenuItem>
+                {Array.from(races).sort().map(race => (
+                  <MenuItem key={race} value={race}>{race}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <FormControl fullWidth size="small">
+              <InputLabel id="attr-filter-label" sx={{ color: 'text.secondary' }}>Atributo</InputLabel>
+              <Select
+                labelId="attr-filter-label"
+                value={attrFilter}
+                label="Atributo"
+                onChange={(e) => setAttrFilter(e.target.value)}
+              >
+                <MenuItem value="">Todos os Atributos</MenuItem>
+                <MenuItem value="LIGHT">Luz (LIGHT)</MenuItem>
+                <MenuItem value="DARK">Trevas (DARK)</MenuItem>
+                <MenuItem value="WATER">Água (WATER)</MenuItem>
+                <MenuItem value="FIRE">Fogo (FIRE)</MenuItem>
+                <MenuItem value="EARTH">Terra (EARTH)</MenuItem>
+                <MenuItem value="WIND">Vento (WIND)</MenuItem>
+                <MenuItem value="DIVINE">Divino (DIVINE)</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+      </Paper>
 
       {hasFilter ? (
         filteredCards.length === 0 ? (
-          <div className="no-cards"><h3>Nenhuma carta encontrada</h3><p>Tente ajustar seus filtros de busca</p></div>
+          <Paper sx={{ p: 6, textAlign: 'center', backgroundColor: 'rgba(15,15,20,0.6)' }}>
+            <Typography variant="h5" color="primary.main" gutterBottom sx={{ fontWeight: 700 }}>
+              Nenhuma carta encontrada
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              Tente ajustar seus termos ou seletores de filtro.
+            </Typography>
+          </Paper>
         ) : (
           <>
-            <div className="cards-section">
+            <Box className="cards-section">
               {allCardTypes.map(({ key, label, type }) => {
                 const group = filteredByType[type]
                 if (!group || group.length === 0) return null
                 const paginated = paginatedCards.filter(c => c._cardType === type)
                 if (paginated.length === 0 && group.length > 0 && currentPage !== 1) return null
                 return (
-                  <div key={key} className="cards-group">
-                    <h3 className="group-title">{label} ({group.length})</h3>
+                  <Box key={key} className="cards-group" sx={{ mb: 4 }}>
+                    <Typography variant="h6" className="group-title" sx={{ color: 'primary.main', mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                      {label} <Chip label={group.length} size="small" color="primary" variant="outlined" />
+                    </Typography>
                     <div className="simple-card-grid">
                       {paginated.map(card => (
                         <MemoSimpleCard key={card.id} card={card} onClick={setModalCard} />
                       ))}
                     </div>
-                  </div>
+                  </Box>
                 )
               })}
-            </div>
+            </Box>
+
             {totalPages > 1 && (
-              <div className="pagination">
-                <button className="page-btn" disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)}>&laquo;</button>
-                {Array.from({ length: Math.min(totalPages, 10) }, (_, i) => {
-                  const page = i + 1
-                  return (
-                    <button key={page} className={`page-btn ${currentPage === page ? 'active' : ''}`} onClick={() => setCurrentPage(page)}>{page}</button>
-                  )
-                })}
-                <button className="page-btn" disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)}>&raquo;</button>
-              </div>
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+                <Pagination
+                  count={totalPages}
+                  page={currentPage}
+                  onChange={(_, page) => setCurrentPage(page)}
+                  color="primary"
+                  size="large"
+                  showFirstButton
+                  showLastButton
+                />
+              </Box>
             )}
           </>
         )
       ) : (
-        <div className="cards-section">
+        <Box className="cards-section">
           {allCardTypes.map(({ key, label, type }) => {
             const typeCards = cards._byType?.[type] || []
             const isExpanded = expandedTypes[key]
@@ -412,26 +529,33 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
             if (typeCards.length === 0) return null
             
             return (
-              <div key={key} className="cards-group">
-                <div className="group-header">
-                  <h3 className="group-title">{label} ({typeCards.length})</h3>
+              <Box key={key} className="cards-group" sx={{ mb: 4 }}>
+                <Box className="group-header" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                  <Typography variant="h6" className="group-title" sx={{ color: 'primary.main', display: 'flex', alignItems: 'center', gap: 1 }}>
+                    {label} <Chip label={typeCards.length} size="small" color="primary" />
+                  </Typography>
                   {typeCards.length > 20 && (
-                    <button className="view-all-btn" onClick={() => toggleType(key)}>
+                    <Button 
+                      size="small" 
+                      variant="outlined" 
+                      color="primary" 
+                      onClick={() => toggleType(key)}
+                    >
                       {isExpanded ? 'Ver menos' : 'Ver todas as cartas'}
-                    </button>
+                    </Button>
                   )}
-                </div>
+                </Box>
                 <div className="simple-card-grid">
                   {displayCards.map(card => (
                     <MemoSimpleCard key={card.id} card={card} onClick={setModalCard} />
                   ))}
                 </div>
-              </div>
+              </Box>
             )
           })}
-        </div>
+        </Box>
       )}
-    </section>
+    </Box>
   )
 }
 
@@ -1443,149 +1567,295 @@ function App() {
 
   if (loading) {
     return (
-      <div className="loading-overlay">
+      <Box 
+        className="loading-overlay"
+        sx={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: '#0F0F14',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 2000
+        }}
+      >
         <img src="/loading-kaiba.gif" alt="Kaiba" className="loading-kaiba" />
-        <div className="loading-text">Carregando as Cartas...</div>
-      </div>
+        <Typography variant="h6" sx={{ color: 'primary.main', mt: 2, fontWeight: 700 }}>
+          Carregando as Cartas...
+        </Typography>
+        <CircularProgress color="primary" sx={{ mt: 3 }} />
+      </Box>
     )
   }
 
+  const navItems = [
+    { label: 'Cartas', path: '/', icon: <CardsIcon /> },
+    { label: 'Monte seu Deck', path: '/deck', icon: <DeckIcon /> },
+    { label: 'Pontos de Vida', path: '/batalha', icon: <BattleIcon /> },
+    { label: 'Noite da Rapaziada', path: '/noite-da-rapaziada', icon: <EventIcon /> }
+  ]
+
   return (
     <BrowserRouter>
-      <div className="app">
-        <header className="header">
-          <div className="header-content">
-            <div className="logo">
-              <img src="/yugidex-icon.png" alt="Yugidex" className="logo-icon" />
-              <h1>Yugioh <span>Dex</span></h1>
-            </div>
-            {isMobile ? (
-              <>
-                <button
-                  className={`hamburger-btn ${menuOpen ? 'open' : ''}`}
-                  onClick={() => setMenuOpen(prev => !prev)}
-                  aria-label="Menu"
-                  aria-expanded={menuOpen}
+      <Box className="app" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <AppBar position="sticky" elevation={4}>
+          <Container maxWidth="xl">
+            <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                <Box
+                  component="img"
+                  src="/yugidex-icon.png"
+                  alt="Yugidex"
+                  sx={{ width: 36, height: 36, filter: 'drop-shadow(0 0 8px rgba(229,191,53,0.6))' }}
+                />
+                <Typography 
+                  variant="h5" 
+                  component={Link} 
+                  to="/" 
+                  sx={{ 
+                    textDecoration: 'none', 
+                    color: 'text.primary', 
+                    fontWeight: 800,
+                    letterSpacing: 1,
+                    '& span': { color: 'primary.main' }
+                  }}
                 >
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </button>
-                <nav className={`nav-tabs mobile-menu ${menuOpen ? 'open' : ''}`}>
-                  <Link to="/" className="nav-tab" onClick={() => setMenuOpen(false)}>Cartas</Link>
-                  <Link to="/deck" className="nav-tab" onClick={() => setMenuOpen(false)}>Monte seu Deck</Link>
-                  <Link to="/batalha" className="nav-tab" onClick={() => setMenuOpen(false)}>Pontos de Vida</Link>
-                  <Link to="/noite-da-rapaziada" className="nav-tab" onClick={() => setMenuOpen(false)}>Noite da Rapaziada</Link>
-                </nav>
-              </>
-            ) : (
-              <nav className="nav-tabs">
-                <Link to="/" className="nav-tab">Cartas</Link>
-                <Link to="/deck" className="nav-tab">Monte seu Deck</Link>
-                <Link to="/batalha" className="nav-tab">Pontos de Vida</Link>
-                <Link to="/noite-da-rapaziada" className="nav-tab">Noite da Rapaziada</Link>
-              </nav>
-            )}
-          </div>
-          {isMobile && menuOpen && <div className="mobile-menu-backdrop" onClick={() => setMenuOpen(false)} />}
-        </header>
+                  Yugioh <span>Dex</span>
+                </Typography>
+              </Box>
 
-        <main className="main-content">
+              {/* Desktop Nav */}
+              <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
+                {navItems.map((item) => (
+                  <Button
+                    key={item.path}
+                    component={Link}
+                    to={item.path}
+                    startIcon={item.icon}
+                    color="primary"
+                    sx={{ 
+                      px: 2, 
+                      py: 1,
+                      fontWeight: 700,
+                      '&:hover': { backgroundColor: 'rgba(229, 191, 53, 0.15)' }
+                    }}
+                  >
+                    {item.label}
+                  </Button>
+                ))}
+              </Box>
+
+              {/* Mobile Menu Icon */}
+              <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                <IconButton
+                  color="primary"
+                  onClick={() => setMenuOpen(true)}
+                  edge="end"
+                  aria-label="Abrir Menu"
+                >
+                  <MenuIcon fontSize="large" />
+                </IconButton>
+              </Box>
+            </Toolbar>
+          </Container>
+        </AppBar>
+
+        {/* Mobile Navigation Drawer */}
+        <Drawer
+          anchor="right"
+          open={menuOpen}
+          onClose={() => setMenuOpen(false)}
+          PaperProps={{
+            sx: {
+              width: 280,
+              backgroundColor: '#0F0F14',
+              borderLeft: '1px solid rgba(229, 191, 53, 0.3)',
+              p: 2
+            }
+          }}
+        >
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <Typography variant="h6" color="primary.main" fontWeight={700}>
+              Menu YugiDex
+            </Typography>
+            <IconButton onClick={() => setMenuOpen(false)} color="primary">
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          <Divider sx={{ borderColor: 'rgba(229, 191, 53, 0.2)', mb: 2 }} />
+          <List>
+            {navItems.map((item) => (
+              <ListItem disablePadding key={item.path} sx={{ mb: 1 }}>
+                <ListItemButton
+                  component={Link}
+                  to={item.path}
+                  onClick={() => setMenuOpen(false)}
+                  sx={{
+                    borderRadius: 2,
+                    color: 'text.primary',
+                    '&:hover': { backgroundColor: 'rgba(229, 191, 53, 0.15)', color: 'primary.main' }
+                  }}
+                >
+                  <ListItemIcon sx={{ color: 'primary.main' }}>
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={item.label} primaryTypographyProps={{ fontWeight: 600 }} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+
+        <Container maxWidth="xl" component="main" sx={{ flexGrow: 1, pt: 3, pb: 6 }}>
           <Routes>
             <Route path="/" element={<CardsView cards={cards} filteredCards={filteredCards} filteredByType={filteredByType} currentPage={currentPage} setCurrentPage={setCurrentPage} deck={deck} setModalCard={setModalCard} searchTerm={searchTerm} setSearchTerm={setSearchTerm} typeFilter={typeFilter} setTypeFilter={setTypeFilter} raceFilter={raceFilter} setRaceFilter={setRaceFilter} attrFilter={attrFilter} setAttrFilter={setAttrFilter} races={races} lang={lang} setLang={setLang} onOpenScanner={() => setScannerOpen(true)} />} />
             <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} isMobile={isMobile} deckIdSet={deckIdSet} onOpenScanner={() => setScannerOpen(true)} />} />
             <Route path="/batalha" element={<BattlePage />} />
             <Route path="/noite-da-rapaziada" element={<NoiteDaRapaziada />} />
           </Routes>
-        </main>
+        </Container>
 
-        <div className={`modal ${modalCard ? 'active' : ''}`} onClick={() => setModalCard(null)}>
+        {/* Modal de Zoom e Detalhes da Carta */}
+        <Dialog
+          open={Boolean(modalCard)}
+          onClose={() => setModalCard(null)}
+          maxWidth="sm"
+          fullWidth
+        >
           {modalCard && (
-            <div className="modal-content" onClick={e => e.stopPropagation()}>
-              <button className="modal-close" onClick={() => setModalCard(null)}>&times;</button>
-                <div className="card-detail">
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <img 
-                    src={modalCard._image} 
+            <>
+              <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb: 1 }}>
+                <Typography variant="h6" color="primary.main" fontWeight={700}>
+                  {modalCard._ptName}
+                </Typography>
+                <IconButton onClick={() => setModalCard(null)} size="small" color="primary">
+                  <CloseIcon />
+                </IconButton>
+              </DialogTitle>
+              <DialogContent dividers>
+                <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 3, alignItems: { xs: 'center', sm: 'flex-start' } }}>
+                  <Box
+                    component="img"
+                    src={modalCard._image}
                     alt={modalCard._ptName}
-                    style={{ maxWidth: '280px', width: '100%', height: 'auto', aspectRatio: '2.5/3.5', objectFit: 'contain', borderRadius: '8px', border: '3px solid var(--gold)' }}
+                    sx={{
+                      maxWidth: 240,
+                      width: '100%',
+                      borderRadius: 2,
+                      border: '2px solid #E5BF35',
+                      boxShadow: '0 0 15px rgba(229,191,53,0.3)'
+                    }}
                   />
-                </div>
-                <div className="card-detail-info">
-                  <h2>{modalCard._ptName}</h2>
-                  {modalCard.text?.en?.name && modalCard.text?.en?.name !== modalCard.text?.pt?.name && (
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '0.5rem' }}>({modalCard.text.en.name})</p>
-                  )}
-                  <div className="card-detail-meta">
-                    <div className="meta-item"><span className="meta-label">Tipo:</span><span className="meta-value">{modalCard._cardType === 'monster' ? 'Monstro' : modalCard._cardType === 'spell' ? 'Magia' : modalCard._cardType === 'trap' ? 'Armadilha' : modalCard._cardType}</span></div>
-                    {modalCard.level && <div className="meta-item"><span className="meta-label">Nível:</span><span className="meta-value">{'★'.repeat(modalCard.level)} ({modalCard.level})</span></div>}
-                    {modalCard.attribute && <div className="meta-item"><span className="meta-label">Atributo:</span><span className="meta-value">{getAttributeNamePT(modalCard.attribute)}</span></div>}
-                    {modalCard.type && <div className="meta-item"><span className="meta-label">Raça:</span><span className="meta-value">{getRacePT(modalCard.type)}</span></div>}
-                    {modalCard.atk !== undefined && <div className="meta-item"><span className="meta-label">ATK:</span><span className="meta-value">{modalCard.atk}</span></div>}
-                    {modalCard.def !== undefined && <div className="meta-item"><span className="meta-label">DEF:</span><span className="meta-value">{modalCard.def}</span></div>}
-                  </div>
-                  <div className="card-effect">
-                    <h4>Efeito</h4>
-                    <p>{modalCard.text?.pt?.effect || modalCard.text?.en?.effect || 'Sem efeito disponível'}</p>
-                  </div>
-                  {(() => {
-                    const cardInDeck = deck.find(c => c.id === modalCard.id)
-                    const qty = cardInDeck?.qty || 0
-                    return (
-                      <div className="deck-modal-actions" style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                        {qty > 0 ? (
-                          <>
-                            <button 
-                              className="btn" 
-                              style={{ flex: 1 }}
-                              onClick={() => {
-                                if (qty <= 1) {
-                                  setDeck(prev => prev.filter(c => c.id !== modalCard.id))
-                                } else {
-                                  setDeck(prev => prev.map(c => c.id === modalCard.id ? { ...c, qty: c.qty - 1 } : c))
-                                }
-                              }}
-                            >
-                              {qty <= 1 ? 'Remover' : '-1'}
-                            </button>
-                            <span style={{ color: 'var(--gold)', fontWeight: 'bold', minWidth: '30px', textAlign: 'center' }}>{qty}</span>
-                            <button 
-                              className="btn btn-primary" 
-                              style={{ flex: 1 }}
-                              disabled={qty >= 3}
-                              onClick={() => {
-                                if (qty >= 3) { alert('Máximo 3 cópias por carta!'); return }
-                                setDeck(prev => prev.map(c => c.id === modalCard.id ? { ...c, qty: c.qty + 1 } : c))
-                              }}
-                            >
-                              +1
-                            </button>
-                          </>
-                        ) : (
-                          <button 
-                            className="btn btn-primary" 
-                            style={{ width: '100%' }}
-                            onClick={() => {
-                              let deckType = 'main'
-                              if (['fusion', 'synchro', 'xyz', 'link', 'ritual'].includes(modalCard.cardType)) {
-                                deckType = 'extra'
-                              }
-                              const totalCards = deck.reduce((sum, c) => sum + c.qty, 0)
-                              if (totalCards >= 60) alert('Deck cheio! (máx 60)')
-                              setDeck(prev => [...prev, { ...modalCard, qty: 1, deckType }])
-                            }}
-                          >
-                            Adicionar ao Deck
-                          </button>
+                  <Box sx={{ flex: 1 }}>
+                    {modalCard.text?.en?.name && modalCard.text?.en?.name !== modalCard.text?.pt?.name && (
+                      <Typography variant="subtitle2" sx={{ color: 'text.secondary', mb: 1, italic: true }}>
+                        ({modalCard.text.en.name})
+                      </Typography>
+                    )}
+                    <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 2 }}>
+                      <Chip 
+                        label={`Tipo: ${modalCard._cardType === 'monster' ? 'Monstro' : modalCard._cardType === 'spell' ? 'Magia' : modalCard._cardType === 'trap' ? 'Armadilha' : modalCard._cardType}`} 
+                        color="primary" 
+                        size="small" 
+                        variant="outlined" 
+                      />
+                      {modalCard.level && (
+                        <Chip label={`★ ${modalCard.level}`} color="secondary" size="small" />
+                      )}
+                      {modalCard.attribute && (
+                        <Chip label={getAttributeNamePT(modalCard.attribute)} size="small" />
+                      )}
+                      {modalCard.type && (
+                        <Chip label={getRacePT(modalCard.type)} size="small" variant="outlined" />
+                      )}
+                    </Stack>
+                    
+                    {(modalCard.atk !== undefined || modalCard.def !== undefined) && (
+                      <Paper sx={{ p: 1.5, mb: 2, backgroundColor: 'rgba(15,15,20,0.6)', display: 'flex', gap: 2 }}>
+                        {modalCard.atk !== undefined && (
+                          <Typography variant="body2" fontWeight={700} color="primary.main">
+                            ATK / {modalCard.atk}
+                          </Typography>
                         )}
-                      </div>
-                    )
-                  })()}
-                </div>
-              </div>
-            </div>
+                        {modalCard.def !== undefined && (
+                          <Typography variant="body2" fontWeight={700} color="text.secondary">
+                            DEF / {modalCard.def}
+                          </Typography>
+                        )}
+                      </Paper>
+                    )}
+
+                    <Typography variant="subtitle2" color="primary.main" fontWeight={700} sx={{ mb: 0.5 }}>
+                      Efeito / Descrição
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.primary', lineHeight: 1.6 }}>
+                      {modalCard.text?.pt?.effect || modalCard.text?.en?.effect || 'Sem efeito disponível'}
+                    </Typography>
+                  </Box>
+                </Box>
+              </DialogContent>
+              <DialogActions sx={{ p: 2 }}>
+                {(() => {
+                  const cardInDeck = deck.find(c => c.id === modalCard.id)
+                  const qty = cardInDeck?.qty || 0
+                  return qty > 0 ? (
+                    <Stack direction="row" spacing={1} alignItems="center" sx={{ width: '100%' }}>
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        onClick={() => {
+                          if (qty <= 1) {
+                            setDeck(prev => prev.filter(c => c.id !== modalCard.id))
+                          } else {
+                            setDeck(prev => prev.map(c => c.id === modalCard.id ? { ...c, qty: c.qty - 1 } : c))
+                          }
+                        }}
+                        sx={{ flex: 1 }}
+                      >
+                        {qty <= 1 ? 'Remover' : '-1 Cópia'}
+                      </Button>
+                      <Chip label={`${qty} no Deck`} color="primary" fontWeight={700} />
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        disabled={qty >= 3}
+                        onClick={() => {
+                          if (qty >= 3) { alert('Máximo 3 cópias por carta!'); return }
+                          setDeck(prev => prev.map(c => c.id === modalCard.id ? { ...c, qty: c.qty + 1 } : c))
+                        }}
+                        sx={{ flex: 1 }}
+                      >
+                        +1 Cópia
+                      </Button>
+                    </Stack>
+                  ) : (
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      startIcon={<AddIcon />}
+                      onClick={() => {
+                        let deckType = 'main'
+                        if (['fusion', 'synchro', 'xyz', 'link', 'ritual'].includes(modalCard.cardType)) {
+                          deckType = 'extra'
+                        }
+                        const totalCards = deck.reduce((sum, c) => sum + c.qty, 0)
+                        if (totalCards >= 60) alert('Deck cheio! (máx 60)')
+                        setDeck(prev => [...prev, { ...modalCard, qty: 1, deckType }])
+                      }}
+                    >
+                      Adicionar ao Deck
+                    </Button>
+                  )
+                })()}
+              </DialogActions>
+            </>
           )}
-        </div>
+        </Dialog>
 
         {scannerOpen && (
           <CardScanner
@@ -1598,14 +1868,25 @@ function App() {
           />
         )}
 
-        <button className="translate-btn" onClick={handleTranslate} title="Traduzir página">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <IconButton
+          onClick={handleTranslate}
+          title="Traduzir página"
+          sx={{
+            position: 'fixed',
+            bottom: 20,
+            right: 20,
+            backgroundColor: '#E5BF35',
+            color: '#0F0F14',
+            boxShadow: '0 4px 15px rgba(229,191,53,0.5)',
+            '&:hover': { backgroundColor: '#f0d46a' },
+            zIndex: 1000
+          }}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="24" height="24">
             <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
           </svg>
-        </button>
-
-        <div className="pyramid-bg"></div>
-      </div>
+        </IconButton>
+      </Box>
     </BrowserRouter>
   )
 }
