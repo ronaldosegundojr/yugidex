@@ -889,6 +889,12 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         if (byPass) return byPass
       }
 
+      if (c.imageUrl) {
+        const imageUrl = String(c.imageUrl).trim()
+        const byImage = cards.find(card => card._image === imageUrl)
+        if (byImage) return byImage
+      }
+
       const nameStr = String(c.name || c.cardName || c.title || c._ptName || '').trim().toLowerCase()
       if (nameStr) {
         const byName = cards.find(card => 
@@ -928,32 +934,42 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
             sideRaw = parsed.side || parsed.side_deck || parsed.sideDeck || []
           }
         } else {
-          // Parse TXT format
+          // Parse TXT format (exported format)
           const lines = content.split('\n')
           let currentSection = 'main'
           
-          for (const line of lines) {
+          for (let i = 0; i < lines.length; i++) {
+            const line = lines[i]
             const trimmed = line.trim()
+            
             if (trimmed.startsWith('NOME DO DECK:')) {
               importedDeckName = trimmed.replace('NOME DO DECK:', '').trim()
-            } else if (trimmed.includes('MAIN DECK')) {
+            } else if (trimmed.startsWith('--- MAIN DECK')) {
               currentSection = 'main'
-            } else if (trimmed.includes('EXTRA DECK')) {
+            } else if (trimmed.startsWith('--- EXTRA DECK')) {
               currentSection = 'extra'
-            } else if (trimmed.includes('SIDE DECK')) {
+            } else if (trimmed.startsWith('--- SIDE DECK')) {
               currentSection = 'side'
-            } else if (trimmed.startsWith('QUANTIDADE NO DECK:')) {
-              const qty = parseInt(trimmed.replace('QUANTIDADE NO DECK:', '').trim()) || 1
-              const nameLineIdx = lines.indexOf(line) - 2
-              if (nameLineIdx >= 0) {
-                const nameLine = lines[nameLineIdx].trim()
-                if (nameLine.startsWith('NOME DA CARTA:')) {
-                  const cardName = nameLine.replace('NOME DA CARTA:', '').trim()
-                  const targetObj = { name: cardName, qty }
-                  if (currentSection === 'extra') extraRaw.push(targetObj)
-                  else if (currentSection === 'side') sideRaw.push(targetObj)
-                  else mainRaw.push(targetObj)
+            } else if (trimmed.includes('(QUANTIDADE DESEJADA:')) {
+              // Format: "Nome da Carta (QUANTIDADE DESEJADA: 1x)"
+              const match = trimmed.match(/^(.+?)\s*\(QUANTIDADE DESEJADA:\s*(\d+)x\)$/)
+              if (match) {
+                const cardName = match[1].trim()
+                const qty = parseInt(match[2]) || 1
+                
+                // Check next line for image URL (optional)
+                let imageUrl = null
+                if (i + 1 < lines.length) {
+                  const nextLine = lines[i + 1].trim()
+                  if (nextLine.startsWith('IMAGEM DA CARTA:')) {
+                    imageUrl = nextLine.replace('IMAGEM DA CARTA:', '').trim()
+                  }
                 }
+                
+                const targetObj = { name: cardName, qty, imageUrl }
+                if (currentSection === 'extra') extraRaw.push(targetObj)
+                else if (currentSection === 'side') sideRaw.push(targetObj)
+                else mainRaw.push(targetObj)
               }
             }
           }
