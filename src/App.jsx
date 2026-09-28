@@ -6,7 +6,7 @@ import {
   List, ListItem, ListItemButton, ListItemIcon, ListItemText, TextField, Select, MenuItem,
   FormControl, InputLabel, Chip, Pagination, Dialog, DialogTitle, DialogContent,
   DialogActions, LinearProgress, Tooltip, Badge, Paper, InputAdornment,
-  CircularProgress, Divider, Stack, Grid, Modal
+  CircularProgress, Divider, Stack, Grid, Modal, ToggleButton, ToggleButtonGroup
 } from '@mui/material'
 import {
   Menu as MenuIcon, Close as CloseIcon, Search as SearchIcon,
@@ -332,92 +332,120 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
   return (
     <Box component="section" sx={{ pb: 6 }}>
       <Paper 
-        elevation={4} 
+        elevation={6} 
         sx={{ 
-          p: { xs: 2, md: 3 }, 
+          p: { xs: 2.5, md: 3.5 }, 
           mb: 4, 
-          borderRadius: 3, 
-          backgroundColor: 'rgba(20, 45, 102, 0.75)',
-          backdropFilter: 'blur(12px)',
-          border: '1px solid rgba(229, 191, 53, 0.3)'
+          borderRadius: 4, 
+          backgroundColor: 'rgba(18, 24, 36, 0.85)',
+          backdropFilter: 'blur(20px)',
+          border: '1px solid rgba(229, 191, 53, 0.25)',
+          boxShadow: '0 12px 40px rgba(0, 0, 0, 0.5)'
         }}
       >
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} md={5}>
+        <Stack spacing={2.5}>
+          {/* Top Row: Search Input, Scanner Button, Language Toggle */}
+          <Box 
+            sx={{ 
+              display: 'grid', 
+              gridTemplateColumns: { xs: '1fr', md: '1fr auto auto' }, 
+              gap: 2, 
+              alignItems: 'center' 
+            }}
+          >
             <TextField
               fullWidth
               variant="outlined"
-              size="small"
-              placeholder="Buscar cartas (ex: dragão, mestre, blue eyes)..."
+              placeholder="Buscar cartas por nome (ex: Dragão Branco, Mago Negro, Blue Eyes)..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon sx={{ color: 'primary.main' }} />
-                  </InputAdornment>
-                ),
-                endAdornment: searchTerm ? (
-                  <InputAdornment position="end">
-                    <IconButton size="small" onClick={() => setSearchTerm('')} sx={{ color: 'text.secondary' }}>
-                      <CloseIcon fontSize="small" />
-                    </IconButton>
-                  </InputAdornment>
-                ) : null
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon sx={{ color: 'primary.main', fontSize: 26 }} />
+                    </InputAdornment>
+                  ),
+                  endAdornment: searchTerm ? (
+                    <InputAdornment position="end">
+                      <IconButton size="small" onClick={() => setSearchTerm('')} sx={{ color: 'text.secondary' }}>
+                        <CloseIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ) : null,
+                  sx: { fontSize: '1rem', py: 0.5 }
+                }
               }}
             />
-          </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
             <Button
-              fullWidth
               variant="contained"
               color="primary"
               startIcon={<CameraIcon />}
               onClick={onOpenScanner}
-              sx={{ height: 40, fontWeight: 700 }}
+              sx={{ 
+                height: 48, 
+                px: 3,
+                whiteSpace: 'nowrap',
+                fontWeight: 700,
+                fontSize: '0.95rem',
+                background: 'linear-gradient(135deg, #E5BF35 0%, #b8941f 100%)',
+                color: '#0B0E14'
+              }}
             >
               Escanear Carta
             </Button>
-          </Grid>
 
-          <Grid item xs={12} sm={6} md={4}>
-            <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
-              <Typography variant="body2" sx={{ color: 'text.secondary', mr: 1, fontWeight: 600 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 600 }}>
                 Idioma:
               </Typography>
-              <Chip 
-                label="PT" 
-                color={lang === 'pt' ? 'primary' : 'default'} 
-                onClick={() => setLang('pt')} 
-                clickable 
-                size="small" 
-              />
-              <Chip 
-                label="EN" 
-                color={lang === 'en' ? 'primary' : 'default'} 
-                onClick={() => setLang('en')} 
-                clickable 
-                size="small" 
-              />
-              <Chip 
-                label="JP" 
-                color={lang === 'ja' ? 'primary' : 'default'} 
-                onClick={() => setLang('ja')} 
-                clickable 
-                size="small" 
-              />
-            </Stack>
-          </Grid>
+              <ToggleButtonGroup
+                value={lang}
+                exclusive
+                onChange={(_, newLang) => newLang && setLang(newLang)}
+                size="small"
+                color="primary"
+                sx={{
+                  backgroundColor: 'rgba(11, 14, 20, 0.6)',
+                  '& .MuiToggleButton-root': {
+                    color: 'text.secondary',
+                    fontWeight: 700,
+                    px: 1.5,
+                    py: 0.5,
+                    border: '1px solid rgba(229, 191, 53, 0.2)',
+                    '&.Mui-selected': {
+                      color: '#0B0E14',
+                      backgroundColor: '#E5BF35',
+                      fontWeight: 800
+                    }
+                  }
+                }}
+              >
+                <ToggleButton value="pt">PT</ToggleButton>
+                <ToggleButton value="en">EN</ToggleButton>
+                <ToggleButton value="ja">JP</ToggleButton>
+              </ToggleButtonGroup>
+            </Box>
+          </Box>
 
-          <Grid item xs={12} sm={4}>
+          {/* Bottom Row: Spacious Filter Dropdowns with minimum widths */}
+          <Box 
+            sx={{ 
+              display: 'grid', 
+              gridTemplateColumns: { xs: '1fr', sm: 'repeat(auto-fit, minmax(220px, 1fr))' }, 
+              gap: 2, 
+              alignItems: 'center' 
+            }}
+          >
             <FormControl fullWidth size="small">
-              <InputLabel id="type-filter-label" sx={{ color: 'text.secondary' }}>Tipo de Carta</InputLabel>
+              <InputLabel id="type-filter-label" sx={{ color: 'text.secondary', fontWeight: 600 }}>Tipo de Carta</InputLabel>
               <Select
                 labelId="type-filter-label"
                 value={typeFilter}
                 label="Tipo de Carta"
                 onChange={(e) => setTypeFilter(e.target.value)}
+                sx={{ color: 'text.primary', minWidth: 200 }}
               >
                 <MenuItem value="">Todos os Tipos</MenuItem>
                 <MenuItem value="monster">Monstro</MenuItem>
@@ -430,16 +458,15 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
                 <MenuItem value="link">Link</MenuItem>
               </Select>
             </FormControl>
-          </Grid>
 
-          <Grid item xs={12} sm={4}>
             <FormControl fullWidth size="small">
-              <InputLabel id="race-filter-label" sx={{ color: 'text.secondary' }}>Raça / Família</InputLabel>
+              <InputLabel id="race-filter-label" sx={{ color: 'text.secondary', fontWeight: 600 }}>Raça / Família</InputLabel>
               <Select
                 labelId="race-filter-label"
                 value={raceFilter}
                 label="Raça / Família"
                 onChange={(e) => setRaceFilter(e.target.value)}
+                sx={{ color: 'text.primary', minWidth: 200 }}
               >
                 <MenuItem value="">Todas as Raças</MenuItem>
                 {Array.from(races).sort().map(race => (
@@ -447,16 +474,15 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
                 ))}
               </Select>
             </FormControl>
-          </Grid>
 
-          <Grid item xs={12} sm={4}>
             <FormControl fullWidth size="small">
-              <InputLabel id="attr-filter-label" sx={{ color: 'text.secondary' }}>Atributo</InputLabel>
+              <InputLabel id="attr-filter-label" sx={{ color: 'text.secondary', fontWeight: 600 }}>Atributo</InputLabel>
               <Select
                 labelId="attr-filter-label"
                 value={attrFilter}
                 label="Atributo"
                 onChange={(e) => setAttrFilter(e.target.value)}
+                sx={{ color: 'text.primary', minWidth: 200 }}
               >
                 <MenuItem value="">Todos os Atributos</MenuItem>
                 <MenuItem value="LIGHT">Luz (LIGHT)</MenuItem>
@@ -468,8 +494,25 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
                 <MenuItem value="DIVINE">Divino (DIVINE)</MenuItem>
               </Select>
             </FormControl>
-          </Grid>
-        </Grid>
+
+            {hasFilter && (
+              <Button
+                variant="outlined"
+                color="secondary"
+                size="small"
+                onClick={() => {
+                  setSearchTerm('')
+                  setTypeFilter('')
+                  setRaceFilter('')
+                  setAttrFilter('')
+                }}
+                sx={{ height: 40, px: 3, whiteSpace: 'nowrap' }}
+              >
+                Limpar Filtros
+              </Button>
+            )}
+          </Box>
+        </Stack>
       </Paper>
 
       {hasFilter ? (
@@ -1013,6 +1056,12 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         if (byPass) return byPass
       }
 
+      if (c.imageUrl) {
+        const imageUrl = String(c.imageUrl).trim()
+        const byImage = cards.find(card => card._image === imageUrl)
+        if (byImage) return byImage
+      }
+
       const nameStr = String(c.name || c.cardName || c.title || c._ptName || '').trim().toLowerCase()
       if (nameStr) {
         const byName = cards.find(card => 
@@ -1052,32 +1101,42 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
             sideRaw = parsed.side || parsed.side_deck || parsed.sideDeck || []
           }
         } else {
-          // Parse TXT format
+          // Parse TXT format (exported format)
           const lines = content.split('\n')
           let currentSection = 'main'
           
-          for (const line of lines) {
+          for (let i = 0; i < lines.length; i++) {
+            const line = lines[i]
             const trimmed = line.trim()
+            
             if (trimmed.startsWith('NOME DO DECK:')) {
               importedDeckName = trimmed.replace('NOME DO DECK:', '').trim()
-            } else if (trimmed.includes('MAIN DECK')) {
+            } else if (trimmed.startsWith('--- MAIN DECK')) {
               currentSection = 'main'
-            } else if (trimmed.includes('EXTRA DECK')) {
+            } else if (trimmed.startsWith('--- EXTRA DECK')) {
               currentSection = 'extra'
-            } else if (trimmed.includes('SIDE DECK')) {
+            } else if (trimmed.startsWith('--- SIDE DECK')) {
               currentSection = 'side'
-            } else if (trimmed.startsWith('QUANTIDADE NO DECK:')) {
-              const qty = parseInt(trimmed.replace('QUANTIDADE NO DECK:', '').trim()) || 1
-              const nameLineIdx = lines.indexOf(line) - 2
-              if (nameLineIdx >= 0) {
-                const nameLine = lines[nameLineIdx].trim()
-                if (nameLine.startsWith('NOME DA CARTA:')) {
-                  const cardName = nameLine.replace('NOME DA CARTA:', '').trim()
-                  const targetObj = { name: cardName, qty }
-                  if (currentSection === 'extra') extraRaw.push(targetObj)
-                  else if (currentSection === 'side') sideRaw.push(targetObj)
-                  else mainRaw.push(targetObj)
+            } else if (trimmed.includes('(QUANTIDADE DESEJADA:')) {
+              // Format: "Nome da Carta (QUANTIDADE DESEJADA: 1x)"
+              const match = trimmed.match(/^(.+?)\s*\(QUANTIDADE DESEJADA:\s*(\d+)x\)$/)
+              if (match) {
+                const cardName = match[1].trim()
+                const qty = parseInt(match[2]) || 1
+                
+                // Check next line for image URL (optional)
+                let imageUrl = null
+                if (i + 1 < lines.length) {
+                  const nextLine = lines[i + 1].trim()
+                  if (nextLine.startsWith('IMAGEM DA CARTA:')) {
+                    imageUrl = nextLine.replace('IMAGEM DA CARTA:', '').trim()
+                  }
                 }
+                
+                const targetObj = { name: cardName, qty, imageUrl }
+                if (currentSection === 'extra') extraRaw.push(targetObj)
+                else if (currentSection === 'side') sideRaw.push(targetObj)
+                else mainRaw.push(targetObj)
               }
             }
           }
@@ -1728,8 +1787,8 @@ function App() {
         >
           {modalCard && (
             <>
-              <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb: 1 }}>
-                <Typography variant="h6" color="primary.main" fontWeight={700}>
+              <DialogTitle component="div" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb: 1 }}>
+                <Typography variant="h6" component="span" color="primary.main" fontWeight={700}>
                   {modalCard._ptName}
                 </Typography>
                 <IconButton onClick={() => setModalCard(null)} size="small" color="primary">
@@ -1752,11 +1811,11 @@ function App() {
                   />
                   <Box sx={{ flex: 1 }}>
                     {modalCard.text?.en?.name && modalCard.text?.en?.name !== modalCard.text?.pt?.name && (
-                      <Typography variant="subtitle2" sx={{ color: 'text.secondary', mb: 1, italic: true }}>
+                      <Typography variant="subtitle2" sx={{ color: 'text.secondary', mb: 1, fontStyle: 'italic' }}>
                         ({modalCard.text.en.name})
                       </Typography>
                     )}
-                    <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 2 }}>
+                    <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2 }}>
                       <Chip 
                         label={`Tipo: ${modalCard._cardType === 'monster' ? 'Monstro' : modalCard._cardType === 'spell' ? 'Magia' : modalCard._cardType === 'trap' ? 'Armadilha' : modalCard._cardType}`} 
                         color="primary" 
@@ -1772,7 +1831,7 @@ function App() {
                       {modalCard.type && (
                         <Chip label={getRacePT(modalCard.type)} size="small" variant="outlined" />
                       )}
-                    </Stack>
+                    </Box>
                     
                     {(modalCard.atk !== undefined || modalCard.def !== undefined) && (
                       <Paper sx={{ p: 1.5, mb: 2, backgroundColor: 'rgba(15,15,20,0.6)', display: 'flex', gap: 2 }}>
