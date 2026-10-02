@@ -1,5 +1,16 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import {
+  Box, Container, Typography, Paper, Grid, Card, CardContent, CardActionArea,
+  CardMedia, Button, Chip, Dialog, DialogTitle, DialogContent, DialogActions,
+  IconButton, Stack, Divider, Avatar, Badge, CircularProgress
+} from '@mui/material'
+import {
+  WhatsApp as WhatsAppIcon, CalendarMonth as CalendarIcon, Collections as PhotosIcon,
+  Movie as VideoIcon, CheckCircle as CheckIcon, Stars as StarIcon,
+  Close as CloseIcon, ArrowBack as PrevIcon, ArrowForward as NextIcon,
+  Lock as LockIcon, EventRepeat as RepeatIcon
+} from '@mui/icons-material'
 import { isAuthorized, authorize, setAuthorized } from './noiteAuth'
 import './NoiteDaRapaziada.css'
 
@@ -49,7 +60,7 @@ const UPCOMING_DATES = new Set([
   '2026-10-12'
 ])
 
-const WEEKDAY_HEADERS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
+const WEEKDAY_HEADERS = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
 
 const MONTH_TITLES = [
   'Janeiro', 'Fevereiro', 'Março', 'Abril',
@@ -68,57 +79,94 @@ function CalendarGrid({ month, year }) {
   for (let d = 1; d <= daysInMonth; d++) cells.push(d)
 
   return (
-    <div className="calendar-month">
-      <h3 className="calendar-month-title">{monthLabel}</h3>
-      <div className="calendar-weekdays">
-        {WEEKDAY_HEADERS.map(h => <span key={h} className="calendar-weekday">{h}</span>)}
-      </div>
-      <div className="calendar-days">
+    <Paper 
+      elevation={4} 
+      sx={{ 
+        p: 2, 
+        backgroundColor: 'rgba(18, 24, 36, 0.85)',
+        backdropFilter: 'blur(12px)',
+        border: '1px solid rgba(229, 191, 53, 0.2)',
+        borderRadius: 3
+      }}
+    >
+      <Typography color="primary.main" fontWeight={700} sx={{ mb: 1.5, fontSize: '1rem', textAlign: 'center' }}>
+        {monthLabel}
+      </Typography>
+      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 0.5, textAlign: 'center' }}>
+        {WEEKDAY_HEADERS.map((h, i) => (
+          <Typography key={i} variant="caption" sx={{ color: 'text.secondary', fontWeight: 700 }}>
+            {h}
+          </Typography>
+        ))}
         {cells.map((day, i) => {
           if (day === null) {
-            return <span key={`empty-${i}`} className="calendar-day empty" />
+            return <Box key={`empty-${i}`} />
           }
           const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
           const isOccurred = OCCURRED_DATES.has(dateStr)
           const isUpcoming = UPCOMING_DATES.has(dateStr)
-          const marker = isOccurred ? '×' : (isUpcoming ? '○' : '')
-          const cls = `calendar-day${isOccurred ? ' occurred' : ''}${isUpcoming ? ' upcoming' : ''}`
+
+          let bg = 'transparent'
+          let border = '1px solid rgba(255,255,255,0.05)'
+          let textColor = 'text.primary'
+
+          if (isOccurred) {
+            bg = 'rgba(16, 185, 129, 0.2)'
+            border = '1px solid #10B981'
+            textColor = '#10B981'
+          } else if (isUpcoming) {
+            bg = 'rgba(229, 191, 53, 0.2)'
+            border = '1px solid #E5BF35'
+            textColor = '#E5BF35'
+          }
+
           return (
-            <span key={dateStr} className={cls}>
-              <span className="calendar-marker">{marker}</span>
-              <span className="calendar-day-num">{day}</span>
-            </span>
+            <Box
+              key={dateStr}
+              sx={{
+                py: 0.75,
+                borderRadius: 1.5,
+                backgroundColor: bg,
+                border: border,
+                fontWeight: isOccurred || isUpcoming ? 800 : 500,
+                fontSize: '0.8rem',
+                color: textColor,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              {day}
+            </Box>
           )
         })}
-      </div>
-    </div>
+      </Box>
+    </Paper>
   )
 }
 
 function NoiteCalendar() {
   return (
-    <div className="calendar-section">
-      <div className="calendar-section-head">
-        <h2>📅 Calendário da Noite</h2>
-        <p className="calendar-subtitle">
-          As noites acontecem preferencialmente às sextas-feiras, de 15 em 15 dias,
-          com raras exceções para feriados. Marque os encontros que você já participou!
-        </p>
-      </div>
-      <div className="calendar-grid-wrapper">
+    <Box sx={{ mb: 6 }}>
+      <Box sx={{ textAlign: 'center', mb: 3 }}>
+        <Typography variant="h5" color="primary.main" fontWeight={800} gutterBottom sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+          <CalendarIcon color="primary" /> Calendário dos Encontros
+        </Typography>
+
+        <Stack direction="row" spacing={2} justifyContent="center" sx={{ mt: 1.5 }}>
+          <Chip icon={<CheckIcon style={{ color: '#10B981' }} />} label="Realizados" variant="outlined" sx={{ borderColor: '#10B981', color: '#10B981' }} />
+          <Chip icon={<StarIcon style={{ color: '#E5BF35' }} />} label="Próximos" variant="outlined" sx={{ borderColor: '#E5BF35', color: '#E5BF35' }} />
+        </Stack>
+      </Box>
+
+      <Grid container spacing={2}>
         {[6, 7, 8, 9].map(m => (
-          <CalendarGrid key={m} month={m} year={2026} />
+          <Grid item xs={12} sm={6} md={3} key={m}>
+            <CalendarGrid month={m} year={2026} />
+          </Grid>
         ))}
-      </div>
-      <div className="calendar-legend">
-        <span className="legend-item">
-          <span className="legend-symbol occurred">×</span> Noites que já aconteceram
-        </span>
-        <span className="legend-item">
-          <span className="legend-symbol upcoming">○</span> Próximas noites
-        </span>
-      </div>
-    </div>
+      </Grid>
+    </Box>
   )
 }
 
@@ -157,10 +205,19 @@ function NoiteVideo() {
   }, [])
 
   return (
-    <>
+    <Paper 
+      elevation={6}
+      sx={{ 
+        overflow: 'hidden', 
+        borderRadius: 4, 
+        border: '1px solid rgba(229, 191, 53, 0.3)',
+        backgroundColor: '#000',
+        boxShadow: '0 12px 40px rgba(0,0,0,0.8)'
+      }}
+    >
       <video
         ref={videoRef}
-        className="noite-video"
+        style={{ width: '100%', height: 'auto', display: 'block', maxHeight: '420px', objectFit: 'contain' }}
         src={NOITE_VIDEO_URL}
         controls
         autoPlay
@@ -168,15 +225,13 @@ function NoiteVideo() {
         playsInline
         loop
         preload="auto"
-      >
-        Seu navegador não suporta a reprodução de vídeo.
-      </video>
+      />
       {playFailed && (
-        <p className="history-video-hint-video">
-          O navegador bloqueou o autoplay com som. Clique no play do vídeo para assistir com som.
-        </p>
+        <Typography variant="caption" sx={{ p: 1, display: 'block', textAlign: 'center', color: 'text.secondary' }}>
+          Clique no play para ouvir com som.
+        </Typography>
       )}
-    </>
+    </Paper>
   )
 }
 
@@ -268,172 +323,299 @@ function NoiteDaRapaziada() {
   }
 
   return (
-    <div className="noite-rapaziada-page">
-      <div className="header-section">
-        <h1>🌙 Noite da Rapaziada</h1>
-        <p className="subtitle">Registros dos nossos encontros</p>
-      </div>
+    <Container maxWidth="xl" sx={{ py: 3 }}>
+      {/* Hero Banner Header */}
+      <Paper 
+        elevation={6}
+        sx={{
+          p: { xs: 3, md: 5 },
+          mb: 5,
+          borderRadius: 4,
+          background: 'linear-gradient(135deg, rgba(18,24,36,0.95) 0%, rgba(11,14,20,0.98) 100%)',
+          border: '1px solid rgba(229,191,53,0.3)',
+          boxShadow: '0 16px 48px rgba(0,0,0,0.6)',
+          textAlign: 'center',
+          position: 'relative',
+          overflow: 'hidden'
+        }}
+      >
+        <Typography variant="h3" color="primary.main" fontWeight={800} gutterBottom sx={{ letterSpacing: 1.5 }}>
+          🌙 Noite da Rapaziada
+        </Typography>
+        <Typography variant="subtitle1" color="text.secondary" sx={{ maxWidth: 700, mx: 'auto', mb: 3, fontSize: '1.1rem' }}>
+          Registros oficiais das nossas reuniões quinzenais para jogos, boas conversas e momentos inesquecíveis.
+        </Typography>
+        
+        <Stack direction="row" spacing={2} justifyContent="center" flexWrap="wrap" useFlexGap sx={{ mt: 2 }}>
+          <Button
+            variant="contained"
+            startIcon={<WhatsAppIcon />}
+            href={WHATSAPP_GROUP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              background: 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
+              color: '#fff',
+              px: 3,
+              py: 1.2,
+              fontWeight: 800,
+              fontSize: '0.95rem',
+              boxShadow: '0 4px 20px rgba(37, 211, 102, 0.4)',
+              '&:hover': {
+                background: 'linear-gradient(135deg, #20bd5a 0%, #0e7065 100%)'
+              }
+            }}
+          >
+            Entrar no Grupo do WhatsApp
+          </Button>
+        </Stack>
+      </Paper>
 
-      <div className="history-section">
-        <div className="history-text">
-          <p>
-            Em <strong>07/07/2026</strong> o <strong>Arthur</strong> nosso anfitrião propôs 
-            de fazer reuniões mais frequentes entre os amigos, conforme ele disse:
-          </p>
-          <blockquote>
-            "Este grupo foi criado para institucionalizar uma noite da semana para acontecer a 
-            <strong>NOITE DA RAPAZIADA</strong>"
-          </blockquote>
-          <p>
-            A ideia é nos reunir para conversar, jogar, e passar o tempo junto.
-            Depois disso começamos a fazer reuniões frequentes a cada 15 dias para jogar 
-            e encontrar com os amigos.
-          </p>
-          <p>
-            Abaixo estão os registros de cada um dos encontros para termos um histórico 
-            e não perdermos isso.
-          </p>
-          <div className="history-video">
-            <h3 className="history-video-title">🎬 Vídeo da Noite</h3>
-            <NoiteVideo />
-            <p className="history-video-hint">O vídeo começa automaticamente; ative o som se necessário.</p>
-          </div>
-          <div className="history-whatsapp">
-            <a
-              className="whatsapp-btn"
-              href={WHATSAPP_GROUP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+      {/* History and Video Grid */}
+      <Grid container spacing={4} sx={{ mb: 6 }}>
+        <Grid item xs={12} md={6}>
+          <Paper sx={{ p: 4, height: '100%', borderRadius: 4, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <Typography variant="h5" color="primary.main" fontWeight={700} gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <RepeatIcon color="primary" /> A História da Tradição
+            </Typography>
+            <Typography variant="body1" paragraph sx={{ lineHeight: 1.8, color: 'text.primary', mb: 2 }}>
+              Em <strong>07/07/2026</strong>, nosso anfitrião <strong>Arthur</strong> propôs institucionalizar encontros frequentes entre os amigos:
+            </Typography>
+            <Paper 
+              elevation={0}
+              sx={{
+                p: 2.5,
+                mb: 2,
+                backgroundColor: 'rgba(229, 191, 53, 0.08)',
+                borderLeft: '4px solid #E5BF35',
+                fontStyle: 'italic'
+              }}
             >
-              <span className="whatsapp-icon">💬</span>
-              Entrar no grupo da Noite da Rapaziada
-            </a>
-            <p className="whatsapp-hint">
-              Fale com um dos criadores para te adicionarem na lista de autorizados.
-            </p>
-          </div>
-        </div>
-      </div>
+              <Typography variant="body1" color="primary.main" fontWeight={600}>
+                "Este grupo foi criado para institucionalizar uma noite da semana para acontecer a NOITE DA RAPAZIADA"
+              </Typography>
+            </Paper>
+            <Typography variant="body1" sx={{ lineHeight: 1.8, color: 'text.secondary' }}>
+              Desde então, nos reunimos a cada 15 dias para jogar Yu-Gi-Oh!, conversar e celebrar nossa amizade.
+            </Typography>
+          </Paper>
+        </Grid>
 
+        <Grid item xs={12} md={6}>
+          <Box>
+            <Typography variant="h5" color="primary.main" fontWeight={700} gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+              <VideoIcon color="primary" /> Vídeo da Noite
+            </Typography>
+            <NoiteVideo />
+          </Box>
+        </Grid>
+      </Grid>
+
+      {/* Calendar Component */}
       <NoiteCalendar />
 
-      <div className="albums-section">
-        <h2>📸 Álbuns por Data</h2>
-        <div className="albums-grid">
+      {/* Albums Section */}
+      <Box sx={{ mb: 6 }}>
+        <Typography variant="h4" color="primary.main" fontWeight={800} sx={{ mb: 3, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+          <PhotosIcon color="primary" fontSize="large" /> Álbuns por Data
+        </Typography>
+
+        <Grid container spacing={3}>
           {Object.entries(ALBUM_DATA).map(([date, album]) => {
             const albumPreview = previews[date] || []
+            const coverImage = album.cover || albumPreview[0]
+
             return (
-              <div 
-                key={date} 
-                className="album-card"
-                onClick={() => openAlbum(date)}
-              >
-                <div className="album-cover">
-                  <div className={`album-preview-area ${albumPreview.length ? 'has-photos' : ''}`}>
-                    {album.cover ? (
-                      <img
-                        className="album-cover-img"
-                        src={album.cover}
-                        alt=""
-                        loading="lazy"
-                        onError={(e) => { e.target.style.display = 'none' }}
+              <Grid item xs={12} sm={6} md={4} key={date}>
+                <Card 
+                  sx={{ 
+                    borderRadius: 4,
+                    transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+                    border: '1px solid rgba(229,191,53,0.25)',
+                    '&:hover': {
+                      transform: 'translateY(-6px)',
+                      boxShadow: '0 12px 32px rgba(229,191,53,0.3)',
+                      borderColor: '#E5BF35'
+                    }
+                  }}
+                >
+                  <CardActionArea onClick={() => openAlbum(date)}>
+                    <Box sx={{ position: 'relative', height: 220, backgroundColor: '#000' }}>
+                      {coverImage ? (
+                        <CardMedia
+                          component="img"
+                          height="220"
+                          image={coverImage}
+                          alt={album.title}
+                          sx={{ objectFit: 'cover' }}
+                        />
+                      ) : (
+                        <Box sx={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+                          <PhotosIcon sx={{ fontSize: 60, color: 'text.secondary' }} />
+                        </Box>
+                      )}
+                      
+                      <Chip
+                        label={`${album.photos} FOTOS`}
+                        color="primary"
+                        size="small"
+                        sx={{
+                          position: 'absolute',
+                          top: 12,
+                          right: 12,
+                          fontWeight: 800,
+                          boxShadow: '0 4px 12px rgba(0,0,0,0.6)'
+                        }}
                       />
-                    ) : albumPreview.length > 0 ? (
-                      <div className="album-preview-grid">
-                        {albumPreview.slice(0, 6).map((src, i) => (
-                          <div key={i} className="album-preview-photo">
-                            <img 
-                              src={src} 
-                              alt=""
-                              loading="lazy"
-                              onError={(e) => { e.target.style.visibility = 'hidden' }}
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="album-preview-placeholder">📸</div>
-                    )}
-                  </div>
-                  <div className="album-cover-overlay">
-                    <span className="album-date">{date}</span>
-                    <span className="album-photo-count">{album.photos} fotos</span>
-                  </div>
-                  <div className="album-open-hint">📂 Abrir álbum</div>
-                </div>
-                <div className="album-info">
-                  <h3>{album.title}</h3>
-                  <p>{album.description}</p>
-                </div>
-              </div>
+
+                      <Chip
+                        label={date}
+                        size="small"
+                        sx={{
+                          position: 'absolute',
+                          bottom: 12,
+                          left: 12,
+                          backgroundColor: 'rgba(11,14,20,0.85)',
+                          color: '#fff',
+                          fontWeight: 700,
+                          backdropFilter: 'blur(8px)'
+                        }}
+                      />
+                    </Box>
+
+                    <CardContent sx={{ p: 2.5 }}>
+                      <Typography variant="h6" color="primary.main" fontWeight={700} gutterBottom noWrap>
+                        {album.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" sx={{ minHeight: 40 }}>
+                        {album.description}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
             )
           })}
-        </div>
-      </div>
+        </Grid>
+      </Box>
 
-      {showAlbum && (
-        <div className="album-modal-overlay" onClick={closeAlbum}>
-          <div className="album-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="album-modal-header">
-              <h2>{ALBUM_DATA[showAlbum]?.title || showAlbum}</h2>
-              <button className="close-modal-btn" onClick={closeAlbum}>&times;</button>
-            </div>
-            
-            {loading ? (
-              <div className="album-loading">Carregando fotos...</div>
-            ) : albumPhotos.length === 0 ? (
-              <div className="album-empty">
-                <p>Nenhuma foto encontrada neste álbum.</p>
-              </div>
-            ) : (
-              <div className="album-photos-grid">
-                {albumPhotos.map((photo, index) => (
-                  <div key={index} className="album-photo-item" onClick={() => setViewPhotoIndex(index)}>
-                    <img 
-                      src={photo} 
-                      alt={`${showAlbum} - Foto ${index + 1}`}
+      {/* Album Photos Dialog Modal */}
+      <Dialog
+        open={Boolean(showAlbum)}
+        onClose={closeAlbum}
+        maxWidth="lg"
+        fullWidth
+      >
+        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography variant="h6" color="primary.main" fontWeight={700}>
+            {ALBUM_DATA[showAlbum]?.title || showAlbum}
+          </Typography>
+          <IconButton onClick={closeAlbum} color="primary">
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent dividers>
+          {loading ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', p: 6 }}>
+              <CircularProgress color="primary" />
+            </Box>
+          ) : albumPhotos.length === 0 ? (
+            <Typography variant="body1" textAlign="center" color="text.secondary" sx={{ p: 4 }}>
+              Nenhuma foto encontrada neste álbum.
+            </Typography>
+          ) : (
+            <Grid container spacing={2}>
+              {albumPhotos.map((photo, index) => (
+                <Grid item xs={6} sm={4} md={3} key={index}>
+                  <Card 
+                    sx={{ 
+                      borderRadius: 3, 
+                      cursor: 'pointer',
+                      border: '1px solid rgba(229,191,53,0.2)',
+                      '&:hover': { opacity: 0.9, borderColor: '#E5BF35' }
+                    }}
+                    onClick={() => setViewPhotoIndex(index)}
+                  >
+                    <CardMedia
+                      component="img"
+                      height="160"
+                      image={photo}
+                      alt={`Foto ${index + 1}`}
+                      sx={{ objectFit: 'cover' }}
                       loading="lazy"
-                      onError={(e) => { e.target.style.display = 'none' }}
                     />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          )}
+        </DialogContent>
+        <DialogActions sx={{ px: 3, py: 2 }}>
+          <Button variant="outlined" color="primary" onClick={closeAlbum}>
+            Fechar
+          </Button>
+        </DialogActions>
+      </Dialog>
 
-      {viewPhotoIndex !== null && albumPhotos[viewPhotoIndex] && (
-        <div
-          className="photo-viewer-overlay"
-          onClick={() => setViewPhotoIndex(null)}
-        >
-          <button className="photo-viewer-close" onClick={() => setViewPhotoIndex(null)} title="Fechar">&times;</button>
+      {/* Lightbox / Fullscreen Image Viewer Modal */}
+      <Dialog
+        open={viewPhotoIndex !== null}
+        onClose={() => setViewPhotoIndex(null)}
+        maxWidth="xl"
+        fullWidth
+        PaperProps={{
+          sx: {
+            backgroundColor: 'rgba(5, 7, 10, 0.95)',
+            backdropFilter: 'blur(20px)',
+            border: 'none',
+            boxShadow: 'none'
+          }
+        }}
+      >
+        {viewPhotoIndex !== null && albumPhotos[viewPhotoIndex] && (
+          <Box sx={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', p: 2, minHeight: '80vh' }}>
+            <IconButton
+              onClick={() => setViewPhotoIndex(null)}
+              sx={{ position: 'absolute', top: 16, right: 16, color: '#fff', backgroundColor: 'rgba(0,0,0,0.5)' }}
+            >
+              <CloseIcon />
+            </IconButton>
 
-          <button
-            className="photo-nav photo-nav-prev"
-            onClick={(e) => { e.stopPropagation(); showPrevPhoto() }}
-            title="Anterior (←)"
-          >&#8249;</button>
+            <IconButton
+              onClick={showPrevPhoto}
+              sx={{ position: 'absolute', left: 16, color: '#E5BF35', backgroundColor: 'rgba(0,0,0,0.6)', p: 1.5 }}
+            >
+              <PrevIcon fontSize="large" />
+            </IconButton>
 
-          <div className="photo-viewer" onClick={(e) => e.stopPropagation()}>
-            <img
+            <Box
+              component="img"
               src={albumPhotos[viewPhotoIndex]}
               alt={`Foto ${viewPhotoIndex + 1}`}
+              sx={{
+                maxWidth: '90vw',
+                maxHeight: '75vh',
+                objectFit: 'contain',
+                borderRadius: 3,
+                boxShadow: '0 0 40px rgba(0,0,0,0.9)',
+                border: '2px solid rgba(229,191,53,0.4)'
+              }}
             />
-            <span className="photo-viewer-hint">
-              {viewPhotoIndex + 1} / {albumPhotos.length} · use ← → para navegar · fora ou &times; para fechar
-            </span>
-          </div>
 
-          <button
-            className="photo-nav photo-nav-next"
-            onClick={(e) => { e.stopPropagation(); showNextPhoto() }}
-            title="Próxima (→)"
-          >&#8250;</button>
-        </div>
-      )}
-    </div>
+            <IconButton
+              onClick={showNextPhoto}
+              sx={{ position: 'absolute', right: 16, color: '#E5BF35', backgroundColor: 'rgba(0,0,0,0.6)', p: 1.5 }}
+            >
+              <NextIcon fontSize="large" />
+            </IconButton>
+
+            <Typography variant="body2" sx={{ mt: 2, color: 'primary.main', fontWeight: 700 }}>
+              {viewPhotoIndex + 1} / {albumPhotos.length}
+            </Typography>
+          </Box>
+        )}
+      </Dialog>
+    </Container>
   )
 }
 

@@ -659,7 +659,55 @@ function usePlayerState(initialLp, playerName = 'P1') {
   }
 }
 
-function SinglePlayerBattle({ onBack, currentTemplate, setTemplate }) {
+function useWakeLock(enabled) {
+  const wakeLockRef = useRef(null)
+
+  const requestWakeLock = useCallback(async () => {
+    if (!enabled || !('wakeLock' in navigator)) return
+    try {
+      wakeLockRef.current = await navigator.wakeLock.request('screen')
+      wakeLockRef.current.addEventListener('release', () => {
+        wakeLockRef.current = null
+      })
+    } catch (err) {
+      console.warn('Wake Lock não suportado ou negado:', err)
+    }
+  }, [enabled])
+
+  const releaseWakeLock = useCallback(async () => {
+    if (wakeLockRef.current) {
+      try {
+        await wakeLockRef.current.release()
+        wakeLockRef.current = null
+      } catch (err) {
+        console.warn('Erro ao liberar Wake Lock:', err)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (enabled) {
+      requestWakeLock()
+    } else {
+      releaseWakeLock()
+    }
+    return () => releaseWakeLock()
+  }, [enabled, requestWakeLock, releaseWakeLock])
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (enabled && document.visibilityState === 'visible' && !wakeLockRef.current) {
+        requestWakeLock()
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }, [enabled, requestWakeLock])
+
+  return { requestWakeLock, releaseWakeLock }
+}
+
+function SinglePlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn }) {
   const [lpInitial, setLpInitial] = useState(DEFAULT_LP)
   const player = usePlayerState(lpInitial)
   const [soundOpen, setSoundOpen] = useState(false)
@@ -669,9 +717,10 @@ function SinglePlayerBattle({ onBack, currentTemplate, setTemplate }) {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [musicPlayerOpen, setMusicPlayerOpen] = useState(true)
 
+  useWakeLock(keepScreenOn)
+
   return (
     <div className="battle-arena" style={{ background: currentTemplate.bgGradient }}>
-      {/* Componente Intermediário Superior (Aproxima os botões da barra de navegação) */}
       <div className="top-nav-wrapper">
         <div className="ygo-header-bar">
           <button className="ygo-nav-hex" onClick={onBack} title="Voltar">↩</button>
@@ -726,7 +775,7 @@ function SinglePlayerBattle({ onBack, currentTemplate, setTemplate }) {
   )
 }
 
-function DuoPlayerBattle({ onBack, currentTemplate, setTemplate }) {
+function DuoPlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn }) {
   const [lpInitial, setLpInitial] = useState(DEFAULT_LP)
   const player1 = usePlayerState(lpInitial, 'Jogador 1')
   const player2 = usePlayerState(lpInitial, 'Jogador 2')
@@ -736,6 +785,8 @@ function DuoPlayerBattle({ onBack, currentTemplate, setTemplate }) {
   const [historyOpen, setHistoryOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [musicPlayerOpen, setMusicPlayerOpen] = useState(true)
+
+  useWakeLock(keepScreenOn)
 
   return (
     <div className="battle-arena" style={{ background: currentTemplate.bgGradient }}>
@@ -820,9 +871,10 @@ function DuoPlayerBattle({ onBack, currentTemplate, setTemplate }) {
 export default function BattlePage() {
   const [mode, setMode] = useState(null)
   const [currentTemplate, setTemplate] = useState(TEMPLATES[0])
+  const [keepScreenOn, setKeepScreenOn] = useState(false)
 
-  if (mode === '1') return <SinglePlayerBattle onBack={() => setMode(null)} currentTemplate={currentTemplate} setTemplate={setTemplate} />
-  if (mode === '2') return <DuoPlayerBattle onBack={() => setMode(null)} currentTemplate={currentTemplate} setTemplate={setTemplate} />
+  if (mode === '1') return <SinglePlayerBattle onBack={() => setMode(null)} currentTemplate={currentTemplate} setTemplate={setTemplate} keepScreenOn={keepScreenOn} />
+  if (mode === '2') return <DuoPlayerBattle onBack={() => setMode(null)} currentTemplate={currentTemplate} setTemplate={setTemplate} keepScreenOn={keepScreenOn} />
 
   return (
     <div className="battle-selection">
@@ -843,6 +895,17 @@ export default function BattlePage() {
           <span className="battle-select-label">2 Jogadores</span>
           <span className="battle-select-desc">Mesmo dispositivo (Versus)</span>
         </button>
+      </div>
+      <div className="battle-screen-wake-option">
+        <label className="wake-lock-label">
+          <input
+            type="checkbox"
+            checked={keepScreenOn}
+            onChange={(e) => setKeepScreenOn(e.target.checked)}
+          />
+          <span className="wake-lock-text">🔋 Não apagar a tela (manter acordado)</span>
+        </label>
+        <p className="wake-lock-hint">Mantém a tela ligada durante o duelo no celular</p>
       </div>
     </div>
   )

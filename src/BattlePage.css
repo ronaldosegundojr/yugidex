@@ -840,4 +840,41 @@
   .ygo-calc-keypad { padding: 10px; }
   .ygo-calc-btn { height: 40px; font-size: 1.1rem; }
   .ygo-calc-lp-box, .ygo-calc-input-text { font-size: 1.3rem; }
+
+  .battle-screen-wake-option {
+    margin-top: 1.5rem;
+    padding: 1rem 1.5rem;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid #ffff00;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .wake-lock-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffff00;
+  }
+
+  .wake-lock-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #ffff00;
+    cursor: pointer;
+  }
+
+  .wake-lock-hint {
+    margin-top: 0.5rem;
+    font-size: 0.7rem;
+    color: #aaa;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+  }
 }
