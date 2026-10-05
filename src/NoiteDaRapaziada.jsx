@@ -18,7 +18,7 @@ const ALBUM_DATA = {
   '15-07-2026': {
     title: '15/07/2026 - Primeiro Encontro',
     description: 'O encontro que deu início a tudo',
-    photos: 26
+    photos: 27
   },
   '27-07-2026': {
     title: '27/07/2026 - Segundo Encontro',
@@ -28,12 +28,12 @@ const ALBUM_DATA = {
   '17-08-2026': {
     title: '17/08/2026 - Terceiro Encontro',
     description: 'Mais uma noite memorável',
-    photos: 9
+    photos: 10
   },
   '28-08-2026': {
     title: '28/08/2026 - Quarto Encontro',
     description: 'Fechando o mês com chave de ouro',
-    photos: 19
+    photos: 18
   },
   '07-09-2026': {
     title: '07/09/2026 - Quinto Encontro',
@@ -424,6 +424,9 @@ function NoiteDaRapaziada() {
           {Object.entries(ALBUM_DATA).map(([date, album]) => {
             const albumPreview = previews[date] || []
             const coverImage = album.cover || albumPreview[0]
+            // O manifest.json e a fonte da verdade; a contagem estatica so
+            // aparece enquanto ele ainda nao carregou.
+            const photoCount = albumPreview.length || album.photos
 
             return (
               <Grid item xs={12} sm={6} md={4} key={date}>
@@ -456,7 +459,7 @@ function NoiteDaRapaziada() {
                       )}
                       
                       <Chip
-                        label={`${album.photos} FOTOS`}
+                        label={`${photoCount} FOTOS`}
                         color="primary"
                         size="small"
                         sx={{

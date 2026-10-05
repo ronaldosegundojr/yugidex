@@ -3,7 +3,11 @@ import react from '@vitejs/plugin-react'
 import fs from 'fs'
 import path from 'path'
 
-const PHOTOS_SOURCE = 'C:/Users/Ronaldo/Desktop/yugidex/Fotos Noite da Rapaziada'
+// Pasta opcional de origem para copiar fotos novas durante o desenvolvimento.
+// As fotos ja versionadas em public/fotos-noite-rapaziada sao a fonte de
+// verdade do build e da producao; este caminho so evita duplicar o trabalho
+// de copia manual na sua maquina.
+const PHOTOS_SOURCE = 'Fotos Noite da Rapaziada'
 const PHOTOS_DEST = 'public/fotos-noite-rapaziada'
 
 function copyPhotosPlugin() {
@@ -11,7 +15,7 @@ function copyPhotosPlugin() {
     name: 'copy-photos',
     async buildStart() {
       if (!fs.existsSync(PHOTOS_SOURCE)) {
-        console.warn('Photos source folder not found:', PHOTOS_SOURCE)
+        console.log('Pasta de origem de fotos nao encontrada, usando as fotos em public/:', PHOTOS_SOURCE)
         return
       }
       
@@ -42,9 +46,11 @@ function copyPhotosPlugin() {
       console.log('Photos copied to public folder')
     },
     configureServer(server) {
+      if (!fs.existsSync(PHOTOS_SOURCE)) return
+
       server.middlewares.use('/fotos-noite-rapaziada', (req, res, next) => {
-        const filePath = path.join(PHOTOS_SOURCE, req.url)
-        if (fs.existsSync(filePath)) {
+        const filePath = path.join(PHOTOS_SOURCE, decodeURIComponent(req.url.split('?')[0]))
+        if (filePath.startsWith(path.resolve(PHOTOS_SOURCE)) && fs.existsSync(filePath)) {
           res.sendFile(filePath)
         } else {
           next()
