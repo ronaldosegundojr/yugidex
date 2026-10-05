@@ -1,17 +1,9 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import './BattlePage.css'
-
-const SOUND_MAP = {
-  'point-drop': '/sounds/point-drop.mp3',
-  'mamaco': '/sounds/eu-vim-ver-o-mamaco.mp3',
-  'hora-do-duelo': '/sounds/yu-gi-oh-e-hora-do-duelo.mp3',
-  'life-points': '/sounds/yugioh-life-points.mp3',
-  'oh-no-oh-yes': '/sounds/yugioh-oh-no-oh-yes.mp3',
-  'sua-vez': '/sounds/sua-vez.mp3',
-  'meme': '/sounds/yugioh-meme.mp3',
-  'time-to-duel': '/sounds/Its-time-to-duel.mp3',
-  'baixar-carta': '/sounds/yugioh-baixar-carta.mp3',
-}
+import BattleScreenSwitcher from './components/BattleScreenSwitcher'
+import FieldScreen from './components/FieldScreen'
+import { useBattleSession } from './hooks/useBattleSession'
+import { playBattleSound } from './battleSounds'
 
 const SOUND_BUTTONS = [
   { key: 'mamaco', label: 'Eu vim ver o macaco', icon: '🐒' },
@@ -45,24 +37,8 @@ const TEMPLATES = [
   { id: 'rainbow-disc', name: 'Disco Rainbow LP (Duelo Clássico)', fontClass: 'style-rainbow', bgGradient: 'radial-gradient(circle at center, #2b2d42 0%, #11121e 100%)', color: '#ffffff' },
 ]
 
-const globalAudioMap = {}
-if (typeof window !== 'undefined') {
-  Object.entries(SOUND_MAP).forEach(([key, src]) => {
-    const audio = new Audio(src)
-    audio.preload = 'auto'
-    globalAudioMap[key] = audio
-  })
-}
-
 function playSoundInstant(key) {
-  const audio = globalAudioMap[key]
-  if (audio) {
-    audio.currentTime = 0
-    audio.play().catch(() => {})
-  } else {
-    const newAudio = new Audio(SOUND_MAP[key])
-    newAudio.play().catch(() => {})
-  }
+  playBattleSound(key)
 }
 
 function LPChangeIndicator({ change }) {
@@ -707,7 +683,7 @@ function useWakeLock(enabled) {
   return { requestWakeLock, releaseWakeLock }
 }
 
-function SinglePlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn }) {
+function SinglePlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn, onResetBattle }) {
   const [lpInitial, setLpInitial] = useState(DEFAULT_LP)
   const player = usePlayerState(lpInitial)
   const [soundOpen, setSoundOpen] = useState(false)
@@ -716,6 +692,11 @@ function SinglePlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn
   const [historyOpen, setHistoryOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [musicPlayerOpen, setMusicPlayerOpen] = useState(true)
+
+  const handleReset = useCallback(() => {
+    player.reset()
+    onResetBattle?.()
+  }, [player, onResetBattle])
 
   useWakeLock(keepScreenOn)
 
@@ -729,7 +710,7 @@ function SinglePlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn
 
           <button className="ygo-nav-hex center-hex" onClick={() => setDiceCoinOpen(true)} title="Dado & Moeda">🎲🪙</button>
 
-          <button className="ygo-nav-hex" onClick={player.reset} title="Resetar LP">⟲</button>
+          <button className="ygo-nav-hex" onClick={handleReset} title="Resetar LP">⟲</button>
           <button className="ygo-nav-hex" onClick={() => setHistoryOpen(true)} title="Histórico">📖</button>
           <button className="ygo-nav-hex" onClick={() => setSettingsOpen(true)} title="Configurações">⚙️</button>
         </div>
@@ -751,7 +732,7 @@ function SinglePlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn
           setSelectedValue={player.setSelectedValue}
           onAdd={() => player.add()}
           onSubtract={() => player.subtract()}
-          onReset={player.reset}
+          onReset={handleReset}
           onCustom={() => player.setShowCustom(true)}
         />
       </div>
@@ -775,7 +756,7 @@ function SinglePlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn
   )
 }
 
-function DuoPlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn }) {
+function DuoPlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn, onResetBattle }) {
   const [lpInitial, setLpInitial] = useState(DEFAULT_LP)
   const player1 = usePlayerState(lpInitial, 'Jogador 1')
   const player2 = usePlayerState(lpInitial, 'Jogador 2')
@@ -786,6 +767,22 @@ function DuoPlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn })
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [musicPlayerOpen, setMusicPlayerOpen] = useState(true)
 
+  const handleResetBattle = useCallback(() => {
+    player1.reset()
+    player2.reset()
+    onResetBattle?.()
+  }, [player1, player2, onResetBattle])
+
+  const handleResetPlayer1 = useCallback(() => {
+    player1.reset()
+    onResetBattle?.()
+  }, [player1, onResetBattle])
+
+  const handleResetPlayer2 = useCallback(() => {
+    player2.reset()
+    onResetBattle?.()
+  }, [player2, onResetBattle])
+
   useWakeLock(keepScreenOn)
 
   return (
@@ -795,7 +792,7 @@ function DuoPlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn })
         <button className="ygo-nav-hex" onClick={() => setSoundOpen(true)} title="Sons">🎵</button>
         <button className="ygo-nav-hex" onClick={() => setDesignOpen(true)} title="Design">🎨</button>
         <button className="ygo-nav-hex center-hex" onClick={() => setDiceCoinOpen(true)} title="Dado & Moeda">🎲🪙</button>
-        <button className="ygo-nav-hex" onClick={() => { player1.reset(); player2.reset(); }} title="Resetar">⟲</button>
+        <button className="ygo-nav-hex" onClick={handleResetBattle} title="Resetar">⟲</button>
         <button className="ygo-nav-hex" onClick={() => setHistoryOpen(true)} title="Histórico">📖</button>
         <button className="ygo-nav-hex" onClick={() => setSettingsOpen(true)} title="Configurações">⚙️</button>
       </div>
@@ -815,7 +812,7 @@ function DuoPlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn })
             setSelectedValue={player1.setSelectedValue}
             onAdd={() => player1.add()}
             onSubtract={() => player1.subtract()}
-            onReset={player1.reset}
+            onReset={handleResetPlayer1}
             onCustom={() => player1.setShowCustom(true)}
           />
           {player1.showCustom && (
@@ -844,7 +841,7 @@ function DuoPlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn })
             setSelectedValue={player2.setSelectedValue}
             onAdd={() => player2.add()}
             onSubtract={() => player2.subtract()}
-            onReset={player2.reset}
+            onReset={handleResetPlayer2}
             onCustom={() => player2.setShowCustom(true)}
           />
           {player2.showCustom && (
@@ -868,13 +865,76 @@ function DuoPlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn })
   )
 }
 
-export default function BattlePage() {
+function BattleSession({ mode, cards, currentTemplate, setTemplate, keepScreenOn, onBack }) {
+  const [screen, setScreen] = useState(0)
+  // A brand new battle id means a brand new (empty) field snapshot.
+  const { battleId, startNewBattle } = useBattleSession(mode)
+
+  const handleResetBattle = useCallback(() => {
+    startNewBattle()
+  }, [startNewBattle])
+
+  const isDuo = mode === '2'
+
+  const screens = [
+    {
+      key: 'life-points',
+      label: 'Pontos de Vida',
+      node: isDuo ? (
+        <DuoPlayerBattle
+          onBack={onBack}
+          currentTemplate={currentTemplate}
+          setTemplate={setTemplate}
+          keepScreenOn={keepScreenOn}
+          onResetBattle={handleResetBattle}
+        />
+      ) : (
+        <SinglePlayerBattle
+          onBack={onBack}
+          currentTemplate={currentTemplate}
+          setTemplate={setTemplate}
+          keepScreenOn={keepScreenOn}
+          onResetBattle={handleResetBattle}
+        />
+      ),
+    },
+    {
+      key: 'battle-field',
+      label: 'Campo de Batalha',
+      node: (
+        <FieldScreen
+          battleId={battleId}
+          mode={mode}
+          cards={cards}
+          currentTemplate={currentTemplate}
+          onBackToLP={() => setScreen(0)}
+        />
+      ),
+    },
+  ]
+
+  return (
+    <BattleScreenSwitcher index={screen} onIndexChange={setScreen} screens={screens} />
+  )
+}
+
+export default function BattlePage({ cards = [] }) {
   const [mode, setMode] = useState(null)
   const [currentTemplate, setTemplate] = useState(TEMPLATES[0])
   const [keepScreenOn, setKeepScreenOn] = useState(false)
 
-  if (mode === '1') return <SinglePlayerBattle onBack={() => setMode(null)} currentTemplate={currentTemplate} setTemplate={setTemplate} keepScreenOn={keepScreenOn} />
-  if (mode === '2') return <DuoPlayerBattle onBack={() => setMode(null)} currentTemplate={currentTemplate} setTemplate={setTemplate} keepScreenOn={keepScreenOn} />
+  if (mode === '1' || mode === '2') {
+    return (
+      <BattleSession
+        mode={mode}
+        cards={cards}
+        currentTemplate={currentTemplate}
+        setTemplate={setTemplate}
+        keepScreenOn={keepScreenOn}
+        onBack={() => setMode(null)}
+      />
+    )
+  }
 
   return (
     <div className="battle-selection">

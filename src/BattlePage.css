@@ -878,3 +878,952 @@
     font-family: 'Orbitron', sans-serif;
   }
 }
+/* ============================================================
+   Alternador de telas (LP <-> Campo de Batalha)
+
+   A tela ativa usa `display: contents`, entao o wrapper nao cria
+   nenhuma caixa: o layout da arena de LP fica exatamente como
+   estava. Nenhum transform e aplicado aqui, para nao alterar
+   a tela de LP nem conter os `position: fixed` dos modais.
+   ============================================================ */
+
+.battle-screens {
+  position: relative;
+  width: 100%;
+  /* O gesto horizontal e do switcher; a rolagem vertical e nativa. */
+  touch-action: pan-y;
+}
+
+.battle-screen-slot {
+  min-width: 0;
+}
+
+.battle-screen-nav {
+  position: absolute;
+  left: 50%;
+  bottom: calc(6px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  background: rgba(6, 8, 16, 0.85);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.55);
+  z-index: 60;
+}
+
+.carousel-arrow {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.45);
+  background: rgba(255, 215, 0, 0.08);
+  color: #ffd700;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.carousel-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.carousel-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.carousel-tab {
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.carousel-tab.is-active {
+  border-color: rgba(255, 215, 0, 0.6);
+  background: rgba(255, 215, 0, 0.14);
+  color: #ffd700;
+}
+
+/* ============================================================
+   Campo de Batalha - grade de 7 colunas x 5 linhas
+
+   Todas as medidas vem de `--u`, que vale 1 pixel da referencia (404 x 450).
+   Assim o tabuleiro inteiro escala junto e nunca estoura a tela.
+
+Carta   43 x 60 u   |  gap horizontal 15 u  |  gap vertical 7 u
+   Faixa central 124 u  |  margens 5-10 u      |  tabuleiro 404 x 450 u
+   ============================================================ */
+
+.field-screen {
+  /* Escala do tabuleiro. O tabuleiro montado mede 404u x 450u, entao
+     --u e o menor entre "caber na altura" e "caber na largura".
+     Derivar os dois lados da equacao evita distorcer a proporcao. */
+  --u: min(calc((100vh - 135px) / 450), calc((100vw - 24px) / 404), 2.4px);
+
+  --mat-w: calc(404 * var(--u));
+  --card-w: calc(43 * var(--u));
+  --card-h: calc(60 * var(--u));
+  --gap-x: calc(15 * var(--u));
+  --gap-y: calc(7 * var(--u));
+  /* Faixa central: duas linhas de carta (oponente em cima, jogador embaixo). */
+  --band-h: calc(124 * var(--u));
+  --plate-h: calc(17 * var(--u));
+
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  /* O style inline aplica o shorthand `background`, que zera background-size.
+     O !important e necessario para o cover vencer, como no .battle-arena. */
+  background-size: cover !important;
+  background-position: center 42% !important;
+  background-repeat: no-repeat !important;
+}
+
+.field-screen-title {
+  align-self: center;
+  color: #ffd700;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.field-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px 70px;
+  overflow: hidden;
+}
+
+.field-mat {
+  width: var(--mat-w);
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-y);
+}
+
+/* Cada meio campo e uma grade 7 x 2 com as colunas laterais decorativas. */
+.field-side {
+  display: flex;
+  flex-direction: column;
+  gap: calc(3 * var(--u));
+  padding: calc(5 * var(--u));
+  border-radius: calc(9 * var(--u));
+  /* Contorno do duelista: azul no jogador 1, vermelho no jogador 2. */
+  border: calc(1.5 * var(--u)) solid;
+}
+
+.field-side-player {
+  border-color: #2f6bff;
+  box-shadow: 0 0 calc(14 * var(--u)) rgba(47, 107, 255, 0.45), inset 0 0 calc(18 * var(--u)) rgba(47, 107, 255, 0.12);
+}
+
+.field-side-opponent {
+  border-color: #d63b3b;
+  box-shadow: 0 0 calc(14 * var(--u)) rgba(214, 59, 59, 0.45), inset 0 0 calc(18 * var(--u)) rgba(214, 59, 59, 0.12);
+  /* O oponente e o mesmo DOM rotacionado 180 graus. */
+  transform: rotate(180deg);
+}
+
+.field-side-grid {
+  display: grid;
+  grid-template-columns: repeat(7, var(--card-w));
+  /* Altura de linha fixa: as linhas nao mudam quando um slot recebe carta. */
+  grid-auto-rows: var(--card-h);
+  gap: var(--gap-y) var(--gap-x);
+  justify-content: center;
+}
+
+/* --- Faixa central (linha 3) --- */
+
+.field-center {
+  position: relative;
+  height: var(--band-h);
+}
+
+/* Faixa cinza em degraus: o topo acompanha a borda dos campos e o centro
+   fica mais escuro, separando visualmente as duas linhas de cartas. */
+.field-band {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #9aa3ad 0%, #6f777f 100%);
+  clip-path: polygon(
+    0% 100%, 0% 58%,
+    12% 58%, 26% 26%,
+    74% 26%, 88% 58%,
+    100% 58%, 100% 100%
+  );
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Divisoria central: separa a linha do oponente da linha do jogador. */
+.field-band::after {
+  content: '';
+  position: absolute;
+  left: 26%;
+  right: 26%;
+  top: 50%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Quadrado cinza central decorativo (linha 3, coluna 4). */
+.field-center-square {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(46 * var(--u));
+  height: calc(46 * var(--u));
+  transform: translate(-50%, -50%);
+  border-radius: calc(3 * var(--u));
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: linear-gradient(160deg, #7d858e, #4d545b);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.field-center-opponent,
+.field-center-player {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(7, var(--card-w));
+  column-gap: var(--gap-x);
+  justify-content: center;
+  /* So a area slotted recebe cliques; o resto fica transparente ao mouse. */
+  pointer-events: none;
+  z-index: 2;
+}
+
+.field-center-opponent { align-items: start; padding-top: calc(2 * var(--u)); }
+.field-center-player { align-items: end; padding-bottom: calc(2 * var(--u)); }
+
+.field-center-slot { pointer-events: auto; }
+.field-center-slot > .field-zone { width: var(--card-w); }
+.field-center-slot.is-column-1 > .field-zone-field,
+.field-center-slot.is-column-7 > .field-zone-field { width: calc(59 * var(--u)); }
+
+/* Alinhamento por coluna (1 = lateral esquerda, 7 = lateral direita). */
+.field-center-slot.is-column-1 { grid-column: 1; }
+.field-center-slot.is-column-3 { grid-column: 3; }
+.field-center-slot.is-column-5 { grid-column: 5; }
+.field-center-slot.is-column-7 { grid-column: 7; }
+
+/* --- Slots --- */
+
+.field-zone {
+  position: relative;
+  width: var(--card-w);
+  height: var(--card-h);
+  border-radius: calc(4 * var(--u));
+  /* Contorno branco fino com preenchimento azul translucido. */
+  border: max(1px, calc(1 * var(--u))) solid rgba(255, 255, 255, 0.6);
+  background: rgba(28, 62, 122, 0.35);
+}
+
+.field-zone.is-filled {
+  border-color: rgba(255, 215, 0, 0.8);
+  background: rgba(10, 14, 28, 0.9);
+}
+
+.field-zone-field {
+  width: calc(59 * var(--u));
+  height: calc(44 * var(--u));
+}
+
+/*
+  Modo de defesa: a carta deita na horizontal (90 graus).
+
+  O slot continua 43 x 60u e o botao continua 100%/100% -- so a ARTE gira.
+  Redimensionar o botao quebrava a caixa flex dentro da linha de altura fixa.
+
+  Medidas: a arte e portrait (proporcao 0,7). Deitada, a caixa pre-rotacao
+  precisa medir 30u de largura por 43u de altura para que, depois do giro,
+  o resultado visual ocupe 43u de largura por ~30u de altura, cabendo no slot.
+*/
+/*
+  A arte deitada e centralizada, mas precisa fugir da placa: desloca-se meia
+  placa para longe do lado onde a placa esta. Sem isso a arte deitada ficaria
+  por baixo da placa de atributos.
+*/
+.field-zone.is-defense.plate-top.plate-top .field-zone-image {
+  top: calc(50% + var(--plate-h) / 2);
+}
+
+.field-zone.is-defense.plate-bottom.plate-bottom .field-zone-image {
+  top: calc(50% - var(--plate-h) / 2);
+}
+
+/* Especificidade duplicada de proposito: vence o margin-top de
+   .is-filled.plate-top, que aparece mais abaixo no arquivo. */
+.field-zone.is-defense.is-filled .field-zone-image,
+.field-zone.is-defense .field-zone-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(30 * var(--u));
+  height: calc(43 * var(--u));
+  max-width: none;
+  flex: none;
+  /* Zerado de proposito: anula o margin-top de .plate-top, que vem depois. */
+  margin: 0;
+  transform: translate(-50%, -50%) rotate(90deg);
+  transform-origin: center;
+  object-fit: cover;
+  object-position: center;
+  border-radius: calc(2 * var(--u));
+}
+
+/* Em defesa a arte ja esta deitada: a placa segue a alternancia normal,
+   entao nao ha ajuste extra necessario aqui. */
+
+.field-zone.is-defense .field-zone-name {
+  display: none;
+}
+
+.field-zone-lateral {
+  border-style: dashed;
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(28, 62, 122, 0.18);
+  pointer-events: none;
+}
+
+.field-lateral-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: max(7px, calc(7 * var(--u)));
+  text-align: center;
+}
+
+.field-zone-target {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  border-radius: calc(4 * var(--u));
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.field-zone-target:focus-visible {
+  outline: 3px solid #ffd700;
+  outline-offset: 2px;
+}
+
+.field-zone-empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: max(7px, calc(8 * var(--u)));
+  text-align: center;
+  line-height: 1.1;
+}
+
+.field-zone-image {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* Com carta, a arte cede espaco a faixa da placa, seja na base ou no topo. */
+.field-zone.is-filled.plate-bottom .field-zone-image {
+  flex: 0 0 calc(100% - var(--plate-h));
+}
+
+.field-zone.is-filled.plate-top .field-zone-image {
+  flex: 0 0 calc(100% - var(--plate-h));
+  margin-top: var(--plate-h);
+}
+
+/* O nome da carta fica na ponta oposta a da placa de atributos. */
+.field-zone.plate-bottom .field-zone-name {
+  position: absolute;
+  inset: auto 0 var(--plate-h) 0;
+}
+
+.field-zone.plate-top .field-zone-name {
+  position: absolute;
+  inset: var(--plate-h) 0 auto 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.92), transparent);
+}
+
+.field-zone-name {
+  padding: 2px 3px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.92));
+  color: #fff;
+  font-size: max(7px, calc(8 * var(--u)));
+  line-height: 1.1;
+  max-height: 2.2em;
+  overflow: hidden;
+  text-align: left;
+}
+
+/* Marcadores pequenos dentro do slot, no canto oposto ao da placa. */
+.field-zone.plate-top .field-zone-stats {
+  inset: auto calc(2 * var(--u)) calc(2 * var(--u)) auto;
+}
+
+.field-zone-stats {
+  position: absolute;
+  inset: calc(2 * var(--u)) calc(2 * var(--u)) auto auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: max(6px, calc(7 * var(--u)));
+}
+
+.field-slot-stat {
+  padding: 1px 3px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.82);
+  color: #fff;
+  white-space: nowrap;
+}
+
+.field-slot-stat.stat-increased { color: #7dff9b; }
+.field-slot-stat.stat-decreased { color: #ff8f8f; }
+.field-slot-delta { margin-left: 2px; font-weight: 700; }
+
+/* Placa grande de atributos, transbordando para fora do slot.
+   A classe plate-top no slot e quem inverte a posicao vertical. */
+.field-stat-plate {
+  /* Posicao vertical da placa: alternada pelo FieldZone (plate-top/plate-bottom). */
+  bottom: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: calc(1.5 * var(--u));
+  /* Carta (43u) + um vao (15u) = 58u. Essa e a largura maxima sem invadir
+     o vao do vizinho -- a 73u as placas de monstros vizinhos se sobrepunham. */
+  width: calc(58 * var(--u));
+  min-height: var(--plate-h);
+  padding: calc(1.5 * var(--u)) calc(3 * var(--u));
+  border-radius: calc(4 * var(--u));
+  border: 1px solid rgba(255, 215, 0, 0.75);
+  background: linear-gradient(180deg, rgba(8, 11, 22, 0.97), rgba(2, 3, 8, 0.99));
+box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0, 0, 0, 0.8);
+  font-family: 'Orbitron', sans-serif;
+  /* Acima do z-index dos slots vizinhos, entao nunca tapa o clique de outra carta. */
+  z-index: 4;
+  pointer-events: none;
+}
+
+.field-plate-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(0.5 * var(--u));
+  font-size: max(7px, calc(10 * var(--u)));
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Placa no topo: monstros em posicao impar da fileira. */
+.field-zone.plate-top .field-stat-plate {
+  bottom: auto;
+  top: 0;
+}
+
+/* Rotulo em cima, valor embaixo: empilhado evita que ATK/DEF/Level colidam
+   horizontalmente quando ha tres atributos na mesma placa. */
+.field-plate-label {
+  font-size: 0.6em;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.72);
+  letter-spacing: 0.5px;
+}
+
+.field-plate-value {
+  font-size: 1.25em;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 0 calc(5 * var(--u)) rgba(255, 215, 0, 0.55);
+}
+
+.field-plate-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  font-size: 0.75em;
+  font-weight: 900;
+}
+
+.field-plate-stat.stat-increased { color: #7dff9b; }
+.field-plate-stat.stat-decreased { color: #ff8f8f; }
+.field-plate-stat.stat-increased .field-plate-value { text-shadow: 0 0 calc(6 * var(--u)) rgba(125, 255, 155, 0.75); }
+.field-plate-stat.stat-decreased .field-plate-value { text-shadow: 0 0 calc(6 * var(--u)) rgba(255, 143, 143, 0.75); }
+
+/* Botao de alternar ataque/defesa: canto oposto ao remover. */
+.field-zone-rotate {
+  position: absolute;
+  top: calc(-4 * var(--u));
+  right: calc(-4 * var(--u));
+  width: max(22px, calc(14 * var(--u)));
+  height: max(22px, calc(14 * var(--u)));
+  border-radius: 50%;
+  border: 1px solid #7fb2ff;
+  background: rgba(6, 14, 30, 0.95);
+  color: #bcd4ff;
+  font-size: max(10px, calc(9 * var(--u)));
+  line-height: 1;
+  cursor: pointer;
+  z-index: 8;
+}
+
+.field-zone-rotate:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.field-zone-remove {
+  position: absolute;
+  top: calc(-4 * var(--u));
+  left: calc(-4 * var(--u));
+  width: max(22px, calc(14 * var(--u)));
+  height: max(22px, calc(14 * var(--u)));
+  border-radius: 50%;
+  border: 1px solid #ff6b6b;
+  background: rgba(20, 6, 6, 0.95);
+  color: #ff8f8f;
+  font-size: max(10px, calc(9 * var(--u)));
+  line-height: 1;
+  cursor: pointer;
+  z-index: 8;
+}
+
+/* Losangos de Pendulo */
+.field-pendulum-diamond {
+  display: block;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.35));
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.35);
+}
+
+.field-pendulum-diamond.is-blue { background: linear-gradient(135deg, #7fb2ff, #1d4fd8); }
+.field-pendulum-diamond.is-red { background: linear-gradient(135deg, #ff9d9d, #c62828); }
+
+.field-pendulum-center {
+  width: 45%;
+  aspect-ratio: 1;
+  margin: auto;
+  transform: rotate(45deg);
+}
+
+.field-pendulum-corner {
+  position: absolute;
+  top: calc(2 * var(--u));
+  left: calc(2 * var(--u));
+  width: max(8px, calc(9 * var(--u)));
+  height: max(8px, calc(9 * var(--u)));
+  transform: rotate(45deg);
+  z-index: 7;
+}
+
+/* Indicador de jogador */
+.player-indicator {
+  display: flex;
+  align-items: center;
+  gap: calc(4 * var(--u));
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: max(8px, calc(10 * var(--u)));
+}
+
+.player-diamond {
+  width: max(9px, calc(11 * var(--u)));
+  height: max(9px, calc(11 * var(--u)));
+  transform: rotate(45deg);
+  background: #2f6bff;
+  border: 1px solid #bcd4ff;
+}
+
+.player-diamond.is-opponent {
+  background: #d63b3b;
+  border-color: #ffc9c9;
+}
+
+.player-card-count {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: max(7px, calc(9 * var(--u)));
+}
+
+.field-hint {
+  margin: 0;
+  padding: 4px 12px 6px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 10px;
+  text-align: center;
+}
+
+/* ============================================================
+   Modal de edicao do slot (renderizado via portal no body)
+   ============================================================ */
+
+.slot-editor-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.slot-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(720px, 100%);
+  max-height: min(88vh, 900px);
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 215, 0, 0.45);
+  background: linear-gradient(160deg, #101627, #05070d);
+  color: #fff;
+  overflow: hidden;
+}
+
+.slot-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.slot-editor-header h3 {
+  margin: 0;
+  color: #ffd700;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 17px;
+}
+
+.slot-editor-close {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.slot-editor-current {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.slot-editor-image {
+  width: 74px;
+  aspect-ratio: 0.7;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 215, 0, 0.4);
+}
+
+.slot-editor-current-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.slot-editor-current-info span { color: rgba(255, 255, 255, 0.72); }
+.slot-editor-empty { color: rgba(255, 255, 255, 0.6); font-size: 13px; }
+
+.slot-editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.slot-editor-button {
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 215, 0, 0.45);
+  background: rgba(255, 215, 0, 0.12);
+  color: #ffd700;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.slot-editor-button.is-danger {
+  border-color: rgba(255, 107, 107, 0.6);
+  background: rgba(255, 107, 107, 0.14);
+  color: #ff9d9d;
+}
+
+.slot-editor-button.is-primary {
+  border-color: rgba(125, 255, 155, 0.6);
+  background: rgba(125, 255, 155, 0.16);
+  color: #b6ffcb;
+  font-weight: 700;
+  margin-left: auto;
+}
+
+.slot-editor-search {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+
+.slot-editor-search-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 14px;
+}
+
+.slot-editor-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.slot-editor-filter {
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.slot-editor-filter.is-active {
+  border-color: #ffd700;
+  background: rgba(255, 215, 0, 0.16);
+  color: #ffd700;
+}
+
+.slot-editor-filter.is-ghost { border-style: dashed; }
+
+.slot-editor-results {
+  flex: 1;
+  min-height: 120px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.slot-editor-status,
+.slot-editor-count {
+  margin: 4px 0;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 12px;
+}
+
+.slot-editor-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 8px;
+}
+
+.slot-editor-result {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+}
+
+.slot-editor-result.is-selected {
+  border-color: #ffd700;
+  box-shadow: 0 0 0 1px #ffd700 inset;
+}
+
+.slot-editor-result img {
+  width: 100%;
+  aspect-ratio: 0.7;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.slot-editor-result-name { font-size: 11px; line-height: 1.2; }
+
+/* Ajustador de atributos */
+.slot-editor-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.stat-adjuster {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.stat-adjuster-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.stat-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  color: #ffd700;
+}
+
+.stat-original { font-size: 11px; color: rgba(255, 255, 255, 0.6); }
+
+.stat-controls {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  gap: 6px;
+}
+
+.stat-step,
+.stat-quick,
+.stat-reset {
+  min-height: 44px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.stat-input {
+  min-height: 44px;
+  width: 100%;
+  padding: 0 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px;
+  text-align: center;
+}
+
+.stat-quick-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.stat-quick { min-height: 36px; font-size: 12px; }
+.stat-quick.is-up { border-color: rgba(125, 255, 155, 0.5); color: #7dff9b; }
+.stat-quick.is-down { border-color: rgba(255, 143, 143, 0.5); color: #ff8f8f; }
+
+.stat-current {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stat-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  color: #fff;
+}
+
+.stat-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+}
+
+.stat-adjuster.stat-increased .stat-delta { color: #7dff9b; }
+.stat-adjuster.stat-decreased .stat-delta { color: #ff8f8f; }
+.stat-arrow { font-weight: 700; }
+
+.stat-reset {
+  margin-left: auto;
+  padding: 0 12px;
+  min-height: 36px;
+  font-size: 12px;
+}
+
+.stat-reset:disabled { opacity: 0.35; cursor: default; }
+
+@media (max-width: 720px) {
+  .field-mat { padding: 6px 6px 70px; }
+  .field-screen-title { font-size: 13px; }
+  .field-zone-empty { font-size: 7px; }
+  .field-lateral-label { font-size: 6px; }
+  .carousel-tab { padding: 0 10px; font-size: 11px; }
+}
+
+/* O player de audio e fixo no canto inferior esquerdo: em telas estreitas a
+   navegacao do switcher vai para a direita para nao ficar embaixo dele. */
+@media (max-width: 600px) {
+  .battle-screen-nav {
+    left: auto;
+    right: 10px;
+    transform: none;
+    gap: 6px;
+    padding: 4px 8px;
+  }
+}
+
+@media (max-height: 620px) {
+  .field-zone { min-height: 32px; }
+  .field-zone-name { display: none; }
+  .field-center { height: clamp(62px, 13vh, 96px); }
+}
