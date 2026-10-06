@@ -1522,6 +1522,33 @@ box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0, 0, 0, 0.8);
   overflow: hidden;
 }
 
+/* Cabecalho e acoes ficam fixos; so o meio rola (obrigatorio no mobile,
+   onde o conteudo -- efeito + atributos -- facilmente passa da viewport). */
+.slot-editor-header,
+.slot-editor-actions {
+  flex: 0 0 auto;
+}
+
+.slot-editor-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+/* Nada encolhe dentro da area rolavel: o conteudo transborda e a rolagem
+   acontece no proprio container. */
+.slot-editor-scroll > * {
+  flex: 0 0 auto;
+}
+
+
 .slot-editor-header {
   display: flex;
   align-items: center;
@@ -1570,6 +1597,33 @@ box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0, 0, 0, 0.8);
 
 .slot-editor-current-info span { color: rgba(255, 255, 255, 0.72); }
 .slot-editor-empty { color: rgba(255, 255, 255, 0.6); font-size: 13px; }
+
+.slot-editor-effect {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 215, 0, 0.28);
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.slot-editor-effect-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: #ffd700;
+}
+
+.slot-editor-effect p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
 
 .slot-editor-actions {
   display: flex;
@@ -1646,11 +1700,9 @@ box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0, 0, 0, 0.8);
 .slot-editor-filter.is-ghost { border-style: dashed; }
 
 .slot-editor-results {
-  flex: 1;
   min-height: 120px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
 }
+
 
 .slot-editor-status,
 .slot-editor-count {
@@ -1808,6 +1860,23 @@ box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0, 0, 0, 0.8);
   .field-zone-empty { font-size: 7px; }
   .field-lateral-label { font-size: 6px; }
   .carousel-tab { padding: 0 10px; font-size: 11px; }
+
+  /* No mobile o brilho externo (0 0 14u) fica maior que o padding do
+     .field-body e e cortado, alem de invadir a faixa central e as zonas do
+     meio. Fica so o brilho interno sutil, que nao transborda nem sobrepoe. */
+  .field-side {
+    border-width: 1px;
+    padding: calc(4 * var(--u));
+    border-radius: calc(6 * var(--u));
+  }
+
+  .field-side-player {
+    box-shadow: inset 0 0 calc(10 * var(--u)) rgba(47, 107, 255, 0.14);
+  }
+
+  .field-side-opponent {
+    box-shadow: inset 0 0 calc(10 * var(--u)) rgba(214, 59, 59, 0.14);
+  }
 }
 
 /* O player de audio e fixo no canto inferior esquerdo: em telas estreitas a
