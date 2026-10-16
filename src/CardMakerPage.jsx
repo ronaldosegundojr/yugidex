@@ -28,6 +28,17 @@ const DB_PER_PAGE = 40
 const b64encode = (str) => btoa(unescape(encodeURIComponent(str)))
 const b64decode = (str) => decodeURIComponent(escape(atob(str)))
 
+// As artes vindas do banco ficam em outro dominio (images.ygoprodeck.com) sem
+// cabecalho CORS, e o navegador nao deixa ler a imagem para desenhar no canvas
+// (isso quebra a exportacao de PNG/PDF: "Failed to fetch" e canvas contaminado).
+// Na hora de exportar, reencaminha a arte remota por um proxy com CORS; a
+// imagem exibida na tela continua usando a URL original.
+const artForExport = (art) => {
+  if (!art || typeof art !== 'string' || !/^https?:\/\//i.test(art)) return art
+  if (art.includes('images.weserv.nl')) return art
+  return `https://images.weserv.nl/?url=${encodeURIComponent(art)}`
+}
+
 function loadSaved() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
@@ -144,11 +155,20 @@ export default function CardMakerPage({ cards = [] }) {
           images.push(dataUrl)
         }
         if (cancelled) return
-        const { pages } = await buildDeckPdf(images, pc.filename)
-        setToast(`PDF gerado: ${images.length} carta(s) em ${pages} folha(s) A4`)
+        if (!images.length) return
+        if (pc.kind === 'png') {
+          const a = document.createElement('a')
+          a.download = pc.filename
+          a.href = images[0]
+          a.click()
+          setToast('Download gerado!')
+        } else {
+          const { pages } = await buildDeckPdf(images, pc.filename)
+          setToast(`PDF gerado: ${images.length} carta(s) em ${pages} folha(s) A4`)
+        }
       } catch (e) {
-        console.error('Erro ao gerar PDF do deck:', e)
-        setToast('Falha ao gerar PDF')
+        console.error('Erro ao gerar arquivo do deck:', e)
+        setToast(pc.kind === 'png' ? 'Falha ao gerar PNG' : 'Falha ao gerar PDF')
       } finally {
         if (!cancelled) {
           setBusy(false)
@@ -230,28 +250,9 @@ export default function CardMakerPage({ cards = [] }) {
     setToast('Nova carta')
   }
 
-  const handleDownload = async () => {
-    if (!cardRef.current) return
-    setBusy(true)
-    try {
-      const dataUrl = await toPng(cardRef.current, {
-        width: CARD_W,
-        height: CARD_H,
-        pixelRatio: 2,
-        cacheBust: true,
-        style: { transform: 'none', transformOrigin: 'top left' },
-      })
-      const a = document.createElement('a')
-      a.download = `${(state.name || 'yugioh-card').replace(/[^\w-]+/g, '_')}.png`
-      a.href = dataUrl
-      a.click()
-      setToast('Download gerado!')
-    } catch (e) {
-      console.error('Erro ao gerar PNG:', e)
-      setToast('Falha ao gerar PNG')
-    } finally {
-      setBusy(false)
-    }
+  const handleDownload = () => {
+    const safe = (state.name || 'yugioh-card').replace(/[^\w-]+/g, '_')
+    generateFromStates([{ id: 'carta-atual', state }], `${safe}.png`, 'png')
   }
 
   const handleShare = async () => {
@@ -278,15 +279,19 @@ export default function CardMakerPage({ cards = [] }) {
     }
   }
 
-  // ---- Exportacao em PDF (A4, matriz 3x3) ----
-  const generateFromStates = (cards, filename) => {
+  // ---- Exportacao em PNG/PDF (A4, matriz 3x3) ----
+  const generateFromStates = (cards, filename, kind = 'pdf') => {
     if (!cards.length) {
       setToast('Nenhuma carta para exportar')
       return
     }
     printRefs.current = []
     setBusy(true)
-    setPrintCards({ cards, filename })
+    setPrintCards({
+      cards: cards.map((c) => ({ ...c, state: { ...c.state, art: artForExport(c.state.art) } })),
+      filename,
+      kind,
+    })
   }
 
 
