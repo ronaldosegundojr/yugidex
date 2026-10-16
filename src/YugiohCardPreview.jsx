@@ -118,7 +118,9 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
   const stars = L.showLevel ? Math.max(0, Math.min(12, Number(state.level) || 0)) : 0
   const linkCount = countLinkArrows(state.linkArrows)
   const scriptWord = trapSpell
-    ? `[ ${state.type.charAt(0).toUpperCase()}${state.type.slice(1)} Card ]`
+    ? state.type === 'trap'
+      ? '[ Carta Armadilha ]'
+      : '[ Carta Mágica ]'
     : ''
   const effectFont = isNormalMonster(state) ? '"Stone Serif Italic", serif' : '"Matrix Book", serif'
 
