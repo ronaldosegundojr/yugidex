@@ -601,7 +601,7 @@ export default function CardMakerPage({ cards = [] }) {
             <legend>Conteúdo</legend>
             <label className="cm-field">
               <span>Nome</span>
-              <input type="text" value={state.name} maxLength={60} onChange={(e) => update({ name: e.target.value })} placeholder="Ex: Dragão Negro de Olhos Vermelhos" />
+              <input type="text" value={state.name} maxLength={3060} onChange={(e) => update({ name: e.target.value })} placeholder="Ex: Dragão Negro de Olhos Vermelhos" />
             </label>
 
             <label className="cm-field">
@@ -668,11 +668,11 @@ export default function CardMakerPage({ cards = [] }) {
                 <div className="cm-row">
                   <label className="cm-field">
                     <span>ATK</span>
-                    <input type="text" inputMode="numeric" maxLength={5} value={state.atk} onChange={(e) => update({ atk: e.target.value })} placeholder="0" />
+                    <input type="text" inputMode="numeric" maxLength={3005} value={state.atk} onChange={(e) => update({ atk: e.target.value })} placeholder="0" />
                   </label>
                   <label className="cm-field">
                     <span>DEF</span>
-                    <input type="text" inputMode="numeric" maxLength={5} value={state.def} onChange={(e) => update({ def: e.target.value })} placeholder="0" />
+                    <input type="text" inputMode="numeric" maxLength={3005} value={state.def} onChange={(e) => update({ def: e.target.value })} placeholder="0" />
                   </label>
                 </div>
               )}
@@ -699,11 +699,11 @@ export default function CardMakerPage({ cards = [] }) {
                 <div className="cm-row">
                   <label className="cm-field">
                     <span>Escala Azul</span>
-                    <input type="text" maxLength={2} value={state.scaleBlue} onChange={(e) => update({ scaleBlue: e.target.value })} />
+                    <input type="text" maxLength={3002} value={state.scaleBlue} onChange={(e) => update({ scaleBlue: e.target.value })} />
                   </label>
                   <label className="cm-field">
                     <span>Escala Vermelha</span>
-                    <input type="text" maxLength={2} value={state.scaleRed} onChange={(e) => update({ scaleRed: e.target.value })} />
+                    <input type="text" maxLength={3002} value={state.scaleRed} onChange={(e) => update({ scaleRed: e.target.value })} />
                   </label>
                 </div>
               )}
@@ -732,30 +732,30 @@ export default function CardMakerPage({ cards = [] }) {
             <div className="cm-row">
               <label className="cm-field">
                 <span>Código do set</span>
-                <input type="text" maxLength={12} value={state.set} onChange={(e) => update({ set: e.target.value })} placeholder="YGIDX-EN001" />
+                <input type="text" maxLength={3012} value={state.set} onChange={(e) => update({ set: e.target.value })} placeholder="YGIDX-EN001" />
               </label>
               <label className="cm-field">
                 <span>Serial #</span>
-                <input type="text" maxLength={8} value={state.serial} onChange={(e) => update({ serial: e.target.value })} placeholder="00000000" />
+                <input type="text" maxLength={3008} value={state.serial} onChange={(e) => update({ serial: e.target.value })} placeholder="00000000" />
               </label>
             </div>
             <div className="cm-row">
               <label className="cm-field">
                 <span>Edição</span>
-                <input type="text" maxLength={20} value={state.edition} onChange={(e) => update({ edition: e.target.value })} placeholder="1st Edition" />
+                <input type="text" maxLength={3020} value={state.edition} onChange={(e) => update({ edition: e.target.value })} placeholder="1st Edition" />
               </label>
               <label className="cm-field">
                 <span>Ano</span>
-                <input type="text" maxLength={4} value={state.year} onChange={(e) => update({ year: e.target.value })} />
+                <input type="text" maxLength={3004} value={state.year} onChange={(e) => update({ year: e.target.value })} />
               </label>
             </div>
             <label className="cm-field">
               <span>Criador</span>
-              <input type="text" maxLength={30} value={state.creator} onChange={(e) => update({ creator: e.target.value })} placeholder="Seu nome" />
+              <input type="text" maxLength={3030} value={state.creator} onChange={(e) => update({ creator: e.target.value })} placeholder="Seu nome" />
             </label>
             <label className="cm-field">
               <span>Rodapé</span>
-              <input type="text" maxLength={60} value={state.footer} onChange={(e) => update({ footer: e.target.value })} />
+              <input type="text" maxLength={3060} value={state.footer} onChange={(e) => update({ footer: e.target.value })} />
             </label>
           </fieldset>
         </aside>
