@@ -68,8 +68,6 @@ export default function CardMakerPage({ cards = [] }) {
   const [busy, setBusy] = useState(false)
   const [toast, setToast] = useState('')
   const [previewWidth, setPreviewWidth] = useState(421)
-  const [deckOpen, setDeckOpen] = useState(false)
-  const [selectedIds, setSelectedIds] = useState(() => new Set())
   const [printCards, setPrintCards] = useState(null)
   const cardRef = useRef(null)
   const previewRef = useRef(null)
@@ -95,19 +93,21 @@ export default function CardMakerPage({ cards = [] }) {
   }, [toast])
 
   useEffect(() => {
+    if (mode !== 'editor') return
     const el = previewRef.current
     if (!el || typeof ResizeObserver === 'undefined') return
     const ro = new ResizeObserver((entries) => {
       const w = entries[0].contentRect.width
-      setPreviewWidth(Math.max(220, Math.min(421, Math.floor(w - 32))))
+      if (w > 0) setPreviewWidth(Math.max(220, Math.min(421, Math.floor(w - 32))))
     })
     ro.observe(el)
     return () => ro.disconnect()
-  }, [])
+  }, [mode])
 
   // Renderiza (oculto) as cartas do deck e gera o PDF A4 em matriz.
   useEffect(() => {
-    if (!printCards) return
+    const pc = printCards
+    if (!pc) return
     let cancelled = false
     const run = async () => {
       try {
@@ -115,7 +115,7 @@ export default function CardMakerPage({ cards = [] }) {
         await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))
         await new Promise((r) => setTimeout(r, 150))
         const images = []
-        for (let i = 0; i < printCards.cards.length; i++) {
+        for (let i = 0; i < pc.cards.length; i++) {
           const el = printRefs.current[i]
           if (!el) continue
           const dataUrl = await toPng(el, {
@@ -129,7 +129,7 @@ export default function CardMakerPage({ cards = [] }) {
           images.push(dataUrl)
         }
         if (cancelled) return
-        const { pages } = await buildDeckPdf(images, printCards.filename)
+        const { pages } = await buildDeckPdf(images, pc.filename)
         setToast(`PDF gerado: ${images.length} carta(s) em ${pages} folha(s) A4`)
       } catch (e) {
         console.error('Erro ao gerar PDF do deck:', e)
@@ -271,37 +271,17 @@ export default function CardMakerPage({ cards = [] }) {
     }
     printRefs.current = []
     setBusy(true)
-    setDeckOpen(false)
     setPrintCards({ cards, filename })
   }
 
-  const handleDeckPdf = () => {
-    const cards = saved
-      .filter((c) => selectedIds.has(c.id))
-      .map((c) => ({ id: c.id, state: c.state }))
-    generateFromStates(cards, 'deck-yugidex.pdf')
-  }
+
 
   const handleSinglePdf = () => {
     const safe = (state.name || 'yugioh-card').replace(/[^\w-]+/g, '_')
     generateFromStates([{ id: 'carta-atual', state }], `${safe}.pdf`)
   }
 
-  const openDeckModal = () => {
-    setSelectedIds(new Set(saved.map((c) => c.id)))
-    setDeckOpen(true)
-  }
 
-  const toggleSelect = (id) =>
-    setSelectedIds((prev) => {
-      const next = new Set(prev)
-      if (next.has(id)) next.delete(id)
-      else next.add(id)
-      return next
-    })
-
-  const selectAllSaved = () => setSelectedIds(new Set(saved.map((c) => c.id)))
-  const clearSelection = () => setSelectedIds(new Set())
 
   // ---- Montador de deck (cartas criadas) ----
   const persistDecks = (next) => {
@@ -399,11 +379,7 @@ export default function CardMakerPage({ cards = [] }) {
     return saved.filter((c) => c.name.toLowerCase().includes(q))
   }, [saved, savedSearch])
 
-  const selectedCount = useMemo(
-    () => saved.filter((c) => selectedIds.has(c.id)).length,
-    [saved, selectedIds],
-  )
-  const deckPages = Math.ceil(selectedCount / DECK_PER_PAGE)
+
 
   const filteredDb = useMemo(() => {
     const q = normalizeText(dbSearch)
@@ -442,13 +418,13 @@ export default function CardMakerPage({ cards = [] }) {
             >
               Editor
             </button>
-            <button
-              type="button"
-              className={mode === 'deck' ? 'active' : ''}
-              onClick={() => setMode('deck')}
-            >
-              Deck de cartas criadas
-            </button>
+      <button
+        type="button"
+        className={mode === 'deck' ? 'active' : ''}
+        onClick={() => setMode('deck')}
+      >
+        Deck Criado
+      </button>
           </div>
 
           {mode === 'editor' && (
@@ -510,9 +486,6 @@ export default function CardMakerPage({ cards = [] }) {
             </button>
             <button type="button" className="cm-btn ghost" onClick={handleSinglePdf} disabled={busy}>
               PDF A4 (esta carta)
-            </button>
-            <button type="button" className="cm-btn primary" onClick={openDeckModal} disabled={busy}>
-              Imprimir deck (PDF A4)
             </button>
             <button type="button" className="cm-btn ghost" onClick={handleShare}>
               Link de compartilhamento
@@ -748,8 +721,8 @@ export default function CardMakerPage({ cards = [] }) {
                 <button type="button" className="cm-btn ghost small" onClick={clearDeckCards} disabled={!deckCards.length}>
                   Limpar
                 </button>
-                <button type="button" className="cm-btn primary small" onClick={exportDeckPdf} disabled={busy || !deckCards.length}>
-                  {busy ? 'Gerando...' : 'Exportar PDF (A4)'}
+                <button type="button" className="cm-btn primary small" onClick={exportDeckPdf} disabled={busy || !deckCards.length} style={{ fontWeight: '700', boxShadow: '0 0 0 2px rgba(229, 191, 53, 0.4)' }}>
+                  {busy ? 'Gerando...' : 'Salvar deck em PDF (A4)'}
                 </button>
               </div>
             </div>
@@ -871,61 +844,6 @@ export default function CardMakerPage({ cards = [] }) {
               </div>
             )}
           </aside>
-        </div>
-      )}
-
-      {deckOpen && (
-        <div className="cm-modal-backdrop" onMouseDown={() => setDeckOpen(false)}>
-          <div className="cm-modal" onMouseDown={(e) => e.stopPropagation()}>
-            <h3>Imprimir deck em PDF (A4)</h3>
-            <p className="cm-modal-sub">
-              {selectedCount} de {saved.length} carta(s) • {deckPages} folha(s) A4 • {DECK_PER_PAGE} cartas por
-              folha (3×3) • 59×86 mm
-            </p>
-
-            {saved.length === 0 ? (
-              <p className="cm-modal-empty">
-                Você ainda não salvou cartas. Use o botão <strong>Salvar</strong> para adicioná-las ao deck.
-              </p>
-            ) : (
-              <>
-                <div className="cm-modal-tools">
-                  <button type="button" className="cm-btn ghost small" onClick={selectAllSaved}>
-                    Selecionar todas
-                  </button>
-                  <button type="button" className="cm-btn ghost small" onClick={clearSelection}>
-                    Limpar seleção
-                  </button>
-                </div>
-                <div className="cm-modal-list">
-                  {saved.map((c) => (
-                    <label key={c.id} className="cm-deck-item">
-                      <input
-                        type="checkbox"
-                        checked={selectedIds.has(c.id)}
-                        onChange={() => toggleSelect(c.id)}
-                      />
-                      <span className="cm-deck-name">{c.name}</span>
-                    </label>
-                  ))}
-                </div>
-              </>
-            )}
-
-            <div className="cm-modal-actions">
-              <button type="button" className="cm-btn ghost" onClick={() => setDeckOpen(false)}>
-                Cancelar
-              </button>
-              <button
-                type="button"
-                className="cm-btn primary"
-                onClick={handleDeckPdf}
-                disabled={busy || selectedCount === 0}
-              >
-                {busy ? 'Gerando...' : 'Gerar PDF do deck'}
-              </button>
-            </div>
-          </div>
         </div>
       )}
 
