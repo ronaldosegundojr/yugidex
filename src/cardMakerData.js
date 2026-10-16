@@ -5,6 +5,17 @@ export const CARD_W = 694
 export const CARD_H = 1013
 export const FRAME_BASE = '/cardmaker'
 
+// ---- Dimensoes reais para impressao (milimetros) ----
+// Carta de Yu-Gi-Oh oficial: 59 x 86 mm. Folha A4: 210 x 297 mm.
+export const CARD_MM_W = 59
+export const CARD_MM_H = 86
+export const A4_MM_W = 210
+export const A4_MM_H = 297
+// Matriz de cartas por folha A4 (3 colunas x 3 linhas = 9 cartas).
+export const DECK_COLS = 3
+export const DECK_ROWS = 3
+export const DECK_PER_PAGE = DECK_COLS * DECK_ROWS
+
 // Monta a URL de um recurso local (moldes, atributos, icones, fontes...).
 export const frame = (path) =>
   FRAME_BASE + '/' + path.split('/').map(encodeURIComponent).join('/')
@@ -108,7 +119,7 @@ export function computeLayout(state) {
     isPendulum,
     showLevel,
     background: { x: 23, y: 23, w: CARD_W - 46, h: CARD_H - 46 },
-    name: { x: 53, y: 56, w: 518, h: 79 },
+    name: { x: 53, y: 38, w: 518, h: 79 },
     header: { x: 36, y: 38, w: 622, h: 79 },
     attribute: { x: 581, y: 44, w: 66, h: 66 },
     star: { y: 122, w: 44, h: 44 },
@@ -125,10 +136,10 @@ export function computeLayout(state) {
       w: 585,
       h: isPendulum ? 104 : isTrapSpell ? 180 : 131,
     },
-    atkLabel: { x: isLink ? 368 : 380, y: 927, w: 140, h: 34 },
-    atk: { x: isLink ? 374 : 386, y: 927, w: 118, h: 34 },
-    defLabel: { x: 520, y: 927, w: 125, h: 34 },
-    def: { x: 524, y: 927, w: 118, h: 34 },
+    atkLabel: { x: isLink ? 368 : 380, y: 915, w: 140, h: 34 },
+    atk: { x: isLink ? 374 : 386, y: 915, w: 118, h: 34 },
+    defLabel: { x: 520, y: 915, w: 125, h: 34 },
+    def: { x: 524, y: 915, w: 118, h: 34 },
     footerLine: { x: 52, y: 921, w: 588, h: 2 },
     linkLabel: { x: 515, y: 928, w: 100, h: 20 },
     linkNumber: { x: 515, y: 927, w: 125, h: 20 },
@@ -227,6 +238,62 @@ export function defaultCardState() {
     year: String(new Date().getFullYear()),
     creator: '',
     art: '',
-    footer: 'Carta de fã criada no Yugidex',
+    footer: '',
+  }
+}
+
+// Converte uma carta do banco (enriquecida em App.jsx / cards.json) para o
+// estado do criador, para poder editar nome/estrelas/texto e salvar como nova.
+const SPELL_TRAP_ICON_VALUES = SPELL_TRAP_ICONS.map((s) => s.value).filter(Boolean)
+const cap = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : '')
+
+export function stateFromDbCard(card) {
+  if (!card) return defaultCardState()
+  const base = defaultCardState()
+  const text = card.text || {}
+  const name = card._ptName || text.pt?.name || text.en?.name || ''
+
+  const monsterTypes = (card.monsterCardTypes || []).map((t) => String(t).toLowerCase())
+  const classifications = (card.classifications || []).map((c) => String(c).toLowerCase())
+  let type = base.type
+  if (card.cardType === 'spell') type = 'spell'
+  else if (card.cardType === 'trap') type = 'trap'
+  else if (monsterTypes.includes('link')) type = 'link'
+  else if (monsterTypes.includes('xyz')) type = 'xyz'
+  else if (monsterTypes.includes('synchro')) type = 'synchro'
+  else if (monsterTypes.includes('fusion')) type = 'fusion'
+  else if (monsterTypes.includes('ritual') || classifications.includes('ritual')) type = 'ritual'
+  else if (classifications.includes('effect')) type = 'effect'
+  else type = 'normal'
+
+  const attr = String(card.attribute || '').toLowerCase()
+  const attribute = ATTRIBUTES.some((a) => a.value === attr) ? attr : base.attribute
+
+  const race = cap(card.type)
+  const cls = classifications.map(cap).join(' / ')
+  const monsterType = race ? (cls ? `${race} / ${cls}` : race) : base.monsterType
+
+  const level = Number(card.level ?? card.rank ?? 0) || 0
+  const atk = card.atk === undefined || card.atk === null ? '' : String(card.atk)
+  const def = card.def === undefined || card.def === null ? '' : String(card.def)
+  const effect = text.pt?.effect || text.en?.effect || ''
+
+  const sub = String(card.subcategory || '').toLowerCase()
+  const spellTrapIcon = SPELL_TRAP_ICON_VALUES.includes(sub) ? sub : ''
+
+  const art = card._image || card.images?.[0]?.card || card.images?.[0]?.art || ''
+
+  return {
+    ...base,
+    type,
+    attribute,
+    name,
+    monsterType,
+    effect,
+    atk,
+    def,
+    level,
+    spellTrapIcon,
+    art,
   }
 }

@@ -45,6 +45,32 @@ function FittedText({ text, baseSize, box, className, style }) {
   )
 }
 
+// Texto que mantem a altura da fonte e comprime na horizontal para caber (squeeze do cardmaker).
+function SqueezeText({ text, baseSize, box, className, style }) {
+  const wrapRef = useRef(null)
+  const spanRef = useRef(null)
+
+  useLayoutEffect(() => {
+    const wrap = wrapRef.current
+    const span = spanRef.current
+    if (!wrap || !span) return
+    span.style.transform = 'none'
+    const avail = wrap.clientWidth
+    const need = span.scrollWidth
+    if (need > avail + 1 && need > 0) {
+      span.style.transform = `scaleX(${avail / need})`
+    }
+  }, [text, baseSize, box.w])
+
+  return (
+    <div ref={wrapRef} className={`ycm-squeeze ${className || ''}`} style={{ ...style, overflow: 'hidden' }}>
+      <span ref={spanRef} style={{ fontSize: baseSize }}>
+        {text}
+      </span>
+    </div>
+  )
+}
+
 const absStyle = (box, zIndex, extra = {}) => ({
   position: 'absolute',
   left: box.x + 'px',
@@ -120,7 +146,7 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
 
         {/* cabecalho + nome */}
         <img className="ycm-layer" style={absStyle(L.header, 1)} src={frame('other/Header.png')} alt="" />
-        <FittedText
+        <SqueezeText
           text={state.name || 'Nome da Carta'}
           baseSize={65}
           box={L.name}
@@ -157,9 +183,13 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
 
         {/* linha de tipo do monstro */}
         {!trapSpell && (
-          <div className="ycm-type" style={absStyle(L.type, 3)}>
-            [{state.monsterType || ''}]
-          </div>
+          <SqueezeText
+            text={`[${state.monsterType || ''}]`}
+            baseSize={26}
+            box={L.type}
+            className="ycm-type"
+            style={absStyle(L.type, 3)}
+          />
         )}
 
         {/* lore / efeito */}

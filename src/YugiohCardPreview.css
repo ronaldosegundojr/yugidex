@@ -71,16 +71,25 @@
   image-rendering: auto;
 }
 
+/* Texto comprimido na horizontal (squeeze) */
+.ycm-squeeze {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+.ycm-squeeze > span {
+  display: inline-block;
+  white-space: nowrap;
+  transform-origin: left center;
+}
+
 /* Nome */
 .ycm-name {
   font-family: 'YGO Matrix Small', 'Times New Roman', serif;
   font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
-  padding-left: 12px;
-  line-height: 79px;
-  box-sizing: border-box;
   color: #000;
+  padding-left: 12px;
+  justify-content: flex-start;
 }
 .ycm-name.white {
   color: #fff;
