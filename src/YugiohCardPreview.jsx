@@ -89,7 +89,7 @@ function SqueezeText({ text, baseSize, box, className, style }) {
   }, [text, baseSize, box.w])
 
   return (
-    <div ref={wrapRef} className={`ycm-squeeze ${className || ''}`} style={{ ...style, overflow: 'hidden' }}>
+    <div ref={wrapRef} className={`ycm-squeeze ${className || ''}`} style={style}>
       <span ref={spanRef} style={{ fontSize: baseSize }}>
         {text}
       </span>
@@ -309,9 +309,13 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
             {state.edition}
           </div>
         )}
-        <div className={`ycm-small ${whiteFooter ? 'white' : ''}`} style={absStyle(L.year, 1, { textAlign: 'right' })}>
-          {state.year ? `© ${state.year}${state.creator ? ' ' + state.creator : ''}` : ''}
-        </div>
+        <SqueezeText
+          text={state.year ? `© ${state.year}${state.creator ? ' ' + state.creator : ''}` : ''}
+          baseSize={20}
+          box={L.year}
+          className={`ycm-small ${whiteFooter ? 'white' : ''}`}
+          style={absStyle(L.year, 1, { justifyContent: 'flex-end', overflow: 'visible' })}
+        />
         <div className="ycm-footer" style={absStyle(L.footer, 1)}>
           {state.footer}
         </div>

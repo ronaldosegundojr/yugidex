@@ -129,7 +129,7 @@ export function computeLayout(state) {
       : { x: 86, y: 186, w: 526, h: 526 },
     loreBorder: { x: 30, y: 743, w: 633, h: 225 },
     loreBackground: { x: 44, y: 754, w: 608, h: 204 },
-    type: { x: 51, y: isPendulum ? 789 : 764, w: 586, h: 18 },
+    type: { x: 51, y: isPendulum ? 789 : 764, w: 586, h: 22 },
     effect: {
       x: 53,
       y: isPendulum ? 816 : isTrapSpell ? 754 : 791,
