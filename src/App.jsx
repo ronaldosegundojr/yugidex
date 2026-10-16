@@ -5,6 +5,7 @@ import { YGOCard, YGOCardMini } from './YGOCard'
 import CardScanner from './CardScanner'
 import BattlePage from './BattlePage'
 import NoiteDaRapaziada from './NoiteDaRapaziada'
+import CardMakerPage from './CardMakerPage'
 import './YGOCard.css'
 
 const ITEMS_PER_PAGE = 60
@@ -1491,6 +1492,7 @@ function App() {
                   <Link to="/" className="nav-tab" onClick={() => setMenuOpen(false)}>Cartas</Link>
                   <Link to="/deck" className="nav-tab" onClick={() => setMenuOpen(false)}>Monte seu Deck</Link>
                   <Link to="/batalha" className="nav-tab" onClick={() => setMenuOpen(false)}>Pontos de Vida</Link>
+                  <Link to="/criar-card" className="nav-tab" onClick={() => setMenuOpen(false)}>Criação de Cards</Link>
                   <Link to="/noite-da-rapaziada" className="nav-tab" onClick={() => setMenuOpen(false)}>Noite da Rapaziada</Link>
                 </nav>
               </>
@@ -1499,6 +1501,7 @@ function App() {
                 <Link to="/" className="nav-tab">Cartas</Link>
                 <Link to="/deck" className="nav-tab">Monte seu Deck</Link>
                 <Link to="/batalha" className="nav-tab">Pontos de Vida</Link>
+                <Link to="/criar-card" className="nav-tab">Criação de Cards</Link>
                 <Link to="/noite-da-rapaziada" className="nav-tab">Noite da Rapaziada</Link>
               </nav>
             )}
@@ -1511,6 +1514,7 @@ function App() {
             <Route path="/" element={<CardsView cards={cards} filteredCards={filteredCards} filteredByType={filteredByType} currentPage={currentPage} setCurrentPage={setCurrentPage} deck={deck} setModalCard={setModalCard} searchTerm={searchTerm} setSearchTerm={setSearchTerm} typeFilter={typeFilter} setTypeFilter={setTypeFilter} raceFilter={raceFilter} setRaceFilter={setRaceFilter} attrFilter={attrFilter} setAttrFilter={setAttrFilter} races={races} lang={lang} setLang={setLang} onOpenScanner={() => setScannerOpen(true)} />} />
             <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} isMobile={isMobile} deckIdSet={deckIdSet} onOpenScanner={() => setScannerOpen(true)} />} />
             <Route path="/batalha" element={<BattlePage cards={cards} />} />
+            <Route path="/criar-card" element={<CardMakerPage />} />
             <Route path="/noite-da-rapaziada" element={<NoiteDaRapaziada />} />
           </Routes>
         </main>

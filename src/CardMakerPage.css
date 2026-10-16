@@ -1,0 +1,312 @@
+.cm-page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 3rem;
+  color: var(--text-light);
+}
+
+/* ---- Toolbar ---- */
+.cm-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+.cm-toolbar-title h2 {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  margin: 0;
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+}
+.cm-toolbar-title p {
+  margin: 0.15rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+.cm-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* combo minhas cartas */
+.cm-combo {
+  position: relative;
+}
+.cm-combo input {
+  height: 38px;
+  min-width: 220px;
+  padding: 0 0.75rem;
+  background: var(--yblack-light);
+  border: 1px solid var(--gold-dark);
+  border-radius: 4px;
+  color: var(--text-light);
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+.cm-combo input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+.cm-combo-list {
+  position: absolute;
+  top: 42px;
+  left: 0;
+  right: 0;
+  max-height: 260px;
+  overflow-y: auto;
+  background: var(--yblack-light);
+  border: 1px solid var(--gold-dark);
+  border-radius: 4px;
+  z-index: 40;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+.cm-combo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(229, 191, 53, 0.15);
+}
+.cm-combo-item:hover {
+  background: rgba(229, 191, 53, 0.12);
+}
+.cm-combo-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cm-combo-del {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.cm-combo-del:hover {
+  color: #e74c3c;
+}
+.cm-combo-empty {
+  padding: 0.65rem 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ---- Buttons ---- */
+.cm-btn {
+  height: 38px;
+  padding: 0 1rem;
+  border-radius: 4px;
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+.cm-btn.primary {
+  background: var(--gold);
+  color: var(--egypt-dark);
+  border-color: var(--gold);
+}
+.cm-btn.primary:hover:not(:disabled) {
+  background: var(--ygold-light);
+}
+.cm-btn.ghost {
+  background: transparent;
+  color: var(--gold);
+  border-color: var(--gold-dark);
+}
+.cm-btn.ghost:hover {
+  background: rgba(229, 191, 53, 0.12);
+}
+.cm-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.cm-btn.small {
+  height: 30px;
+  font-size: 0.8rem;
+}
+
+/* ---- Layout ---- */
+.cm-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 460px) 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* ---- Preview ---- */
+.cm-preview {
+  position: sticky;
+  top: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.cm-preview-inner {
+  padding: 1rem;
+  background: radial-gradient(circle at 50% 30%, rgba(229, 191, 53, 0.12), transparent 70%);
+  border-radius: 10px;
+}
+.cm-preview-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ---- Form ---- */
+.cm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.cm-group {
+  border: 1px solid var(--gold-dark);
+  border-radius: 8px;
+  padding: 0.9rem 1rem 1.1rem;
+  background: rgba(26, 26, 46, 0.55);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.cm-group legend {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  padding: 0 0.5rem;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+.cm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1;
+}
+.cm-field > span {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.cm-field input[type='text'],
+.cm-field input[type='url'],
+.cm-field input[type='number'],
+.cm-field select,
+.cm-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.55rem 0.65rem;
+  background: var(--yblack-light);
+  border: 1px solid var(--gold-dark);
+  border-radius: 4px;
+  color: var(--text-light);
+  font-family: inherit;
+  font-size: 0.9rem;
+  resize: vertical;
+}
+.cm-field input:focus,
+.cm-field select:focus,
+.cm-field textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+.cm-field input[type='file'] {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+.cm-row {
+  display: flex;
+  gap: 0.75rem;
+}
+.cm-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.cm-check input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--gold);
+}
+
+/* setas de link (grade 3x3, centro vazio) */
+.cm-arrows {
+  display: grid;
+  grid-template-columns: repeat(3, 44px);
+  grid-template-rows: repeat(3, 44px);
+  gap: 6px;
+  width: max-content;
+}
+.cm-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  border: 1px solid var(--gold-dark);
+  background: var(--yblack-light);
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.cm-arrow.on {
+  background: var(--gold);
+  color: var(--egypt-dark);
+  border-color: var(--gold);
+}
+.cm-arrow:nth-child(1) { grid-area: 1 / 1; }
+.cm-arrow:nth-child(2) { grid-area: 1 / 2; }
+.cm-arrow:nth-child(3) { grid-area: 1 / 3; }
+.cm-arrow:nth-child(4) { grid-area: 2 / 1; }
+.cm-arrow:nth-child(5) { grid-area: 2 / 3; }
+.cm-arrow:nth-child(6) { grid-area: 3 / 1; }
+.cm-arrow:nth-child(7) { grid-area: 3 / 2; }
+.cm-arrow:nth-child(8) { grid-area: 3 / 3; }
+
+/* ---- Toast ---- */
+.cm-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gold);
+  color: var(--egypt-dark);
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  animation: cm-toast-in 0.2s ease;
+}
+@keyframes cm-toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (max-width: 900px) {
+  .cm-layout {
+    grid-template-columns: 1fr;
+  }
+  .cm-preview {
+    position: static;
+  }
+}

@@ -1,0 +1,221 @@
+/* Fontes do cardmaker (servidas localmente) */
+@font-face {
+  font-family: 'YGO Matrix Small';
+  src: url('/cardmaker/fonts/mbsc.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Stone Small Caps';
+  src: url('/cardmaker/fonts/STOSFSCS.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Matrix Bold Small';
+  src: url('/cardmaker/fonts/MatrixBoldSmallCaps.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Matrix Book';
+  src: url('/cardmaker/fonts/Yu-Gi-OhMatrixBook.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Matrix Regular Small';
+  src: url('/cardmaker/fonts/Yu-Gi-OhMatrixRegularSmallCaps.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Stone Serif Medium';
+  src: url('/cardmaker/fonts/StoneSerifStd-Medium.otf') format('opentype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Stone Serif Semibold';
+  src: url('/cardmaker/fonts/StoneSerifSemibold.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Stone Small Caps Bold';
+  src: url('/cardmaker/fonts/ITCStoneSerifSmallCapsBold.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Stone Serif Italic';
+  src: url('/cardmaker/fonts/ITC_Stone_Serif_LT_Italic.ttf') format('truetype');
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Eurostile Candy';
+  src: url('/cardmaker/fonts/EurostileCandyW01Semibold.ttf') format('truetype');
+  font-display: swap;
+}
+
+.ycm-scaler {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.ycm-card {
+  position: relative;
+  transform-origin: top left;
+  background: #000;
+  overflow: hidden;
+  font-family: 'Matrix Book', 'Times New Roman', serif;
+  user-select: none;
+}
+
+.ycm-layer {
+  pointer-events: none;
+  /* evita linhas de 1px em imagens redimensionadas */
+  image-rendering: auto;
+}
+
+/* Nome */
+.ycm-name {
+  font-family: 'YGO Matrix Small', 'Times New Roman', serif;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  padding-left: 12px;
+  line-height: 79px;
+  box-sizing: border-box;
+  color: #000;
+}
+.ycm-name.white {
+  color: #fff;
+}
+.ycm-name.gold,
+.ycm-name.silver {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.5));
+}
+.ycm-name.gold {
+  background-image: linear-gradient(180deg, #fff3b0 0%, #f5d010 45%, #a8820a 75%, #ffe98a 100%);
+}
+.ycm-name.silver {
+  background-image: linear-gradient(180deg, #ffffff 0%, #cfcfcf 45%, #8a8a8a 75%, #f2f2f2 100%);
+}
+
+/* Linha de tipo do monstro */
+.ycm-type {
+  font-family: 'Stone Small Caps', 'Times New Roman', serif;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  line-height: 22px;
+  overflow: visible;
+  white-space: nowrap;
+  color: #000;
+  box-sizing: border-box;
+}
+
+/* Efeito / lore */
+.ycm-effect {
+  font-family: 'Matrix Book', 'Times New Roman', serif;
+  line-height: 1.18;
+  text-align: justify;
+  overflow: hidden;
+  color: #000;
+  box-sizing: border-box;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+/* Escalas do pendulo */
+.ycm-scale {
+  font-family: 'Matrix Regular Small', 'Times New Roman', serif;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* ATK / DEF */
+.ycm-atkdef {
+  font-family: 'Matrix Bold Small', 'Times New Roman', serif;
+  font-weight: bold;
+  font-size: 36px;
+  letter-spacing: 1px;
+  line-height: 34px;
+  color: #000;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+.ycm-atkdef.value.right {
+  text-align: right;
+}
+.ycm-linknum {
+  font-family: 'Eurostile Candy', 'Arial', sans-serif;
+  font-size: 28px;
+  line-height: 20px;
+  text-align: right;
+  color: #1a3a9c;
+}
+
+/* Rodape / dados de colecao */
+.ycm-small {
+  font-family: 'Stone Serif Medium', 'Times New Roman', serif;
+  font-size: 20px;
+  line-height: 16px;
+  color: #000;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.ycm-small.white {
+  color: #fff;
+}
+.ycm-footer {
+  font-family: 'Stone Serif Medium', 'Times New Roman', serif;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Label de magia/armadilha */
+.ycm-spell-label {
+  font-family: 'Stone Small Caps Bold', 'Times New Roman', serif;
+  font-weight: bold;
+  font-size: 30px;
+  letter-spacing: 0.5px;
+  text-align: right;
+  line-height: 30px;
+  color: #000;
+  box-sizing: border-box;
+}
+
+/* Recorte da arte */
+.ycm-art-clip {
+  overflow: hidden;
+  border-radius: 6px;
+}
+.ycm-art-clip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.ycm-art-clip.pendulum {
+  border-radius: 8px;
+}
+.ycm-art-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: repeating-linear-gradient(45deg, #2a2a2a 0 14px, #333 14px 28px);
+  color: #777;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 4px;
+  overflow: hidden;
+}
+.ycm-art-empty span {
+  font-size: 34px;
+  opacity: 0.7;
+}
