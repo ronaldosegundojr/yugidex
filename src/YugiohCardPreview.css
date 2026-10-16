@@ -193,10 +193,10 @@
 .ycm-spell-label {
   font-family: 'Stone Small Caps Bold', 'Times New Roman', serif;
   font-weight: normal;
-  font-size: 30px;
+  font-size: 26px;
   letter-spacing: 0.5px;
-  text-align: center;
-  line-height: 30px;
+  text-align: right;
+  line-height: 26px;
   color: #000;
   box-sizing: border-box;
 }

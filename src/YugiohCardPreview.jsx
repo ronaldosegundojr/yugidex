@@ -223,7 +223,7 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
         {/* lore / efeito */}
         <FittedText
           text={state.effect || ''}
-          baseSize={Number(state.effectSize) > 0 ? Number(state.effectSize) : 20}
+          baseSize={Number(state.effectSize) > 0 ? Number(state.effectSize) : 24}
           box={L.effect}
           className="ycm-effect"
           style={absStyle(L.effect, 3, { fontFamily: effectFont })}
@@ -233,7 +233,7 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
         {L.isPendulum && (
           <FittedText
             text={state.pendulumEffect || ''}
-            baseSize={Number(state.effectSize) > 0 ? Number(state.effectSize) : 20}
+            baseSize={Number(state.effectSize) > 0 ? Number(state.effectSize) : 24}
             box={L.effectPendulum}
             className="ycm-effect"
             style={absStyle(L.effectPendulum, 3, { fontFamily: '"Matrix Book", serif' })}
