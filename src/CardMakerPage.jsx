@@ -104,6 +104,21 @@ export default function CardMakerPage({ cards = [] }) {
     return () => ro.disconnect()
   }, [mode])
 
+  // Ao entrar no Deck Criado sem um deck carregado, lista automaticamente
+  // todas as cartas criadas para edicao/exportacao.
+  const prevModeRef = useRef(mode)
+  useEffect(() => {
+    const prev = prevModeRef.current
+    prevModeRef.current = mode
+    if (prev === mode || mode !== 'deck') return
+    if (currentDeckId !== null) return
+    if (!saved.length) return
+    setDeckCards(
+      saved.map((c) => ({ id: `dc_saved_${c.id}`, state: { ...c.state } })),
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode])
+
   // Renderiza (oculto) as cartas do deck e gera o PDF A4 em matriz.
   useEffect(() => {
     const pc = printCards
@@ -281,6 +296,12 @@ export default function CardMakerPage({ cards = [] }) {
     generateFromStates([{ id: 'carta-atual', state }], `${safe}.pdf`)
   }
 
+  const clampSize = (v, min, max, def) => {
+    const n = Number(v)
+    if (Number.isNaN(n)) return def
+    return Math.max(min, Math.min(max, Math.floor(n)))
+  }
+
 
 
   // ---- Montador de deck (cartas criadas) ----
@@ -359,6 +380,30 @@ export default function CardMakerPage({ cards = [] }) {
     setCurrentId(null)
     setMode('editor')
     setToast('Carta importada para edição')
+  }
+
+  // ---- Arrastar carta do banco para o criador ----
+  const [dragOver, setDragOver] = useState(false)
+
+  const handleLibDragStart = (card) => (e) => {
+    try {
+      e.dataTransfer.setData('text/ygo-card-id', String(card.id))
+      e.dataTransfer.effectAllowed = 'copy'
+    } catch {
+      /* navegadores podem bloquear */
+    }
+  }
+
+  const findDbCard = (id) => cards.find((c) => String(c.id) === String(id))
+
+  const handleCreatorDrop = (e) => {
+    e.preventDefault()
+    setDragOver(false)
+    const id = e.dataTransfer.getData('text/ygo-card-id')
+    if (!id) return
+    const card = findDbCard(id)
+    if (card) importDbCard(card)
+    else setToast('Carta não encontrada no banco')
   }
 
   const exportDeckPdf = () => {
@@ -559,6 +604,19 @@ export default function CardMakerPage({ cards = [] }) {
               <input type="text" value={state.name} maxLength={60} onChange={(e) => update({ name: e.target.value })} placeholder="Ex: Dragão Negro de Olhos Vermelhos" />
             </label>
 
+            <label className="cm-field">
+              <span>Tamanho da fonte do nome (px)</span>
+              <input
+                type="number"
+                min="8"
+                max="120"
+                step="1"
+                list="cm-size-presets"
+                value={state.nameSize ?? 65}
+                onChange={(e) => update({ nameSize: clampSize(e.target.value, 8, 120, 65) })}
+              />
+            </label>
+
             {!isTrapSpell && (
               <label className="cm-field">
                 <span>Tipo do monstro (raça)</span>
@@ -569,6 +627,19 @@ export default function CardMakerPage({ cards = [] }) {
             <label className="cm-field">
               <span>{isTrapSpell ? 'Efeito da carta' : 'Texto de efeito / lore'}</span>
               <textarea rows={5} value={state.effect} onChange={(e) => update({ effect: e.target.value })} placeholder="Descreva o efeito..." />
+            </label>
+
+            <label className="cm-field">
+              <span>Tamanho da fonte do efeito (px)</span>
+              <input
+                type="number"
+                min="6"
+                max="60"
+                step="1"
+                list="cm-size-presets"
+                value={state.effectSize ?? 24}
+                onChange={(e) => update({ effectSize: clampSize(e.target.value, 6, 60, 24) })}
+              />
             </label>
 
             {canPendulum && state.pendulum && (
@@ -693,7 +764,19 @@ export default function CardMakerPage({ cards = [] }) {
 
       {mode === 'deck' && (
         <div className="cdm-layout">
-          <section className="cdm-deck">
+          <section
+            className={`cdm-deck ${dragOver ? 'drag-over' : ''}`}
+            onDragOver={(e) => {
+              if (!e.dataTransfer.types.includes('text/ygo-card-id')) return
+              e.preventDefault()
+              setDragOver(true)
+            }}
+            onDragLeave={(e) => {
+              if (e.currentTarget.contains(e.relatedTarget)) return
+              setDragOver(false)
+            }}
+            onDrop={handleCreatorDrop}
+          >
             <div className="cdm-deck-head">
               <input
                 type="text"
@@ -715,6 +798,7 @@ export default function CardMakerPage({ cards = [] }) {
                 {deckCards.length} carta(s) • {Math.max(1, Math.ceil(deckCards.length / DECK_PER_PAGE))} folha(s) A4
               </span>
               <div className="cdm-deck-bar-actions">
+                <span className="cdm-drag-hint">Arraste uma carta do banco para o criador</span>
                 <button type="button" className="cm-btn ghost small" onClick={addCurrentToDeck}>
                   + Carta atual
                 </button>
@@ -803,7 +887,16 @@ export default function CardMakerPage({ cards = [] }) {
                     const img = getCardImage(card)
                     const nm = card._ptName || card.text?.pt?.name || card.text?.en?.name || ''
                     return (
-                      <button key={card.id} type="button" className="cdm-lib-card" onClick={() => importDbCard(card)} title={nm}>
+                      <button
+                        key={card.id}
+                        type="button"
+                        className="cdm-lib-card"
+                        draggable
+                        onDragStart={handleLibDragStart(card)}
+                        onDragEnd={() => setDragOver(false)}
+                        onClick={() => importDbCard(card)}
+                        title={`Editar: ${nm}`}
+                      >
                         {img ? <img src={img} alt={nm} loading="lazy" /> : <div className="cdm-lib-noimg">{nm.slice(0, 12)}</div>}
                         <span>{nm}</span>
                       </button>
@@ -862,6 +955,38 @@ export default function CardMakerPage({ cards = [] }) {
           ))}
         </div>
       )}
+
+      <datalist id="cm-size-presets">
+        <option value="6"></option>
+        <option value="8"></option>
+        <option value="10"></option>
+        <option value="12"></option>
+        <option value="14"></option>
+        <option value="16"></option>
+        <option value="18"></option>
+        <option value="20"></option>
+        <option value="22"></option>
+        <option value="24"></option>
+        <option value="26"></option>
+        <option value="28"></option>
+        <option value="30"></option>
+        <option value="32"></option>
+        <option value="34"></option>
+        <option value="36"></option>
+        <option value="40"></option>
+        <option value="45"></option>
+        <option value="50"></option>
+        <option value="55"></option>
+        <option value="60"></option>
+        <option value="65"></option>
+        <option value="70"></option>
+        <option value="75"></option>
+        <option value="80"></option>
+        <option value="90"></option>
+        <option value="100"></option>
+        <option value="110"></option>
+        <option value="120"></option>
+      </datalist>
 
       {toast && <div className="cm-toast">{toast}</div>}
     </div>

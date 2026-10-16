@@ -45,7 +45,8 @@ function FittedText({ text, baseSize, box, className, style }) {
   )
 }
 
-// Texto que mantem a altura da fonte e comprime na horizontal para caber (squeeze do cardmaker).
+// Texto que reduz o tamanho da fonte para caber na largura disponivel e, se
+// ainda faltar espaco, comprime levemente na horizontal (squeeze do cardmaker).
 function SqueezeText({ text, baseSize, box, className, style }) {
   const wrapRef = useRef(null)
   const spanRef = useRef(null)
@@ -54,11 +55,33 @@ function SqueezeText({ text, baseSize, box, className, style }) {
     const wrap = wrapRef.current
     const span = spanRef.current
     if (!wrap || !span) return
-    span.style.transform = 'none'
-    const avail = wrap.clientWidth
-    const need = span.scrollWidth
-    if (need > avail + 1 && need > 0) {
-      span.style.transform = `scaleX(${avail / need})`
+    const fit = () => {
+      span.style.transform = 'none'
+      const avail = wrap.clientWidth
+      if (!avail) return
+      // 1) reduz a fonte ate caber (min 55% do tamanho base, piso absoluto 9px)
+      const min = Math.max(9, Math.round(baseSize * 0.55))
+      let fs = baseSize
+      span.style.fontSize = fs + 'px'
+      let guard = 0
+      while (span.scrollWidth > avail + 1 && fs > min && guard < 120) {
+        fs -= 1
+        span.style.fontSize = fs + 'px'
+        guard++
+      }
+      // 2) se ainda sobrar, comprime na horizontal
+      span.style.transform = 'none'
+      const need = span.scrollWidth
+      if (need > avail + 1 && need > 0) {
+        span.style.transform = `scaleX(${avail / need})`
+      }
+    }
+    fit()
+    // reajusta quando as fontes locais terminarem de carregar
+    if (document.fonts?.ready) document.fonts.ready.then(() => fit())
+    if (document.fonts?.addEventListener) {
+      document.fonts.addEventListener('loadingdone', fit)
+      return () => document.fonts.removeEventListener('loadingdone', fit)
     }
   }, [text, baseSize, box.w])
 
@@ -107,7 +130,7 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
         style={{ width: CARD_W + 'px', height: CARD_H + 'px', transform: `scale(${scale})` }}
       >
         {/* borda geral (atras) */}
-        <img className="ycm-layer" style={absStyle({ x: 0, y: 0, w: CARD_W, h: CARD_H }, -1)} src={frame('other/border-full.png')} alt="" />
+        <img className="ycm-layer" style={absStyle({ x: 0, y: 0, w: CARD_W, h: CARD_H }, 0)} src={frame('other/border-full.png')} alt="" />
 
         {/* fundo do tipo */}
         <img className="ycm-layer" style={absStyle(L.background, 0)} src={frame(backgroundFile(state.type))} alt="" />
@@ -146,13 +169,13 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
 
         {/* cabecalho + nome */}
         <img className="ycm-layer" style={absStyle(L.header, 1)} src={frame('other/Header.png')} alt="" />
-        <SqueezeText
-          text={state.name || 'Nome da Carta'}
-          baseSize={65}
-          box={L.name}
-          className={`ycm-name ${rarity} ${whiteName ? 'white' : ''}`}
-          style={absStyle(L.name, 4)}
-        />
+          <SqueezeText
+            text={state.name || 'Nome da Carta'}
+            baseSize={Number(state.nameSize || 65)}
+            box={L.name}
+            className={`ycm-name ${rarity} ${whiteName ? 'white' : ''}`}
+            style={absStyle(L.name, 4)}
+          />
 
         {/* atributo */}
         <img className="ycm-layer" style={absStyle(L.attribute, 1)} src={frame(attributeFile(state))} alt="" />
@@ -185,7 +208,7 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
         {!trapSpell && (
           <SqueezeText
             text={`[${state.monsterType || ''}]`}
-            baseSize={26}
+            baseSize={Number(state.typeSize || 26)}
             box={L.type}
             className="ycm-type"
             style={absStyle(L.type, 3)}
@@ -195,7 +218,7 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
         {/* lore / efeito */}
         <FittedText
           text={state.effect || ''}
-          baseSize={20}
+          baseSize={Number(state.effectSize) > 0 ? Number(state.effectSize) : 24}
           box={L.effect}
           className="ycm-effect"
           style={absStyle(L.effect, 3, { fontFamily: effectFont })}
@@ -205,7 +228,7 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
         {L.isPendulum && (
           <FittedText
             text={state.pendulumEffect || ''}
-            baseSize={20}
+            baseSize={Number(state.effectSize) > 0 ? Number(state.effectSize) : 24}
             box={L.effectPendulum}
             className="ycm-effect"
             style={absStyle(L.effectPendulum, 3, { fontFamily: '"Matrix Book", serif' })}

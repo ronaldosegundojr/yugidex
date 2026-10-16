@@ -144,8 +144,8 @@
 
 /* ATK / DEF */
 .ycm-atkdef {
-  font-family: 'Matrix Bold Small', 'Times New Roman', serif;
-  font-weight: bold;
+  font-family: 'Matrix Regular Small', 'Times New Roman', serif;
+  font-weight: 400;
   font-size: 36px;
   letter-spacing: 1px;
   line-height: 34px;

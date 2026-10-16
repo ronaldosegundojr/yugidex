@@ -239,6 +239,10 @@ export function defaultCardState() {
     creator: '',
     art: '',
     footer: '',
+    effectSize: 24,
+    nameSize: 65,
+    typeSize: 26,
+    atkDefSize: 36,
   }
 }
 
@@ -281,7 +285,9 @@ export function stateFromDbCard(card) {
   const sub = String(card.subcategory || '').toLowerCase()
   const spellTrapIcon = SPELL_TRAP_ICON_VALUES.includes(sub) ? sub : ''
 
-  const art = card._image || card.images?.[0]?.card || card.images?.[0]?.art || ''
+  // Usa apenas a arte (recorte), nunca a imagem completa da carta, para nao
+  // criar o efeito de "carta dentro de carta" ao editar uma carta do banco.
+  const art = card.images?.[0]?.art || (card.art && /art/i.test(String(card.art)) ? card.art : '') || ''
 
   return {
     ...base,

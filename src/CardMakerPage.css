@@ -487,7 +487,7 @@
 }
 .cdm-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 0.75rem;
 }
 .cdm-card {
@@ -495,6 +495,7 @@
   flex-direction: column;
   gap: 0.35rem;
   align-items: center;
+  min-width: 0;
 }
 .cdm-card-name {
   font-size: 0.75rem;
@@ -508,6 +509,17 @@
 .cdm-card-actions {
   display: flex;
   gap: 0.3rem;
+  width: 100%;
+  justify-content: center;
+}
+.cdm-card-actions .cm-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0 0.3rem;
+  font-size: 0.7rem;
+  height: 26px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .cm-btn.ghost.danger {
   color: #ff8a8a;
@@ -661,4 +673,26 @@
     position: static;
     max-height: 460px;
   }
+}
+
+
+/* ---- Arrastar cartas do banco para o criador ---- */
+.cdm-deck.drag-over {
+  border-color: var(--gold);
+  box-shadow: inset 0 0 0 2px rgba(229, 191, 53, 0.55);
+}
+.cdm-drag-hint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  opacity: 0.85;
+}
+.cdm-deck.drag-over .cdm-drag-hint {
+  color: var(--gold);
+}
+.cdm-lib-card {
+  cursor: grab;
+}
+.cdm-lib-card:active {
+  cursor: grabbing;
 }
