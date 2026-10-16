@@ -57,10 +57,13 @@ function SqueezeText({ text, baseSize, box, className, style }) {
     if (!wrap || !span) return
     const fit = () => {
       span.style.transform = 'none'
-      const avail = wrap.clientWidth
+      // largura util = largura do conteudo (clientWidth inclui o padding)
+      const cs = getComputedStyle(wrap)
+      const pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0)
+      const avail = Math.max(0, wrap.clientWidth - pad)
       if (!avail) return
-      // 1) reduz a fonte ate caber (min 55% do tamanho base, piso absoluto 9px)
-      const min = Math.max(9, Math.round(baseSize * 0.55))
+      // 1) reduz a fonte ate caber (min 45% do tamanho base, piso absoluto 9px)
+      const min = Math.max(9, Math.round(baseSize * 0.45))
       let fs = baseSize
       span.style.fontSize = fs + 'px'
       let guard = 0
@@ -218,7 +221,7 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
         {/* lore / efeito */}
         <FittedText
           text={state.effect || ''}
-          baseSize={Number(state.effectSize) > 0 ? Number(state.effectSize) : 24}
+          baseSize={Number(state.effectSize) > 0 ? Number(state.effectSize) : 20}
           box={L.effect}
           className="ycm-effect"
           style={absStyle(L.effect, 3, { fontFamily: effectFont })}
@@ -228,7 +231,7 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
         {L.isPendulum && (
           <FittedText
             text={state.pendulumEffect || ''}
-            baseSize={Number(state.effectSize) > 0 ? Number(state.effectSize) : 24}
+            baseSize={Number(state.effectSize) > 0 ? Number(state.effectSize) : 20}
             box={L.effectPendulum}
             className="ycm-effect"
             style={absStyle(L.effectPendulum, 3, { fontFamily: '"Matrix Book", serif' })}

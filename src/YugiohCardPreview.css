@@ -86,7 +86,7 @@
 /* Nome */
 .ycm-name {
   font-family: 'YGO Matrix Small', 'Times New Roman', serif;
-  font-weight: bold;
+  font-weight: normal;
   color: #000;
   padding-left: 12px;
   justify-content: flex-start;
@@ -110,8 +110,8 @@
 
 /* Linha de tipo do monstro */
 .ycm-type {
-  font-family: 'Stone Small Caps', 'Times New Roman', serif;
-  font-weight: bold;
+  font-family: 'Stone Small Caps Bold', 'Times New Roman', serif;
+  font-weight: normal;
   letter-spacing: 0.5px;
   line-height: 22px;
   overflow: visible;
@@ -123,7 +123,7 @@
 /* Efeito / lore */
 .ycm-effect {
   font-family: 'Matrix Book', 'Times New Roman', serif;
-  line-height: 1.18;
+  line-height: 1.15;
   text-align: justify;
   overflow: hidden;
   color: #000;
@@ -134,8 +134,8 @@
 
 /* Escalas do pendulo */
 .ycm-scale {
-  font-family: 'Matrix Regular Small', 'Times New Roman', serif;
-  font-weight: bold;
+  font-family: 'Matrix Bold Small', 'Times New Roman', serif;
+  font-weight: normal;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -191,7 +191,7 @@
 /* Label de magia/armadilha */
 .ycm-spell-label {
   font-family: 'Stone Small Caps Bold', 'Times New Roman', serif;
-  font-weight: bold;
+  font-weight: normal;
   font-size: 30px;
   letter-spacing: 0.5px;
   text-align: right;
