@@ -406,16 +406,138 @@ export default function CardMakerPage({ cards = [] }) {
     else setToast('Carta não encontrada no banco')
   }
 
+  const deckFilename = () => (deckName.trim() || 'deck-yugidex').replace(/[^\w-]+/g, '_')
+
   const exportDeckPdf = () => {
     if (!deckCards.length) {
       setToast('Deck vazio')
       return
     }
-    const safe = (deckName.trim() || 'deck-yugidex').replace(/[^\w-]+/g, '_')
+    const safe = deckFilename()
     generateFromStates(
       deckCards.map((c, i) => ({ id: `dc${i}`, state: c.state })),
       `${safe}.pdf`,
     )
+  }
+
+  const CREATED_EXTRA_TYPES = ['fusion', 'synchro', 'dark-synchro', 'xyz', 'link']
+
+  const cardTypeLabel = (s) => (CARD_TYPES.find((t) => t.value === s.type) || {}).label || s.type || ''
+  const attributeLabel = (s) =>
+    (ATTRIBUTES.find((a) => a.value === s.attribute) || {}).label || s.attribute || ''
+
+  const escapeJsonArt = (state) => (state.art && /^https?:/i.test(state.art) ? state.art : '')
+
+  const buildCreatedDeckTxt = () => {
+    if (!deckCards.length) return ''
+    const name = deckName.trim() || `Deck ${customDecks.length + 1}`
+
+    const counts = {}
+    deckCards.forEach((c) => {
+      const t = c.state.type || 'outros'
+      counts[t] = (counts[t] || 0) + 1
+    })
+
+    let content = `========================================\n`
+    content += `       INFORMAÇÕES DO DECK: ${name.toUpperCase()}\n`
+    content += `========================================\n\n`
+    content += `NOME DO DECK: ${name}\n`
+    content += `DATA DE EXPORTAÇÃO: ${new Date().toLocaleString('pt-BR')}\n`
+    content += `TOTAL DE CARTAS: ${deckCards.length}\n\n`
+
+    content += `========================================\n`
+    content += `           CARTAS DO DECK\n`
+    content += `========================================\n\n`
+
+    deckCards.forEach((dc, i) => {
+      const s = dc.state || {}
+      content += `${i + 1}. ${s.name || 'Sem nome'}\n`
+
+      const details = []
+      details.push(`   TIPO DE CARTA: ${cardTypeLabel(s)}`)
+      if (s.monsterType) details.push(`   TIPO/RAÇA: ${s.monsterType}`)
+      if (s.attribute) details.push(`   ATRIBUTO: ${attributeLabel(s)}`)
+      if (!SPELL_TRAP_TYPES.includes(s.type) && s.level !== undefined && s.level !== '') {
+        details.push(`   NÍVEL: ${s.level}`)
+      }
+      if (s.atk !== undefined && s.atk !== '') details.push(`   ATK: ${s.atk}`)
+      if (s.def !== undefined && s.def !== '') details.push(`   DEF: ${s.def}`)
+      if (s.pendulum) details.push(`   PÊNDULO: Escala Azul ${s.scaleBlue} / Escala Vermelha ${s.scaleRed}`)
+      if (s.effect) details.push(`   EFEITO: ${s.effect}`)
+      if (s.pendulumEffect) details.push(`   EFEITO DO PÊNDULO: ${s.pendulumEffect}`)
+      const art = escapeJsonArt(s)
+      if (art) details.push(`   IMAGEM DA CARTA: ${art}`)
+      if (s.set) details.push(`   SET: ${s.set}`)
+      if (s.serial) details.push(`   SERIAL: ${s.serial}`)
+      if (s.edition) details.push(`   EDIÇÃO: ${s.edition}`)
+      if (s.year) details.push(`   ANO: ${s.year}`)
+      if (s.creator) details.push(`   CRIADOR: ${s.creator}`)
+      content += `${details.join('\n')}\n\n`
+    })
+
+    content += `========================================\n`
+    content += `           RESUMO DO DECK\n`
+    content += `========================================\n\n`
+    content += `TOTAL DE CARTAS: ${deckCards.length}\n\n`
+    const known = new Set(CARD_TYPES.map((t) => t.value))
+    CARD_TYPES.forEach((t) => {
+      if (counts[t.value]) content += `${t.label}: ${counts[t.value]}\n`
+    })
+    Object.keys(counts).forEach((k) => {
+      if (!known.has(k)) content += `${k}: ${counts[k]}\n`
+    })
+
+    content += `\n========================================\n`
+    content += `       FIM DA EXPORTAÇÃO\n`
+    content += `========================================\n`
+    return content
+  }
+
+  const downloadBlob = (content, type, filename) => {
+    const blob = new Blob([content], { type })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = filename
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const exportCreatedDeckTxt = () => {
+    const content = buildCreatedDeckTxt()
+    if (!content) {
+      setToast('Adicione cartas ao deck primeiro')
+      return
+    }
+    downloadBlob(content, 'text/plain;charset=utf-8', `${deckFilename()}.txt`)
+    setToast('Deck salvo em .txt')
+  }
+
+  const exportCreatedDeckJson = () => {
+    if (!deckCards.length) {
+      setToast('Adicione cartas ao deck primeiro')
+      return
+    }
+    const name = deckName.trim() || `Deck ${customDecks.length + 1}`
+    const main = []
+    const extra = []
+    deckCards.forEach((dc) => {
+      const s = dc.state || {}
+      const item = { id: dc.id, qty: 1, name: s.name || '', state: s }
+      if (CREATED_EXTRA_TYPES.includes(s.type)) extra.push(item)
+      else main.push(item)
+    })
+    const deckData = {
+      name,
+      type: 'custom',
+      exportedAt: new Date().toISOString(),
+      count: deckCards.length,
+      main,
+      extra,
+      side: [],
+    }
+    downloadBlob(JSON.stringify(deckData, null, 2), 'application/json', `${deckFilename()}.json`)
+    setToast('Deck salvo em .json')
   }
 
   const filteredSaved = useMemo(() => {
@@ -804,6 +926,12 @@ export default function CardMakerPage({ cards = [] }) {
                 </button>
                 <button type="button" className="cm-btn ghost small" onClick={clearDeckCards} disabled={!deckCards.length}>
                   Limpar
+                </button>
+                <button type="button" className="cm-btn ghost small" onClick={exportCreatedDeckTxt} disabled={!deckCards.length}>
+                  Salvar .txt
+                </button>
+                <button type="button" className="cm-btn ghost small" onClick={exportCreatedDeckJson} disabled={!deckCards.length}>
+                  Salvar .json
                 </button>
                 <button type="button" className="cm-btn primary small" onClick={exportDeckPdf} disabled={busy || !deckCards.length} style={{ fontWeight: '700', boxShadow: '0 0 0 2px rgba(229, 191, 53, 0.4)' }}>
                   {busy ? 'Gerando...' : 'Salvar deck em PDF (A4)'}
