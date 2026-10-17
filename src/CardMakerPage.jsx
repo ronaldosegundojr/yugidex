@@ -83,6 +83,8 @@ export default function CardMakerPage({ cards = [] }) {
   const cardRef = useRef(null)
   const previewRef = useRef(null)
   const printRefs = useRef([])
+  const deckTxtInputRef = useRef(null)
+  const deckJsonInputRef = useRef(null)
 
   // ---- Montador de deck (cartas criadas) ----
   const [mode, setMode] = useState('editor')
@@ -149,6 +151,11 @@ export default function CardMakerPage({ cards = [] }) {
             height: CARD_H,
             pixelRatio: 2,
             cacheBust: true,
+            // O html-to-image usa a URL sem query como chave de cache. Como a
+            // arte do banco passa pelo proxy (images.weserv.nl/?url=...), todas
+            // as cartas cairiam na mesma chave e repetiriam a 1a imagem. Incluir
+            // a query na chave mantem a arte correta de cada carta.
+            includeQueryParams: true,
             style: { transform: 'none', transformOrigin: 'top left' },
           })
           if (cancelled) return
@@ -401,13 +408,19 @@ export default function CardMakerPage({ cards = [] }) {
 
   const findDbCard = (id) => cards.find((c) => String(c.id) === String(id))
 
+  const addDbCardToDeck = (card) => {
+    const s = stateFromDbCard(card)
+    setDeckCards((prev) => [...prev, { id: newDeckCardId(), state: s }])
+    setToast(`${s.name || 'Carta'} adicionada ao deck`)
+  }
+
   const handleCreatorDrop = (e) => {
     e.preventDefault()
     setDragOver(false)
     const id = e.dataTransfer.getData('text/ygo-card-id')
     if (!id) return
     const card = findDbCard(id)
-    if (card) importDbCard(card)
+    if (card) addDbCardToDeck(card)
     else setToast('Carta não encontrada no banco')
   }
 
@@ -544,6 +557,173 @@ export default function CardMakerPage({ cards = [] }) {
     downloadBlob(JSON.stringify(deckData, null, 2), 'application/json', `${deckFilename()}.json`)
     setToast('Deck salvo em .json')
   }
+
+  // ---- Importar deck salvo (.txt / .json) ----
+  // Le o arquivo como texto UTF-8.
+  const readFileText = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(String(reader.result || ''))
+      reader.onerror = () => reject(reader.error)
+      reader.readAsText(file, 'utf-8')
+    })
+
+  // Converte um rotulo salvo (ex.: "Monstro de Efeito") de volta para o valor.
+  const valueFromLabel = (list, label) => {
+    const norm = String(label || '').trim().toLowerCase()
+    const hit = list.find(
+      (o) => String(o.label).toLowerCase() === norm || String(o.value).toLowerCase() === norm,
+    )
+    return hit ? hit.value : ''
+  }
+
+  const TXT_FIELD_BY_LABEL = {
+    'TIPO DE CARTA': 'type',
+    'TIPO/RAÇA': 'monsterType',
+    'ATRIBUTO': 'attribute',
+    'NÍVEL': 'level',
+    'ATK': 'atk',
+    'DEF': 'def',
+    'PÊNDULO': 'pendulum',
+    'EFEITO': 'effect',
+    'EFEITO DO PÊNDULO': 'pendulumEffect',
+    'IMAGEM DA CARTA': 'art',
+    'SET': 'set',
+    'SERIAL': 'serial',
+    'EDIÇÃO': 'edition',
+    'ANO': 'year',
+    'CRIADOR': 'creator',
+  }
+
+  // Le o .txt gerado por "Salvar .txt" e reconstroi os estados das cartas.
+  const parseDeckTxt = (text) => {
+    const lines = String(text || '').split(/\r?\n/)
+    let name = ''
+    const cards = []
+    let current = null
+    let lastField = null
+
+    lines.forEach((line) => {
+      const nameMatch = line.match(/^\s*NOME DO DECK:\s*(.*)$/i)
+      if (nameMatch) {
+        name = nameMatch[1].trim()
+        return
+      }
+      const numMatch = line.match(/^\s*\d+\.\s+(.*)$/)
+      if (numMatch) {
+        current = { name: numMatch[1].trim(), fields: [] }
+        cards.push(current)
+        lastField = null
+        return
+      }
+      if (!current) return
+      if (line.trim() === '') {
+        lastField = null
+        return
+      }
+      const keyMatch = line.match(/^\s{2,}([^:]+):\s?(.*)$/)
+      if (keyMatch) {
+        const key = TXT_FIELD_BY_LABEL[keyMatch[1].trim().toUpperCase()]
+        if (key) {
+          lastField = { key, value: keyMatch[2] }
+          current.fields.push(lastField)
+          return
+        }
+      }
+      // Linha sem rotulo: continua o valor anterior (ex.: efeito multilinha).
+      if (lastField) lastField.value += `\n${line}`
+    })
+
+    const states = cards.map((card) => {
+      const s = { name: card.name }
+      card.fields.forEach(({ key, value }) => {
+        switch (key) {
+          case 'type':
+            s.type = valueFromLabel(CARD_TYPES, value) || s.type
+            break
+          case 'attribute':
+            s.attribute = valueFromLabel(ATTRIBUTES, value) || s.attribute
+            break
+          case 'level':
+            s.level = Number(value) || 0
+            break
+          case 'pendulum': {
+            const m = value.match(/azul\s+(\d+)\D+vermelha\s+(\d+)/i)
+            if (m) {
+              s.pendulum = true
+              s.scaleBlue = Number(m[1])
+              s.scaleRed = Number(m[2])
+            }
+            break
+          }
+          default:
+            s[key] = value
+        }
+      })
+      return s
+    })
+
+    return { name, states }
+  }
+
+  // Le o .json gerado por "Salvar .json" e reconstroi os estados das cartas.
+  const parseDeckJson = (text) => {
+    const data = JSON.parse(text)
+    const list = []
+    ;['main', 'extra', 'side'].forEach((k) => {
+      if (Array.isArray(data[k])) list.push(...data[k])
+    })
+    const source = list.length ? list : Array.isArray(data) ? data : []
+    const states = source
+      .map((item) => {
+        if (!item || typeof item !== 'object') return null
+        if (item.state && typeof item.state === 'object') return item.state
+        if (item.type || item.name || item.effect) return item
+        return null
+      })
+      .filter(Boolean)
+    return { name: data.name || '', states }
+  }
+
+  const applyImportedDeck = (name, states) => {
+    if (!states.length) {
+      setToast('Nenhuma carta encontrada no arquivo')
+      return
+    }
+    setDeckName(name || '')
+    setCurrentDeckId(null)
+    setDeckCards(
+      states.map((s) => ({ id: newDeckCardId(), state: { ...defaultCardState(), ...s } })),
+    )
+    setToast(`${states.length} carta(s) importada(s)`)
+  }
+
+  const handleImportDeckTxt = async (file) => {
+    if (!file) return
+    try {
+      const text = await readFileText(file)
+      const { name, states } = parseDeckTxt(text)
+      applyImportedDeck(name, states)
+    } catch (e) {
+      console.error('Falha ao importar .txt:', e)
+      setToast('Não foi possível ler o arquivo .txt')
+    }
+  }
+
+  const handleImportDeckJson = async (file) => {
+    if (!file) return
+    try {
+      const text = await readFileText(file)
+      const { name, states } = parseDeckJson(text)
+      applyImportedDeck(name, states)
+    } catch (e) {
+      console.error('Falha ao importar .json:', e)
+      setToast('Arquivo .json inválido')
+    }
+  }
+
+  const importDeckTxt = () => deckTxtInputRef.current?.click()
+  const importDeckJson = () => deckJsonInputRef.current?.click()
 
   const filteredSaved = useMemo(() => {
     const q = savedSearch.trim().toLowerCase()
@@ -904,6 +1084,26 @@ export default function CardMakerPage({ cards = [] }) {
             }}
             onDrop={handleCreatorDrop}
           >
+            <input
+              ref={deckTxtInputRef}
+              type="file"
+              accept=".txt,text/plain"
+              style={{ display: 'none' }}
+              onChange={(e) => {
+                handleImportDeckTxt(e.target.files?.[0])
+                e.target.value = ''
+              }}
+            />
+            <input
+              ref={deckJsonInputRef}
+              type="file"
+              accept=".json,application/json"
+              style={{ display: 'none' }}
+              onChange={(e) => {
+                handleImportDeckJson(e.target.files?.[0])
+                e.target.value = ''
+              }}
+            />
             <div className="cdm-deck-head">
               <input
                 type="text"
@@ -925,22 +1125,34 @@ export default function CardMakerPage({ cards = [] }) {
                 {deckCards.length} carta(s) • {Math.max(1, Math.ceil(deckCards.length / DECK_PER_PAGE))} folha(s) A4
               </span>
               <div className="cdm-deck-bar-actions">
-                <span className="cdm-drag-hint">Arraste uma carta do banco para o criador</span>
-                <button type="button" className="cm-btn ghost small" onClick={addCurrentToDeck}>
-                  + Carta atual
-                </button>
-                <button type="button" className="cm-btn ghost small" onClick={clearDeckCards} disabled={!deckCards.length}>
-                  Limpar
-                </button>
-                <button type="button" className="cm-btn ghost small" onClick={exportCreatedDeckTxt} disabled={!deckCards.length}>
-                  Salvar .txt
-                </button>
-                <button type="button" className="cm-btn ghost small" onClick={exportCreatedDeckJson} disabled={!deckCards.length}>
-                  Salvar .json
-                </button>
-                <button type="button" className="cm-btn primary small" onClick={exportDeckPdf} disabled={busy || !deckCards.length} style={{ fontWeight: '700', boxShadow: '0 0 0 2px rgba(229, 191, 53, 0.4)' }}>
-                  {busy ? 'Gerando...' : 'Salvar deck em PDF (A4)'}
-                </button>
+                <span className="cdm-drag-hint">Arraste uma carta do banco para o deck</span>
+                <div className="cdm-deck-group">
+                  <button type="button" className="cm-btn ghost small" onClick={addCurrentToDeck}>
+                    + Carta atual
+                  </button>
+                  <button type="button" className="cm-btn ghost small" onClick={clearDeckCards} disabled={!deckCards.length}>
+                    Limpar
+                  </button>
+                </div>
+                <div className="cdm-deck-group">
+                  <button type="button" className="cm-btn ghost small" onClick={exportCreatedDeckTxt} disabled={!deckCards.length}>
+                    Salvar .txt
+                  </button>
+                  <button type="button" className="cm-btn ghost small" onClick={exportCreatedDeckJson} disabled={!deckCards.length}>
+                    Salvar .json
+                  </button>
+                  <button type="button" className="cm-btn primary small" onClick={exportDeckPdf} disabled={busy || !deckCards.length} style={{ fontWeight: '700', boxShadow: '0 0 0 2px rgba(229, 191, 53, 0.4)' }}>
+                    {busy ? 'Gerando...' : 'Salvar deck em PDF (A4)'}
+                  </button>
+                </div>
+                <div className="cdm-deck-group">
+                  <button type="button" className="cm-btn ghost small" onClick={importDeckTxt}>
+                    Importar .txt
+                  </button>
+                  <button type="button" className="cm-btn ghost small" onClick={importDeckJson}>
+                    Importar .json
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -950,7 +1162,7 @@ export default function CardMakerPage({ cards = [] }) {
               <div className="cdm-grid">
                 {deckCards.map((dc) => (
                   <div key={dc.id} className="cdm-card">
-                    <YugiohCardPreview state={dc.state} width={120} />
+                    <YugiohCardPreview state={dc.state} width={170} />
                     <div className="cdm-card-name">{dc.state.name || 'Sem nome'}</div>
                     <div className="cdm-card-actions">
                       <button type="button" className="cm-btn ghost small" onClick={() => editDeckCard(dc)}>
@@ -1062,7 +1274,7 @@ export default function CardMakerPage({ cards = [] }) {
                 {saved.map((entry) => (
                   <div key={entry.id} className="cdm-saved-card">
                     <button type="button" className="cdm-lib-card" onClick={() => addSavedToDeck(entry)} title={`Adicionar ${entry.name} ao deck`}>
-                      <YugiohCardPreview state={entry.state} width={120} />
+                      <YugiohCardPreview state={entry.state} width={110} />
                       <span>{entry.name}</span>
                     </button>
                   </div>
