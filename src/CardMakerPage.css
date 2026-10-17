@@ -534,6 +534,113 @@
   padding: 1rem 0;
   text-align: center;
 }
+/* ---- Opcoes de exibicao e filtros do "Deck Criado" ---- */
+.cdm-display {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 0.7rem 0.85rem;
+  margin-bottom: 0.85rem;
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(229, 191, 53, 0.22);
+  border-radius: 10px;
+}
+.cdm-display-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+.cdm-display-row .cm-field {
+  flex: 1 1 140px;
+  min-width: 130px;
+}
+.cdm-display-row .cm-field > span {
+  font-size: 0.7rem;
+}
+.cdm-display-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1.2rem;
+  align-items: center;
+}
+.cdm-display-checks .cm-check {
+  font-size: 0.82rem;
+}
+.cdm-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 0.9rem;
+}
+.cdm-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+.cdm-filter-row .cdm-search {
+  flex: 1 1 200px;
+  min-width: 150px;
+  margin: 0;
+}
+.cdm-filter-select {
+  flex: 0 1 190px;
+  min-width: 140px;
+  height: 36px;
+  padding: 0 0.5rem;
+  background: var(--yblack-light);
+  border: 1px solid var(--gold-dark);
+  border-radius: 4px;
+  color: var(--text-light);
+  font-family: inherit;
+  font-size: 0.84rem;
+}
+.cdm-filter-select:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+.cdm-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.cdm-chips-sm {
+  margin-bottom: 0.5rem;
+}
+.cdm-chips-sm .cdm-chip {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+}
+.cdm-lib-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  margin: 0 0 0.5rem;
+}
+.cdm-lib-filter-row .cdm-filter-select {
+  flex: 1 1 160px;
+}
+.cdm-chip {
+  padding: 0.26rem 0.72rem;
+  border-radius: 999px;
+  border: 1px solid rgba(229, 191, 53, 0.35);
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.cdm-chip:hover {
+  border-color: var(--gold);
+  color: var(--text-light);
+}
+.cdm-chip.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #1a1408;
+  font-weight: 700;
+}
 .cdm-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
@@ -549,6 +656,35 @@
   min-width: 0;
   max-width: 100%;
   width: 100%;
+}
+.cdm-card-preview {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  line-height: 0;
+}
+.cdm-card-count,
+.cdm-card-index {
+  position: absolute;
+  top: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.25;
+  padding: 0.1rem 0.42rem;
+  border-radius: 999px;
+  pointer-events: none;
+}
+.cdm-card-count {
+  right: 6px;
+  background: var(--gold);
+  color: #1a1408;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+.cdm-card-index {
+  left: 6px;
+  background: rgba(0, 0, 0, 0.72);
+  color: var(--gold);
 }
 .cdm-card-name {
   font-size: 0.82rem;

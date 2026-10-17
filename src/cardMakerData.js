@@ -267,24 +267,33 @@ export function defaultCardState() {
 // estado do criador, para poder editar nome/estrelas/texto e salvar como nova.
 const cap = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : '')
 
+// Categoria do tipo de carta do banco (usada para filtros e para montar o estado
+// do criador): 'spell' | 'trap' | 'link' | 'xyz' | 'synchro' | 'fusion' |
+// 'ritual' | 'effect' | 'normal'.
+export function dbCardCategory(card) {
+  if (!card) return 'normal'
+  const ct = String(card.cardType || '').toLowerCase()
+  if (ct === 'spell') return 'spell'
+  if (ct === 'trap') return 'trap'
+  const monsterTypes = (card.monsterCardTypes || []).map((t) => String(t).toLowerCase())
+  const classifications = (card.classifications || []).map((c) => String(c).toLowerCase())
+  if (monsterTypes.includes('link')) return 'link'
+  if (monsterTypes.includes('xyz')) return 'xyz'
+  if (monsterTypes.includes('synchro')) return 'synchro'
+  if (monsterTypes.includes('fusion')) return 'fusion'
+  if (monsterTypes.includes('ritual') || classifications.includes('ritual')) return 'ritual'
+  if (classifications.includes('effect')) return 'effect'
+  return 'normal'
+}
+
 export function stateFromDbCard(card) {
   if (!card) return defaultCardState()
   const base = defaultCardState()
   const text = card.text || {}
   const name = card._ptName || text.pt?.name || text.en?.name || ''
 
-  const monsterTypes = (card.monsterCardTypes || []).map((t) => String(t).toLowerCase())
   const classifications = (card.classifications || []).map((c) => String(c).toLowerCase())
-  let type = base.type
-  if (card.cardType === 'spell') type = 'spell'
-  else if (card.cardType === 'trap') type = 'trap'
-  else if (monsterTypes.includes('link')) type = 'link'
-  else if (monsterTypes.includes('xyz')) type = 'xyz'
-  else if (monsterTypes.includes('synchro')) type = 'synchro'
-  else if (monsterTypes.includes('fusion')) type = 'fusion'
-  else if (monsterTypes.includes('ritual') || classifications.includes('ritual')) type = 'ritual'
-  else if (classifications.includes('effect')) type = 'effect'
-  else type = 'normal'
+  const type = dbCardCategory(card)
 
   const attr = String(card.attribute || '').toLowerCase()
   const attribute = ATTRIBUTES.some((a) => a.value === attr) ? attr : base.attribute

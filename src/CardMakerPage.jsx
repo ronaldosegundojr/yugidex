@@ -16,6 +16,7 @@ import {
   DECK_PER_PAGE,
   defaultCardState,
   stateFromDbCard,
+  dbCardCategory,
 } from './cardMakerData'
 import { getCardImage, normalizeText } from './cardUtils'
 import { buildDeckPdf } from './deckPdf'
@@ -23,7 +24,105 @@ import './CardMakerPage.css'
 
 const STORAGE_KEY = 'ygoCustomCards'
 const DECKS_KEY = 'ygoCustomDecks'
+const DECK_VIEW_KEY = 'ygoCustomDeckView'
 const DB_PER_PAGE = 40
+
+// ---- Preferencias de exibicao do "Deck Criado" ----
+const DECK_VIEW_DEFAULTS = {
+  cardSize: 'auto', // auto | sm | md | lg | xl
+  cols: 'auto', // auto | 1 | 2 | 3 | 4
+  gap: 'normal', // compact | normal | wide
+  groupRepeated: false,
+  showName: true,
+  showActions: true,
+  showNumber: false,
+  sort: 'added', // added | name | type | level | atk
+}
+
+const DECK_CARD_SIZES = { sm: 190, md: 260, lg: 340, xl: 421 }
+const DECK_GAPS = { compact: 10, normal: 18, wide: 30 }
+
+// Calcula largura/colunas da grade do deck a partir da largura disponivel e das
+// preferencias escolhidas (tamanho fixo, numero de colunas ou automatico).
+function computeDeckLayout(containerW, view) {
+  const w = Math.max(240, Math.floor(containerW || 756))
+  const gap = DECK_GAPS[view?.gap] ?? DECK_GAPS.normal
+  const MAX = 421
+  const MIN = 130
+  let cols
+
+  const explicitCols = view?.cols && view.cols !== 'auto' ? Number(view.cols) : 0
+  const preset = view?.cardSize && view.cardSize !== 'auto' ? DECK_CARD_SIZES[view.cardSize] : 0
+
+  if (explicitCols > 0) {
+    cols = Math.max(1, Math.min(4, explicitCols))
+  } else if (preset) {
+    cols = Math.max(1, Math.min(4, Math.floor((w + gap) / (preset + gap))))
+  } else {
+    const MIN_CARD = 300
+    cols = 1
+    for (let c = 2; c <= 3; c++) {
+      if (Math.floor((w - gap * (c - 1)) / c) >= MIN_CARD) cols = c
+    }
+  }
+
+  // Em telas estreitas reduz as colunas para nao estourar a largura.
+  const maxCols = Math.max(1, Math.floor((w + gap) / (MIN + gap)))
+  cols = Math.max(1, Math.min(cols, maxCols))
+
+  let cardW = Math.floor((w - gap * (cols - 1)) / cols)
+  if (preset && !explicitCols) cardW = Math.min(cardW, preset)
+  cardW = Math.max(MIN, Math.min(MAX, cardW))
+  return { cardWidth: cardW, cols, gap }
+}
+
+// Chips de filtro por tipo de carta (no estilo do filtro do Master Duel).
+const DECK_FILTER_CHIPS = [
+  { value: 'monster', label: 'Monstros', test: (s) => !SPELL_TRAP_TYPES.includes(s.type) && s.type !== 'token' },
+  { value: 'normal', label: 'Normais', test: (s) => s.type === 'normal' },
+  { value: 'effect', label: 'Efeito', test: (s) => s.type === 'effect' },
+  { value: 'ritual', label: 'Ritual', test: (s) => s.type === 'ritual' },
+  { value: 'fusion', label: 'Fusão', test: (s) => s.type === 'fusion' },
+  { value: 'synchro', label: 'Synchro', test: (s) => s.type === 'synchro' || s.type === 'dark-synchro' },
+  { value: 'xyz', label: 'Xyz', test: (s) => s.type === 'xyz' },
+  { value: 'link', label: 'Link', test: (s) => s.type === 'link' },
+  { value: 'pendulum', label: 'Pêndulo', test: (s) => !!s.pendulum },
+  { value: 'spell', label: 'Magias', test: (s) => s.type === 'spell' },
+  { value: 'trap', label: 'Armadilhas', test: (s) => s.type === 'trap' },
+  { value: 'token', label: 'Token', test: (s) => s.type === 'token' },
+]
+
+// Chips de filtro para o "Banco de cartas" (pool), no estilo do Master Duel.
+const DB_FILTER_CHIPS = [
+  { value: 'monster', label: 'Monstros', test: (c) => !['spell', 'trap'].includes(dbCardCategory(c)) },
+  { value: 'normal', label: 'Normais', test: (c) => dbCardCategory(c) === 'normal' },
+  { value: 'effect', label: 'Efeito', test: (c) => dbCardCategory(c) === 'effect' },
+  { value: 'ritual', label: 'Ritual', test: (c) => dbCardCategory(c) === 'ritual' },
+  { value: 'fusion', label: 'Fusão', test: (c) => dbCardCategory(c) === 'fusion' },
+  { value: 'synchro', label: 'Synchro', test: (c) => dbCardCategory(c) === 'synchro' },
+  { value: 'xyz', label: 'Xyz', test: (c) => dbCardCategory(c) === 'xyz' },
+  { value: 'link', label: 'Link', test: (c) => dbCardCategory(c) === 'link' },
+  { value: 'spell', label: 'Magias', test: (c) => dbCardCategory(c) === 'spell' },
+  { value: 'trap', label: 'Armadilhas', test: (c) => dbCardCategory(c) === 'trap' },
+]
+
+// Chave estavel para agrupar cartas repetidas (mesmo conteudo = mesma chave).
+const deckStateKey = (s) => {  if (!s) return ''
+  try {
+    return JSON.stringify(s)
+  } catch {
+    return String(Math.random())
+  }
+}
+
+function loadDeckView() {
+  try {
+    const raw = localStorage.getItem(DECK_VIEW_KEY)
+    return raw ? { ...DECK_VIEW_DEFAULTS, ...JSON.parse(raw) } : { ...DECK_VIEW_DEFAULTS }
+  } catch {
+    return { ...DECK_VIEW_DEFAULTS }
+  }
+}
 
 // base64 seguro para unicode
 const b64encode = (str) => btoa(unescape(encodeURIComponent(str)))
@@ -103,8 +202,7 @@ export default function CardMakerPage({ cards = [] }) {
   const [toast, setToast] = useState('')
   const [previewWidth, setPreviewWidth] = useState(421)
   const [printCards, setPrintCards] = useState(null)
-  const [deckCardWidth, setDeckCardWidth] = useState(240)
-  const [deckCols, setDeckCols] = useState(2)
+  const [deckContainerW, setDeckContainerW] = useState(756)
   const cardRef = useRef(null)
   const previewRef = useRef(null)
   const deckSectionRef = useRef(null)
@@ -118,9 +216,12 @@ export default function CardMakerPage({ cards = [] }) {
   const [currentDeckId, setCurrentDeckId] = useState(null)
   const [deckName, setDeckName] = useState('')
   const [deckCards, setDeckCards] = useState([])
+  const [deckView, setDeckView] = useState(loadDeckView)
+  const [deckFilters, setDeckFilters] = useState({ q: '', kinds: [], attribute: 'all' })
   const [libTab, setLibTab] = useState('db')
   const [dbSearch, setDbSearch] = useState('')
   const [dbPage, setDbPage] = useState(1)
+  const [dbFilters, setDbFilters] = useState({ kinds: [], attribute: 'all' })
 
   const isTrapSpell = SPELL_TRAP_TYPES.includes(state.type)
   const canPendulum = !isTrapSpell && state.type !== 'link'
@@ -143,26 +244,15 @@ export default function CardMakerPage({ cards = [] }) {
     return () => ro.disconnect()
   }, [mode])
 
-  // Dimensiona as previas do "Deck Criado" para que os textos fiquem legiveis,
-  // no mesmo padrao do /criar-card (ate 421px, o tamanho do editor).
+  // Mede a largura disponivel do "Deck Criado"; a largura final das cartas e o
+  // numero de colunas sao calculados a partir das preferencias de exibicao.
   useEffect(() => {
     if (mode !== 'deck') return
     const el = deckSectionRef.current
     if (!el) return
     const compute = () => {
       const w = el.clientWidth - 32 // padding 1rem de cada lado
-      if (w <= 0) return
-      const gap = 18
-      const MAX = 421
-      const MIN_CARD = 300
-      let cols = 1
-      for (let c = 2; c <= 3; c++) {
-        const cand = Math.floor((w - gap * (c - 1)) / c)
-        if (cand >= MIN_CARD) cols = c
-      }
-      const cw = Math.max(160, Math.min(MAX, Math.floor((w - gap * (cols - 1)) / cols)))
-      setDeckCols(cols)
-      setDeckCardWidth(cw)
+      if (w > 0) setDeckContainerW(w)
     }
     compute()
     if (typeof ResizeObserver === 'undefined') return
@@ -242,6 +332,86 @@ export default function CardMakerPage({ cards = [] }) {
       cancelled = true
     }
   }, [printCards])
+
+  // ---- Derivados da exibicao do "Deck Criado" ----
+  const { cardWidth: deckCardWidth, cols: deckCols, gap: deckGap } = useMemo(
+    () => computeDeckLayout(deckContainerW, deckView),
+    [deckContainerW, deckView],
+  )
+
+  // Agrupa cartas repetidas (mesmo conteudo) quando a opcao esta ligada.
+  const deckGroups = useMemo(() => {
+    if (!deckView.groupRepeated) {
+      return deckCards.map((dc) => ({ key: dc.id, state: dc.state, items: [dc] }))
+    }
+    const map = new Map()
+    deckCards.forEach((dc) => {
+      const key = deckStateKey(dc.state)
+      const g = map.get(key)
+      if (g) g.items.push(dc)
+      else map.set(key, { key, state: dc.state, items: [dc] })
+    })
+    return [...map.values()]
+  }, [deckCards, deckView.groupRepeated])
+
+  // Aplica busca + filtros (tipo e atributo) + ordenacao.
+  const filteredDeckGroups = useMemo(() => {
+    const q = deckFilters.q.trim().toLowerCase()
+    const kinds = deckFilters.kinds
+    const attr = deckFilters.attribute
+    const tests = DECK_FILTER_CHIPS.filter((c) => kinds.includes(c.value))
+    let list = deckGroups.filter((g) => {
+      const s = g.state || {}
+      if (q) {
+        const name = String(s.name || '').toLowerCase()
+        const eff = String(s.effect || '').toLowerCase()
+        if (!name.includes(q) && !eff.includes(q)) return false
+      }
+      if (tests.length && !tests.some((c) => c.test(s))) return false
+      if (attr !== 'all') {
+        const a = SPELL_TRAP_TYPES.includes(s.type) ? s.type : s.attribute
+        if (a !== attr) return false
+      }
+      return true
+    })
+    const num = (v) => {
+      const n = Number(v)
+      return Number.isFinite(n) ? n : 0
+    }
+    if (deckView.sort === 'name') {
+      list = [...list].sort((a, b) =>
+        String(a.state?.name || '').localeCompare(String(b.state?.name || ''), 'pt', {
+          sensitivity: 'base',
+        }),
+      )
+    } else if (deckView.sort === 'type') {
+      list = [...list].sort((a, b) =>
+        String(a.state?.type || '').localeCompare(String(b.state?.type || '')),
+      )
+    } else if (deckView.sort === 'level') {
+      list = [...list].sort((a, b) => num(b.state?.level) - num(a.state?.level))
+    } else if (deckView.sort === 'atk') {
+      list = [...list].sort((a, b) => num(b.state?.atk) - num(a.state?.atk))
+    }
+    return list
+  }, [deckGroups, deckFilters, deckView.sort])
+
+  const deckHasFilters =
+    deckFilters.q.trim() !== '' || deckFilters.kinds.length > 0 || deckFilters.attribute !== 'all'
+  const deckShownCount = filteredDeckGroups.reduce((n, g) => n + g.items.length, 0)
+
+  // Resumo por categoria (estilo Master Duel).
+  const deckBreakdown = useMemo(() => {
+    const acc = { monster: 0, spell: 0, trap: 0, other: 0 }
+    deckCards.forEach((c) => {
+      const t = c.state?.type
+      if (t === 'spell') acc.spell++
+      else if (t === 'trap') acc.trap++
+      else if (t === 'token') acc.other++
+      else acc.monster++
+    })
+    return acc
+  }, [deckCards])
 
   const update = useCallback((patch) => {
     setState((s) => ({ ...s, ...patch }))
@@ -416,7 +586,29 @@ export default function CardMakerPage({ cards = [] }) {
   }
 
   const removeDeckCard = (id) => setDeckCards((prev) => prev.filter((c) => c.id !== id))
+  const removeDeckCardIds = (ids) => {
+    const set = new Set(ids)
+    setDeckCards((prev) => prev.filter((c) => !set.has(c.id)))
+  }
   const clearDeckCards = () => setDeckCards([])
+
+  // ---- Preferencias de exibicao / filtros do deck ----
+  const persistDeckView = (next) => {
+    setDeckView(next)
+    try {
+      localStorage.setItem(DECK_VIEW_KEY, JSON.stringify(next))
+    } catch {
+      /* localStorage pode estar indisponivel */
+    }
+  }
+  const updateDeckView = (patch) => persistDeckView({ ...deckView, ...patch })
+
+  const toggleDeckKind = (value) =>
+    setDeckFilters((f) => ({
+      ...f,
+      kinds: f.kinds.includes(value) ? f.kinds.filter((k) => k !== value) : [...f.kinds, value],
+    }))
+  const clearDeckFilters = () => setDeckFilters({ q: '', kinds: [], attribute: 'all' })
 
   const editDeckCard = (dc) => {
     setState({ ...defaultCardState(), ...dc.state })
@@ -816,9 +1008,23 @@ export default function CardMakerPage({ cards = [] }) {
 
   const filteredDb = useMemo(() => {
     const q = normalizeText(dbSearch)
-    if (!q) return cards
-    return cards.filter((c) => (c._normalizedNames || '').includes(q))
-  }, [cards, dbSearch])
+    const tests = DB_FILTER_CHIPS.filter((c) => dbFilters.kinds.includes(c.value))
+    const attr = dbFilters.attribute
+    return cards.filter((c) => {
+      if (q && !(c._normalizedNames || '').includes(q)) return false
+      if (tests.length && !tests.some((t) => t.test(c))) return false
+      if (attr !== 'all' && String(c.attribute || '').toLowerCase() !== attr) return false
+      return true
+    })
+  }, [cards, dbSearch, dbFilters])
+
+  const dbHasFilters = dbFilters.kinds.length > 0 || dbFilters.attribute !== 'all'
+  const toggleDbKind = (value) =>
+    setDbFilters((f) => ({
+      ...f,
+      kinds: f.kinds.includes(value) ? f.kinds.filter((k) => k !== value) : [...f.kinds, value],
+    }))
+  const clearDbFilters = () => setDbFilters({ kinds: [], attribute: 'all' })
 
   const dbTotalPages = Math.max(1, Math.ceil(filteredDb.length / DB_PER_PAGE))
   const dbPageCards = useMemo(
@@ -1349,31 +1555,207 @@ export default function CardMakerPage({ cards = [] }) {
               </div>
               <div className="cdm-deck-info">
                 <span>
-                  {deckCards.length} carta(s) • {Math.max(1, Math.ceil(deckCards.length / DECK_PER_PAGE))} folha(s) A4
+                  {deckCards.length} carta(s) • {deckBreakdown.monster} monstro(s) • {deckBreakdown.spell} magia(s) •{' '}
+                  {deckBreakdown.trap} armadilha(s) • {Math.max(1, Math.ceil(deckCards.length / DECK_PER_PAGE))} folha(s) A4
+                  {deckHasFilters ? ` • ${deckShownCount} exibida(s)` : ''}
                 </span>
                 <span className="cdm-drag-hint">Arraste uma carta do banco para o deck</span>
               </div>
             </div>
 
+            <div className="cdm-display">
+              <div className="cdm-display-row">
+                <label className="cm-field">
+                  <span>Tamanho das cartas</span>
+                  <select
+                    value={deckView.cardSize}
+                    onChange={(e) => updateDeckView({ cardSize: e.target.value })}
+                    disabled={deckView.cols !== 'auto'}
+                    title={
+                      deckView.cols !== 'auto'
+                        ? 'Definido pelas colunas escolhidas'
+                        : 'Tamanho das cartas na grade'
+                    }
+                  >
+                    <option value="auto">Automático</option>
+                    <option value="sm">Pequeno</option>
+                    <option value="md">Médio</option>
+                    <option value="lg">Grande</option>
+                    <option value="xl">Extra</option>
+                  </select>
+                </label>
+                <label className="cm-field">
+                  <span>Colunas</span>
+                  <select value={deckView.cols} onChange={(e) => updateDeckView({ cols: e.target.value })}>
+                    <option value="auto">Automático</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </label>
+                <label className="cm-field">
+                  <span>Espaçamento</span>
+                  <select value={deckView.gap} onChange={(e) => updateDeckView({ gap: e.target.value })}>
+                    <option value="compact">Compacto</option>
+                    <option value="normal">Normal</option>
+                    <option value="wide">Amplo</option>
+                  </select>
+                </label>
+                <label className="cm-field">
+                  <span>Ordenar por</span>
+                  <select value={deckView.sort} onChange={(e) => updateDeckView({ sort: e.target.value })}>
+                    <option value="added">Ordem de adição</option>
+                    <option value="name">Nome (A-Z)</option>
+                    <option value="type">Tipo</option>
+                    <option value="level">Nível</option>
+                    <option value="atk">ATK</option>
+                  </select>
+                </label>
+              </div>
+              <div className="cdm-display-checks">
+                <label className="cm-check">
+                  <input
+                    type="checkbox"
+                    checked={deckView.groupRepeated}
+                    onChange={(e) => updateDeckView({ groupRepeated: e.target.checked })}
+                  />
+                  <span>Agrupar cartas repetidas</span>
+                </label>
+                <label className="cm-check">
+                  <input
+                    type="checkbox"
+                    checked={deckView.showName}
+                    onChange={(e) => updateDeckView({ showName: e.target.checked })}
+                  />
+                  <span>Mostrar nome</span>
+                </label>
+                <label className="cm-check">
+                  <input
+                    type="checkbox"
+                    checked={deckView.showActions}
+                    onChange={(e) => updateDeckView({ showActions: e.target.checked })}
+                  />
+                  <span>Mostrar botões</span>
+                </label>
+                <label className="cm-check">
+                  <input
+                    type="checkbox"
+                    checked={deckView.showNumber}
+                    onChange={(e) => updateDeckView({ showNumber: e.target.checked })}
+                  />
+                  <span>Numerar cartas</span>
+                </label>
+              </div>
+            </div>
+
+            <div className="cdm-filters">
+              <div className="cdm-filter-row">
+                <input
+                  type="text"
+                  className="cdm-search"
+                  placeholder="Buscar no deck (nome ou efeito)..."
+                  value={deckFilters.q}
+                  onChange={(e) => setDeckFilters((f) => ({ ...f, q: e.target.value }))}
+                />
+                <select
+                  className="cdm-filter-select"
+                  value={deckFilters.attribute}
+                  onChange={(e) => setDeckFilters((f) => ({ ...f, attribute: e.target.value }))}
+                >
+                  <option value="all">Todos os atributos</option>
+                  {ATTRIBUTES.map((a) => (
+                    <option key={a.value} value={a.value}>
+                      {a.label}
+                    </option>
+                  ))}
+                  <option value="spell">Magia (tipo)</option>
+                  <option value="trap">Armadilha (tipo)</option>
+                </select>
+                {deckHasFilters && (
+                  <button type="button" className="cm-btn ghost small" onClick={clearDeckFilters}>
+                    Limpar filtros
+                  </button>
+                )}
+              </div>
+              <div className="cdm-chips">
+                <button
+                  type="button"
+                  className={`cdm-chip ${deckFilters.kinds.length === 0 ? 'active' : ''}`}
+                  onClick={() => setDeckFilters((f) => ({ ...f, kinds: [] }))}
+                >
+                  Todos
+                </button>
+                {DECK_FILTER_CHIPS.map((c) => (
+                  <button
+                    key={c.value}
+                    type="button"
+                    className={`cdm-chip ${deckFilters.kinds.includes(c.value) ? 'active' : ''}`}
+                    onClick={() => toggleDeckKind(c.value)}
+                  >
+                    {c.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {deckCards.length === 0 ? (
               <p className="cdm-empty">Deck vazio. Adicione cartas criadas pela biblioteca ao lado ou clique em “+ Carta atual”.</p>
+            ) : filteredDeckGroups.length === 0 ? (
+              <p className="cdm-empty">
+                Nenhuma carta corresponde aos filtros.{' '}
+                <button type="button" className="cm-btn ghost small" onClick={clearDeckFilters}>
+                  Limpar filtros
+                </button>
+              </p>
             ) : (
               <div
                 className="cdm-grid"
-                style={{ gridTemplateColumns: `repeat(${deckCols}, minmax(0, 1fr))` }}
+                style={{ gridTemplateColumns: `repeat(${deckCols}, minmax(0, 1fr))`, gap: `${deckGap}px` }}
               >
-                {deckCards.map((dc) => (
-                  <div key={dc.id} className="cdm-card">
-                    <YugiohCardPreview state={dc.state} width={deckCardWidth} />
-                    <div className="cdm-card-name">{dc.state.name || 'Sem nome'}</div>
-                    <div className="cdm-card-actions">
-                      <button type="button" className="cm-btn ghost small" onClick={() => editDeckCard(dc)}>
-                        Editar
-                      </button>
-                      <button type="button" className="cm-btn ghost small danger" onClick={() => removeDeckCard(dc.id)}>
-                        Remover
-                      </button>
+                {filteredDeckGroups.map((g, idx) => (
+                  <div key={g.key} className="cdm-card">
+                    <div className="cdm-card-preview">
+                      <YugiohCardPreview state={g.state} width={deckCardWidth} />
+                      {deckView.showNumber && <span className="cdm-card-index">{idx + 1}</span>}
+                      {g.items.length > 1 && <span className="cdm-card-count">×{g.items.length}</span>}
                     </div>
+                    {deckView.showName && <div className="cdm-card-name">{g.state.name || 'Sem nome'}</div>}
+                    {deckView.showActions && (
+                      <div className="cdm-card-actions">
+                        <button type="button" className="cm-btn ghost small" onClick={() => editDeckCard(g.items[0])}>
+                          Editar
+                        </button>
+                        {g.items.length > 1 ? (
+                          <>
+                            <button
+                              type="button"
+                              className="cm-btn ghost small danger"
+                              onClick={() => removeDeckCard(g.items[g.items.length - 1].id)}
+                              title="Remover 1 cópia"
+                            >
+                              −1
+                            </button>
+                            <button
+                              type="button"
+                              className="cm-btn ghost small danger"
+                              onClick={() => removeDeckCardIds(g.items.map((i) => i.id))}
+                              title="Remover todas as cópias"
+                            >
+                              Todas
+                            </button>
+                          </>
+                        ) : (
+                          <button
+                            type="button"
+                            className="cm-btn ghost small danger"
+                            onClick={() => removeDeckCard(g.items[0].id)}
+                          >
+                            Remover
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -1447,6 +1829,60 @@ export default function CardMakerPage({ cards = [] }) {
                     setDbPage(1)
                   }}
                 />
+                <div className="cdm-lib-filter-row">
+                  <select
+                    className="cdm-filter-select"
+                    value={dbFilters.attribute}
+                    onChange={(e) => {
+                      setDbFilters((f) => ({ ...f, attribute: e.target.value }))
+                      setDbPage(1)
+                    }}
+                  >
+                    <option value="all">Todos os atributos</option>
+                    {ATTRIBUTES.filter((a) => ['dark', 'light', 'fire', 'water', 'earth', 'wind', 'divine'].includes(a.value)).map((a) => (
+                      <option key={a.value} value={a.value}>
+                        {a.label}
+                      </option>
+                    ))}
+                  </select>
+                  {dbHasFilters && (
+                    <button
+                      type="button"
+                      className="cm-btn ghost small"
+                      onClick={() => {
+                        clearDbFilters()
+                        setDbPage(1)
+                      }}
+                    >
+                      Limpar
+                    </button>
+                  )}
+                </div>
+                <div className="cdm-chips cdm-chips-sm">
+                  <button
+                    type="button"
+                    className={`cdm-chip ${dbFilters.kinds.length === 0 ? 'active' : ''}`}
+                    onClick={() => {
+                      setDbFilters((f) => ({ ...f, kinds: [] }))
+                      setDbPage(1)
+                    }}
+                  >
+                    Todos
+                  </button>
+                  {DB_FILTER_CHIPS.map((c) => (
+                    <button
+                      key={c.value}
+                      type="button"
+                      className={`cdm-chip ${dbFilters.kinds.includes(c.value) ? 'active' : ''}`}
+                      onClick={() => {
+                        toggleDbKind(c.value)
+                        setDbPage(1)
+                      }}
+                    >
+                      {c.label}
+                    </button>
+                  ))}
+                </div>
                 <p className="cdm-lib-info">{filteredDb.length} carta(s) • clique para editar</p>
                 <div className="cdm-lib-grid">
                   {dbPageCards.map((card) => {
