@@ -377,6 +377,24 @@ export default function CardMakerPage({ cards = [] }) {
     return Math.max(min, Math.min(max, Math.floor(n)))
   }
 
+  // Normaliza o limite de caracteres ao sair do campo (permite digitar livremente
+  // e nao deixa o valor "pular" a cada tecla). Se o limite estiver ativo, corta o
+  // efeito para o novo tamanho.
+  const commitEffectLimit = () => {
+    const raw = state.effectLimit
+    const lim = raw === '' || raw === null || raw === undefined ? 300 : clampSize(raw, 20, 2000, 300)
+    const patch = { effectLimit: lim }
+    if (state.effectLimitEnabled) patch.effect = String(state.effect || '').slice(0, lim)
+    update(patch)
+  }
+
+  // Normaliza o espacamento entre linhas ao sair do campo.
+  const commitEffectSpacing = () => {
+    const raw = state.effectSpacing
+    const n = raw === '' || raw === null || raw === undefined ? 1.15 : Number(raw)
+    update({ effectSpacing: Number.isNaN(n) ? 1.15 : Math.max(0.8, Math.min(2.4, n)) })
+  }
+
 
 
   // ---- Montador de deck (cartas criadas) ----
@@ -999,6 +1017,13 @@ export default function CardMakerPage({ cards = [] }) {
               <textarea
                 rows={5}
                 value={state.effect}
+                maxLength={
+                  state.effectLimitEnabled
+                    ? Number(state.effectLimit) > 0
+                      ? Math.floor(Number(state.effectLimit))
+                      : 300
+                    : undefined
+                }
                 onChange={(e) => update({ effect: applyEffectRules(e.target.value, state) })}
                 placeholder="Descreva o efeito..."
               />
@@ -1055,10 +1080,14 @@ export default function CardMakerPage({ cards = [] }) {
                       type="number"
                       min="20"
                       max="2000"
-                      step="10"
+                      step="1"
                       disabled={!state.effectLimitEnabled}
                       value={state.effectLimit ?? 300}
-                      onChange={(e) => update({ effectLimit: clampSize(e.target.value, 20, 2000, 300) })}
+                      onChange={(e) => update({ effectLimit: e.target.value })}
+                      onBlur={commitEffectLimit}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') e.currentTarget.blur()
+                      }}
                     />
                   </label>
                   <label className="cm-field">
@@ -1069,9 +1098,10 @@ export default function CardMakerPage({ cards = [] }) {
                       max="2.4"
                       step="0.05"
                       value={state.effectSpacing ?? 1.15}
-                      onChange={(e) => {
-                        const n = Number(e.target.value)
-                        update({ effectSpacing: Number.isNaN(n) ? 1.15 : Math.max(0.8, Math.min(2.4, n)) })
+                      onChange={(e) => update({ effectSpacing: e.target.value })}
+                      onBlur={commitEffectSpacing}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') e.currentTarget.blur()
                       }}
                     />
                   </label>
@@ -1087,7 +1117,9 @@ export default function CardMakerPage({ cards = [] }) {
                 </label>
                 <p className="cm-format-hint">
                   {String(state.effect || '').length} caractere(s)
-                  {state.effectLimitEnabled ? ` • limite ${state.effectLimit ?? 300}` : ''}
+                  {state.effectLimitEnabled
+                    ? ` • limite ${clampSize(state.effectLimit, 20, 2000, 300)}`
+                    : ''}
                 </p>
               </div>
             </div>
