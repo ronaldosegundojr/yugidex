@@ -286,7 +286,15 @@ export function dbCardCategory(card) {
   return 'normal'
 }
 
-export function stateFromDbCard(card) {
+// Rotulo amigavel da edicao (YGOJSON: "1st" | "unlimited" | "limited").
+export function editionLabel(edition) {
+  if (edition === '1st') return '1st Edition'
+  if (edition === 'unlimited') return 'Unlimited'
+  if (edition === 'limited') return 'Limited Edition'
+  return edition || ''
+}
+
+export function stateFromDbCard(card, printing = null) {
   if (!card) return defaultCardState()
   const base = defaultCardState()
   const text = card.text || {}
@@ -318,6 +326,10 @@ export function stateFromDbCard(card) {
   // criar o efeito de "carta dentro de carta" ao editar uma carta do banco.
   const art = card.images?.[0]?.art || (card.art && /art/i.test(String(card.art)) ? card.art : '') || ''
 
+  // Dados de colecao: o Serial # e o passcode de 8 digitos impresso na carta.
+  // Set/Edicao/Ano vem da impressao escolhida (padrao: a mais antiga em TCG EN).
+  const serial = Array.isArray(card.passwords) && card.passwords.length ? String(card.passwords[0]) : ''
+
   return {
     ...base,
     type,
@@ -330,6 +342,12 @@ export function stateFromDbCard(card) {
     level,
     spellTrapIcon,
     art,
+    serial,
+    set: printing?.code || '',
+    edition: printing ? editionLabel(printing.edition) : '',
+    year: printing?.year ? String(printing.year) : base.year,
+    // Guarda o id da carta do banco para permitir trocar de impressao depois.
+    dbCardId: card.id,
     // Mantem o padrao de tamanho do /criar-card (65 nome / 24 efeito): nao deixa
     // o ajuste automatico reduzir a fonte das cartas vindas do banco.
     nameSize: base.nameSize,

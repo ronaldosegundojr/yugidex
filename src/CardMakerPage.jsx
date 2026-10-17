@@ -17,7 +17,9 @@ import {
   defaultCardState,
   stateFromDbCard,
   dbCardCategory,
+  editionLabel,
 } from './cardMakerData'
+import { loadPrintings, printingsForCard, defaultPrinting, regionLabel } from './printingsData'
 import { getCardImage, normalizeText } from './cardUtils'
 import { buildDeckPdf } from './deckPdf'
 import './CardMakerPage.css'
@@ -30,7 +32,7 @@ const DB_PER_PAGE = 40
 // ---- Preferencias de exibicao do "Deck Criado" ----
 const DECK_VIEW_DEFAULTS = {
   cardSize: 'auto', // auto | sm | md | lg | xl
-  cols: 'auto', // auto | 1 | 2 | 3 | 4
+  cols: '4', // auto | 1 | 2 | 3 | 4  (4 colunas por padrao: tamanho ja ajustado)
   gap: 'normal', // compact | normal | wide
   groupRepeated: false,
   showName: true,
@@ -222,9 +224,53 @@ export default function CardMakerPage({ cards = [] }) {
   const [dbSearch, setDbSearch] = useState('')
   const [dbPage, setDbPage] = useState(1)
   const [dbFilters, setDbFilters] = useState({ kinds: [], attribute: 'all' })
+  // Sobe quando o catalogo de impressoes (sets) termina de carregar, para
+  // recalcular as opcoes de impressao na tela.
+  const [printingsReady, setPrintingsReady] = useState(false)
 
   const isTrapSpell = SPELL_TRAP_TYPES.includes(state.type)
   const canPendulum = !isTrapSpell && state.type !== 'link'
+
+  const collOptions = useMemo(() => {
+    if (!state.dbCardId) return []
+    return printingsForCard(state.dbCardId)
+  }, [state.dbCardId, printingsReady])
+
+  const collIndex = useMemo(() => {
+    if (!collOptions.length || !state.set) return -1
+    const idx = collOptions.findIndex((p) => p.code === state.set)
+    return idx
+  }, [collOptions, state.set])
+
+  const applyPrinting = useCallback(
+    (idx) => {
+      const i = Number(idx)
+      if (!collOptions[i]) return
+      const p = collOptions[i]
+      setState((prev) => ({
+        ...prev,
+        set: p.code,
+        edition: editionLabel(p.edition),
+        year: p.year ? String(p.year) : prev.year,
+      }))
+    },
+    [collOptions, setState],
+  )
+
+  // Carrega (uma vez) o catalogo de impressoes sob demanda.
+  useEffect(() => {
+    let alive = true
+    loadPrintings()
+      .then(() => {
+        if (alive) setPrintingsReady(true)
+      })
+      .catch(() => {
+        /* sem o catalogo, seguimos apenas com o passcode (Serial) */
+      })
+    return () => {
+      alive = false
+    }
+  }, [])
 
   useEffect(() => {
     if (!toast) return
@@ -661,7 +707,8 @@ export default function CardMakerPage({ cards = [] }) {
   }
 
   const importDbCard = (card) => {
-    setState(stateFromDbCard(card))
+    const p = defaultPrinting(card.id)
+    setState(stateFromDbCard(card, p))
     setCurrentId(null)
     setMode('editor')
     setToast('Carta importada para edição')
@@ -682,7 +729,8 @@ export default function CardMakerPage({ cards = [] }) {
   const findDbCard = (id) => cards.find((c) => String(c.id) === String(id))
 
   const addDbCardToDeck = (card) => {
-    const s = stateFromDbCard(card)
+    const p = defaultPrinting(card.id)
+    const s = stateFromDbCard(card, p)
     setDeckCards((prev) => [...prev, { id: newDeckCardId(), state: s }])
     setToast(`${s.name || 'Carta'} adicionada ao deck`)
   }
@@ -1440,6 +1488,31 @@ export default function CardMakerPage({ cards = [] }) {
                 <input type="text" maxLength={3008} value={state.serial} onChange={(e) => update({ serial: e.target.value })} placeholder="00000000" />
               </label>
             </div>
+            {collOptions.length > 1 && (
+              <div className="cm-row">
+                <label className="cm-field cm-field-wide">
+                  <span>Impressão (set)</span>
+                  <select
+                    className="cm-select"
+                    value={collIndex >= 0 ? collIndex : ''}
+                    onChange={(e) => applyPrinting(e.target.value)}
+                  >
+                    <option value="" disabled>
+                      Selecione uma impressão
+                    </option>
+                    {collOptions.map((p, i) => (
+                      <option key={`${p.code}-${i}`} value={i}>
+                        {p.code} — {p.setName}
+                        {p.rarity ? ` · ${p.rarity}` : ''}
+                        {p.edition ? ` · ${editionLabel(p.edition)}` : ''}
+                        {p.year ? ` · ${p.year}` : ''}
+                        {` (${regionLabel(p.lang)})`}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+            )}
             <div className="cm-row">
               <label className="cm-field">
                 <span>Edição</span>
