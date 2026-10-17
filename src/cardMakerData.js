@@ -59,15 +59,21 @@ export const ATTRIBUTES = [
 ]
 
 // ---- Subtipos de Magia/Armadilha (icone) ----
+// `types` indica para quais tipos a opcao aparece (Magia x Armadilha), conforme
+// os subtipos oficiais do Yu-Gi-Oh.
 export const SPELL_TRAP_ICONS = [
-  { value: '', label: 'Normal' },
-  { value: 'continuous', label: 'Contínua' },
-  { value: 'counter', label: 'Counter' },
-  { value: 'equip', label: 'Equipar' },
-  { value: 'field', label: 'Campo' },
-  { value: 'quick-play', label: 'Rápida (Quick-Play)' },
-  { value: 'ritual', label: 'Ritual' },
+  { value: '', label: 'Normal', types: ['spell', 'trap'] },
+  { value: 'continuous', label: 'Contínua', types: ['spell', 'trap'] },
+  { value: 'quick-play', label: 'Rápida (Quick-Play)', types: ['spell'] },
+  { value: 'equip', label: 'Equipar', types: ['spell'] },
+  { value: 'field', label: 'Campo', types: ['spell'] },
+  { value: 'ritual', label: 'Ritual', types: ['spell'] },
+  { value: 'counter', label: 'Counter (Resposta)', types: ['trap'] },
 ]
+
+// Opcoes de subtipo validas para o tipo atual (spell/trap).
+export const spellTrapIconsFor = (type) =>
+  SPELL_TRAP_ICONS.filter((s) => !s.types || s.types.includes(type))
 
 export const RARITIES = [
   { value: 'common', label: 'Comum' },
@@ -143,8 +149,10 @@ export function computeLayout(state) {
     footerLine: { x: 52, y: 921, w: 588, h: 2 },
     linkLabel: { x: 515, y: 928, w: 100, h: 20 },
     linkNumber: { x: 515, y: 927, w: 125, h: 20 },
+    // O icone de subtipo agora entra DENTRO dos colchetes ("[ Carta Armadilha X ]"),
+    // entao a caixa do rotulo cobre toda a faixa (texto + icone).
     spellTrapIcon: { x: 570, y: 126, w: 38, h: 38 },
-    spellTrapLabel: { x: 44, y: 133, w: 520, h: 30 },
+    spellTrapLabel: { x: 44, y: 126, w: 564, h: 38 },
     set: { x: isPendulum ? 54 : isLink ? 420 : 480, y: isPendulum ? 930 : 730, w: 140, h: 16 },
     serial: { x: 32, y: 969, w: 96, h: 16 },
     edition: { x: 132, y: 968, w: 200, h: 16 },
@@ -243,12 +251,20 @@ export function defaultCardState() {
     nameSize: 65,
     typeSize: 26,
     atkDefSize: 36,
+    // ---- Formatacao do texto do efeito ----
+    // autoFit = true reduz a fonte automaticamente para caber na caixa.
+    // Cartas vindas do banco usam false (mantem o tamanho padrao do /criar-card).
+    autoFit: true,
+    effectAllowSymbols: true,
+    effectLimitEnabled: false,
+    effectLimit: 300,
+    effectSpacing: 1.15,
+    effectAlign: 'justify',
   }
 }
 
 // Converte uma carta do banco (enriquecida em App.jsx / cards.json) para o
 // estado do criador, para poder editar nome/estrelas/texto e salvar como nova.
-const SPELL_TRAP_ICON_VALUES = SPELL_TRAP_ICONS.map((s) => s.value).filter(Boolean)
 const cap = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : '')
 
 export function stateFromDbCard(card) {
@@ -283,7 +299,11 @@ export function stateFromDbCard(card) {
   const effect = text.pt?.effect || text.en?.effect || ''
 
   const sub = String(card.subcategory || '').toLowerCase()
-  const spellTrapIcon = SPELL_TRAP_ICON_VALUES.includes(sub) ? sub : ''
+  const spellTrapIcon = SPELL_TRAP_ICONS.some(
+    (i) => i.value && i.value === sub && (!i.types || i.types.includes(type)),
+  )
+    ? sub
+    : ''
 
   // Usa apenas a arte (recorte), nunca a imagem completa da carta, para nao
   // criar o efeito de "carta dentro de carta" ao editar uma carta do banco.
@@ -301,5 +321,12 @@ export function stateFromDbCard(card) {
     level,
     spellTrapIcon,
     art,
+    // Mantem o padrao de tamanho do /criar-card (65 nome / 24 efeito): nao deixa
+    // o ajuste automatico reduzir a fonte das cartas vindas do banco.
+    nameSize: base.nameSize,
+    effectSize: base.effectSize,
+    typeSize: base.typeSize,
+    atkDefSize: base.atkDefSize,
+    autoFit: false,
   }
 }

@@ -18,7 +18,9 @@ import {
 import './YugiohCardPreview.css'
 
 // Texto que reduz a fonte automaticamente para caber na caixa (fitFont do cardmaker).
-function FittedText({ text, baseSize, box, className, style }) {
+// Quando `autoFit` e false mantem o tamanho base (padrao do /criar-card), mesmo
+// que o texto fique no limite da caixa.
+function FittedText({ text, baseSize, box, className, style, autoFit = true }) {
   const ref = useRef(null)
 
   useLayoutEffect(() => {
@@ -26,6 +28,7 @@ function FittedText({ text, baseSize, box, className, style }) {
     if (!el) return
     let fs = baseSize
     el.style.fontSize = fs + 'px'
+    if (!autoFit) return
     let guard = 0
     while (
       (el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1) &&
@@ -36,7 +39,7 @@ function FittedText({ text, baseSize, box, className, style }) {
       el.style.fontSize = fs + 'px'
       guard++
     }
-  }, [text, baseSize, box.w, box.h])
+  }, [text, baseSize, box.w, box.h, autoFit])
 
   return (
     <div ref={ref} className={className} style={{ ...style, fontSize: baseSize }}>
@@ -47,7 +50,8 @@ function FittedText({ text, baseSize, box, className, style }) {
 
 // Texto que reduz o tamanho da fonte para caber na largura disponivel e, se
 // ainda faltar espaco, comprime levemente na horizontal (squeeze do cardmaker).
-function SqueezeText({ text, baseSize, box, className, style }) {
+// Com `autoFit` false o tamanho base e mantido e apenas comprime na horizontal.
+function SqueezeText({ text, baseSize, box, className, style, autoFit = true }) {
   const wrapRef = useRef(null)
   const spanRef = useRef(null)
 
@@ -62,8 +66,9 @@ function SqueezeText({ text, baseSize, box, className, style }) {
       const pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0)
       const avail = Math.max(0, wrap.clientWidth - pad)
       if (!avail) return
-      // 1) reduz a fonte ate caber (min 45% do tamanho base, piso absoluto 9px)
-      const min = Math.max(9, Math.round(baseSize * 0.45))
+      // 1) reduz a fonte ate caber (min 45% do tamanho base, piso absoluto 9px).
+      //    Com autoFit desligado o piso e o proprio tamanho base.
+      const min = autoFit ? Math.max(9, Math.round(baseSize * 0.45)) : baseSize
       let fs = baseSize
       span.style.fontSize = fs + 'px'
       let guard = 0
@@ -86,7 +91,7 @@ function SqueezeText({ text, baseSize, box, className, style }) {
       document.fonts.addEventListener('loadingdone', fit)
       return () => document.fonts.removeEventListener('loadingdone', fit)
     }
-  }, [text, baseSize, box.w])
+  }, [text, baseSize, box.w, autoFit])
 
   return (
     <div ref={wrapRef} className={`ycm-squeeze ${className || ''}`} style={style}>
@@ -117,12 +122,9 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
 
   const stars = L.showLevel ? Math.max(0, Math.min(12, Number(state.level) || 0)) : 0
   const linkCount = countLinkArrows(state.linkArrows)
-  const scriptWord = trapSpell
-    ? state.type === 'trap'
-      ? '[ Carta Armadilha ]'
-      : '[ Carta Mágica ]'
-    : ''
+  const spellTrapWord = trapSpell ? (state.type === 'trap' ? 'Carta Armadilha' : 'Carta Mágica') : ''
   const effectFont = isNormalMonster(state) ? '"Stone Serif Italic", serif' : '"Matrix Book", serif'
+  const autoFit = state.autoFit !== false
 
   return (
     <div
@@ -180,6 +182,7 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
             box={L.name}
             className={`ycm-name ${rarity} ${whiteName ? 'white' : ''}`}
             style={absStyle(L.name, 4)}
+            autoFit={autoFit}
           />
 
         {/* atributo */}
@@ -217,6 +220,7 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
             box={L.type}
             className="ycm-type"
             style={absStyle(L.type, 3)}
+            autoFit={autoFit}
           />
         )}
 
@@ -226,7 +230,12 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
           baseSize={Number(state.effectSize) > 0 ? Number(state.effectSize) : 24}
           box={L.effect}
           className="ycm-effect"
-          style={absStyle(L.effect, 3, { fontFamily: effectFont })}
+          autoFit={autoFit}
+          style={absStyle(L.effect, 3, {
+            fontFamily: effectFont,
+            lineHeight: state.effectSpacing ? String(state.effectSpacing) : '1.15',
+            textAlign: state.effectAlign || 'justify',
+          })}
         />
 
         {/* efeito do pendulo */}
@@ -236,7 +245,12 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
             baseSize={Number(state.effectSize) > 0 ? Number(state.effectSize) : 24}
             box={L.effectPendulum}
             className="ycm-effect"
-            style={absStyle(L.effectPendulum, 3, { fontFamily: '"Matrix Book", serif' })}
+            autoFit={autoFit}
+            style={absStyle(L.effectPendulum, 3, {
+              fontFamily: '"Matrix Book", serif',
+              lineHeight: state.effectSpacing ? String(state.effectSpacing) : '1.15',
+              textAlign: state.effectAlign || 'justify',
+            })}
           />
         )}
 
@@ -257,16 +271,19 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
           <img className="ycm-layer" style={absStyle(L.footerLine, 3)} src={frame('other/atk_def line.png')} alt="" />
         )}
 
-        {/* magia/armadilha */}
+        {/* magia/armadilha: "[ Carta Armadilha X ]" com o icone dentro dos colchetes */}
         {trapSpell && (
-          <>
+          <div className="ycm-spell-label" style={absStyle(L.spellTrapLabel, 3)}>
+            <span className="ycm-spell-text">[ {spellTrapWord}</span>
             {state.spellTrapIcon && (
-              <img className="ycm-layer" style={absStyle(L.spellTrapIcon, 1)} src={frame(`icons/${state.spellTrapIcon}.png`)} alt="" />
+              <img
+                className="ycm-spell-icon"
+                src={frame(`icons/${state.spellTrapIcon}.png`)}
+                alt=""
+              />
             )}
-            <div className="ycm-spell-label" style={absStyle(L.spellTrapLabel, 3)}>
-              {scriptWord}
-            </div>
-          </>
+            <span className="ycm-spell-text">]</span>
+          </div>
         )}
 
         {/* ATK / DEF / LINK */}

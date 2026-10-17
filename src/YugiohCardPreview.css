@@ -189,16 +189,28 @@
   box-sizing: border-box;
 }
 
-/* Label de magia/armadilha */
+/* Label de magia/armadilha: "[ Carta Armadilha X ]" (icone dentro dos colchetes) */
 .ycm-spell-label {
   font-family: 'Stone Small Caps Bold', 'Times New Roman', serif;
   font-weight: normal;
   font-size: 26px;
   letter-spacing: 0.5px;
-  text-align: right;
-  line-height: 26px;
   color: #000;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  white-space: nowrap;
+}
+.ycm-spell-label .ycm-spell-text {
+  display: inline-block;
+}
+.ycm-spell-label .ycm-spell-icon {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 /* Recorte da arte */

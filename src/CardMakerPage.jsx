@@ -5,6 +5,7 @@ import {
   CARD_TYPES,
   ATTRIBUTES,
   SPELL_TRAP_ICONS,
+  spellTrapIconsFor,
   RARITIES,
   LEVELS,
   LINK_ARROWS,
@@ -27,6 +28,28 @@ const DB_PER_PAGE = 40
 // base64 seguro para unicode
 const b64encode = (str) => btoa(unescape(encodeURIComponent(str)))
 const b64decode = (str) => decodeURIComponent(escape(atob(str)))
+
+// ---- Formatacao do texto do efeito ----
+// Remove emojis/pictogramas/simbolos quando "Permitir símbolos" esta desligado.
+const EFFECT_SYMBOL_RE = /[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{2190}-\u{21FF}\u{25A0}-\u{25FF}]/gu
+const stripEffectSymbols = (s) => String(s || '').replace(EFFECT_SYMBOL_RE, '')
+// Aplica as regras de formato (simbolos/limite de caracteres) ao texto digitado.
+const applyEffectRules = (value, s) => {
+  let v = String(value ?? '')
+  if (s.effectAllowSymbols === false) v = stripEffectSymbols(v)
+  if (s.effectLimitEnabled) {
+    const lim = Number(s.effectLimit) > 0 ? Math.floor(Number(s.effectLimit)) : 300
+    if (v.length > lim) v = v.slice(0, lim)
+  }
+  return v
+}
+
+const formatDeckDate = (iso) => {
+  if (!iso) return ''
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return ''
+  return d.toLocaleDateString('pt-BR')
+}
 
 // As artes vindas do banco ficam em outro dominio (images.ygoprodeck.com) sem
 // cabecalho CORS, e o navegador nao deixa ler a imagem para desenhar no canvas
@@ -80,8 +103,11 @@ export default function CardMakerPage({ cards = [] }) {
   const [toast, setToast] = useState('')
   const [previewWidth, setPreviewWidth] = useState(421)
   const [printCards, setPrintCards] = useState(null)
+  const [deckCardWidth, setDeckCardWidth] = useState(240)
+  const [deckCols, setDeckCols] = useState(2)
   const cardRef = useRef(null)
   const previewRef = useRef(null)
+  const deckSectionRef = useRef(null)
   const printRefs = useRef([])
   const deckTxtInputRef = useRef(null)
   const deckJsonInputRef = useRef(null)
@@ -113,6 +139,34 @@ export default function CardMakerPage({ cards = [] }) {
       const w = entries[0].contentRect.width
       if (w > 0) setPreviewWidth(Math.max(220, Math.min(421, Math.floor(w - 32))))
     })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [mode])
+
+  // Dimensiona as previas do "Deck Criado" para que os textos fiquem legiveis,
+  // no mesmo padrao do /criar-card (ate 421px, o tamanho do editor).
+  useEffect(() => {
+    if (mode !== 'deck') return
+    const el = deckSectionRef.current
+    if (!el) return
+    const compute = () => {
+      const w = el.clientWidth - 32 // padding 1rem de cada lado
+      if (w <= 0) return
+      const gap = 18
+      const MAX = 421
+      const MIN_CARD = 300
+      let cols = 1
+      for (let c = 2; c <= 3; c++) {
+        const cand = Math.floor((w - gap * (c - 1)) / c)
+        if (cand >= MIN_CARD) cols = c
+      }
+      const cw = Math.max(160, Math.min(MAX, Math.floor((w - gap * (cols - 1)) / cols)))
+      setDeckCols(cols)
+      setDeckCardWidth(cw)
+    }
+    compute()
+    if (typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver(compute)
     ro.observe(el)
     return () => ro.disconnect()
   }, [mode])
@@ -203,7 +257,16 @@ export default function CardMakerPage({ cards = [] }) {
       } else {
         next.pendulum = false
       }
-      if (SPELL_TRAP_TYPES.includes(type)) next.attribute = type
+      if (SPELL_TRAP_TYPES.includes(type)) {
+        next.attribute = type
+        // descarta um subtipo que nao exista no novo tipo (ex.: Rapida -> Armadilha)
+        if (s.spellTrapIcon) {
+          const valid = SPELL_TRAP_ICONS.some(
+            (i) => i.value === s.spellTrapIcon && (!i.types || i.types.includes(type)),
+          )
+          if (!valid) next.spellTrapIcon = ''
+        }
+      }
       return next
     })
   }
@@ -874,10 +937,10 @@ export default function CardMakerPage({ cards = [] }) {
 
             {isTrapSpell && (
               <label className="cm-field">
-                <span>Subtipo (ícone)</span>
+                <span>{state.type === 'trap' ? 'Tipo de Armadilha' : 'Tipo de Magia'}</span>
                 <select value={state.spellTrapIcon} onChange={(e) => update({ spellTrapIcon: e.target.value })}>
-                  {SPELL_TRAP_ICONS.map((s) => (
-                    <option key={s.value} value={s.value}>
+                  {spellTrapIconsFor(state.type).map((s) => (
+                    <option key={s.value || 'none'} value={s.value}>
                       {s.label}
                     </option>
                   ))}
@@ -933,8 +996,101 @@ export default function CardMakerPage({ cards = [] }) {
 
             <label className="cm-field">
               <span>{isTrapSpell ? 'Efeito da carta' : 'Texto de efeito / lore'}</span>
-              <textarea rows={5} value={state.effect} onChange={(e) => update({ effect: e.target.value })} placeholder="Descreva o efeito..." />
+              <textarea
+                rows={5}
+                value={state.effect}
+                onChange={(e) => update({ effect: applyEffectRules(e.target.value, state) })}
+                placeholder="Descreva o efeito..."
+              />
             </label>
+
+            <div className="cm-field">
+              <span>Formatação do efeito</span>
+              <div className="cm-format">
+                <label className="cm-check">
+                  <input
+                    type="checkbox"
+                    checked={state.autoFit !== false}
+                    onChange={(e) => update({ autoFit: e.target.checked })}
+                  />
+                  <span>Ajustar texto automaticamente ao espaço</span>
+                </label>
+                <label className="cm-check">
+                  <input
+                    type="checkbox"
+                    checked={state.effectAllowSymbols !== false}
+                    onChange={(e) =>
+                      update({
+                        effectAllowSymbols: e.target.checked,
+                        effect: e.target.checked
+                          ? state.effect
+                          : stripEffectSymbols(state.effect),
+                      })
+                    }
+                  />
+                  <span>Permitir símbolos</span>
+                </label>
+                <label className="cm-check">
+                  <input
+                    type="checkbox"
+                    checked={!!state.effectLimitEnabled}
+                    onChange={(e) =>
+                      update({
+                        effectLimitEnabled: e.target.checked,
+                        effect: e.target.checked
+                          ? String(state.effect || '').slice(
+                              0,
+                              clampSize(state.effectLimit, 20, 2000, 300),
+                            )
+                          : state.effect,
+                      })
+                    }
+                  />
+                  <span>Definir limite de caracteres</span>
+                </label>
+                <div className="cm-row">
+                  <label className="cm-field">
+                    <span>Limite de caracteres</span>
+                    <input
+                      type="number"
+                      min="20"
+                      max="2000"
+                      step="10"
+                      disabled={!state.effectLimitEnabled}
+                      value={state.effectLimit ?? 300}
+                      onChange={(e) => update({ effectLimit: clampSize(e.target.value, 20, 2000, 300) })}
+                    />
+                  </label>
+                  <label className="cm-field">
+                    <span>Espaçamento (linhas)</span>
+                    <input
+                      type="number"
+                      min="0.8"
+                      max="2.4"
+                      step="0.05"
+                      value={state.effectSpacing ?? 1.15}
+                      onChange={(e) => {
+                        const n = Number(e.target.value)
+                        update({ effectSpacing: Number.isNaN(n) ? 1.15 : Math.max(0.8, Math.min(2.4, n)) })
+                      }}
+                    />
+                  </label>
+                </div>
+                <label className="cm-field">
+                  <span>Alinhamento do texto</span>
+                  <select value={state.effectAlign || 'justify'} onChange={(e) => update({ effectAlign: e.target.value })}>
+                    <option value="justify">Justificado</option>
+                    <option value="left">Esquerda</option>
+                    <option value="center">Centro</option>
+                    <option value="right">Direita</option>
+                  </select>
+                </label>
+                <p className="cm-format-hint">
+                  {String(state.effect || '').length} caractere(s)
+                  {state.effectLimitEnabled ? ` • limite ${state.effectLimit ?? 300}` : ''}
+                </p>
+              </div>
+            </div>
 
             <label className="cm-field">
               <span>Tamanho da fonte do efeito (px)</span>
@@ -1072,6 +1228,7 @@ export default function CardMakerPage({ cards = [] }) {
       {mode === 'deck' && (
         <div className="cdm-layout">
           <section
+            ref={deckSectionRef}
             className={`cdm-deck ${dragOver ? 'drag-over' : ''}`}
             onDragOver={(e) => {
               if (!e.dataTransfer.types.includes('text/ygo-card-id')) return
@@ -1121,48 +1278,61 @@ export default function CardMakerPage({ cards = [] }) {
             </div>
 
             <div className="cdm-deck-bar">
-              <span>
-                {deckCards.length} carta(s) • {Math.max(1, Math.ceil(deckCards.length / DECK_PER_PAGE))} folha(s) A4
-              </span>
               <div className="cdm-deck-bar-actions">
-                <span className="cdm-drag-hint">Arraste uma carta do banco para o deck</span>
                 <div className="cdm-deck-group">
+                  <span className="cdm-deck-group-label">Cartas</span>
                   <button type="button" className="cm-btn ghost small" onClick={addCurrentToDeck}>
                     + Carta atual
                   </button>
-                  <button type="button" className="cm-btn ghost small" onClick={clearDeckCards} disabled={!deckCards.length}>
+                  <button type="button" className="cm-btn ghost small danger" onClick={clearDeckCards} disabled={!deckCards.length}>
                     Limpar
                   </button>
                 </div>
                 <div className="cdm-deck-group">
-                  <button type="button" className="cm-btn ghost small" onClick={exportCreatedDeckTxt} disabled={!deckCards.length}>
-                    Salvar .txt
+                  <span className="cdm-deck-group-label">Importar</span>
+                  <button type="button" className="cm-btn ghost small" onClick={importDeckTxt}>
+                    .txt
                   </button>
-                  <button type="button" className="cm-btn ghost small" onClick={exportCreatedDeckJson} disabled={!deckCards.length}>
-                    Salvar .json
-                  </button>
-                  <button type="button" className="cm-btn primary small" onClick={exportDeckPdf} disabled={busy || !deckCards.length} style={{ fontWeight: '700', boxShadow: '0 0 0 2px rgba(229, 191, 53, 0.4)' }}>
-                    {busy ? 'Gerando...' : 'Salvar deck em PDF (A4)'}
+                  <button type="button" className="cm-btn ghost small" onClick={importDeckJson}>
+                    .json
                   </button>
                 </div>
                 <div className="cdm-deck-group">
-                  <button type="button" className="cm-btn ghost small" onClick={importDeckTxt}>
-                    Importar .txt
+                  <span className="cdm-deck-group-label">Exportar</span>
+                  <button type="button" className="cm-btn ghost small" onClick={exportCreatedDeckTxt} disabled={!deckCards.length}>
+                    .txt
                   </button>
-                  <button type="button" className="cm-btn ghost small" onClick={importDeckJson}>
-                    Importar .json
+                  <button type="button" className="cm-btn ghost small" onClick={exportCreatedDeckJson} disabled={!deckCards.length}>
+                    .json
+                  </button>
+                  <button
+                    type="button"
+                    className="cm-btn primary small cdm-pdf-btn"
+                    onClick={exportDeckPdf}
+                    disabled={busy || !deckCards.length}
+                  >
+                    {busy ? 'Gerando...' : 'Salvar PDF (A4)'}
                   </button>
                 </div>
+              </div>
+              <div className="cdm-deck-info">
+                <span>
+                  {deckCards.length} carta(s) • {Math.max(1, Math.ceil(deckCards.length / DECK_PER_PAGE))} folha(s) A4
+                </span>
+                <span className="cdm-drag-hint">Arraste uma carta do banco para o deck</span>
               </div>
             </div>
 
             {deckCards.length === 0 ? (
               <p className="cdm-empty">Deck vazio. Adicione cartas criadas pela biblioteca ao lado ou clique em “+ Carta atual”.</p>
             ) : (
-              <div className="cdm-grid">
+              <div
+                className="cdm-grid"
+                style={{ gridTemplateColumns: `repeat(${deckCols}, minmax(0, 1fr))` }}
+              >
                 {deckCards.map((dc) => (
                   <div key={dc.id} className="cdm-card">
-                    <YugiohCardPreview state={dc.state} width={170} />
+                    <YugiohCardPreview state={dc.state} width={deckCardWidth} />
                     <div className="cdm-card-name">{dc.state.name || 'Sem nome'}</div>
                     <div className="cdm-card-actions">
                       <button type="button" className="cm-btn ghost small" onClick={() => editDeckCard(dc)}>
@@ -1183,12 +1353,31 @@ export default function CardMakerPage({ cards = [] }) {
                 <div className="cdm-saved-list">
                   {customDecks.map((d) => (
                     <div key={d.id} className={`cdm-saved-item ${currentDeckId === d.id ? 'active' : ''}`}>
-                      <button type="button" className="cdm-saved-name" onClick={() => loadCustomDeck(d)}>
-                        {d.name} <span>({d.cards?.length || 0})</span>
+                      <button
+                        type="button"
+                        className="cdm-saved-name"
+                        onClick={() => loadCustomDeck(d)}
+                        title="Clique para carregar este deck"
+                      >
+                        <strong>{d.name}</strong>
+                        <span>
+                          {d.cards?.length || 0} carta(s)
+                          {d.date ? ` • ${formatDeckDate(d.date)}` : ''}
+                        </span>
                       </button>
-                      <button type="button" className="cm-combo-del" onClick={() => deleteCustomDeck(d.id)} title="Excluir">
-                        ×
-                      </button>
+                      <div className="cdm-saved-actions">
+                        <button type="button" className="cm-btn primary small" onClick={() => loadCustomDeck(d)}>
+                          Load
+                        </button>
+                        <button
+                          type="button"
+                          className="cm-btn ghost small danger"
+                          onClick={() => deleteCustomDeck(d.id)}
+                          title="Excluir"
+                        >
+                          ×
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
