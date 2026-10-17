@@ -1231,6 +1231,15 @@ export default function CardMakerPage({ cards = [] }) {
               </select>
             </label>
 
+            <label className="cm-check">
+              <input
+                type="checkbox"
+                checked={!!state.holographic}
+                onChange={(e) => update({ holographic: e.target.checked })}
+              />
+              <span>Carta holográfica / metalizada (foil)</span>
+            </label>
+
             {canPendulum && (
               <label className="cm-check">
                 <input type="checkbox" checked={!!state.pendulum} onChange={(e) => update({ pendulum: e.target.checked })} />

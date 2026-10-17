@@ -240,6 +240,8 @@ export function defaultCardState() {
     linkArrows: {},
     spellTrapIcon: '',
     rarity: 'common',
+    // Acabamento metalizado/holografico (foil) aplicado sobre a carta inteira.
+    holographic: false,
     set: '',
     serial: '',
     edition: '',

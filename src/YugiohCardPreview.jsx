@@ -26,18 +26,35 @@ function FittedText({ text, baseSize, box, className, style, autoFit = true }) {
   useLayoutEffect(() => {
     const el = ref.current
     if (!el) return
-    let fs = baseSize
-    el.style.fontSize = fs + 'px'
-    if (!autoFit) return
-    let guard = 0
-    while (
-      (el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1) &&
-      fs > 6 &&
-      guard < 220
-    ) {
-      fs -= 1
+    // Limite minimo de fonte: nunca reduz demais. Usa no maximo ~55% do tamanho
+    // base e nunca abaixo de 11px (antes ia ate 6px, deixando o texto ilegivel).
+    const min = Math.max(11, Math.round(baseSize * 0.55))
+    const fit = () => {
+      if (!autoFit) {
+        el.style.fontSize = baseSize + 'px'
+        return
+      }
+      let fs = baseSize
       el.style.fontSize = fs + 'px'
-      guard++
+      let guard = 0
+      while (
+        (el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1) &&
+        fs > min &&
+        guard < 400
+      ) {
+        // passo de 0.5px: para perto de onde realmente cabe, sem "pular" demais
+        fs = Math.max(min, fs - 0.5)
+        el.style.fontSize = fs + 'px'
+        guard++
+      }
+    }
+    fit()
+    // reajusta quando as fontes locais terminarem de carregar (antes o texto era
+    // medido com a fonte de fallback, bem mais larga, e ficava pequeno demais)
+    if (document.fonts?.ready) document.fonts.ready.then(() => fit())
+    if (document.fonts?.addEventListener) {
+      document.fonts.addEventListener('loadingdone', fit)
+      return () => document.fonts.removeEventListener('loadingdone', fit)
     }
   }, [text, baseSize, box.w, box.h, autoFit])
 
@@ -125,6 +142,11 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
   const spellTrapWord = trapSpell ? (state.type === 'trap' ? 'Carta Armadilha' : 'Carta Mágica') : ''
   const effectFont = isNormalMonster(state) ? '"Stone Serif Italic", serif' : '"Matrix Book", serif'
   const autoFit = state.autoFit !== false
+  // Acabamento metalizado/holografico (foil)
+  const holographic = state.holographic === true
+  // Nome vira foil quando a carta e holografica e a raridade nao define uma
+  // folha propria (ouro/prata). Com ouro/prata a raridade ja cuida do nome.
+  const holoName = holographic && rarity !== 'gold' && rarity !== 'silver'
 
   return (
     <div
@@ -180,7 +202,7 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
             text={state.name || 'Nome da Carta'}
             baseSize={Number(state.nameSize || 65)}
             box={L.name}
-            className={`ycm-name ${rarity} ${whiteName ? 'white' : ''}`}
+            className={`ycm-name ${rarity} ${whiteName ? 'white' : ''} ${holoName ? 'holo' : ''}`}
             style={absStyle(L.name, 4)}
             autoFit={autoFit}
           />
@@ -341,6 +363,17 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
 
         {/* holograma */}
         <img className="ycm-layer" style={absStyle(L.hologram, 2)} src={frame('other/Hologram.png')} alt="" />
+
+        {/* acabamento holografico / metalizado (foil) */}
+        {holographic && (
+          <>
+            {/* prismatico + reflexo ficam sob o texto (z 2), mantendo a leitura
+                do efeito/nome nitida; o brilho metalizado vai por cima (z 30) */}
+            <div className="ycm-holo ycm-holo-prism" style={absStyle({ x: 0, y: 0, w: CARD_W, h: CARD_H }, 2)} />
+            <div className="ycm-holo ycm-holo-sheen" style={absStyle({ x: 0, y: 0, w: CARD_W, h: CARD_H }, 2)} />
+            <div className="ycm-holo ycm-holo-metal" style={absStyle({ x: 0, y: 0, w: CARD_W, h: CARD_H }, 30)} />
+          </>
+        )}
       </div>
     </div>
   )
