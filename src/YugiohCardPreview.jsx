@@ -202,8 +202,16 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
             text={state.name || 'Nome da Carta'}
             baseSize={Number(state.nameSize || 65)}
             box={L.name}
-            className={`ycm-name ${rarity} ${whiteName ? 'white' : ''} ${holoName ? 'holo' : ''}`}
-            style={absStyle(L.name, 4)}
+            className={`ycm-name ${rarity} ${whiteName && !state.nameColor ? 'white' : ''} ${holoName ? 'holo' : ''}`}
+            style={{
+              ...absStyle(L.name, 4),
+              // Cor personalizada do titulo tem prioridade sobre o branco/preto
+              // automatico e sobre as classes de raridade (foil continua no
+              // background, mas o texto usa a cor escolhida).
+              ...(state.nameColor
+                ? { color: state.nameColor, WebkitTextFillColor: state.nameColor }
+                : {}),
+            }}
             autoFit={autoFit}
           />
 

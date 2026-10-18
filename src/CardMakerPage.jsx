@@ -18,6 +18,7 @@ import {
   stateFromDbCard,
   dbCardCategory,
   editionLabel,
+  isWhiteName,
 } from './cardMakerData'
 import { loadPrintings, printingsForCard, defaultPrinting, regionLabel } from './printingsData'
 import { getCardImage, normalizeText } from './cardUtils'
@@ -27,6 +28,11 @@ import './CardMakerPage.css'
 const STORAGE_KEY = 'ygoCustomCards'
 const DECKS_KEY = 'ygoCustomDecks'
 const DECK_VIEW_KEY = 'ygoCustomDeckView'
+// Rascunho automatico do editor: guarda o trabalho em andamento (carta +
+// deck) e expira apos 30 dias sem uso, avisando o usuario nas ultimas 48h.
+const DRAFT_KEY = 'ygoCardMakerDraft'
+const DRAFT_TTL_MS = 30 * 24 * 60 * 60 * 1000 // 30 dias
+const DRAFT_WARN_MS = 48 * 60 * 60 * 1000 // aviso quando restam < 48h
 const DB_PER_PAGE = 40
 
 // ---- Preferencias de exibicao do "Deck Criado" ----
@@ -181,7 +187,109 @@ function loadDecks() {
   }
 }
 
+// Grava no localStorage sem deixar estourar a cota (~5MB): se o valor nao
+// couber, tenta de novo sem as artes em base64 (data:) e, se ainda assim
+// falhar, apenas ignora (o aviso e feito pelo chamador).
+function safeSetItem(key, value) {
+  try {
+    localStorage.setItem(key, value)
+    return true
+  } catch {
+    try {
+      const stripped = JSON.parse(value)
+      const strip = (s) => {
+        if (Array.isArray(s)) return s.map(strip)
+        if (s && typeof s === 'object') {
+          const o = { ...s }
+          if (typeof o.art === 'string' && o.art.startsWith('data:')) o.art = ''
+          if (Array.isArray(o.cards)) o.cards = o.cards.map(strip)
+          if (o.state && typeof o.state === 'object') o.state = strip(o.state)
+          return o
+        }
+        return s
+      }
+      localStorage.setItem(key, JSON.stringify(strip(stripped)))
+      return 'stripped'
+    } catch {
+      return false
+    }
+  }
+}
+
+// Reduz a imagem no upload para caber no localStorage: max 1024px no maior
+// lado, JPEG 0.85 (PNG vira JPEG, menos ~80% do tamanho). Imagens de celular
+// costumam ter 10-40MB em base64 e quebravam o salvamento + travavam a UI.
+const MAX_ART_DIM = 1024
+function compressImageFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onerror = () => reject(reader.error)
+    reader.onload = () => {
+      const dataUrl = String(reader.result || '')
+      const img = new Image()
+      img.onerror = () => reject(new Error('imagem invalida'))
+      img.onload = () => {
+        try {
+          const w = img.naturalWidth || img.width
+          const h = img.naturalHeight || img.height
+          if (!w || !h) {
+            resolve(dataUrl)
+            return
+          }
+          const scale = Math.min(1, MAX_ART_DIM / Math.max(w, h))
+          if (scale === 1 && dataUrl.length < 400_000) {
+            resolve(dataUrl)
+            return
+          }
+          const canvas = document.createElement('canvas')
+          canvas.width = Math.max(1, Math.round(w * scale))
+          canvas.height = Math.max(1, Math.round(h * scale))
+          const ctx = canvas.getContext('2d')
+          ctx.fillStyle = '#000'
+          ctx.fillRect(0, 0, canvas.width, canvas.height)
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+          resolve(canvas.toDataURL('image/jpeg', 0.85))
+        } catch {
+          resolve(dataUrl)
+        }
+      }
+      img.src = dataUrl
+    }
+    reader.readAsDataURL(file)
+  })
+}
+
+function loadDraft() {
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY)
+    if (!raw) return null
+    const d = JSON.parse(raw)
+    if (!d || !d.savedAt) return null
+    if (Date.now() - d.savedAt > DRAFT_TTL_MS) {
+      localStorage.removeItem(DRAFT_KEY)
+      return null
+    }
+    return d
+  } catch {
+    return null
+  }
+}
+
+const draftRemainingLabel = (ms) => {
+  if (ms <= 0) return 'expirado'
+  const mins = Math.max(1, Math.floor(ms / 60000))
+  const days = Math.floor(mins / 1440)
+  const hours = Math.floor((mins % 1440) / 60)
+  const m = mins % 60
+  if (days > 0) return `${days}d ${hours}h`
+  if (hours > 0) return `${hours}h ${m}min`
+  return `${m}min`
+}
+
 export default function CardMakerPage({ cards = [] }) {
+  // Rascunho carregado uma unica vez; usado para restaurar o trabalho na
+  // abertura da pagina (o link #c= tem prioridade sobre o rascunho).
+  const [initialDraft] = useState(loadDraft)
   const [state, setState] = useState(() => {
     const base = defaultCardState()
     try {
@@ -194,10 +302,11 @@ export default function CardMakerPage({ cards = [] }) {
     } catch {
       /* ignora hash invalido */
     }
+    if (initialDraft?.state) return { ...base, ...initialDraft.state }
     return base
   })
   const [saved, setSaved] = useState(loadSaved)
-  const [currentId, setCurrentId] = useState(null)
+  const [currentId, setCurrentId] = useState(() => initialDraft?.currentId ?? null)
   const [savedSearch, setSavedSearch] = useState('')
   const [listOpen, setListOpen] = useState(false)
   const [busy, setBusy] = useState(false)
@@ -213,11 +322,13 @@ export default function CardMakerPage({ cards = [] }) {
   const deckJsonInputRef = useRef(null)
 
   // ---- Montador de deck (cartas criadas) ----
-  const [mode, setMode] = useState('editor')
+  const [mode, setMode] = useState(() => initialDraft?.mode || 'editor')
   const [customDecks, setCustomDecks] = useState(loadDecks)
-  const [currentDeckId, setCurrentDeckId] = useState(null)
-  const [deckName, setDeckName] = useState('')
-  const [deckCards, setDeckCards] = useState([])
+  const [currentDeckId, setCurrentDeckId] = useState(() => initialDraft?.currentDeckId ?? null)
+  const [deckName, setDeckName] = useState(() => initialDraft?.deckName || '')
+  const [deckCards, setDeckCards] = useState(() =>
+    (initialDraft?.deckCards || []).map((c, i) => ({ id: c.id || `dc_draft_${i}`, state: c.state || {} })),
+  )
   const [deckView, setDeckView] = useState(loadDeckView)
   const [deckFilters, setDeckFilters] = useState({ q: '', kinds: [], attribute: 'all' })
   const [libTab, setLibTab] = useState('db')
@@ -227,6 +338,12 @@ export default function CardMakerPage({ cards = [] }) {
   // Sobe quando o catalogo de impressoes (sets) termina de carregar, para
   // recalcular as opcoes de impressao na tela.
   const [printingsReady, setPrintingsReady] = useState(false)
+  // Momento do ultimo rascunho salvo (null = nenhum rascunho nesta sessao).
+  const [draftSavedAt, setDraftSavedAt] = useState(() => initialDraft?.savedAt || null)
+  // Aviso de expiracao do rascunho pode ser dispensado pelo usuario.
+  const [draftWarnDismissed, setDraftWarnDismissed] = useState(false)
+  // Relogio para calcular o tempo restante do rascunho (atualiza 1x/min).
+  const [now, setNow] = useState(() => Date.now())
 
   const isTrapSpell = SPELL_TRAP_TYPES.includes(state.type)
   const canPendulum = !isTrapSpell && state.type !== 'link'
@@ -278,6 +395,44 @@ export default function CardMakerPage({ cards = [] }) {
     return () => clearTimeout(t)
   }, [toast])
 
+  // Relogio do rascunho: recalcula o tempo restante a cada minuto.
+  useEffect(() => {
+    const iv = setInterval(() => setNow(Date.now()), 60000)
+    return () => clearInterval(iv)
+  }, [])
+
+  // Autosave do rascunho: grava o trabalho em andamento (carta + deck +
+  // modo) no localStorage 1.2s depois de cada mudanca, sem bloquear a UI.
+  const draftTimerRef = useRef(null)
+  useEffect(() => {
+    if (draftTimerRef.current) clearTimeout(draftTimerRef.current)
+    draftTimerRef.current = setTimeout(() => {
+      try {
+        const payload = {
+          savedAt: Date.now(),
+          currentId,
+          mode,
+          state,
+          deckName,
+          currentDeckId,
+          deckCards: deckCards.map((c) => ({ id: c.id, state: c.state })),
+        }
+        safeSetItem(DRAFT_KEY, JSON.stringify(payload))
+        setDraftSavedAt(payload.savedAt)
+      } catch {
+        /* rascunho e melhor esforco */
+      }
+    }, 1200)
+    return () => {
+      if (draftTimerRef.current) clearTimeout(draftTimerRef.current)
+    }
+  }, [state, currentId, mode, deckCards, deckName, currentDeckId])
+
+  const draftExpiresAt = draftSavedAt ? draftSavedAt + DRAFT_TTL_MS : null
+  const draftRemainingMs = draftExpiresAt ? draftExpiresAt - now : 0
+  const draftExpiringSoon =
+    draftExpiresAt !== null && draftRemainingMs > 0 && draftRemainingMs < DRAFT_WARN_MS
+
   useEffect(() => {
     if (mode !== 'editor') return
     const el = previewRef.current
@@ -308,13 +463,15 @@ export default function CardMakerPage({ cards = [] }) {
   }, [mode])
 
   // Ao entrar no Deck Criado sem um deck carregado, lista automaticamente
-  // todas as cartas criadas para edicao/exportacao.
+  // todas as cartas criadas para edicao/exportacao (apenas se o deck ainda
+  // estiver vazio — nao sobrescreve um deck restaurado do rascunho).
   const prevModeRef = useRef(mode)
   useEffect(() => {
     const prev = prevModeRef.current
     prevModeRef.current = mode
     if (prev === mode || mode !== 'deck') return
     if (currentDeckId !== null) return
+    if (deckCards.length > 0) return
     if (!saved.length) return
     setDeckCards(
       saved.map((c) => ({ id: `dc_saved_${c.id}`, state: { ...c.state } })),
@@ -487,11 +644,25 @@ export default function CardMakerPage({ cards = [] }) {
     })
   }
 
-  const handleArtFile = (file) => {
+  const handleArtFile = async (file, inputEl) => {
     if (!file) return
-    const reader = new FileReader()
-    reader.onload = () => update({ art: reader.result })
-    reader.readAsDataURL(file)
+    if (!file.type.startsWith('image/')) {
+      setToast('Selecione um arquivo de imagem (PNG/JPG)')
+      return
+    }
+    try {
+      setBusy(true)
+      const art = await compressImageFile(file)
+      update({ art })
+      setToast('Imagem carregada!')
+    } catch {
+      setToast('Falha ao ler a imagem do dispositivo')
+    } finally {
+      setBusy(false)
+      // Permite selecionar o MESMO arquivo de novo (sem isso o onChange nao
+      // dispara e o usuario achava que o upload "nao funcionava").
+      if (inputEl) inputEl.value = ''
+    }
   }
 
   const handleSave = () => {
@@ -502,14 +673,20 @@ export default function CardMakerPage({ cards = [] }) {
       state,
       date: new Date().toISOString(),
     }
-    setSaved((prev) => {
-      const exists = prev.some((c) => c.id === entry.id)
-      const next = exists ? prev.map((c) => (c.id === entry.id ? entry : c)) : [entry, ...prev]
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
-      return next
-    })
+    const exists = saved.some((c) => c.id === entry.id)
+    const next = exists ? saved.map((c) => (c.id === entry.id ? entry : c)) : [entry, ...saved]
+    // Grava FORA do updater do React: se o localStorage estourar a cota, o
+    // erro nao pode derrubar a pagina (isso travava a edição e exigia reload).
+    const ok = safeSetItem(STORAGE_KEY, JSON.stringify(next))
+    setSaved(next)
     setCurrentId(entry.id)
-    setToast('Carta salva!')
+    if (ok === false) {
+      setToast('Sem espaço no navegador para salvar a carta')
+    } else if (ok === 'stripped') {
+      setToast('Carta salva (arte local removida do salvamento por espaço)')
+    } else {
+      setToast('Carta salva!')
+    }
   }
 
   const handleLoad = (entry) => {
@@ -521,11 +698,9 @@ export default function CardMakerPage({ cards = [] }) {
   }
 
   const handleDelete = (id) => {
-    setSaved((prev) => {
-      const next = prev.filter((c) => c.id !== id)
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
-      return next
-    })
+    const next = saved.filter((c) => c.id !== id)
+    safeSetItem(STORAGE_KEY, JSON.stringify(next))
+    setSaved(next)
     if (currentId === id) setCurrentId(null)
   }
 
@@ -616,7 +791,8 @@ export default function CardMakerPage({ cards = [] }) {
   // ---- Montador de deck (cartas criadas) ----
   const persistDecks = (next) => {
     setCustomDecks(next)
-    localStorage.setItem(DECKS_KEY, JSON.stringify(next))
+    const ok = safeSetItem(DECKS_KEY, JSON.stringify(next))
+    if (ok === false) setToast('Sem espaço no navegador para salvar o deck')
   }
 
   const newDeckCardId = () => `dc_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`
@@ -804,6 +980,7 @@ export default function CardMakerPage({ cards = [] }) {
       if (s.pendulum) details.push(`   PÊNDULO: Escala Azul ${s.scaleBlue} / Escala Vermelha ${s.scaleRed}`)
       if (s.effect) details.push(`   EFEITO: ${s.effect}`)
       if (s.pendulumEffect) details.push(`   EFEITO DO PÊNDULO: ${s.pendulumEffect}`)
+      if (s.nameColor) details.push(`   COR DO TÍTULO: ${s.nameColor}`)
       const art = escapeJsonArt(s)
       if (art) details.push(`   IMAGEM DA CARTA: ${art}`)
       if (s.set) details.push(`   SET: ${s.set}`)
@@ -879,6 +1056,75 @@ export default function CardMakerPage({ cards = [] }) {
     setToast('Deck salvo em .json')
   }
 
+  // ---- Exportacao do rascunho (estado em andamento) ----
+  // Salva a carta atual + o deck em andamento em .txt/.json, para o usuario
+  // nao perder o trabalho quando o rascunho estiver perto de expirar.
+  const exportDraftJson = () => {
+    const payload = {
+      app: 'yugidex-criar-cards',
+      kind: 'draft',
+      exportedAt: new Date().toISOString(),
+      currentId,
+      card: state,
+      deck: {
+        name: deckName,
+        id: currentDeckId,
+        cards: deckCards.map((c) => c.state),
+      },
+    }
+    const stamp = new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')
+    downloadBlob(JSON.stringify(payload, null, 2), 'application/json', `rascunho-yugidex-${stamp}.json`)
+    setToast('Rascunho salvo em .json')
+  }
+
+  const exportDraftTxt = () => {
+    let content = `========================================\n`
+    content += `       RASCUNHO - CRIADOR DE CARTAS\n`
+    content += `========================================\n\n`
+    content += `EXPORTADO EM: ${new Date().toLocaleString('pt-BR')}\n`
+    if (draftExpiresAt) {
+      content += `EXPIRA EM: ${new Date(draftExpiresAt).toLocaleString('pt-BR')}\n`
+    }
+    content += `\n========================================\n`
+    content += `           CARTA ATUAL\n`
+    content += `========================================\n\n`
+    const s = state || {}
+    content += `NOME: ${s.name || 'Sem nome'}\n`
+    content += `   TIPO DE CARTA: ${cardTypeLabel(s)}\n`
+    if (s.monsterType) content += `   TIPO/RAÇA: ${s.monsterType}\n`
+    if (s.attribute) content += `   ATRIBUTO: ${attributeLabel(s)}\n`
+    if (!SPELL_TRAP_TYPES.includes(s.type) && s.level !== undefined && s.level !== '') {
+      content += `   NÍVEL: ${s.level}\n`
+    }
+    if (s.atk !== undefined && s.atk !== '') content += `   ATK: ${s.atk}\n`
+    if (s.def !== undefined && s.def !== '') content += `   DEF: ${s.def}\n`
+    if (s.effect) content += `   EFEITO: ${s.effect}\n`
+    if (s.pendulumEffect) content += `   EFEITO DO PÊNDULO: ${s.pendulumEffect}\n`
+    if (s.nameColor) content += `   COR DO TÍTULO: ${s.nameColor}\n`
+    const art = escapeJsonArt(s)
+    if (art) content += `   IMAGEM DA CARTA: ${art}\n`
+    else if (s.art && s.art.startsWith('data:')) content += `   IMAGEM DA CARTA: (imagem local - use o .json)\n`
+    if (s.serial) content += `   SERIAL: ${s.serial}\n`
+    if (s.creator) content += `   CRIADOR: ${s.creator}\n`
+    content += `\n`
+    if (deckCards.length) {
+      content += `========================================\n`
+      content += `    DECK EM ANDAMENTO: ${deckName || 'Sem nome'}\n`
+      content += `========================================\n\n`
+      content += `TOTAL: ${deckCards.length} carta(s)\n\n`
+      deckCards.forEach((dc, i) => {
+        content += `${i + 1}. ${dc.state?.name || 'Sem nome'} (${cardTypeLabel(dc.state || {})})\n`
+      })
+      content += `\n(O deck completo pode ser exportado na aba Deck Criado)\n`
+    }
+    content += `\n========================================\n`
+    content += `       FIM DO RASCUNHO\n`
+    content += `========================================\n`
+    const stamp = new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')
+    downloadBlob(content, 'text/plain;charset=utf-8', `rascunho-yugidex-${stamp}.txt`)
+    setToast('Rascunho salvo em .txt')
+  }
+
   // ---- Importar deck salvo (.txt / .json) ----
   // Le o arquivo como texto UTF-8.
   const readFileText = (file) =>
@@ -908,6 +1154,7 @@ export default function CardMakerPage({ cards = [] }) {
     'PÊNDULO': 'pendulum',
     'EFEITO': 'effect',
     'EFEITO DO PÊNDULO': 'pendulumEffect',
+    'COR DO TÍTULO': 'nameColor',
     'IMAGEM DA CARTA': 'art',
     'SET': 'set',
     'SERIAL': 'serial',
@@ -1091,10 +1338,67 @@ export default function CardMakerPage({ cards = [] }) {
 
   return (
     <div className="cm-page">
+      {/* Aviso de rascunho proximo da expiracao: oferece exportar .txt/.json
+          antes de perder o trabalho salvo automaticamente. */}
+      {draftExpiringSoon && !draftWarnDismissed && (
+        <div className="cm-draft-warning" role="alert">
+          <div className="cm-draft-warning-text">
+            <strong>⚠ Seu rascunho automático expira em {draftRemainingLabel(draftRemainingMs)}</strong>
+            <span>
+              Salvo automaticamente em {new Date(draftSavedAt).toLocaleString('pt-BR')}. Exporte
+              abaixo para não perder seu trabalho.
+            </span>
+          </div>
+          <div className="cm-draft-warning-actions">
+            <button type="button" className="cm-btn ghost small" onClick={exportDraftTxt}>
+              Salvar .txt
+            </button>
+            <button type="button" className="cm-btn ghost small" onClick={exportDraftJson}>
+              Salvar .json
+            </button>
+            <button
+              type="button"
+              className="cm-btn ghost small"
+              onClick={() => {
+                const payload = {
+                  savedAt: Date.now(),
+                  currentId,
+                  mode,
+                  state,
+                  deckName,
+                  currentDeckId,
+                  deckCards: deckCards.map((c) => ({ id: c.id, state: c.state })),
+                }
+                safeSetItem(DRAFT_KEY, JSON.stringify(payload))
+                setDraftSavedAt(payload.savedAt)
+                setNow(Date.now())
+                setToast('Rascunho renovado por mais 30 dias')
+              }}
+            >
+              Renovar 30 dias
+            </button>
+            <button
+              type="button"
+              className="cm-btn ghost small danger"
+              onClick={() => setDraftWarnDismissed(true)}
+            >
+              Dispensar
+            </button>
+          </div>
+        </div>
+      )}
       <div className="cm-toolbar">
         <div className="cm-toolbar-title">
           <h2>Criador de Cartas</h2>
-          <p>Monte sua carta de Yu-Gi-Oh personalizada</p>
+          <p>
+            Monte sua carta de Yu-Gi-Oh personalizada
+            {draftSavedAt && (
+              <span className="cm-draft-badge" title="Trabalho salvo automaticamente neste navegador">
+                {' • '}
+                Rascunho salvo (expira em {draftRemainingLabel(draftRemainingMs)})
+              </span>
+            )}
+          </p>
         </div>
         <div className="cm-toolbar-actions">
           <div className="cm-mode-toggle">
@@ -1267,6 +1571,45 @@ export default function CardMakerPage({ cards = [] }) {
                 onChange={(e) => update({ nameSize: clampSize(e.target.value, 8, 120, 65) })}
               />
             </label>
+
+            <div className="cm-field">
+              <span>Cor do título</span>
+              <div className="cm-color-row">
+                <label className="cm-check">
+                  <input
+                    type="checkbox"
+                    checked={!state.nameColor}
+                    onChange={(e) =>
+                      update({
+                        nameColor: e.target.checked
+                          ? ''
+                          : isWhiteName(state)
+                            ? '#ffffff'
+                            : '#000000',
+                      })
+                    }
+                  />
+                  <span>Automática</span>
+                </label>
+                <input
+                  type="color"
+                  className="cm-color-input"
+                  value={state.nameColor || (isWhiteName(state) ? '#ffffff' : '#000000')}
+                  disabled={!state.nameColor}
+                  onChange={(e) => update({ nameColor: e.target.value })}
+                  title="Escolher cor do título"
+                />
+                {state.nameColor && (
+                  <button
+                    type="button"
+                    className="cm-btn ghost small"
+                    onClick={() => update({ nameColor: '' })}
+                  >
+                    Resetar
+                  </button>
+                )}
+              </div>
+            </div>
 
             {!isTrapSpell && (
               <label className="cm-field">
@@ -1472,7 +1815,11 @@ export default function CardMakerPage({ cards = [] }) {
             <legend>Arte</legend>
             <label className="cm-field">
               <span>Enviar imagem (PNG/JPG)</span>
-              <input type="file" accept="image/*" onChange={(e) => handleArtFile(e.target.files?.[0])} />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleArtFile(e.target.files?.[0], e.target)}
+              />
             </label>
             <label className="cm-field">
               <span>Ou URL da imagem</span>

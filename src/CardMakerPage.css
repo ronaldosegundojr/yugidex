@@ -243,6 +243,65 @@
   accent-color: var(--gold);
 }
 
+/* ---- Cor do titulo ---- */
+.cm-color-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.cm-color-input {
+  width: 44px;
+  height: 30px;
+  padding: 2px;
+  border: 1px solid var(--gold-dark);
+  border-radius: 4px;
+  background: var(--yblack-light);
+  cursor: pointer;
+}
+.cm-color-input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ---- Aviso de expiracao do rascunho ---- */
+.cm-draft-badge {
+  color: var(--gold);
+  font-size: 0.78rem;
+}
+.cm-draft-warning {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  background: rgba(230, 180, 30, 0.1);
+  border: 1px solid rgba(230, 180, 30, 0.55);
+  border-radius: 8px;
+}
+.cm-draft-warning-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+.cm-draft-warning-text strong {
+  color: var(--gold);
+  font-family: 'Cinzel', serif;
+}
+.cm-draft-warning-text span {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.cm-draft-warning-actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
 /* Painel de formatacao do texto do efeito */
 .cm-format {
   display: flex;

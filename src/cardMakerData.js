@@ -251,6 +251,9 @@ export function defaultCardState() {
     footer: '',
     effectSize: 24,
     nameSize: 65,
+    // Cor personalizada do titulo (nome). Vazio = automatica (preto/branco
+    // conforme o tipo da carta).
+    nameColor: '',
     typeSize: 26,
     atkDefSize: 36,
     // ---- Formatacao do texto do efeito ----
