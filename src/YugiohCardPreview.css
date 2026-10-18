@@ -108,19 +108,22 @@
 .ycm-name.silver {
   background-image: linear-gradient(180deg, #ffffff 0%, #cfcfcf 45%, #8a8a8a 75%, #f2f2f2 100%);
 }
-/* Nome em folha metalizada (carta holografica): mistura dourado + prata/prisma */
+/* Nome em folha metalizada (carta holografica): degradê metálico suave
+   prata<->dourado, igual ao acabamento da carta */
 .ycm-name.holo {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-image: linear-gradient(
-    100deg,
-    #f7f7f7 0%,
-    #ffe98a 18%,
-    #f5d010 34%,
-    #e8e8e8 50%,
-    #b9860b 66%,
-    #f6f1c4 82%,
+    112deg,
+    #f5f5f0 0%,
+    #ffe98a 14%,
+    #f5d010 28%,
+    #e8e8e4 42%,
+    #c9c9c4 52%,
+    #d4af37 64%,
+    #b9860b 74%,
+    #f6f1c4 86%,
     #d4af37 100%
   );
   filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.55)) drop-shadow(0 0 3px rgba(255, 240, 150, 0.45));
@@ -261,60 +264,71 @@
 
 /* ---- Acabamento holografico / metalizado (foil) ----
    Camadas estaticas (sem animacao) para renderizarem tambem na exportacao
-   PNG/PDF feita via html-to-image. */
+   PNG/PDF feita via html-to-image. O efeito imita o degradê metalico do
+   foil: base prata<->dourada com textura escovada, iridescencia pastel
+   suave e uma faixa de luz larga (reflexo de vidro). */
 .ycm-holo {
   pointer-events: none;
-  mix-blend-mode: normal;
 }
 
-/* 1) brilho metalizado geral (dourado/prata) */
+/* 1) base metalica: degradê longo e suave dourado <-> prata, com finas
+   risca diagonais (textura escovada) embutidas no proprio degradê */
 .ycm-holo-metal {
   mix-blend-mode: overlay;
-  opacity: 0.45;
+  opacity: 0.5;
+  background-image:
+    repeating-linear-gradient(
+      125deg,
+      rgba(255, 255, 255, 0.32) 0px,
+      rgba(255, 255, 255, 0.32) 1px,
+      rgba(0, 0, 0, 0.1) 1px,
+      rgba(0, 0, 0, 0.1) 6px
+    ),
+    linear-gradient(
+      125deg,
+      #f6e27a 0%,
+      #f9f3c8 10%,
+      #d7dde5 22%,
+      #ffffff 30%,
+      #c9d2dc 40%,
+      #f3e7b3 52%,
+      #e8d9a0 60%,
+      #d5dbe4 72%,
+      #fbfaf3 82%,
+      #e4cf8e 92%,
+      #f6e9b8 100%
+    );
+  background-blend-mode: soft-light, normal;
+}
+
+/* 2) iridescencia: arco-iron pastel metalico em degradê (substitui as
+   riscas grossas e estrelinhas, que ficavam artificiais) */
+.ycm-holo-prism {
+  mix-blend-mode: soft-light;
+  opacity: 0.55;
   background-image: linear-gradient(
-    128deg,
-    rgba(255, 214, 92, 0.85) 0%,
-    rgba(255, 255, 255, 0.35) 18%,
-    rgba(196, 199, 206, 0.7) 34%,
-    rgba(255, 236, 160, 0.9) 52%,
-    rgba(170, 174, 182, 0.6) 70%,
-    rgba(255, 214, 92, 0.85) 88%,
-    rgba(255, 255, 255, 0.4) 100%
+    115deg,
+    rgba(255, 168, 198, 0.9) 0%,
+    rgba(255, 220, 150, 0.9) 14%,
+    rgba(246, 244, 190, 0.85) 28%,
+    rgba(178, 242, 205, 0.9) 42%,
+    rgba(168, 216, 255, 0.9) 56%,
+    rgba(206, 184, 255, 0.9) 70%,
+    rgba(255, 190, 220, 0.9) 84%,
+    rgba(255, 236, 178, 0.9) 100%
   );
 }
 
-/* 2) linhas prismaticas diagonais (secret rare) + estrelinhas (sparkle) */
-.ycm-holo-prism {
-  opacity: 0.34;
-  background-image:
-    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.95) 0 1.6px, transparent 2.8px),
-    radial-gradient(circle at 63% 12%, rgba(255, 255, 255, 0.9) 0 1.3px, transparent 2.4px),
-    radial-gradient(circle at 82% 48%, rgba(255, 255, 255, 0.9) 0 1.6px, transparent 2.8px),
-    radial-gradient(circle at 35% 64%, rgba(255, 255, 255, 0.85) 0 1.2px, transparent 2.2px),
-    radial-gradient(circle at 72% 82%, rgba(255, 255, 255, 0.9) 0 1.5px, transparent 2.6px),
-    radial-gradient(circle at 12% 88%, rgba(255, 255, 255, 0.8) 0 1.2px, transparent 2.2px),
-    repeating-linear-gradient(
-      135deg,
-      rgba(255, 120, 120, 0.7) 0px,
-      rgba(255, 205, 95, 0.7) 2px,
-      rgba(140, 255, 175, 0.7) 4px,
-      rgba(95, 190, 255, 0.7) 6px,
-      rgba(195, 130, 255, 0.7) 8px,
-      rgba(255, 255, 255, 0.25) 9px,
-      rgba(255, 255, 255, 0) 11px,
-      rgba(255, 255, 255, 0) 16px
-    );
-  background-size: 190px 190px, 240px 240px, 210px 210px, 170px 170px, 260px 260px, 200px 200px, auto;
-}
-
-/* 3) reflexo/faixa de luz que "corre" pela superficie */
+/* 3) faixa de luz larga e macia (reflexo de vidro sobre o foil) */
 .ycm-holo-sheen {
   mix-blend-mode: screen;
-  opacity: 0.22;
+  opacity: 0.3;
   background-image: linear-gradient(
-    115deg,
-    rgba(255, 255, 255, 0) 30%,
-    rgba(255, 255, 255, 0.9) 46%,
-    rgba(255, 255, 255, 0) 60%
+    112deg,
+    rgba(255, 255, 255, 0) 28%,
+    rgba(255, 255, 255, 0.12) 38%,
+    rgba(255, 255, 255, 0.55) 47%,
+    rgba(255, 255, 255, 0.12) 56%,
+    rgba(255, 255, 255, 0) 66%
   );
 }
