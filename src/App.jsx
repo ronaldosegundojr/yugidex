@@ -622,6 +622,7 @@ const RARITY_OPTS = [
   { key: 'sr', code: 'SR', label: 'Super Rara' },
   { key: 'ur', code: 'UR', label: 'Ultra Rara' },
 ]
+const ALL_RARITY_KEYS = RARITY_OPTS.map((o) => o.key)
 
 const BAN_OPTS = [
   { key: 'unlimited', short: '3', label: 'Ilimitada', tip: 'Ilimitada (Liberada): até 3 cópias da mesma carta no deck.' },
@@ -647,45 +648,37 @@ function useOutsideClose(open, setOpen) {
 function RarityDropdown({ value, onChange }) {
   const [open, setOpen] = useState(false)
   const ref = useOutsideClose(open, setOpen)
-  const current = RARITY_OPTS.find((o) => o.key === value)
+  const selected = ALL_RARITY_KEYS.filter((k) => value.includes(k))
+  const allOn = selected.length === ALL_RARITY_KEYS.length
+  const toggle = (key) => {
+    const next = selected.includes(key)
+      ? selected.filter((k) => k !== key)
+      : ALL_RARITY_KEYS.filter((k) => selected.includes(k) || k === key)
+    onChange(next)
+  }
   return (
     <div className="lib-dropdown" ref={ref}>
       <button
         type="button"
-        className={`lib-dropdown-btn${current ? ' has-value' : ''}`}
+        className={`lib-dropdown-btn${allOn ? '' : ' has-value'}`}
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         title="Filtrar por raridade"
       >
         <span className="lib-dropdown-lead">
-          {current ? (
-            <span className={`md-rarity-badge ${current.key}`}>{current.code}</span>
-          ) : (
-            <span className="md-rarity-icon ur">UR</span>
-          )}
-          <span>{current ? current.label : 'Raridade'}</span>
+          <span className="md-rarity-icon ur">UR</span>
+          <span>{allOn ? 'Raridade' : `Raridade (${selected.length})`}</span>
         </span>
         <span className="lib-dropdown-caret">▾</span>
       </button>
       {open && (
         <div className="lib-dropdown-menu">
-          <button
-            type="button"
-            className={`lib-dropdown-option${!current ? ' active' : ''}`}
-            onClick={() => { onChange(''); setOpen(false) }}
-          >
-            Todas as raridades
-          </button>
           {RARITY_OPTS.map((opt) => (
-            <button
-              key={opt.key}
-              type="button"
-              className={`lib-dropdown-option${value === opt.key ? ' active' : ''}`}
-              onClick={() => { onChange(value === opt.key ? '' : opt.key); setOpen(false) }}
-            >
+            <label key={opt.key} className="lib-dropdown-check" title={opt.label}>
               <span className={`md-rarity-badge ${opt.key}`}>{opt.code}</span>
               <span>{opt.label}</span>
-            </button>
+              <input type="checkbox" checked={value.includes(opt.key)} onChange={() => toggle(opt.key)} />
+            </label>
           ))}
         </div>
       )}
@@ -1052,7 +1045,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
     const hasSearch = terms.length > 0
     const hasType = !!deckTypeFilter
     const hasLevel = !!deckLevelFilter
-    const hasRarity = !!deckRarityFilter
+    const hasRarity = deckRarityFilter.length > 0
     const hasBan = deckBanFilter.length > 0
     
     const list = cards.filter(card => {
@@ -1073,9 +1066,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         if (deckLevelFilter === 'spell' && type !== 'spell') return false
         if (deckLevelFilter === 'trap' && type !== 'trap') return false
       }
-      if (hasRarity) {
-        if (card._rarity !== deckRarityFilter) return false
-      }
+      if (hasRarity && !deckRarityFilter.includes(card._rarity)) return false
       return true
     })
     if (hasSearch) sortBySearchScore(list)
@@ -2061,7 +2052,7 @@ function App() {
   const [banFilter, setBanFilter] = useState('')
   const [deckTypeFilter, setDeckTypeFilter] = useState('')
   const [deckLevelFilter, setDeckLevelFilter] = useState('')
-  const [deckRarityFilter, setDeckRarityFilter] = useState('')
+  const [deckRarityFilter, setDeckRarityFilter] = useState(ALL_RARITY_KEYS)
   const [deckBanFilter, setDeckBanFilter] = useState(ALL_BAN_KEYS)
   const [lang, setLang] = useState('pt')
   const [isMobile, setIsMobile] = useState(false)

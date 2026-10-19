@@ -167,6 +167,9 @@ const BAN_FILTER_OPTIONS = [
 // pessoa desmarca o que nao quer ver.
 const ALL_BAN_KEYS = BAN_FILTER_OPTIONS.map((o) => o.key)
 
+// Todas as raridades marcadas por padrao (mesmo comportamento da banlist).
+const ALL_RARITY_KEYS = RARITY_FILTER_OPTIONS.map((o) => o.key)
+
 // Raridade efetiva de uma carta criada: usa a raridade Master Duel da carta de
 // origem (quando veio do banco) e, para cartas 100% autorais, o acabamento /
 // preset de cor do titulo escolhido no editor.
@@ -205,46 +208,38 @@ function RarityDropdown({ rarity, onRarityChange }) {
     document.addEventListener('mousedown', onDoc)
     return () => document.removeEventListener('mousedown', onDoc)
   }, [open])
-  const current = RARITY_FILTER_OPTIONS.find((o) => o.key === rarity)
+  const selected = RARITY_FILTER_OPTIONS.map((o) => o.key).filter((k) => rarity.includes(k))
+  const allKeys = RARITY_FILTER_OPTIONS.map((o) => o.key)
+  const allOn = selected.length === allKeys.length
+  const toggle = (key) => {
+    const next = selected.includes(key)
+      ? selected.filter((k) => k !== key)
+      : allKeys.filter((k) => selected.includes(k) || k === key)
+    onRarityChange(next)
+  }
   return (
     <div className="cdm-dropdown" ref={ref}>
       <button
         type="button"
-        className={`cdm-dropdown-btn${current ? ' has-value' : ''}`}
+        className={`cdm-dropdown-btn${allOn ? '' : ' has-value'}`}
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         title="Filtrar por raridade"
       >
         <span className="cdm-dropdown-lead">
-          {current ? (
-            <span className={`md-rarity-badge ${current.key}`}>{current.code}</span>
-          ) : (
-            <span className="md-rarity-icon ur">UR</span>
-          )}
-          <span className="cdm-dropdown-label">{current ? current.label : 'Raridade'}</span>
+          <span className="md-rarity-icon ur">UR</span>
+          <span className="cdm-dropdown-label">{allOn ? 'Raridade' : `Raridade (${selected.length})`}</span>
         </span>
         <span className="cdm-dropdown-caret">▾</span>
       </button>
       {open && (
-        <div className="cdm-dropdown-menu" role="listbox">
-          <button
-            type="button"
-            className={`cdm-dropdown-option${!current ? ' active' : ''}`}
-            onClick={() => onRarityChange('all')}
-          >
-            Todas as raridades
-          </button>
+        <div className="cdm-dropdown-menu" role="group" aria-label="Filtro de Raridade">
           {RARITY_FILTER_OPTIONS.map((opt) => (
-            <button
-              key={opt.key}
-              type="button"
-              className={`cdm-dropdown-option${rarity === opt.key ? ' active' : ''}`}
-              onClick={() => onRarityChange(rarity === opt.key ? 'all' : opt.key)}
-              title={opt.tip}
-            >
+            <label key={opt.key} className="cdm-dropdown-check" title={opt.tip}>
               <span className={`md-rarity-badge ${opt.key}`}>{opt.code}</span>
               <span>{opt.label}</span>
-            </button>
+              <input type="checkbox" checked={rarity.includes(opt.key)} onChange={() => toggle(opt.key)} />
+            </label>
           ))}
         </div>
       )}
@@ -568,7 +563,7 @@ export default function CardMakerPage({ cards = [] }) {
     q: '',
     kinds: [],
     attribute: 'all',
-    rarity: 'all',
+    rarity: ALL_RARITY_KEYS,
     ban: ALL_BAN_KEYS,
   })
   const [libTab, setLibTab] = useState('db')
@@ -578,9 +573,9 @@ export default function CardMakerPage({ cards = [] }) {
     kinds: [],
     attribute: 'all',
     ban: ALL_BAN_KEYS,
-    rarity: 'all',
+    rarity: ALL_RARITY_KEYS,
   })
-  const [savedFilters, setSavedFilters] = useState({ rarity: 'all', ban: ALL_BAN_KEYS })
+  const [savedFilters, setSavedFilters] = useState({ rarity: ALL_RARITY_KEYS, ban: ALL_BAN_KEYS })
   const [allDbOpen, setAllDbOpen] = useState(false)
   const [allDbLimit, setAllDbLimit] = useState(ALL_DB_BATCH)
   // Sobe quando o catalogo de impressoes (sets) termina de carregar, para
@@ -888,7 +883,7 @@ export default function CardMakerPage({ cards = [] }) {
         const a = SPELL_TRAP_TYPES.includes(s.type) ? s.type : s.attribute
         if (a !== attr) return false
       }
-      if (rarity !== 'all' && customCardRarity(s, cards) !== rarity) return false
+      if (rarity.length && !rarity.includes(customCardRarity(s, cards))) return false
       if (banSet.length && !banSet.includes(banStatusForName(s.name || ''))) return false
       return true
     })
@@ -918,7 +913,7 @@ export default function CardMakerPage({ cards = [] }) {
     deckFilters.q.trim() !== '' ||
     deckFilters.kinds.length > 0 ||
     deckFilters.attribute !== 'all' ||
-    deckFilters.rarity !== 'all' ||
+    deckFilters.rarity.length !== RARITY_FILTER_OPTIONS.length ||
     deckFilters.ban.length !== BAN_FILTER_OPTIONS.length
   const deckShownCount = filteredDeckGroups.reduce((n, g) => n + g.items.length, 0)
 
@@ -1203,7 +1198,7 @@ export default function CardMakerPage({ cards = [] }) {
       kinds: f.kinds.includes(value) ? f.kinds.filter((k) => k !== value) : [...f.kinds, value],
     }))
   const clearDeckFilters = () =>
-    setDeckFilters({ q: '', kinds: [], attribute: 'all', rarity: 'all', ban: ALL_BAN_KEYS })
+    setDeckFilters({ q: '', kinds: [], attribute: 'all', rarity: ALL_RARITY_KEYS, ban: ALL_BAN_KEYS })
 
   const editDeckCard = (dc) => {
     setState({ ...defaultCardState(), ...dc.state })
@@ -1680,14 +1675,15 @@ export default function CardMakerPage({ cards = [] }) {
   const filteredSavedLib = useMemo(() => {
     const { rarity, ban } = savedFilters
     return saved.filter((c) => {
-      if (rarity !== 'all' && customCardRarity(c.state, cards) !== rarity) return false
+      if (rarity.length && !rarity.includes(customCardRarity(c.state, cards))) return false
       if (ban.length && !ban.includes(banStatusForName(c.state?.name || c.name || ''))) return false
       return true
     })
   }, [saved, savedFilters, cards])
 
   const savedHasFilters =
-    savedFilters.rarity !== 'all' || savedFilters.ban.length !== BAN_FILTER_OPTIONS.length
+    savedFilters.rarity.length !== RARITY_FILTER_OPTIONS.length ||
+    savedFilters.ban.length !== BAN_FILTER_OPTIONS.length
 
 
 
@@ -1703,7 +1699,7 @@ export default function CardMakerPage({ cards = [] }) {
       if (tests.length && !tests.some((t) => t.test(c))) return false
       if (attr !== 'all' && String(c.attribute || '').toLowerCase() !== attr) return false
       if (banSet.length && !banSet.includes(banStatusFor(c))) return false
-      if (rarity !== 'all' && String(c._rarity || '').toLowerCase() !== rarity) return false
+      if (rarity.length && !rarity.includes(String(c._rarity || '').toLowerCase())) return false
       return true
     })
     if (hasSearch) sortBySearchScore(list)
@@ -1714,14 +1710,14 @@ export default function CardMakerPage({ cards = [] }) {
     dbFilters.kinds.length > 0 ||
     dbFilters.attribute !== 'all' ||
     dbFilters.ban.length !== BAN_FILTER_OPTIONS.length ||
-    dbFilters.rarity !== 'all'
+    dbFilters.rarity.length !== RARITY_FILTER_OPTIONS.length
   const toggleDbKind = (value) =>
     setDbFilters((f) => ({
       ...f,
       kinds: f.kinds.includes(value) ? f.kinds.filter((k) => k !== value) : [...f.kinds, value],
     }))
   const clearDbFilters = () =>
-    setDbFilters({ kinds: [], attribute: 'all', ban: ALL_BAN_KEYS, rarity: 'all' })
+    setDbFilters({ kinds: [], attribute: 'all', ban: ALL_BAN_KEYS, rarity: ALL_RARITY_KEYS })
 
   const dbTotalPages = Math.max(1, Math.ceil(filteredDb.length / DB_PER_PAGE))
   const dbPageCards = useMemo(
@@ -1764,7 +1760,7 @@ export default function CardMakerPage({ cards = [] }) {
     return () => el.removeEventListener('scroll', onScroll)
   }, [allDbOpen, cards.length])
 
-  const clearSavedFilters = () => setSavedFilters({ rarity: 'all', ban: ALL_BAN_KEYS })
+  const clearSavedFilters = () => setSavedFilters({ rarity: ALL_RARITY_KEYS, ban: ALL_BAN_KEYS })
 
   const toggleArrow = (id) => {
     setState((s) => {
