@@ -40,5 +40,27 @@ export function drawHand(deckArray, hand = HAND_SIZE) {
   return [...counts.entries()].map(([idx, qty]) => ({ card: deckArray[idx], qty }))
 }
 
+// Sorteia cartas individuais (preservando cada carta sacada e o restante do deck)
+export function drawIndividualHand(deckArray, count = 5) {
+  const pool = []
+  deckArray.forEach((entry) => {
+    for (let i = 0; i < (entry.qty || 1); i++) {
+      pool.push(entry)
+    }
+  })
+  // Fisher-Yates shuffle
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const temp = pool[i]
+    pool[i] = pool[j]
+    pool[j] = temp
+  }
+  const size = Math.min(count, pool.length)
+  return {
+    hand: pool.slice(0, size),
+    remaining: pool.slice(size),
+  }
+}
+
 export const formatPercent = (value) =>
   `${(value * 100).toFixed(1).replace('.', ',')}%`

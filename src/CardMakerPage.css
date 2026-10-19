@@ -905,13 +905,26 @@
   font-weight: 700;
 }
 .cdm-search {
-  height: 38px;
+  height: 40px;
+  min-height: 40px;
   padding: 0 0.75rem;
   background: var(--yblack);
   border: 1px solid var(--gold-dark);
   border-radius: 6px;
   color: var(--text-light);
   margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+/* A biblioteca e uma coluna flex com altura maxima; sem isto o campo de busca
+   (e demais controles) encolhiam ate ~17px quando o conteudo excedia a altura. */
+.cdm-library > .cdm-lib-tabs,
+.cdm-library > .cdm-search,
+.cdm-library > .cdm-lib-filter-row,
+.cdm-library > .cdm-chips,
+.cdm-library > .cdm-lib-info,
+.cdm-library > .cdm-ban-changes,
+.cdm-library > .cdm-pagination {
+  flex-shrink: 0;
 }
 .cdm-lib-info {
   font-size: 0.72rem;
@@ -1130,7 +1143,29 @@
   }
   .cdm-library {
     position: static;
-    max-height: 460px;
+    max-height: none;
+  }
+  .cdm-lib-grid {
+    flex: none;
+    overflow-y: visible;
+  }
+  .cdm-deck-head .cdm-deck-name {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .cdm-deck {
+    padding: 0.75rem;
+  }
+  .cdm-lib-filter-row .cdm-filter-select {
+    flex: 1 1 100%;
+  }
+  .cdm-filter-row .cdm-search {
+    flex: 1 1 100%;
+  }
+  .cdm-filter-row .cdm-filter-select {
+    flex: 1 1 100%;
   }
 }
 

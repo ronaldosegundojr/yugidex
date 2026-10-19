@@ -745,21 +745,464 @@ body::before {
 .market-loading { color: var(--text-muted); font-size: 0.85rem; }
 .market-error { color: #ff8a80; font-size: 0.85rem; }
 
-/* Simulador de mao inicial */
-.modal-content.hand-sim { max-width: 760px; width: 94%; }
-.hand-sim-sub { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.75rem; }
-.hand-sim-actions { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; }
-.hand-sim-hand { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
-.hand-sim-card { position: relative; width: 84px; }
-.hand-sim-card img { width: 100%; border-radius: 6px; border: 2px solid var(--gold); display: block; }
-.hand-sim-qty { position: absolute; bottom: 2px; right: 2px; background: var(--gold); color: var(--egypt-dark); font-size: 0.7rem; font-weight: bold; padding: 0 4px; border-radius: 3px; }
-.hand-sim-title { color: var(--gold); font-size: 0.9rem; margin: 0.5rem 0; }
-.hand-sim-list { max-height: 40vh; overflow-y: auto; display: flex; flex-direction: column; gap: 0.3rem; }
+/* ========================================================
+   SIMULADOR DE MÃO MASTER DUEL: ARENA + PAINEL DE INSPEÇÃO
+   ======================================================== */
+.modal.md-hand-sim-modal {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(3, 8, 16, 0.88);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+}
+.modal.md-hand-sim-modal.active {
+  display: flex;
+}
+.modal-content.md-hand-sim-content {
+  max-width: 1120px;
+  width: 96%;
+  max-height: 92vh;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, rgba(8, 18, 30, 0.98), rgba(4, 10, 18, 0.98));
+  border: 1px solid rgba(0, 200, 255, 0.35);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 160, 255, 0.2);
+  border-radius: 10px;
+  overflow-y: auto;
+  position: relative;
+}
+.md-hand-sim-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+}
+.md-hand-sim-empty h3 {
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+/* Layout em duas colunas: Painel Esquerdo + Arena Direita */
+.md-hand-sim-layout {
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+/* --- PAINEL ESQUERDO: INSPEÇÃO MASTER DUEL --- */
+.md-sim-left-panel {
+  background: rgba(7, 14, 24, 0.92);
+  border: 1px solid rgba(0, 180, 255, 0.3);
+  border-radius: 8px;
+  padding: 0.9rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  position: sticky;
+  top: 0;
+}
+.md-card-inspector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.md-insp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(0, 180, 255, 0.25);
+}
+.md-insp-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.3px;
+}
+.md-insp-attr {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+.md-insp-preview-row {
+  display: grid;
+  grid-template-columns: 95px 1fr;
+  gap: 0.75rem;
+  align-items: center;
+}
+.md-insp-img-box {
+  position: relative;
+  width: 95px;
+  aspect-ratio: 3/4;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(229, 191, 53, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+.md-insp-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.md-insp-stats-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.md-insp-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: #e2e8f0;
+}
+.md-insp-star {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+.md-insp-label {
+  color: #94a3b8;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.md-insp-val {
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.4px;
+}
+.md-insp-stat-item.atk .md-insp-val {
+  color: #fb7185;
+}
+.md-insp-stat-item.def .md-insp-val {
+  color: #38bdf8;
+}
+.md-insp-rarity-row,
+.md-insp-ban-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.1rem;
+}
+.md-insp-rarity-text,
+.md-insp-ban-text {
+  font-size: 0.7rem;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+/* Faixa de Tipo / Subtipo */
+.md-insp-type-band {
+  padding: 0.32rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.md-insp-type-band.band-effect {
+  background: linear-gradient(90deg, #9d5025, #683015);
+  color: #fff;
+}
+.md-insp-type-band.band-normal {
+  background: linear-gradient(90deg, #a88932, #6e5518);
+  color: #fff;
+}
+.md-insp-type-band.band-spell {
+  background: linear-gradient(90deg, #1d7b68, #104e42);
+  color: #fff;
+}
+.md-insp-type-band.band-trap {
+  background: linear-gradient(90deg, #942258, #5e1135);
+  color: #fff;
+}
+.md-insp-type-band.band-fusion {
+  background: linear-gradient(90deg, #782da8, #4e1773);
+  color: #fff;
+}
+.md-insp-type-band.band-synchro {
+  background: linear-gradient(90deg, #e2e8f0, #94a3b8);
+  color: #0f172a;
+}
+.md-insp-type-band.band-xyz {
+  background: linear-gradient(90deg, #1e293b, #0f172a);
+  color: #fff;
+  border: 1px solid #334155;
+}
+.md-insp-type-band.band-link {
+  background: linear-gradient(90deg, #1b539c, #0d2f5e);
+  color: #fff;
+}
+.md-insp-type-band.band-ritual {
+  background: linear-gradient(90deg, #2563eb, #1e40af);
+  color: #fff;
+}
+
+.md-insp-lang-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-weight: 600;
+  margin-top: 0.15rem;
+}
+.lang-toggle.mini button {
+  padding: 0.15rem 0.45rem;
+  font-size: 0.65rem;
+}
+
+.md-insp-effect-box {
+  background: rgba(3, 7, 14, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: #e2e8f0;
+  max-height: 200px;
+  overflow-y: auto;
+  white-space: pre-line;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+.md-insp-placeholder {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* --- PAINEL DIREITO: ARENA E MÃO --- */
+.md-sim-main-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.md-sim-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(0, 180, 255, 0.2);
+}
+.md-sim-topbar-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.md-sim-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  padding: 0.25rem 0.55rem;
+  border-radius: 4px;
+}
+.md-sim-remaining {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+.md-sim-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.md-sim-action-btn {
+  padding: 0.35rem 0.75rem;
+  background: #0b1726;
+  border: 1px solid rgba(0, 180, 255, 0.3);
+  border-radius: 4px;
+  color: #cbd5e1;
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.md-sim-action-btn:hover:not(:disabled) {
+  background: #122438;
+  color: #ffffff;
+  border-color: #00e5ff;
+}
+.md-sim-action-btn.active {
+  background: linear-gradient(135deg, rgba(0, 150, 255, 0.3), rgba(0, 229, 255, 0.2));
+  border-color: #00e5ff;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+}
+.md-sim-action-btn.draw-one {
+  border-color: rgba(60, 230, 128, 0.4);
+  color: #4ade80;
+}
+.md-sim-action-btn.draw-one:hover:not(:disabled) {
+  background: rgba(60, 230, 128, 0.15);
+  border-color: #4ade80;
+}
+.md-sim-action-btn.draw-one:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.md-sim-action-btn.odds-btn {
+  border-color: rgba(229, 191, 53, 0.35);
+  color: var(--gold);
+}
+
+/* Arena com Mat de Duelo */
+.md-sim-duel-arena {
+  background: radial-gradient(ellipse at center, rgba(14, 32, 54, 0.7) 0%, rgba(5, 12, 22, 0.95) 100%),
+              repeating-linear-gradient(45deg, rgba(0, 180, 255, 0.02) 0, rgba(0, 180, 255, 0.02) 1px, transparent 0, transparent 20px);
+  border: 1px solid rgba(0, 180, 255, 0.28);
+  border-radius: 8px;
+  padding: 1.25rem 1rem 1rem 1rem;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.7);
+}
+.md-sim-arena-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  margin-bottom: 1rem;
+}
+.md-sim-arena-hint {
+  font-size: 0.7rem;
+  font-weight: normal;
+  color: #94a3b8;
+}
+
+/* Cartas da Mão (lado a lado com hover lift) */
+.md-sim-hand-cards {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0.25rem 0.75rem 0.25rem;
+}
+.md-sim-hand-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 96px;
+  cursor: pointer;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, filter 0.2s ease;
+  user-select: none;
+}
+.md-sim-hand-card:hover {
+  transform: translateY(-16px) scale(1.08);
+  z-index: 10;
+}
+.md-sim-hand-card.active-card {
+  transform: translateY(-12px) scale(1.06);
+  z-index: 9;
+}
+.md-sim-card-slot {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.65);
+  background: #040911;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.md-sim-hand-card:hover .md-sim-card-slot {
+  border-color: #00e5ff;
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.6);
+}
+.md-sim-hand-card.active-card .md-sim-card-slot {
+  border-color: var(--gold);
+  box-shadow: 0 0 18px rgba(229, 191, 53, 0.75), 0 0 6px #00e5ff;
+}
+.md-sim-card-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.md-sim-slot-num {
+  position: absolute;
+  bottom: 2px;
+  left: 2px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #e2e8f0;
+  font-size: 0.58rem;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.md-sim-card-name {
+  margin-top: 0.35rem;
+  font-size: 0.66rem;
+  color: #cbd5e1;
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+}
+.md-sim-hand-card.active-card .md-sim-card-name {
+  color: var(--gold);
+}
+
+/* Seção de Probabilidades Opcional */
+.md-sim-odds-section {
+  background: rgba(5, 12, 22, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 6px;
+  padding: 0.8rem;
+}
+.md-sim-odds-section h4 {
+  font-size: 0.8rem;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+/* Lista de probabilidades */
+.hand-sim-list { max-height: 35vh; overflow-y: auto; display: flex; flex-direction: column; gap: 0.3rem; }
 .hand-sim-row { position: relative; display: grid; grid-template-columns: 1fr auto auto; gap: 0.6rem; align-items: center; padding: 0.35rem 0.5rem; background: var(--card-bg); border-radius: 6px; overflow: hidden; }
 .hand-sim-bar { position: absolute; top: 0; bottom: 0; left: 0; background: rgba(212, 175, 55, 0.18); }
 .hand-sim-name { position: relative; font-size: 0.82rem; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .hand-sim-copies { position: relative; color: var(--text-muted); font-size: 0.75rem; }
 .hand-sim-prob { position: relative; color: var(--gold); font-weight: 700; font-size: 0.82rem; min-width: 52px; text-align: right; }
+
+/* Responsivo para Telas Menores */
+@media (max-width: 880px) {
+  .md-hand-sim-layout {
+    grid-template-columns: 1fr;
+  }
+  .md-sim-left-panel {
+    position: static;
+  }
+  .md-sim-hand-card {
+    width: 78px;
+  }
+}
 
 .deck-builder {
   display: grid;
@@ -1386,6 +1829,37 @@ body::before {
 .deck-count.warning { background: var(--gold); color: var(--egypt-dark); }
 .deck-count.error { background: var(--red-glow); color: white; }
 
+.deck-zone-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.deck-zone-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.65rem;
+  background: var(--gold);
+  color: var(--egypt-dark);
+  border: none;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: filter 0.15s ease;
+}
+
+.deck-zone-add:hover {
+  filter: brightness(1.1);
+}
+
+.deck-zone.tap-to-add {
+  cursor: pointer;
+}
+
 .deck-cards-container {
   display: flex;
   flex-wrap: wrap;
@@ -1997,6 +2471,96 @@ body::before {
   border-color: var(--gold);
   color: #1a1408;
   font-weight: 700;
+}
+
+/* ---- Filtro de Banlist (Ilimitada/Limitada/Semi/Proibida) ---- */
+.md-ban-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.45rem 0.65rem;
+  background: linear-gradient(90deg, rgba(25, 5, 5, 0.95), rgba(36, 12, 9, 0.88));
+  border: 1px solid rgba(255, 120, 60, 0.28);
+  border-radius: 6px;
+  margin: 0.45rem 0 0.2rem 0;
+  flex-wrap: wrap;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+.md-ban-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(135deg, #ff6b60, #b3261e);
+  flex-shrink: 0;
+}
+.md-ban-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.72rem;
+  background: #1e0a09;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  color: #e7cfc9;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease-in-out;
+  user-select: none;
+  white-space: nowrap;
+}
+.md-ban-btn:hover {
+  background: #2c1210;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.md-ban-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 3px;
+  font-size: 0.66rem;
+  font-weight: 900;
+  color: #fff;
+  flex-shrink: 0;
+}
+.md-ban-badge.unlimited { background: linear-gradient(135deg, #2ea043, #1a7f37); }
+.md-ban-badge.limited { background: linear-gradient(135deg, #e8710a, #b34e00); }
+.md-ban-badge.semilimited { background: linear-gradient(135deg, #f9d423, #c9a800); color: #1a1408; }
+.md-ban-badge.forbidden { background: linear-gradient(135deg, #e8503f, #a3170f); }
+.md-ban-btn.ban-unlimited.active {
+  background: rgba(46, 160, 67, 0.22);
+  border-color: #2ea043;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(46, 160, 67, 0.5);
+}
+.md-ban-btn.ban-limited.active {
+  background: rgba(232, 113, 10, 0.22);
+  border-color: #e8710a;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(232, 113, 10, 0.5);
+}
+.md-ban-btn.ban-semilimited.active {
+  background: rgba(249, 212, 35, 0.22);
+  border-color: #f9d423;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(249, 212, 35, 0.5);
+}
+.md-ban-btn.ban-forbidden.active {
+  background: rgba(179, 38, 30, 0.28);
+  border-color: #e8503f;
+  color: #fff;
+  box-shadow: 0 0 14px rgba(232, 80, 63, 0.6);
 }
 
 /* Mobile Deck Modal */

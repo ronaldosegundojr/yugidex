@@ -6,7 +6,6 @@ import {
   ATTRIBUTES,
   SPELL_TRAP_ICONS,
   spellTrapIconsFor,
-  RARITIES,
   LEVELS,
   LINK_ARROWS,
   SPELL_TRAP_TYPES,
@@ -19,7 +18,6 @@ import {
   dbCardCategory,
   editionLabel,
   isWhiteName,
-  NAME_COLOR_PRESETS,
   MASTER_DUEL_RARITIES,
 } from './cardMakerData'
 import { loadPrintings, printingsForCard, defaultPrinting, regionLabel } from './printingsData'
@@ -44,6 +42,12 @@ const DRAFT_KEY = 'ygoCardMakerDraft'
 const DRAFT_TTL_MS = 30 * 24 * 60 * 60 * 1000 // 30 dias
 const DRAFT_WARN_MS = 48 * 60 * 60 * 1000 // aviso quando restam < 48h
 const DB_PER_PAGE = 40
+
+// Pixel PNG transparente (1x1) usado como placeholder na exportacao: quando
+// alguma imagem da carta falha (arte remota removida, 404 de molde/atributo),
+// o html-to-image preenche com isto em vez de abortar o toPng inteiro.
+const TRANSPARENT_PIXEL =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
 
 // ---- Preferencias de exibicao do "Deck Criado" ----
 const DECK_VIEW_DEFAULTS = {
@@ -568,6 +572,13 @@ export default function CardMakerPage({ cards = [] }) {
             // as cartas cairiam na mesma chave e repetiriam a 1a imagem. Incluir
             // a query na chave mantem a arte correta de cada carta.
             includeQueryParams: true,
+            // Uma unica imagem quebrada (arte remota removida, molde/atributo
+            // de tipo desconhecido em carta antiga) fazia o html-to-image
+            // rejeitar o toPng inteiro com o evento de erro — o PDF nunca era
+            // gerado. Com o handler + placeholder, a imagem problematica vira
+            // um espaco em branco e as demais cartas continuam sendo exportadas.
+            imagePlaceholder: TRANSPARENT_PIXEL,
+            onImageErrorHandler: () => {},
             style: { transform: 'none', transformOrigin: 'top left' },
           })
           if (cancelled) return
@@ -733,11 +744,6 @@ export default function CardMakerPage({ cards = [] }) {
       })
     }
   }
-  const applyNamePreset = (val) => {
-    const item = MASTER_DUEL_RARITIES.find((m) => m.value === val) || { value: val }
-    applyRarityPreset(item)
-  }
-
   const update = useCallback((patch) => {
     setState((s) => ({ ...s, ...patch }))
   }, [])

@@ -214,13 +214,18 @@ export function computeLayout(state) {
 // Mapeamento dos campos de seta -> arquivo (on/off)
 export const linkArrowFile = (key, on) => `other/link_${key}_${on ? 'on' : 'off'}.png`
 
-// Caminho do fundo (background) do tipo da carta
-export const backgroundFile = (type) => `backgrounds/${type}.png`
+// Caminho do fundo (background) do tipo da carta. Tipos desconhecidos (ex.:
+// dados antigos de rascunho) caem no fundo de "effect" em vez de gerar um 404
+// (backgrounds/undefined.png), que quebrava a exportacao PNG/PDF.
+export const backgroundFile = (type) =>
+  `backgrounds/${CARD_TYPES.some((t) => t.value === type) ? type : 'effect'}.png`
 
-// Caminho do atributo (para magias/armadilhas usa spell/trap)
+// Caminho do atributo (para magias/armadilhas usa spell/trap). Assim como o
+// fundo, valores desconhecidos caem em "dark" para nao gerar 404.
 export const attributeFile = (state) => {
-  const value = SPELL_TRAP_TYPES.includes(state.type) ? state.type : state.attribute
-  return `attributes/${value}.png`
+  const raw = SPELL_TRAP_TYPES.includes(state.type) ? state.type : state.attribute
+  const valid = raw === 'spell' || raw === 'trap' || ATTRIBUTES.some((a) => a.value === raw)
+  return `attributes/${valid ? raw : 'dark'}.png`
 }
 
 // Caminho das estrelas de nivel/rank

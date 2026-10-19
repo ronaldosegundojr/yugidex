@@ -9,7 +9,7 @@ import CardMakerPage from './CardMakerPage'
 import { buildSearchBlob, searchTerms, cardSearchScore, sortBySearchScore } from './cardUtils'
 import { BAN_LABELS, BAN_MAX_COPIES, BAN_SHORT_LABELS, BANLIST_EFFECTIVE, banStatusFor } from './banlistData'
 import { cardPasscode, fetchMarketInfo, formatUsd, formatEur } from './marketData'
-import { probAtLeastOne, drawHand, formatPercent } from './handOdds'
+import { probAtLeastOne, drawHand, drawIndividualHand, formatPercent } from './handOdds'
 import { encodeDeckCode, decodeDeckCode } from './deckShare'
 import './YGOCard.css'
 
@@ -291,64 +291,309 @@ function ExportDeckModal({ open, options, onChange, preview, canExport, onExport
 
 // Simulador de mao inicial (5 cartas) do Main Deck: chances exatas por carta
 // (hipergeometrica) e sorteio visual de uma mao de exemplo.
-function HandSimulatorModal({ open, deckArray, onClose }) {
+// Simulador de mão visual estilo Master Duel com painel de inspeção à esquerda e cartas na mão
+function HandSimulatorModal({ open, deckArray, onClose, lang = 'pt' }) {
   const [hand, setHand] = useState([])
+  const [remainingDeck, setRemainingDeck] = useState([])
+  const [selectedCard, setSelectedCard] = useState(null)
+  const [cardLang, setCardLang] = useState(lang)
+  const [showOdds, setShowOdds] = useState(false)
+  const [handSize, setHandSize] = useState(5)
+
+  useEffect(() => {
+    setCardLang(lang)
+  }, [lang])
 
   const total = useMemo(() => deckArray.reduce((sum, c) => sum + c.qty, 0), [deckArray])
   const odds = useMemo(() => {
     if (!total) return []
     return deckArray
-      .map((c) => ({ card: c, prob: probAtLeastOne(total, c.qty) }))
+      .map((c) => ({ card: c, prob: probAtLeastOne(total, c.qty, handSize) }))
       .sort((a, b) => b.prob - a.prob || b.card.qty - a.card.qty)
-  }, [deckArray, total])
+  }, [deckArray, total, handSize])
+
+  const handleDraw = useCallback((count) => {
+    if (!deckArray.length) return
+    setHandSize(count)
+    const result = drawIndividualHand(deckArray, count)
+    setHand(result.hand)
+    setRemainingDeck(result.remaining)
+    if (result.hand.length > 0) {
+      setSelectedCard(result.hand[0])
+    }
+  }, [deckArray])
+
+  // Ao abrir o modal, sorteia automaticamente a mão inicial de 5 cartas
+  useEffect(() => {
+    if (open && total > 0 && hand.length === 0) {
+      handleDraw(5)
+    }
+  }, [open, total, hand.length, handleDraw])
+
+  const handleDrawOneMore = () => {
+    if (remainingDeck.length === 0) return
+    const nextCard = remainingDeck[0]
+    setHand(prev => [...prev, nextCard])
+    setRemainingDeck(prev => prev.slice(1))
+    setSelectedCard(nextCard)
+  }
 
   const close = () => {
     setHand([])
+    setRemainingDeck([])
+    setSelectedCard(null)
+    setShowOdds(false)
     onClose()
   }
 
+  const cardName = selectedCard
+    ? (cardLang === 'pt'
+        ? (selectedCard._ptName || selectedCard.text?.pt?.name || selectedCard.text?.en?.name)
+        : (selectedCard.text?.en?.name || selectedCard._ptName))
+    : ''
+
+  const cardEffect = selectedCard
+    ? (cardLang === 'pt'
+        ? (selectedCard.text?.pt?.effect || selectedCard.text?.en?.effect || selectedCard.effect || 'Sem descrição ou efeito.')
+        : (selectedCard.text?.en?.effect || selectedCard.text?.pt?.effect || selectedCard.effect || 'No effect text available.'))
+    : ''
+
+  const cardType = selectedCard?.cardType || ''
+  const isMonster = cardType === 'monster' || (cardType !== 'spell' && cardType !== 'trap')
+  const attrKey = selectedCard?.attribute?.toLowerCase() || (cardType === 'spell' ? 'spell' : cardType === 'trap' ? 'trap' : '')
+  const banStatus = selectedCard ? banStatusFor(selectedCard) : 'unlimited'
+
+  const getTypeBandLabel = (c) => {
+    if (!c) return ''
+    if (c.cardType === 'spell') {
+      const sub = c.subcategory && c.subcategory !== 'normal' ? ` / ${c.subcategory}` : ''
+      return `[Carta Mágica${sub}]`
+    }
+    if (c.cardType === 'trap') {
+      const sub = c.subcategory && c.subcategory !== 'normal' ? ` / ${c.subcategory}` : ''
+      return `[Carta Armadilha${sub}]`
+    }
+    const race = c.type || 'Monstro'
+    const classList = Array.isArray(c.classifications)
+      ? c.classifications.map(cl => cl.charAt(0).toUpperCase() + cl.slice(1)).join(' / ')
+      : (c._cardType ? c._cardType.toUpperCase() : '')
+    return `[${race}${classList ? ' / ' + classList : ''}]`
+  }
+
+  const getTypeBandClass = (c) => {
+    if (!c) return ''
+    if (c.cardType === 'spell') return 'band-spell'
+    if (c.cardType === 'trap') return 'band-trap'
+    const t = (c._cardType || '').toLowerCase()
+    if (t === 'xyz') return 'band-xyz'
+    if (t === 'synchro') return 'band-synchro'
+    if (t === 'fusion') return 'band-fusion'
+    if (t === 'ritual') return 'band-ritual'
+    if (t === 'link') return 'band-link'
+    if (c.classifications?.includes('normal')) return 'band-normal'
+    return 'band-effect'
+  }
+
   return (
-    <div className={`modal ${open ? 'active' : ''}`} onClick={close}>
-      <div className="modal-content hand-sim" onClick={(e) => e.stopPropagation()}>
+    <div className={`modal md-hand-sim-modal ${open ? 'active' : ''}`} onClick={close}>
+      <div className="modal-content md-hand-sim-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={close}>&times;</button>
-        <h3>Simulador de mão inicial</h3>
-        <p className="hand-sim-sub">
-          {total === 0
-            ? 'Adicione cartas ao Main Deck para simular.'
-            : `Main Deck: ${total} carta(s) — a mão inicial tem 5 cartas`}
-        </p>
 
-        {total > 0 && (
-          <>
-            <div className="hand-sim-actions">
-              <button type="button" className="btn btn-primary" onClick={() => setHand(drawHand(deckArray))}>
-                Sortear mão
-              </button>
-            </div>
-
-            {hand.length > 0 && (
-              <div className="hand-sim-hand">
-                {hand.map(({ card, qty }) => (
-                  <div key={card.id} className="hand-sim-card">
-                    <img src={card._image} alt={card._ptName} loading="lazy" />
-                    {qty > 1 && <span className="hand-sim-qty">x{qty}</span>}
+        {total === 0 ? (
+          <div className="md-hand-sim-empty">
+            <h3>Simulador de Mão</h3>
+            <p>Adicione cartas ao Main Deck para poder simular a mão inicial.</p>
+          </div>
+        ) : (
+          <div className="md-hand-sim-layout">
+            {/* PAINEL ESQUERDO: INSPEÇÃO DA CARTA ESTILO MASTER DUEL */}
+            <aside className="md-sim-left-panel">
+              {selectedCard ? (
+                <div className="md-card-inspector">
+                  {/* Cabeçalho do painel: Nome + Atributo */}
+                  <div className="md-insp-header">
+                    <h3 className="md-insp-name" title={cardName}>{cardName}</h3>
+                    {attrKey && (
+                      <img
+                        className="md-insp-attr"
+                        src={`/cardmaker/attributes/${attrKey}.png`}
+                        alt={attrKey}
+                        onError={(e) => { e.currentTarget.style.display = 'none' }}
+                      />
+                    )}
                   </div>
-                ))}
-              </div>
-            )}
 
-            <h4 className="hand-sim-title">Chance de abrir com pelo menos 1 cópia</h4>
-            <div className="hand-sim-list">
-              {odds.map(({ card, prob }) => (
-                <div key={card.id} className="hand-sim-row">
-                  <span className="hand-sim-bar" style={{ width: `${Math.max(2, prob * 100)}%` }} />
-                  <span className="hand-sim-name">{card._ptName}</span>
-                  <span className="hand-sim-copies">x{card.qty}</span>
-                  <span className="hand-sim-prob">{formatPercent(prob)}</span>
+                  {/* Linha da imagem e atributos rápidos */}
+                  <div className="md-insp-preview-row">
+                    <div className="md-insp-img-box">
+                      <img src={selectedCard._image} alt={cardName} />
+                      {selectedCard._rarity && (
+                        <span className={`deck-card-rarity rarity-${selectedCard._rarity}`}>
+                          {selectedCard._rarity.toUpperCase()}
+                        </span>
+                      )}
+                      {banStatus !== 'unlimited' && (
+                        <span className={`deck-card-ban ${banStatus}`}>
+                          {BAN_SHORT_LABELS[banStatus]}
+                        </span>
+                      )}
+                    </div>
+                    <div className="md-insp-stats-box">
+                      {isMonster ? (
+                        <>
+                          <div className="md-insp-stat-item level">
+                            <img src="/cardmaker/other/Star.png" alt="★" className="md-insp-star" />
+                            <span>{selectedCard.rank ? `Classe ${selectedCard.rank}` : selectedCard.linkRating ? `Link-${selectedCard.linkRating}` : `Nível ${selectedCard.level || 0}`}</span>
+                          </div>
+                          <div className="md-insp-stat-item atk">
+                            <span className="md-insp-label">ATK</span>
+                            <span className="md-insp-val">{selectedCard.atk !== undefined ? selectedCard.atk : '?'}</span>
+                          </div>
+                          <div className="md-insp-stat-item def">
+                            <span className="md-insp-label">DEF</span>
+                            <span className="md-insp-val">{selectedCard.def !== undefined ? selectedCard.def : (selectedCard.cardType === 'link' ? '-' : '?')}</span>
+                          </div>
+                          {selectedCard.scale !== undefined && (
+                            <div className="md-insp-stat-item scale">
+                              <span className="md-insp-label">Escala</span>
+                              <span className="md-insp-val">{selectedCard.scale}</span>
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <div className="md-insp-stat-item type">
+                          <span className="md-insp-label">{selectedCard.cardType === 'spell' ? 'Mágica' : 'Armadilha'}</span>
+                          <span className="md-insp-val">{selectedCard.subcategory || 'Normal'}</span>
+                        </div>
+                      )}
+                      {selectedCard._rarity && (
+                        <div className="md-insp-rarity-row">
+                          <span className={`md-rarity-badge ${selectedCard._rarity}`}>{selectedCard._rarity.toUpperCase()}</span>
+                          <span className="md-insp-rarity-text">
+                            {selectedCard._rarity === 'ur' ? 'Ultra Rara' : selectedCard._rarity === 'sr' ? 'Super Rara' : selectedCard._rarity === 'r' ? 'Rara' : 'Normal'}
+                          </span>
+                        </div>
+                      )}
+                      {banStatus !== 'unlimited' && (
+                        <div className="md-insp-ban-row">
+                          <span className={`deck-card-ban ${banStatus}`}>{BAN_SHORT_LABELS[banStatus]}</span>
+                          <span className="md-insp-ban-text">{BAN_LABELS[banStatus]}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Faixa horizontal de Tipo/Classificação */}
+                  <div className={`md-insp-type-band ${getTypeBandClass(selectedCard)}`}>
+                    {getTypeBandLabel(selectedCard)}
+                  </div>
+
+                  {/* Seletor de idioma do efeito */}
+                  <div className="md-insp-lang-row">
+                    <span>Descrição / Efeito</span>
+                    <div className="lang-toggle mini">
+                      <button type="button" className={cardLang === 'pt' ? 'active' : ''} onClick={() => setCardLang('pt')}>PT</button>
+                      <button type="button" className={cardLang === 'en' ? 'active' : ''} onClick={() => setCardLang('en')}>EN</button>
+                    </div>
+                  </div>
+
+                  {/* Caixa de Texto do Efeito */}
+                  <div className="md-insp-effect-box">
+                    {cardEffect}
+                  </div>
                 </div>
-              ))}
-            </div>
-          </>
+              ) : (
+                <div className="md-insp-placeholder">
+                  <p>Passe o mouse ou toque em uma carta da mão para ver sua descrição completa aqui.</p>
+                </div>
+              )}
+            </aside>
+
+            {/* PAINEL DIREITO: ARENA DE DUELO E MÃO */}
+            <main className="md-sim-main-panel">
+              <div className="md-sim-topbar">
+                <div className="md-sim-topbar-info">
+                  <span className="md-sim-badge">Main Deck: {total} cartas</span>
+                  <span className="md-sim-remaining">Restantes no Deck: {remainingDeck.length}</span>
+                </div>
+                <div className="md-sim-actions">
+                  <button type="button" className={`md-sim-action-btn ${handSize === 5 ? 'active' : ''}`} onClick={() => handleDraw(5)}>
+                    Sortear 5 Cartas (1º)
+                  </button>
+                  <button type="button" className={`md-sim-action-btn ${handSize === 6 ? 'active' : ''}`} onClick={() => handleDraw(6)}>
+                    Sortear 6 Cartas (2º)
+                  </button>
+                  <button type="button" className="md-sim-action-btn draw-one" onClick={handleDrawOneMore} disabled={remainingDeck.length === 0} title="Comprar 1 carta a mais do deck">
+                    +1 Carta ({remainingDeck.length})
+                  </button>
+                  <button type="button" className={`md-sim-action-btn odds-btn ${showOdds ? 'active' : ''}`} onClick={() => setShowOdds(p => !p)}>
+                    {showOdds ? 'Ocultar Chances' : 'Chances (%)'}
+                  </button>
+                </div>
+              </div>
+
+              {/* Arena do Duelo com a Mão */}
+              <div className="md-sim-duel-arena">
+                <div className="md-sim-arena-header">
+                  <span>Mão de Duelo ({hand.length} cartas)</span>
+                  <span className="md-sim-arena-hint">Passe o mouse ou toque para inspecionar</span>
+                </div>
+
+                <div className="md-sim-hand-cards">
+                  {hand.map((card, idx) => {
+                    const isSelected = selectedCard && (selectedCard.id === card.id || selectedCard === card)
+                    const ban = banStatusFor(card)
+                    return (
+                      <div
+                        key={`${card.id}_${idx}`}
+                        className={`md-sim-hand-card ${isSelected ? 'active-card' : ''}`}
+                        onMouseEnter={() => setSelectedCard(card)}
+                        onClick={() => setSelectedCard(card)}
+                      >
+                        <div className="md-sim-card-slot">
+                          <img src={card._image} alt={card._ptName} loading="lazy" />
+                          {card._rarity && (
+                            <span className={`deck-card-rarity rarity-${card._rarity}`}>
+                              {card._rarity.toUpperCase()}
+                            </span>
+                          )}
+                          {ban !== 'unlimited' && (
+                            <span className={`deck-card-ban ${ban}`}>
+                              {BAN_SHORT_LABELS[ban]}
+                            </span>
+                          )}
+                          <span className="md-sim-slot-num">#{idx + 1}</span>
+                        </div>
+                        <div className="md-sim-card-name" title={card._ptName}>{card._ptName}</div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Seção Opcional de Probabilidades Hipergeométricas */}
+              {showOdds && (
+                <div className="md-sim-odds-section">
+                  <h4>Chance exata de abrir com pelo menos 1 cópia nas {handSize} primeiras cartas:</h4>
+                  <div className="hand-sim-list">
+                    {odds.map(({ card, prob }) => (
+                      <div
+                        key={card.id}
+                        className="hand-sim-row"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => setSelectedCard(card)}
+                      >
+                        <span className="hand-sim-bar" style={{ width: `${Math.max(2, prob * 100)}%` }} />
+                        <span className="hand-sim-name">{card._ptName}</span>
+                        <span className="hand-sim-copies">x{card.qty}</span>
+                        <span className="hand-sim-prob">{formatPercent(prob)}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </main>
+          </div>
         )}
       </div>
     </div>
@@ -524,7 +769,7 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
   )
 }
 
-function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, deckRarityFilter, setDeckRarityFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, deckIdSet, onOpenScanner, sharedDeckName = '' }) {
+function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, deckRarityFilter, setDeckRarityFilter, deckBanFilter, setDeckBanFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, deckIdSet, onOpenScanner, sharedDeckName = '' }) {
   const [activeId, setActiveId] = useState(null)
   const [deckNameOverride, setDeckName] = useState('')
   // Nome vindo de um link compartilhado (prop) quando o usuario ainda nao
@@ -637,11 +882,13 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
     const hasType = !!deckTypeFilter
     const hasLevel = !!deckLevelFilter
     const hasRarity = !!deckRarityFilter
+    const hasBan = !!deckBanFilter
     
     const list = cards.filter(card => {
       if (hasSearch && !cardSearchScore(card, terms)) return false
       if (libraryOptions.hideInDeck && deckIdSet.has(card.id)) return false
       if (libraryOptions.hideForbidden && banStatusFor(card) === 'forbidden') return false
+      if (hasBan && banStatusFor(card) !== deckBanFilter) return false
       if (hasType) {
         const type = card._cardType
         if (deckTypeFilter !== type) return false
@@ -662,7 +909,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
     })
     if (hasSearch) sortBySearchScore(list)
     return list
-  }, [cards, deckSearchTerm, deckTypeFilter, deckLevelFilter, deckRarityFilter, libraryOptions.hideInDeck, libraryOptions.hideForbidden, deckIdSet])
+  }, [cards, deckSearchTerm, deckTypeFilter, deckLevelFilter, deckRarityFilter, deckBanFilter, libraryOptions.hideInDeck, libraryOptions.hideForbidden, deckIdSet])
 
   const totalPages = Math.ceil(filteredCards.length / ITEMS_PER_PAGE)
   const paginatedCards = filteredCards.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
@@ -1292,7 +1539,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         {...listeners}
         {...attributes}
       >
-        <div className="deck-card-image-wrapper" onClick={() => onClick(card)}>
+        <div className="deck-card-image-wrapper" onClick={(e) => { e.stopPropagation(); onClick(card) }}>
           <img src={card._image} alt={card._ptName} loading="lazy" />
           {banStatus !== 'unlimited' && (
             <span
@@ -1369,23 +1616,34 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
 
     return (
       <div 
-        className={`deck-zone ${isOver ? 'drag-over' : ''} ${deckArray.length === 0 ? 'empty' : ''}`}
+        className={`deck-zone ${isOver ? 'drag-over' : ''} ${deckArray.length === 0 ? 'empty' : ''} ${isMobile ? 'tap-to-add' : ''}`}
         ref={setNodeRef}
+        onClick={isMobile ? onEmptyClick : undefined}
+        role={isMobile ? 'button' : undefined}
+        title={isMobile ? 'Toque para abrir a biblioteca de cartas' : undefined}
       >
         <div className="deck-zone-header">
           <h4>{title}</h4>
-          <span className={`deck-count ${stats.total > maxCards ? 'error' : isMain && stats.total >= 40 ? 'warning' : isMain && stats.total < 40 ? 'warning' : 'ok'}`}>
-            {stats.total}/{maxCards}
-          </span>
+          <div className="deck-zone-header-right">
+            {isMobile && (
+              <button
+                type="button"
+                className="deck-zone-add"
+                onClick={(e) => { e.stopPropagation(); onEmptyClick?.() }}
+                title="Adicionar cartas a este deck"
+              >
+                + Adicionar
+              </button>
+            )}
+            <span className={`deck-count ${stats.total > maxCards ? 'error' : isMain && stats.total >= 40 ? 'warning' : isMain && stats.total < 40 ? 'warning' : 'ok'}`}>
+              {stats.total}/{maxCards}
+            </span>
+          </div>
         </div>
         <div className="deck-cards-container">
           {deckArray.length === 0 ? (
-            <p 
-              className="empty-msg" 
-              onClick={isMobile ? onEmptyClick : undefined}
-              style={isMobile ? { cursor: 'pointer', color: 'var(--gold)' } : undefined}
-            >
-              {isMobile ? 'Arraste cartas aqui ou clique aqui' : 'Arraste cartas aqui'}
+            <p className="empty-msg">
+              {isMobile ? 'Arraste cartas aqui ou toque para abrir a biblioteca' : 'Arraste cartas aqui'}
             </p>
           ) : (
             zoneCards
@@ -1549,6 +1807,33 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
                   </button>
                 </div>
               </div>
+
+              {/* Filtro de Banlist (Ilimitada/Limitada/Semi-limitada/Proibida) */}
+              <div className="md-ban-filter-bar">
+                <div className="md-rarity-label-group">
+                  <span className="md-ban-icon">!</span>
+                  <span className="md-rarity-title">Banlist</span>
+                </div>
+                <div className="md-rarity-buttons" role="group" aria-label="Filtro de Banlist">
+                  {[
+                    { key: 'unlimited', short: '3', label: 'Ilimitada', tip: 'Ilimitada (Liberada): pode ter até 3 cópias da mesma carta no deck.' },
+                    { key: 'limited', short: '1', label: 'Limitada', tip: 'Limitada: no máximo 1 cópia da mesma carta no deck. Pode ter várias cartas limitadas diferentes, só não podem ser a mesma.' },
+                    { key: 'semilimited', short: '2', label: 'Semi', tip: 'Semi-limitada: pode ter até 2 cópias da mesma carta no deck.' },
+                    { key: 'forbidden', short: '0', label: 'Proibida', tip: 'Proibida (banida): não pode ter nenhuma cópia no deck (0 cópias).' }
+                  ].map(opt => (
+                    <button
+                      key={opt.key}
+                      type="button"
+                      className={`md-ban-btn ban-${opt.key} ${deckBanFilter === opt.key ? 'active' : ''}`}
+                      onClick={() => { setDeckBanFilter(deckBanFilter === opt.key ? '' : opt.key); setCurrentPage(1) }}
+                      title={opt.tip}
+                    >
+                      <span className={`md-ban-badge ${opt.key}`}>{opt.short}</span>
+                      <span className="md-rarity-btn-text">{opt.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
               <div className="library-options">
                 <label className="library-option">
                   <input
@@ -1639,6 +1924,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         open={simOpen}
         deckArray={mainDeck}
         onClose={() => setSimOpen(false)}
+        lang={lang}
       />
     </DndContext>
   )
@@ -1665,6 +1951,7 @@ function App() {
   const [deckTypeFilter, setDeckTypeFilter] = useState('')
   const [deckLevelFilter, setDeckLevelFilter] = useState('')
   const [deckRarityFilter, setDeckRarityFilter] = useState('')
+  const [deckBanFilter, setDeckBanFilter] = useState('')
   const [lang, setLang] = useState('pt')
   const [isMobile, setIsMobile] = useState(false)
   const [scannerOpen, setScannerOpen] = useState(false)
@@ -1906,7 +2193,7 @@ function App() {
         <main className="main-content">
           <Routes>
             <Route path="/" element={<CardsView cards={cards} filteredCards={filteredCards} filteredByType={filteredByType} currentPage={currentPage} setCurrentPage={setCurrentPage} deck={deck} setModalCard={setModalCard} searchTerm={searchTerm} setSearchTerm={setSearchTerm} typeFilter={typeFilter} setTypeFilter={setTypeFilter} raceFilter={raceFilter} setRaceFilter={setRaceFilter} attrFilter={attrFilter} setAttrFilter={setAttrFilter} banFilter={banFilter} setBanFilter={setBanFilter} races={races} lang={lang} setLang={setLang} onOpenScanner={() => setScannerOpen(true)} />} />
-            <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} deckRarityFilter={deckRarityFilter} setDeckRarityFilter={setDeckRarityFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} isMobile={isMobile} deckIdSet={deckIdSet} onOpenScanner={() => setScannerOpen(true)} sharedDeckName={sharedDeckName} />} />
+            <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} deckRarityFilter={deckRarityFilter} setDeckRarityFilter={setDeckRarityFilter} deckBanFilter={deckBanFilter} setDeckBanFilter={setDeckBanFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} isMobile={isMobile} deckIdSet={deckIdSet} onOpenScanner={() => setScannerOpen(true)} sharedDeckName={sharedDeckName} />} />
             <Route path="/batalha" element={<BattlePage cards={cards} />} />
             <Route path="/criar-card" element={<CardMakerPage cards={cards} />} />
             <Route path="/noite-da-rapaziada" element={<NoiteDaRapaziada />} />
