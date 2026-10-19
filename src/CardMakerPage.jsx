@@ -20,6 +20,7 @@ import {
   editionLabel,
   isWhiteName,
   NAME_COLOR_PRESETS,
+  MASTER_DUEL_RARITIES,
 } from './cardMakerData'
 import { loadPrintings, printingsForCard, defaultPrinting, regionLabel } from './printingsData'
 import {
@@ -715,18 +716,26 @@ export default function CardMakerPage({ cards = [] }) {
     return ` — ${BAN_LABELS[status]} na banlist TCG (${max} ${max === 1 ? 'cópia' : 'cópias'} permitida${max === 1 ? '' : 's'})`
   }
 
-  // ---- Presets de cor do titulo ----
+  // ---- Presets de raridade / cor do titulo ----
   // Preset ativo: cor personalizada sempre que houver cor escolhida.
   const activePreset = state.nameColor ? 'custom' : state.nameColorPreset || 'auto'
-  const applyNamePreset = (value) => {
-    if (value === 'custom') {
+  const applyRarityPreset = (r) => {
+    if (r.value === 'custom') {
       update({
         nameColorPreset: 'custom',
         nameColor: state.nameColor || (isWhiteName(state) ? '#ffffff' : '#000000'),
       })
     } else {
-      update({ nameColorPreset: value, nameColor: '' })
+      update({
+        nameColorPreset: r.value,
+        rarity: r.foil || 'common',
+        nameColor: '',
+      })
     }
+  }
+  const applyNamePreset = (val) => {
+    const item = MASTER_DUEL_RARITIES.find((m) => m.value === val) || { value: val }
+    applyRarityPreset(item)
   }
 
   const update = useCallback((patch) => {
@@ -1646,16 +1655,6 @@ export default function CardMakerPage({ cards = [] }) {
               </label>
             )}
 
-            <label className="cm-field">
-              <span>Raridade</span>
-              <select value={state.rarity} onChange={(e) => update({ rarity: e.target.value })}>
-                {RARITIES.map((r) => (
-                  <option key={r.value} value={r.value}>
-                    {r.label}
-                  </option>
-                ))}
-              </select>
-            </label>
 
             <label className="cm-check">
               <input
@@ -1694,35 +1693,48 @@ export default function CardMakerPage({ cards = [] }) {
               />
             </label>
 
-            <div className="cm-field">
-              <span>Cor do título</span>
-              <div className="cm-presets" role="group" aria-label="Preset de cor do título">
-                {NAME_COLOR_PRESETS.map((p) => (
-                  <button
-                    key={p.value}
-                    type="button"
-                    className={`cm-preset-chip ${p.foil ? `foil-${p.foil}` : ''} ${activePreset === p.value ? 'active' : ''}`}
-                    onClick={() => applyNamePreset(p.value)}
-                    title={
-                      p.value === 'auto'
-                        ? 'Preto/branco e folha seguindo a raridade da carta'
-                        : p.value === 'custom'
-                          ? 'Escolher uma cor livre para o título'
-                          : p.foil
-                            ? `Nome em folha ${p.foil === 'gold' ? 'dourada' : 'prateada'} (estilo ${p.label})`
-                            : `Nome preto/branco automático (estilo ${p.label})`
-                    }
-                  >
-                    {p.label}
-                  </button>
-                ))}
+            <div className="cm-field md-rarity-field">
+              <div className="md-rarity-header">
+                <span className="md-rarity-icon ur">UR</span>
+                <span className="md-rarity-label">Raridade</span>
+              </div>
+              <div className="md-rarity-buttons" role="group" aria-label="Raridade da carta">
+                {MASTER_DUEL_RARITIES.map((r) => {
+                  const isSelected =
+                    activePreset === r.value ||
+                    (r.value === 'normal' && (activePreset === 'common' || (activePreset === 'auto' && state.rarity !== 'gold' && state.rarity !== 'silver'))) ||
+                    (r.value === 'ultra' && activePreset === 'secret') ||
+                    (r.value === 'super' && activePreset === 'auto' && state.rarity === 'silver') ||
+                    (r.value === 'ultra' && activePreset === 'auto' && state.rarity === 'gold')
+
+                  return (
+                    <button
+                      key={r.value}
+                      type="button"
+                      className={`md-rarity-btn rarity-${r.key} ${isSelected ? 'active' : ''}`}
+                      onClick={() => applyRarityPreset(r)}
+                      title={r.foil ? `Raridade ${r.label} (folha ${r.foil === 'gold' ? 'dourada' : 'prateada'})` : `Raridade ${r.label}`}
+                    >
+                      <span className={`md-rarity-badge ${r.key}`}>{r.code}</span>
+                      <span className="md-rarity-btn-text">{r.label}</span>
+                    </button>
+                  )
+                })}
+                <button
+                  type="button"
+                  className={`md-rarity-btn rarity-custom ${activePreset === 'custom' ? 'active' : ''}`}
+                  onClick={() => applyRarityPreset({ value: 'custom' })}
+                  title="Escolher uma cor personalizada para o título"
+                >
+                  <span className="md-rarity-btn-text">Personalizada</span>
+                </button>
                 <input
                   type="color"
                   className="cm-color-input"
                   value={state.nameColor || (isWhiteName(state) ? '#ffffff' : '#000000')}
                   disabled={activePreset !== 'custom'}
                   onChange={(e) => update({ nameColorPreset: 'custom', nameColor: e.target.value })}
-                  title="Escolher cor do título"
+                  title="Escolher cor personalizada do título"
                 />
               </div>
             </div>

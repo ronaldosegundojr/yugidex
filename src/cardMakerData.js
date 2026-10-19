@@ -96,6 +96,14 @@ export const NAME_COLOR_PRESETS = [
   { value: 'custom', label: 'Personalizada' },
 ]
 
+// Raridades padrao Master Duel (N = Normal, R = Rara, SR = Super Rara, UR = Ultra Rara)
+export const MASTER_DUEL_RARITIES = [
+  { code: 'N', value: 'normal', key: 'n', label: 'Normal' },
+  { code: 'R', value: 'rare', key: 'r', label: 'Rara' },
+  { code: 'SR', value: 'super', key: 'sr', label: 'Super Rara', foil: 'silver' },
+  { code: 'UR', value: 'ultra', key: 'ur', label: 'Ultra Rara', foil: 'gold' },
+]
+
 export const LEVELS = Array.from({ length: 13 }, (_, i) => i)
 
 // ---- Setas de Link (link-0 .. link-7) ----

@@ -355,8 +355,14 @@ function HandSimulatorModal({ open, deckArray, onClose }) {
   )
 }
 
-const SimpleCard = ({ card, onClick }) => (  <div className="simple-card" onClick={() => onClick(card)}>
+const SimpleCard = ({ card, onClick }) => (
+  <div className="simple-card" onClick={() => onClick(card)}>
     <img src={card._image} alt={card._ptName} loading="lazy" />
+    {card._rarity && (
+      <span className={`deck-card-rarity rarity-${card._rarity}`} title={`Raridade Master Duel: ${card._rarity.toUpperCase()}`}>
+        {card._rarity.toUpperCase()}
+      </span>
+    )}
   </div>
 )
 
@@ -518,7 +524,7 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
   )
 }
 
-function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, deckIdSet, onOpenScanner, sharedDeckName = '' }) {
+function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, deckRarityFilter, setDeckRarityFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, deckIdSet, onOpenScanner, sharedDeckName = '' }) {
   const [activeId, setActiveId] = useState(null)
   const [deckNameOverride, setDeckName] = useState('')
   // Nome vindo de um link compartilhado (prop) quando o usuario ainda nao
@@ -590,6 +596,11 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
             {BAN_SHORT_LABELS[banStatus]}
           </span>
         )}
+        {card._rarity && (
+          <span className={`deck-card-rarity rarity-${card._rarity}`} title={`Raridade Master Duel: ${card._rarity.toUpperCase()}`}>
+            {card._rarity.toUpperCase()}
+          </span>
+        )}
         <div className="deck-library-card-name">{card._ptName}</div>
         <div className="deck-library-controls">
           {isInDeck ? (
@@ -625,6 +636,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
     const hasSearch = terms.length > 0
     const hasType = !!deckTypeFilter
     const hasLevel = !!deckLevelFilter
+    const hasRarity = !!deckRarityFilter
     
     const list = cards.filter(card => {
       if (hasSearch && !cardSearchScore(card, terms)) return false
@@ -643,11 +655,14 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         if (deckLevelFilter === 'spell' && type !== 'spell') return false
         if (deckLevelFilter === 'trap' && type !== 'trap') return false
       }
+      if (hasRarity) {
+        if (card._rarity !== deckRarityFilter) return false
+      }
       return true
     })
     if (hasSearch) sortBySearchScore(list)
     return list
-  }, [cards, deckSearchTerm, deckTypeFilter, deckLevelFilter, libraryOptions.hideInDeck, libraryOptions.hideForbidden, deckIdSet])
+  }, [cards, deckSearchTerm, deckTypeFilter, deckLevelFilter, deckRarityFilter, libraryOptions.hideInDeck, libraryOptions.hideForbidden, deckIdSet])
 
   const totalPages = Math.ceil(filteredCards.length / ITEMS_PER_PAGE)
   const paginatedCards = filteredCards.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
@@ -1287,6 +1302,11 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
               {BAN_SHORT_LABELS[banStatus]}
             </span>
           )}
+          {card._rarity && (
+            <span className={`deck-card-rarity rarity-${card._rarity}`} title={`Raridade Master Duel: ${card._rarity.toUpperCase()}`}>
+              {card._rarity.toUpperCase()}
+            </span>
+          )}
           {qty > 1 && <span className="deck-card-qty">{qty}</span>}
           <div className="deck-card-tooltip">
             <div className="tooltip-name">{card._ptName}</div>
@@ -1483,6 +1503,52 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
                 <option value="spell">Magias</option>
                 <option value="trap">Armadilhas</option>
               </select>
+
+              {/* Filtro de Raridade Master Duel */}
+              <div className="md-rarity-filter-bar">
+                <div className="md-rarity-label-group">
+                  <span className="md-rarity-icon ur">UR</span>
+                  <span className="md-rarity-title">Raridade</span>
+                </div>
+                <div className="md-rarity-buttons" role="group" aria-label="Filtro de Raridade">
+                  <button
+                    type="button"
+                    className={`md-rarity-btn rarity-n ${deckRarityFilter === 'n' ? 'active' : ''}`}
+                    onClick={() => { setDeckRarityFilter(deckRarityFilter === 'n' ? '' : 'n'); setCurrentPage(1) }}
+                    title="Normal (N)"
+                  >
+                    <span className="md-rarity-badge n">N</span>
+                    <span className="md-rarity-btn-text">Normal</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`md-rarity-btn rarity-r ${deckRarityFilter === 'r' ? 'active' : ''}`}
+                    onClick={() => { setDeckRarityFilter(deckRarityFilter === 'r' ? '' : 'r'); setCurrentPage(1) }}
+                    title="Rara (R)"
+                  >
+                    <span className="md-rarity-badge r">R</span>
+                    <span className="md-rarity-btn-text">Rara</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`md-rarity-btn rarity-sr ${deckRarityFilter === 'sr' ? 'active' : ''}`}
+                    onClick={() => { setDeckRarityFilter(deckRarityFilter === 'sr' ? '' : 'sr'); setCurrentPage(1) }}
+                    title="Super Rara (SR)"
+                  >
+                    <span className="md-rarity-badge sr">SR</span>
+                    <span className="md-rarity-btn-text">Super Rara</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`md-rarity-btn rarity-ur ${deckRarityFilter === 'ur' ? 'active' : ''}`}
+                    onClick={() => { setDeckRarityFilter(deckRarityFilter === 'ur' ? '' : 'ur'); setCurrentPage(1) }}
+                    title="Ultra Rara (UR)"
+                  >
+                    <span className="md-rarity-badge ur">UR</span>
+                    <span className="md-rarity-btn-text">Ultra Rara</span>
+                  </button>
+                </div>
+              </div>
               <div className="library-options">
                 <label className="library-option">
                   <input
@@ -1598,6 +1664,7 @@ function App() {
   const [banFilter, setBanFilter] = useState('')
   const [deckTypeFilter, setDeckTypeFilter] = useState('')
   const [deckLevelFilter, setDeckLevelFilter] = useState('')
+  const [deckRarityFilter, setDeckRarityFilter] = useState('')
   const [lang, setLang] = useState('pt')
   const [isMobile, setIsMobile] = useState(false)
   const [scannerOpen, setScannerOpen] = useState(false)
@@ -1619,6 +1686,7 @@ function App() {
     const searchBlob = buildSearchBlob(card)
     
     const cardType = getCardTypeRaw(card, enName)
+    const mdRarity = card.masterDuel?.rarity?.toLowerCase() || ''
     
     return {
       ...card,
@@ -1627,7 +1695,8 @@ function App() {
       _image: image,
       _normalizedNames: normalizedNames,
       _search: searchBlob,
-      _cardType: cardType
+      _cardType: cardType,
+      _rarity: mdRarity
     }
   }
 
@@ -1837,7 +1906,7 @@ function App() {
         <main className="main-content">
           <Routes>
             <Route path="/" element={<CardsView cards={cards} filteredCards={filteredCards} filteredByType={filteredByType} currentPage={currentPage} setCurrentPage={setCurrentPage} deck={deck} setModalCard={setModalCard} searchTerm={searchTerm} setSearchTerm={setSearchTerm} typeFilter={typeFilter} setTypeFilter={setTypeFilter} raceFilter={raceFilter} setRaceFilter={setRaceFilter} attrFilter={attrFilter} setAttrFilter={setAttrFilter} banFilter={banFilter} setBanFilter={setBanFilter} races={races} lang={lang} setLang={setLang} onOpenScanner={() => setScannerOpen(true)} />} />
-            <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} isMobile={isMobile} deckIdSet={deckIdSet} onOpenScanner={() => setScannerOpen(true)} sharedDeckName={sharedDeckName} />} />
+            <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} deckRarityFilter={deckRarityFilter} setDeckRarityFilter={setDeckRarityFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} isMobile={isMobile} deckIdSet={deckIdSet} onOpenScanner={() => setScannerOpen(true)} sharedDeckName={sharedDeckName} />} />
             <Route path="/batalha" element={<BattlePage cards={cards} />} />
             <Route path="/criar-card" element={<CardMakerPage cards={cards} />} />
             <Route path="/noite-da-rapaziada" element={<NoiteDaRapaziada />} />

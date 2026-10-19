@@ -243,7 +243,15 @@
   accent-color: var(--gold);
 }
 
-/* ---- Cor do titulo: presets no estilo das raridades YGO ---- */
+/* ---- Raridade: presets no estilo Master Duel ---- */
+.cm-field.md-rarity-field {
+  background: rgba(4, 12, 22, 0.45);
+  padding: 0.65rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 180, 255, 0.18);
+  margin-top: 0.2rem;
+  margin-bottom: 0.4rem;
+}
 .cm-presets {
   display: flex;
   align-items: center;
