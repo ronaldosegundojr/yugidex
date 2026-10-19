@@ -1359,13 +1359,20 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         if (byImage) return byImage
       }
 
-      const nameStr = String(c.name || c.cardName || c.title || c._ptName || '').trim().toLowerCase()
-      if (nameStr) {
-        const byName = cards.find(card => 
-          (card._ptName && card._ptName.toLowerCase() === nameStr) ||
-          (card.text?.en?.name && card.text.en.name.toLowerCase() === nameStr)
-        )
-        if (byName) return byName
+      // O .txt exportado pode trazer "Nome PT / Nome EN"; tenta o nome completo
+      // e cada parte separadamente.
+      const rawName = String(c.name || c.cardName || c.title || c._ptName || '').trim()
+      if (rawName) {
+        const names = [rawName, ...rawName.split(' / ')]
+          .map(n => n.trim().toLowerCase())
+          .filter(Boolean)
+        for (const nameStr of names) {
+          const byName = cards.find(card =>
+            (card._ptName && card._ptName.toLowerCase() === nameStr) ||
+            (card.text?.en?.name && card.text.en.name.toLowerCase() === nameStr)
+          )
+          if (byName) return byName
+        }
       }
 
       return null
@@ -1420,44 +1427,71 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
             else mainRaw.push(passcode)
           }
         } else {
-          // Parse TXT format (exported format)
+          // Parse TXT (formato exportado pelo /deck). Aceita o modo agrupado
+          // ("1. Nome (QUANTIDADE DESEJADA: 2x)") e o expandido (uma linha
+          // "1. Nome" por copia), com ou sem secoes e numeracao.
           const lines = content.split('\n')
           let currentSection = 'main'
-          
+          // Arquivos exportados tem o cabecalho "CARTAS DO DECK"; arquivos
+          // manuais sem cabecalho continuam aceitos.
+          let inCards = !/^CARTAS DO DECK$/im.test(content)
+
+          const sectionFromLine = (t) => {
+            if (t.startsWith('--- MAIN DECK')) return 'main'
+            if (t.startsWith('--- EXTRA DECK')) return 'extra'
+            if (t.startsWith('--- SIDE DECK')) return 'side'
+            return null
+          }
+
           for (let i = 0; i < lines.length; i++) {
-            const line = lines[i]
-            const trimmed = line.trim()
-            
+            const raw = lines[i]
+            const trimmed = raw.trim()
+
             if (trimmed.startsWith('NOME DO DECK:')) {
               importedDeckName = trimmed.replace('NOME DO DECK:', '').trim()
-            } else if (trimmed.startsWith('--- MAIN DECK')) {
-              currentSection = 'main'
-            } else if (trimmed.startsWith('--- EXTRA DECK')) {
-              currentSection = 'extra'
-            } else if (trimmed.startsWith('--- SIDE DECK')) {
-              currentSection = 'side'
-            } else if (trimmed.includes('(QUANTIDADE DESEJADA:')) {
-              // Format: "Nome da Carta (QUANTIDADE DESEJADA: 1x)"
-              const match = trimmed.match(/^(.+?)\s*\(QUANTIDADE DESEJADA:\s*(\d+)x\)$/)
-              if (match) {
-                const cardName = match[1].trim()
-                const qty = parseInt(match[2]) || 1
-                
-                // Check next line for image URL (optional)
-                let imageUrl = null
-                if (i + 1 < lines.length) {
-                  const nextLine = lines[i + 1].trim()
-                  if (nextLine.startsWith('IMAGEM DA CARTA:')) {
-                    imageUrl = nextLine.replace('IMAGEM DA CARTA:', '').trim()
-                  }
-                }
-                
-                const targetObj = { name: cardName, qty, imageUrl }
-                if (currentSection === 'extra') extraRaw.push(targetObj)
-                else if (currentSection === 'side') sideRaw.push(targetObj)
-                else mainRaw.push(targetObj)
+              continue
+            }
+            const section = sectionFromLine(trimmed)
+            if (section) {
+              currentSection = section
+              continue
+            }
+            if (/^CARTAS DO DECK$/i.test(trimmed)) {
+              inCards = true
+              continue
+            }
+            if (/^(RESUMO DO DECK|FIM DA EXPORTAÇÃO|FIM DA EXPORTACAO)$/i.test(trimmed)) {
+              inCards = false
+              continue
+            }
+            if (!inCards || !trimmed) continue
+            // Detalhes (EFEITO, TIPO, IMAGEM...) vem indentados; ignora.
+            if (/^\s{2,}/.test(raw)) continue
+            if (/^[=-]{3,}$/.test(trimmed)) continue
+
+            // Remove a numeracao ("1. ") e o sufixo de quantidade agrupada.
+            let lineText = trimmed.replace(/^\d+\.\s+/, '')
+            let qty = 1
+            const qtyMatch = lineText.match(/^(.*?)\s*\(QUANTIDADE DESEJADA:\s*(\d+)x\)\s*$/i)
+            if (qtyMatch) {
+              lineText = qtyMatch[1].trim()
+              qty = parseInt(qtyMatch[2], 10) || 1
+            }
+            if (!lineText) continue
+
+            // A imagem pode vir na linha seguinte (quando exportada).
+            let imageUrl = null
+            if (i + 1 < lines.length) {
+              const nextLine = lines[i + 1].trim()
+              if (nextLine.startsWith('IMAGEM DA CARTA:')) {
+                imageUrl = nextLine.replace('IMAGEM DA CARTA:', '').trim()
               }
             }
+
+            const targetObj = { name: lineText, qty, imageUrl }
+            if (currentSection === 'extra') extraRaw.push(targetObj)
+            else if (currentSection === 'side') sideRaw.push(targetObj)
+            else mainRaw.push(targetObj)
           }
         }
 
