@@ -995,6 +995,78 @@
   }
 }
 
+/* Selo de carta cujo status mudou nesta atualizacao da banlist. */
+.cdm-ban-new {
+  position: absolute;
+  z-index: 4;
+  bottom: 6px;
+  right: 6px;
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  background: #00c2ff;
+  color: #041018;
+  pointer-events: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.55);
+}
+
+/* ---- Painel "mudancas vs lista anterior" ---- */
+.cdm-ban-changes {
+  margin: 0.5rem 0;
+  font-size: 0.78rem;
+}
+.cdm-ban-changes summary {
+  cursor: pointer;
+  color: #f9d423;
+  font-weight: 700;
+  padding: 0.3rem 0;
+}
+.cdm-ban-changes-body {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  margin-top: 0.4rem;
+}
+.cdm-ban-change-group h4 {
+  font-size: 0.74rem;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.cdm-ban-change-group h4.forbidden {
+  color: #ff6b60;
+}
+.cdm-ban-change-group h4.limited {
+  color: #ffac5c;
+}
+.cdm-ban-change-group h4.semilimited {
+  color: #f9d423;
+}
+.cdm-ban-change-group h4.unlimited {
+  color: #7ce8a4;
+}
+.cdm-ban-change-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  max-height: 180px;
+  overflow-y: auto;
+}
+.cdm-ban-change-group li {
+  color: #ddd;
+  line-height: 1.35;
+}
+.cdm-ban-change-from {
+  color: #888;
+  font-size: 0.68rem;
+  margin-left: 0.35rem;
+}
+
 /* Selo no preview do deck: canto inferior esquerdo (o topo tem indice/qtd) */
 .cdm-card-preview .cdm-ban-badge {
   bottom: 6px;

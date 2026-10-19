@@ -122,6 +122,64 @@ export const nameKeys = (name) => {
   return keys
 }
 
+// Blob de busca de uma carta: nomes (todos os idiomas), efeitos (en/pt),
+// atributo, tipo, subcategoria, classificacoes, nivel, ATK/DEF e senha,
+// tudo normalizado — permite achar carta por qualquer texto digitado.
+export const buildSearchBlob = (card) => {
+  const parts = []
+  const text = card?.text || {}
+  for (const lang of Object.values(text)) {
+    if (lang?.name) parts.push(lang.name)
+  }
+  if (text.en?.effect) parts.push(text.en.effect)
+  if (text.pt?.effect) parts.push(text.pt.effect)
+  if (card?.name) parts.push(card.name)
+  parts.push(card?.attribute, card?.type, card?.cardType, card?.subcategory)
+  parts.push(
+    Array.isArray(card?.classifications)
+      ? card.classifications.join(' ')
+      : card?.classifications,
+  )
+  parts.push(card?.level, card?.atk, card?.def)
+  if (Array.isArray(card?.passwords)) for (const p of card.passwords) parts.push(p)
+  return normalizeText(parts.filter((p) => p !== undefined && p !== null && p !== '').join(' '))
+}
+
+// Blob em cache no proprio card (construido uma vez no carregamento ou de
+// forma lazily se o card nao passou pelo enrich).
+export const getSearchBlob = (card) => {
+  if (typeof card?._search !== 'string') card._search = buildSearchBlob(card)
+  return card._search
+}
+
+// Termos de uma consulta: normalizados e sem trechos vazios; a busca exige
+// TODOS os termos (E), em qualquer ordem.
+export const searchTerms = (query) => {
+  const n = normalizeText(query)
+  return n ? n.split(' ') : []
+}
+
+// Pontuacao da busca: 0 = nao casa; 1 = casa no efeito/atributo/etc;
+// 2 = casa em todos os termos tambem no nome (exibido antes). O valor fica
+// guardado em _searchScore para o chamador ordenar com sortBySearchScore.
+export const cardSearchScore = (card, terms) => {
+  let score = 1
+  if (terms.length) {
+    const blob = getSearchBlob(card)
+    score = 0
+    if (terms.every((t) => blob.includes(t))) {
+      const names = card._normalizedNames || ''
+      score = terms.every((t) => names.includes(t)) ? 2 : 1
+    }
+  }
+  card._searchScore = score
+  return score
+}
+
+// Ordena uma lista ja filtrada por cardSearchScore (nomes primeiro).
+export const sortBySearchScore = (list) =>
+  list.sort((a, b) => (b._searchScore || 0) - (a._searchScore || 0))
+
 export function useDebounce(value, delay) {
   const [debounced, setDebounced] = useState(value)
   useEffect(() => {

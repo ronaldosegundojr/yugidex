@@ -715,6 +715,9 @@
 .history-val.neg { color: #ff3333; font-weight: bold; }
 .history-result { color: #ffff00; font-weight: bold; }
 .history-time { color: #666; font-size: 0.7rem; }
+.history-event { border-left: 4px solid #ffff00; background: #161600; }
+.history-event-text { color: #ffe97a; flex: 1; }
+.history-actions { display: flex; justify-content: flex-end; margin-top: 0.8rem; }
 
 .settings-body { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 0.8rem; }
 .settings-lp-presets { display: flex; gap: 0.5rem; }

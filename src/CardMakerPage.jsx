@@ -22,8 +22,15 @@ import {
   NAME_COLOR_PRESETS,
 } from './cardMakerData'
 import { loadPrintings, printingsForCard, defaultPrinting, regionLabel } from './printingsData'
-import { getCardImage, normalizeText, nameKeys } from './cardUtils'
-import { BAN_LABELS, BAN_MAX_COPIES, BANLIST_EFFECTIVE, banStatusFor, banStatusForName } from './banlistData'
+import {
+  getCardImage,
+  normalizeText,
+  nameKeys,
+  searchTerms,
+  cardSearchScore,
+  sortBySearchScore,
+} from './cardUtils'
+import { BAN_LABELS, BAN_MAX_COPIES, BANLIST_EFFECTIVE, BANLIST_PREVIOUS_EFFECTIVE, BANLIST_CHANGES, BANLIST_CHANGES_TOTAL, banStatusFor, banStatusForName, banChangeFor, banChangeByName } from './banlistData'
 import { buildDeckPdf } from './deckPdf'
 import './CardMakerPage.css'
 
@@ -616,16 +623,15 @@ export default function CardMakerPage({ cards = [] }) {
 
   // Aplica busca + filtros (tipo e atributo) + ordenacao.
   const filteredDeckGroups = useMemo(() => {
-    const q = deckFilters.q.trim().toLowerCase()
+    const terms = searchTerms(deckFilters.q)
     const kinds = deckFilters.kinds
     const attr = deckFilters.attribute
     const tests = DECK_FILTER_CHIPS.filter((c) => kinds.includes(c.value))
     let list = deckGroups.filter((g) => {
       const s = g.state || {}
-      if (q) {
-        const name = String(s.name || '').toLowerCase()
-        const eff = String(s.effect || '').toLowerCase()
-        if (!name.includes(q) && !eff.includes(q)) return false
+      if (terms.length) {
+        const hay = normalizeText(`${s.name || ''} ${s.effect || ''}`)
+        if (!terms.every((t) => hay.includes(t))) return false
       }
       if (tests.length && !tests.some((c) => c.test(s))) return false
       if (attr !== 'all') {
@@ -1413,17 +1419,20 @@ export default function CardMakerPage({ cards = [] }) {
 
 
   const filteredDb = useMemo(() => {
-    const q = normalizeText(dbSearch)
+    const terms = searchTerms(dbSearch)
+    const hasSearch = terms.length > 0
     const tests = DB_FILTER_CHIPS.filter((c) => dbFilters.kinds.includes(c.value))
     const attr = dbFilters.attribute
     const ban = dbFilters.ban
-    return cards.filter((c) => {
-      if (q && !(c._normalizedNames || '').includes(q)) return false
+    const list = cards.filter((c) => {
+      if (hasSearch && !cardSearchScore(c, terms)) return false
       if (tests.length && !tests.some((t) => t.test(c))) return false
       if (attr !== 'all' && String(c.attribute || '').toLowerCase() !== attr) return false
       if (ban !== 'all' && banStatusFor(c) !== ban) return false
       return true
     })
+    if (hasSearch) sortBySearchScore(list)
+    return list
   }, [cards, dbSearch, dbFilters])
 
   const dbHasFilters = dbFilters.kinds.length > 0 || dbFilters.attribute !== 'all' || dbFilters.ban !== 'all'
@@ -2256,6 +2265,7 @@ export default function CardMakerPage({ cards = [] }) {
                   const ban = deckBan.get(normalizeText(g.state?.name || ''))
                   const banMax = ban ? BAN_MAX_COPIES[ban.status] : 0
                   const banOver = !!ban && ban.count > banMax
+                  const banChange = banChangeByName(g.state?.name || '')
                   return (
                     <div key={g.key} className="cdm-card">
                       <div className="cdm-card-preview">
@@ -2268,6 +2278,11 @@ export default function CardMakerPage({ cards = [] }) {
                             title={`${BAN_LABELS[ban.status]} na banlist TCG ${BANLIST_EFFECTIVE} — máximo ${banMax} cópia(s), ${ban.count} no deck`}
                           >
                             {BAN_LABELS[ban.status]} {ban.count}/{banMax}
+                          </span>
+                        )}
+                        {banChange && (
+                          <span className="cdm-ban-new" title={`Mudou nesta lista: era ${BAN_LABELS[banChange.from]}`}>
+                            NOVA
                           </span>
                         )}
                       </div>
@@ -2374,7 +2389,7 @@ export default function CardMakerPage({ cards = [] }) {
                 <input
                   type="text"
                   className="cdm-search"
-                  placeholder="Buscar carta no banco..."
+                  placeholder="Buscar no banco (nome, efeito, atributo...)..."
                   value={dbSearch}
                   onChange={(e) => {
                     setDbSearch(e.target.value)
@@ -2451,12 +2466,44 @@ export default function CardMakerPage({ cards = [] }) {
                   ))}
                 </div>
                 <p className="cdm-lib-info">{filteredDb.length} carta(s) • clique para editar</p>
+                <details className="cdm-ban-changes">
+                  <summary>
+                    📜 {BANLIST_CHANGES_TOTAL} mudança(s) vs lista anterior ({BANLIST_PREVIOUS_EFFECTIVE})
+                  </summary>
+                  <div className="cdm-ban-changes-body">
+                    {[
+                      ['toForbidden', 'forbidden', 'Novas proibidas'],
+                      ['toLimited', 'limited', 'Novas limitadas'],
+                      ['toSemilimited', 'semilimited', 'Novas semi-limitadas'],
+                      ['toUnlimited', 'unlimited', 'Saíram da lista']
+                    ].map(([key, status, label]) => {
+                      const list = BANLIST_CHANGES[key]
+                      if (!list.length) return null
+                      return (
+                        <div className="cdm-ban-change-group" key={key}>
+                          <h4 className={status}>
+                            {label} ({list.length})
+                          </h4>
+                          <ul>
+                            {list.map((c) => (
+                              <li key={c.name}>
+                                {c.name}
+                                <span className="cdm-ban-change-from">era {BAN_LABELS[c.from]}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </details>
                 <div className="cdm-lib-grid">
                   {dbPageCards.map((card) => {
                     const img = getCardImage(card)
                     const nm = card._ptName || card.text?.pt?.name || card.text?.en?.name || ''
                     const ban = banStatusFor(card)
                     const restricted = ban !== 'unlimited'
+                    const banChange = banChangeFor(card)
                     return (
                       <button
                         key={card.id}
@@ -2466,7 +2513,7 @@ export default function CardMakerPage({ cards = [] }) {
                         onDragStart={handleLibDragStart(card)}
                         onDragEnd={() => setDragOver(false)}
                         onClick={() => importDbCard(card)}
-                        title={`Editar: ${nm}${restricted ? ` • ${BAN_LABELS[ban]} (máx. ${BAN_MAX_COPIES[ban]})` : ''}`}
+                        title={`Editar: ${nm}${restricted ? ` • ${BAN_LABELS[ban]} (máx. ${BAN_MAX_COPIES[ban]})` : ''}${banChange ? ` • mudou nesta lista (era ${BAN_LABELS[banChange.from]})` : ''}`}
                       >
                         {img ? <img src={img} alt={nm} loading="lazy" /> : <div className="cdm-lib-noimg">{nm.slice(0, 12)}</div>}
                         {restricted && (
@@ -2475,6 +2522,11 @@ export default function CardMakerPage({ cards = [] }) {
                             title={`${BAN_LABELS[ban]} na banlist TCG ${BANLIST_EFFECTIVE} — máximo ${BAN_MAX_COPIES[ban]} cópia(s) no deck`}
                           >
                             {BAN_LABELS[ban]} · {BAN_MAX_COPIES[ban]}
+                          </span>
+                        )}
+                        {banChange && (
+                          <span className="cdm-ban-new" title={`Mudou nesta lista: era ${BAN_LABELS[banChange.from]}`}>
+                            NOVA
                           </span>
                         )}
                         <span>{nm}</span>

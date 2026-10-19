@@ -37,6 +37,8 @@ const TEMPLATES = [
   { id: 'rainbow-disc', name: 'Disco Rainbow LP (Duelo Clássico)', fontClass: 'style-rainbow', bgGradient: 'radial-gradient(circle at center, #2b2d42 0%, #11121e 100%)', color: '#ffffff' },
 ]
 
+const nowTime = () => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+
 function playSoundInstant(key) {
   playBattleSound(key)
 }
@@ -258,7 +260,27 @@ function DesignModal({ currentTemplate, setTemplate, onClose }) {
 }
 
 function HistoryModal({ history, onClose }) {
-  const hasPlayers = history.some(item => item.player)
+  // Junta LP + eventos avulsos (dado/moeda/reset) em ordem cronológica.
+  const items = [...history].sort((a, b) => (a.at || 0) - (b.at || 0))
+  const hasPlayers = items.some(item => item.player)
+
+  const downloadLog = () => {
+    const lines = items.map((item, idx) => {
+      const when = item.time || ''
+      if (item.kind === 'event') return `#${idx + 1} [${when}] ${item.text}`
+      const who = item.player ? `${item.player}: ` : ''
+      return `#${idx + 1} [${when}] ${who}${item.change > 0 ? '+' : ''}${item.change} LP -> ${item.resultLp}`
+    })
+    const content = ['Log do Duelo - YuGiDex', ''].concat(lines, ['', `Total de registros: ${items.length}`]).join('\n')
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `duelo-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')}.txt`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <div className="ygo-calc-overlay" onClick={onClose}>
       <div className="ygo-history-modal" onClick={e => e.stopPropagation()}>
@@ -267,26 +289,39 @@ function HistoryModal({ history, onClose }) {
           <button className="sound-panel-close" onClick={onClose}>&times;</button>
         </div>
         <div className="history-list">
-          {history.length === 0 ? (
+          {items.length === 0 ? (
             <p className="empty-history">Nenhuma alteração de LP registrada ainda.</p>
           ) : (
-            history.map((item, idx) => (
-              <div key={idx} className={`history-item ${item.player === 'Jogador 2' ? 'player-two' : item.player ? 'player-one' : ''}`}>
-                {hasPlayers && (
-                  <span className={`history-player ${item.player === 'Jogador 2' ? 'p2' : 'p1'}`}>
-                    {item.player === 'Jogador 2' ? 'P2' : 'P1'}
+            items.map((item, idx) => (
+              item.kind === 'event' ? (
+                <div key={idx} className="history-item history-event">
+                  <span className="history-index">#{idx + 1}</span>
+                  <span className="history-event-text">{item.text}</span>
+                  <span className="history-time">{item.time}</span>
+                </div>
+              ) : (
+                <div key={idx} className={`history-item ${item.player === 'Jogador 2' ? 'player-two' : item.player ? 'player-one' : ''}`}>
+                  {hasPlayers && (
+                    <span className={`history-player ${item.player === 'Jogador 2' ? 'p2' : 'p1'}`}>
+                      {item.player === 'Jogador 2' ? 'P2' : 'P1'}
+                    </span>
+                  )}
+                  <span className="history-index">#{idx + 1}</span>
+                  <span className={`history-val ${item.change > 0 ? 'pos' : 'neg'}`}>
+                    {item.change > 0 ? `+${item.change}` : item.change} LP
                   </span>
-                )}
-                <span className="history-index">#{idx + 1}</span>
-                <span className={`history-val ${item.change > 0 ? 'pos' : 'neg'}`}>
-                  {item.change > 0 ? `+${item.change}` : item.change} LP
-                </span>
-                <span className="history-result">Total: {item.resultLp}</span>
-                <span className="history-time">{item.time}</span>
-              </div>
+                  <span className="history-result">Total: {item.resultLp}</span>
+                  <span className="history-time">{item.time}</span>
+                </div>
+              )
             ))
           )}
         </div>
+        {items.length > 0 && (
+          <div className="history-actions">
+            <button className="btn" onClick={downloadLog}>BAIXAR LOG (.TXT)</button>
+          </div>
+        )}
       </div>
     </div>
   )
@@ -436,7 +471,7 @@ function YuGiOhCalculatorModal({ currentLp, setLp, triggerChange, onClose }) {
   )
 }
 
-function DiceCoinModal({ onClose }) {
+function DiceCoinModal({ onClose, onResult }) {
   const [activeTab, setActiveTab] = useState('dice')
   const [isRolling, setIsRolling] = useState(false)
   const [diceResult, setDiceResult] = useState(1)
@@ -460,7 +495,11 @@ function DiceCoinModal({ onClose }) {
     const target = rotations[finalVal]
     setDiceRotation({ x: target.x + extraSpins, y: target.y + extraSpins })
 
-    setTimeout(() => { setDiceResult(finalVal); setIsRolling(false); }, 1200)
+    setTimeout(() => {
+      setDiceResult(finalVal)
+      setIsRolling(false)
+      onResult?.({ kind: 'event', text: `🎲 Dado: ${finalVal}` })
+    }, 1200)
   }
 
   const flipCoin = (choice) => {
@@ -476,7 +515,12 @@ function DiceCoinModal({ onClose }) {
     const targetRot = isHeads ? extraFlips : extraFlips + 180
 
     setCoinRotation(targetRot)
-    setTimeout(() => { setCoinResult(res); setIsRolling(false); }, 1400)
+    setTimeout(() => {
+      setCoinResult(res)
+      setIsRolling(false)
+      const hit = choice === res ? ' (acertou)' : ' (errou)'
+      onResult?.({ kind: 'event', text: `🪙 Moeda: ${res.toUpperCase()}${hit}` })
+    }, 1400)
   }
 
   return (
@@ -597,6 +641,7 @@ function usePlayerState(initialLp, playerName = 'P1') {
       player: playerName,
       change: amount,
       resultLp: newLp,
+      at: Date.now(),
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
     }])
 
@@ -692,11 +737,17 @@ function SinglePlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn
   const [historyOpen, setHistoryOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [musicPlayerOpen, setMusicPlayerOpen] = useState(true)
+  const [log, setLog] = useState([])
+
+  const logEvent = useCallback((entry) => {
+    setLog(l => [...l, { at: Date.now(), time: nowTime(), ...entry }])
+  }, [])
 
   const handleReset = useCallback(() => {
     player.reset()
+    logEvent({ kind: 'event', text: '⟲ Pontos de vida reiniciados' })
     onResetBattle?.()
-  }, [player, onResetBattle])
+  }, [player, onResetBattle, logEvent])
 
   useWakeLock(keepScreenOn)
 
@@ -748,9 +799,9 @@ function SinglePlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn
       )}
 
       {soundOpen && <SoundPanel onClose={() => setSoundOpen(false)} />}
-      {diceCoinOpen && <DiceCoinModal onClose={() => setDiceCoinOpen(false)} />}
+      {diceCoinOpen && <DiceCoinModal onClose={() => setDiceCoinOpen(false)} onResult={logEvent} />}
       {designOpen && <DesignModal currentTemplate={currentTemplate} setTemplate={setTemplate} onClose={() => setDesignOpen(false)} />}
-      {historyOpen && <HistoryModal history={player.history} onClose={() => setHistoryOpen(false)} />}
+      {historyOpen && <HistoryModal history={[...player.history, ...log]} onClose={() => setHistoryOpen(false)} />}
       {settingsOpen && <SettingsModal lpInitial={lpInitial} setLpInitial={setLpInitial} player1={player} onClose={() => setSettingsOpen(false)} />}
     </div>
   )
@@ -766,22 +817,30 @@ function DuoPlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn, o
   const [historyOpen, setHistoryOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [musicPlayerOpen, setMusicPlayerOpen] = useState(true)
+  const [log, setLog] = useState([])
+
+  const logEvent = useCallback((entry) => {
+    setLog(l => [...l, { at: Date.now(), time: nowTime(), ...entry }])
+  }, [])
 
   const handleResetBattle = useCallback(() => {
     player1.reset()
     player2.reset()
+    logEvent({ kind: 'event', text: '⟲ Duelo reiniciado' })
     onResetBattle?.()
-  }, [player1, player2, onResetBattle])
+  }, [player1, player2, onResetBattle, logEvent])
 
   const handleResetPlayer1 = useCallback(() => {
     player1.reset()
+    logEvent({ kind: 'event', text: '⟲ LP do Jogador 1 reiniciados' })
     onResetBattle?.()
-  }, [player1, onResetBattle])
+  }, [player1, onResetBattle, logEvent])
 
   const handleResetPlayer2 = useCallback(() => {
     player2.reset()
+    logEvent({ kind: 'event', text: '⟲ LP do Jogador 2 reiniciados' })
     onResetBattle?.()
-  }, [player2, onResetBattle])
+  }, [player2, onResetBattle, logEvent])
 
   useWakeLock(keepScreenOn)
 
@@ -857,9 +916,9 @@ function DuoPlayerBattle({ onBack, currentTemplate, setTemplate, keepScreenOn, o
 
       {musicPlayerOpen && <SideAudioPlayer onClose={() => setMusicPlayerOpen(false)} />}
       {soundOpen && <SoundPanel onClose={() => setSoundOpen(false)} />}
-      {diceCoinOpen && <DiceCoinModal onClose={() => setDiceCoinOpen(false)} />}
+      {diceCoinOpen && <DiceCoinModal onClose={() => setDiceCoinOpen(false)} onResult={logEvent} />}
       {designOpen && <DesignModal currentTemplate={currentTemplate} setTemplate={setTemplate} onClose={() => setDesignOpen(false)} />}
-      {historyOpen && <HistoryModal history={[...player1.history, ...player2.history]} onClose={() => setHistoryOpen(false)} />}
+      {historyOpen && <HistoryModal history={[...player1.history, ...player2.history, ...log]} onClose={() => setHistoryOpen(false)} />}
       {settingsOpen && <SettingsModal lpInitial={lpInitial} setLpInitial={setLpInitial} player1={player1} player2={player2} onClose={() => setSettingsOpen(false)} />}
     </div>
   )

@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react'
-import { normalizeText, useDebounce } from '../cardUtils'
+import { searchTerms, cardSearchScore, sortBySearchScore, useDebounce } from '../cardUtils'
 
 const SEARCH_DEBOUNCE_MS = 200
 export const SEARCH_RESULT_LIMIT = 60
@@ -18,8 +18,9 @@ const matchesLevelFilter = (card, levelFilter) => {
 }
 
 /**
- * Same search behaviour as the /deck library panel: debounced term, shared
- * normalization (so "dragao" finds "Dragão") and the same filters.
+ * Search shared with the /deck library and /criar-card: debounced term,
+ * matches name + effect + any text (word-AND, names ranked first) and the
+ * same filters.
  */
 export function useCardSearch(cards, options = {}) {
   const {
@@ -45,20 +46,25 @@ export function useCardSearch(cards, options = {}) {
   const results = useMemo(() => {
     if (!cardsAvailable) return []
 
-    const normalizedSearch = normalizeText(debouncedSearchTerm)
-    const hasSearch = !!debouncedSearchTerm
+    const terms = searchTerms(debouncedSearchTerm)
+    const hasSearch = terms.length > 0
     const lowerAttr = attrFilter ? attrFilter.toLowerCase() : null
     const matches = []
 
     for (const card of cards) {
-      if (hasSearch && !card._normalizedNames?.includes(normalizedSearch)) continue
+      if (hasSearch && !cardSearchScore(card, terms)) continue
       if (typeFilter && card._cardType !== typeFilter) continue
       if (attrFilter && String(card.attribute || '').toLowerCase() !== lowerAttr) continue
       if (!matchesLevelFilter(card, levelFilter)) continue
       if (allowedTypes && !allowedTypes.includes(card._cardType)) continue
 
       matches.push(card)
-      if (limit > 0 && matches.length >= limit) break
+      if (!hasSearch && limit > 0 && matches.length >= limit) break
+    }
+
+    if (hasSearch) {
+      sortBySearchScore(matches)
+      if (limit > 0 && matches.length > limit) matches.length = limit
     }
 
     return matches
@@ -66,13 +72,13 @@ export function useCardSearch(cards, options = {}) {
 
   const totalMatches = useMemo(() => {
     if (!cardsAvailable) return 0
-    const normalizedSearch = normalizeText(debouncedSearchTerm)
-    const hasSearch = !!debouncedSearchTerm
+    const terms = searchTerms(debouncedSearchTerm)
+    const hasSearch = terms.length > 0
     const lowerAttr = attrFilter ? attrFilter.toLowerCase() : null
     let total = 0
 
     for (const card of cards) {
-      if (hasSearch && !card._normalizedNames?.includes(normalizedSearch)) continue
+      if (hasSearch && !cardSearchScore(card, terms)) continue
       if (typeFilter && card._cardType !== typeFilter) continue
       if (attrFilter && String(card.attribute || '').toLowerCase() !== lowerAttr) continue
       if (!matchesLevelFilter(card, levelFilter)) continue

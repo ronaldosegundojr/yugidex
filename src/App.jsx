@@ -6,6 +6,11 @@ import CardScanner from './CardScanner'
 import BattlePage from './BattlePage'
 import NoiteDaRapaziada from './NoiteDaRapaziada'
 import CardMakerPage from './CardMakerPage'
+import { buildSearchBlob, searchTerms, cardSearchScore, sortBySearchScore } from './cardUtils'
+import { BAN_LABELS, BAN_MAX_COPIES, BAN_SHORT_LABELS, BANLIST_EFFECTIVE, banStatusFor } from './banlistData'
+import { cardPasscode, fetchMarketInfo, formatUsd, formatEur } from './marketData'
+import { probAtLeastOne, drawHand, formatPercent } from './handOdds'
+import { encodeDeckCode, decodeDeckCode } from './deckShare'
 import './YGOCard.css'
 
 const ITEMS_PER_PAGE = 60
@@ -284,15 +289,80 @@ function ExportDeckModal({ open, options, onChange, preview, canExport, onExport
   )
 }
 
-const SimpleCard = ({ card, onClick }) => (
-  <div className="simple-card" onClick={() => onClick(card)}>
+// Simulador de mao inicial (5 cartas) do Main Deck: chances exatas por carta
+// (hipergeometrica) e sorteio visual de uma mao de exemplo.
+function HandSimulatorModal({ open, deckArray, onClose }) {
+  const [hand, setHand] = useState([])
+
+  const total = useMemo(() => deckArray.reduce((sum, c) => sum + c.qty, 0), [deckArray])
+  const odds = useMemo(() => {
+    if (!total) return []
+    return deckArray
+      .map((c) => ({ card: c, prob: probAtLeastOne(total, c.qty) }))
+      .sort((a, b) => b.prob - a.prob || b.card.qty - a.card.qty)
+  }, [deckArray, total])
+
+  const close = () => {
+    setHand([])
+    onClose()
+  }
+
+  return (
+    <div className={`modal ${open ? 'active' : ''}`} onClick={close}>
+      <div className="modal-content hand-sim" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close" onClick={close}>&times;</button>
+        <h3>Simulador de mão inicial</h3>
+        <p className="hand-sim-sub">
+          {total === 0
+            ? 'Adicione cartas ao Main Deck para simular.'
+            : `Main Deck: ${total} carta(s) — a mão inicial tem 5 cartas`}
+        </p>
+
+        {total > 0 && (
+          <>
+            <div className="hand-sim-actions">
+              <button type="button" className="btn btn-primary" onClick={() => setHand(drawHand(deckArray))}>
+                Sortear mão
+              </button>
+            </div>
+
+            {hand.length > 0 && (
+              <div className="hand-sim-hand">
+                {hand.map(({ card, qty }) => (
+                  <div key={card.id} className="hand-sim-card">
+                    <img src={card._image} alt={card._ptName} loading="lazy" />
+                    {qty > 1 && <span className="hand-sim-qty">x{qty}</span>}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <h4 className="hand-sim-title">Chance de abrir com pelo menos 1 cópia</h4>
+            <div className="hand-sim-list">
+              {odds.map(({ card, prob }) => (
+                <div key={card.id} className="hand-sim-row">
+                  <span className="hand-sim-bar" style={{ width: `${Math.max(2, prob * 100)}%` }} />
+                  <span className="hand-sim-name">{card._ptName}</span>
+                  <span className="hand-sim-copies">x{card.qty}</span>
+                  <span className="hand-sim-prob">{formatPercent(prob)}</span>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
+
+const SimpleCard = ({ card, onClick }) => (  <div className="simple-card" onClick={() => onClick(card)}>
     <img src={card._image} alt={card._ptName} loading="lazy" />
   </div>
 )
 
 const MemoSimpleCard = SimpleCard
 
-function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurrentPage, setModalCard, searchTerm, setSearchTerm, typeFilter, setTypeFilter, raceFilter, setRaceFilter, attrFilter, setAttrFilter, races, lang, setLang, onOpenScanner }) {
+function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurrentPage, setModalCard, searchTerm, setSearchTerm, typeFilter, setTypeFilter, raceFilter, setRaceFilter, attrFilter, setAttrFilter, banFilter, setBanFilter, races, lang, setLang, onOpenScanner }) {
   const [expandedTypes, setExpandedTypes] = useState({})
 
   const totalPages = Math.ceil(filteredCards.length / ITEMS_PER_PAGE)
@@ -313,7 +383,7 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
     setExpandedTypes(prev => ({ ...prev, [type]: !prev[type] }))
   }
 
-  const hasFilter = searchTerm || typeFilter || raceFilter || attrFilter
+  const hasFilter = searchTerm || typeFilter || raceFilter || attrFilter || banFilter
 
   return (
     <section className="view active">
@@ -322,7 +392,7 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
           <input 
             type="text" 
             className="search-input" 
-            placeholder="Buscar cartas (ex: dragao, blue eyes, dragão)..."
+            placeholder="Buscar por nome, efeito ou qualquer texto (ex: yubel, destruir)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -363,6 +433,18 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
             <option value="EARTH">Terra</option>
             <option value="WIND">Vento</option>
             <option value="DIVINE">Divino</option>
+          </select>
+          <select
+            className="filter-select"
+            value={banFilter}
+            onChange={(e) => setBanFilter(e.target.value)}
+            title={`Banlist TCG ${BANLIST_EFFECTIVE}`}
+          >
+            <option value="">Todas as listas ({BANLIST_EFFECTIVE})</option>
+            <option value="forbidden">Proibidas (0)</option>
+            <option value="limited">Limitadas (1)</option>
+            <option value="semilimited">Semi-limitadas (2)</option>
+            <option value="unlimited">Liberadas (3)</option>
           </select>
         </div>
       </div>
@@ -436,13 +518,17 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
   )
 }
 
-function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, deckIdSet, onOpenScanner }) {
+function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, deckTypeFilter, setDeckTypeFilter, deckLevelFilter, setDeckLevelFilter, setModalCard, savedDecks, setSavedDecks, lang, setLang, isMobile, deckIdSet, onOpenScanner, sharedDeckName = '' }) {
   const [activeId, setActiveId] = useState(null)
-  const [deckName, setDeckName] = useState('')
+  const [deckNameOverride, setDeckName] = useState('')
+  // Nome vindo de um link compartilhado (prop) quando o usuario ainda nao
+  // digitou um nome proprio.
+  const deckName = deckNameOverride || sharedDeckName || ''
   const [currentPage, setCurrentPage] = useState(1)
   const [exportModalOpen, setExportModalOpen] = useState(false)
+  const [simOpen, setSimOpen] = useState(false)
   const [exportOptions, setExportOptions] = useState(DEFAULT_EXPORT_OPTIONS)
-  const [libraryOptions, setLibraryOptions] = useState({ groupDuplicates: true, hideInDeck: false, compactGrid: false })
+  const [libraryOptions, setLibraryOptions] = useState({ groupDuplicates: true, hideInDeck: false, compactGrid: false, hideForbidden: false })
   const [mobileLibraryOpen, setMobileLibraryOpen] = useState(false)
   const fileInputRef = useRef(null)
 
@@ -454,8 +540,35 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
   const extraDeck = deck.filter(c => c.deckType === 'extra')
   const sideDeck = deck.filter(c => c.deckType === 'side')
 
+  // Checagem da banlist TCG: cartas restritas e violacoes de limite de copias
+  // (o limite vale para o deck inteiro, somando main/extra/side).
+  const deckBanInfo = useMemo(() => {
+    const cardById = new Map()
+    for (const c of cards) cardById.set(c.id, c)
+    const totals = new Map()
+    for (const entry of deck) {
+      const info = totals.get(entry.id) || { card: cardById.get(entry.id), copies: 0, status: 'unlimited' }
+      info.copies += entry.qty
+      info.status = banStatusFor(info.card)
+      totals.set(entry.id, info)
+    }
+    const issues = []
+    let restricted = 0
+    for (const info of totals.values()) {
+      if (info.status === 'unlimited') continue
+      restricted += info.copies
+      const max = BAN_MAX_COPIES[info.status]
+      if (info.copies > max) {
+        issues.push({ name: info.card?._ptName || '?', status: info.status, copies: info.copies, max })
+      }
+    }
+    return { restricted, issues }
+  }, [deck, cards])
+
   const DeckLibraryCard = ({ card, onAdd, onIncrement, onDecrement, isInDeck, qty, onClick }) => {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: card.id })
+    const banStatus = banStatusFor(card)
+    const banOver = banStatus !== 'unlimited' && qty > BAN_MAX_COPIES[banStatus]
     
     const style = transform ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` } : undefined
     
@@ -469,6 +582,14 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         onClick={() => onClick(card)}
       >
         <img src={card._image} alt={card._ptName} loading="lazy" />
+        {banStatus !== 'unlimited' && (
+          <span
+            className={`deck-card-ban ${banStatus}${banOver ? ' over' : ''}`}
+            title={`${BAN_LABELS[banStatus]} — banlist TCG ${BANLIST_EFFECTIVE} (máx ${BAN_MAX_COPIES[banStatus]} cópia(s))`}
+          >
+            {BAN_SHORT_LABELS[banStatus]}
+          </span>
+        )}
         <div className="deck-library-card-name">{card._ptName}</div>
         <div className="deck-library-controls">
           {isInDeck ? (
@@ -500,14 +621,15 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
 
   const filteredCards = useMemo(() => {
     if (!cards.length) return []
-    const normalizedSearch = normalizeText(deckSearchTerm)
-    const hasSearch = !!deckSearchTerm
+    const terms = searchTerms(deckSearchTerm)
+    const hasSearch = terms.length > 0
     const hasType = !!deckTypeFilter
     const hasLevel = !!deckLevelFilter
     
-    return cards.filter(card => {
-      if (hasSearch && !card._normalizedNames.includes(normalizedSearch)) return false
+    const list = cards.filter(card => {
+      if (hasSearch && !cardSearchScore(card, terms)) return false
       if (libraryOptions.hideInDeck && deckIdSet.has(card.id)) return false
+      if (libraryOptions.hideForbidden && banStatusFor(card) === 'forbidden') return false
       if (hasType) {
         const type = card._cardType
         if (deckTypeFilter !== type) return false
@@ -523,7 +645,9 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
       }
       return true
     })
-  }, [cards, deckSearchTerm, deckTypeFilter, deckLevelFilter, libraryOptions.hideInDeck, deckIdSet])
+    if (hasSearch) sortBySearchScore(list)
+    return list
+  }, [cards, deckSearchTerm, deckTypeFilter, deckLevelFilter, libraryOptions.hideInDeck, libraryOptions.hideForbidden, deckIdSet])
 
   const totalPages = Math.ceil(filteredCards.length / ITEMS_PER_PAGE)
   const paginatedCards = filteredCards.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
@@ -655,6 +779,9 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
     if (mainTotal > 60) violations.push(`Main Deck: ${mainTotal}/60`)
     if (extraTotal > 15) violations.push(`Extra Deck: ${extraTotal}/15`)
     if (sideTotal > 15) violations.push(`Side Deck: ${sideTotal}/15`)
+    for (const issue of deckBanInfo.issues) {
+      violations.push(`${issue.name}: ${BAN_LABELS[issue.status]} (${issue.copies}/${issue.max})`)
+    }
     if (violations.length > 0) {
       alert(`Deck não poderá ser utilizado em duelos, pois excede o valor permitido:\n\n${violations.join('\n')}\n\nO deck foi salvo mesmo assim, mas lembre-se de ajustá-lo antes de duelar.`)
     }
@@ -711,6 +838,79 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
     a.download = `${name}.json`
     a.click()
     URL.revokeObjectURL(url)
+  }
+
+  // Exporta no formato YDK (YGOPro/EDOPro): passcodes por secao, repetidos
+  // conforme a quantidade.
+  const exportDeckYdk = () => {
+    const isEmpty = mainDeck.length === 0 && extraDeck.length === 0 && sideDeck.length === 0
+    if (isEmpty) { alert('Adicione cartas ao deck!'); return }
+    let skipped = 0
+    const passcodesOf = (arr) => {
+      const out = []
+      for (const c of arr) {
+        const pass = cardPasscode(c)
+        if (!pass) { skipped += c.qty; continue }
+        for (let i = 0; i < c.qty; i++) out.push(pass)
+      }
+      return out
+    }
+    const main = passcodesOf(mainDeck)
+    const extra = passcodesOf(extraDeck)
+    const side = passcodesOf(sideDeck)
+    if (main.length + extra.length + side.length === 0) {
+      alert('Nenhuma carta do deck tem código oficial (passcode) para exportar em .ydk.')
+      return
+    }
+    const name = deckName.trim() || 'ygo-deck'
+    const content = [
+      '#created by yugidex',
+      '#main',
+      ...main,
+      '#extra',
+      ...extra,
+      '!side',
+      ...side,
+      ''
+    ].join('\n')
+    const blob = new Blob([content], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${name}.ydk`
+    a.click()
+    URL.revokeObjectURL(url)
+    if (skipped > 0) alert(`${skipped} carta(s) sem código oficial foram omitidas do .ydk.`)
+  }
+
+  // Gera um link com o deck embutido (passcodes em base64) e copia para a area
+  // de transferencia.
+  const shareDeck = async () => {
+    const isEmpty = mainDeck.length === 0 && extraDeck.length === 0 && sideDeck.length === 0
+    if (isEmpty) { alert('Adicione cartas ao deck!'); return }
+    let skipped = 0
+    const collect = (arr) => {
+      const out = []
+      for (const c of arr) {
+        const pass = cardPasscode(c)
+        if (!pass) { skipped += c.qty; continue }
+        for (let i = 0; i < c.qty; i++) out.push(String(pass))
+      }
+      return out
+    }
+    const code = encodeDeckCode({
+      main: collect(mainDeck),
+      extra: collect(extraDeck),
+      side: collect(sideDeck),
+    })
+    const url = `${window.location.origin}/deck#deck=${code}`
+    const note = skipped > 0 ? `\n\n(${skipped} carta(s) sem código oficial ficaram de fora do link.)` : ''
+    try {
+      await navigator.clipboard.writeText(url)
+      alert(`Link do deck copiado! Cole no WhatsApp/Discord para compartilhar.${note}`)
+    } catch {
+      prompt('Copie o link do deck:', url)
+    }
   }
 
   const getDetailedDeckStats = useCallback((deckArray) => {
@@ -861,7 +1061,8 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
     if (!file) return
     const isJson = file.name.toLowerCase().endsWith('.json')
     const isTxt = file.name.toLowerCase().endsWith('.txt')
-    if (!isJson && !isTxt) { alert('Apenas arquivos .json ou .txt são suportados!'); return }
+    const isYdk = file.name.toLowerCase().endsWith('.ydk')
+    if (!isJson && !isTxt && !isYdk) { alert('Apenas arquivos .json, .txt ou .ydk são suportados!'); return }
 
     if (!cards || cards.length === 0) {
       alert('As cartas ainda estão sendo carregadas! Por favor, aguarde alguns segundos e tente novamente.')
@@ -933,6 +1134,28 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
             mainRaw = parsed.main || parsed.main_deck || parsed.mainDeck || parsed.cards || []
             extraRaw = parsed.extra || parsed.extra_deck || parsed.extraDeck || []
             sideRaw = parsed.side || parsed.side_deck || parsed.sideDeck || []
+          }
+        } else if (isYdk) {
+          // Parse YDK (YGOPro/EDOPro): secoes #main/#extra/!side com passcodes
+          const lines = content.split(/\r?\n/)
+          let currentSection = 'main'
+
+          for (const line of lines) {
+            const trimmed = line.trim()
+            if (!trimmed) continue
+            const lower = trimmed.toLowerCase()
+
+            if (lower.startsWith('#main')) { currentSection = 'main'; continue }
+            if (lower.startsWith('#extra')) { currentSection = 'extra'; continue }
+            if (lower.startsWith('!side') || lower.startsWith('#side')) { currentSection = 'side'; continue }
+            if (trimmed.startsWith('#') || trimmed.startsWith('!')) continue
+
+            const match = trimmed.match(/^(\d{5,9})\b/)
+            if (!match) continue
+            const passcode = match[1]
+            if (currentSection === 'extra') extraRaw.push(passcode)
+            else if (currentSection === 'side') sideRaw.push(passcode)
+            else mainRaw.push(passcode)
           }
         } else {
           // Parse TXT format (exported format)
@@ -1006,7 +1229,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         }
 
         setDeck(newDeck)
-        setDeckName(importedDeckName || file.name.replace(/\.(json|txt)$/i, '') || 'Deck Importado')
+        setDeckName(importedDeckName || file.name.replace(/\.(json|txt|ydk)$/i, '') || 'Deck Importado')
 
         const mainQty = mainDeckCards.reduce((sum, c) => sum + c.qty, 0)
         const extraQty = extraDeckCards.reduce((sum, c) => sum + c.qty, 0)
@@ -1043,6 +1266,8 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
 
   const DeckCard = ({ card, qty, onClick, onRemove, dragId }) => {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: dragId })
+    const banStatus = banStatusFor(card)
+    const banOver = banStatus !== 'unlimited' && qty > BAN_MAX_COPIES[banStatus]
     const style = transform ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` } : undefined
     return (
       <div
@@ -1054,12 +1279,25 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
       >
         <div className="deck-card-image-wrapper" onClick={() => onClick(card)}>
           <img src={card._image} alt={card._ptName} loading="lazy" />
+          {banStatus !== 'unlimited' && (
+            <span
+              className={`deck-card-ban ${banStatus}${banOver ? ' over' : ''}`}
+              title={`${BAN_LABELS[banStatus]} — banlist TCG ${BANLIST_EFFECTIVE} (máx ${BAN_MAX_COPIES[banStatus]} cópia(s))`}
+            >
+              {BAN_SHORT_LABELS[banStatus]}
+            </span>
+          )}
           {qty > 1 && <span className="deck-card-qty">{qty}</span>}
           <div className="deck-card-tooltip">
             <div className="tooltip-name">{card._ptName}</div>
             <div className="tooltip-type">{card.cardType}</div>
             {card.atk !== undefined && <div className="tooltip-stat">ATK: {card.atk}</div>}
             {card.def !== undefined && <div className="tooltip-stat">DEF: {card.def}</div>}
+            {banStatus !== 'unlimited' && (
+              <div className="tooltip-stat ban">
+                {BAN_LABELS[banStatus]} (máx {BAN_MAX_COPIES[banStatus]})
+              </div>
+            )}
           </div>
         </div>
         <button className="deck-card-remove" onClick={(e) => { e.stopPropagation(); onRemove(card.id) }}>×</button>
@@ -1178,15 +1416,27 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
                 <li className={extraStats.total <= 15 ? 'rule-ok' : 'rule-error'}>Extra Deck: {extraStats.total}/15</li>
                 <li className={sideStats.total <= 15 ? 'rule-ok' : 'rule-error'}>Side Deck: {sideStats.total}/15</li>
                 <li>Cópias por carta: máx 3</li>
+                <li className={deckBanInfo.issues.length ? 'rule-error' : 'rule-ok'}>
+                  Banlist TCG ({BANLIST_EFFECTIVE}): {deckBanInfo.restricted} restrita(s)
+                  {deckBanInfo.issues.length ? ` — ${deckBanInfo.issues.length} acima do limite` : ' ✓'}
+                </li>
+                {deckBanInfo.issues.map(issue => (
+                  <li key={`ban-${issue.name}`} className="rule-error">
+                    {issue.name}: {BAN_LABELS[issue.status]} ({issue.copies}/{issue.max})
+                  </li>
+                ))}
               </ul>
             </div>
 
             <div className="deck-actions">
               <button className="btn btn-primary" onClick={saveDeck}>Salvar Deck</button>
               <button className="btn" onClick={() => setExportModalOpen(true)}>Exportar .txt</button>
+              <button className="btn" onClick={() => setSimOpen(true)}>Simulador de Mão</button>
               <button className="btn" onClick={exportDeckJson}>EXPORTAR DECK (JSON)</button>
-              <button className="btn" onClick={() => fileInputRef.current?.click()}>IMPORTAR DECK (JSON/TXT)</button>
-              <input type="file" ref={fileInputRef} onChange={importDeck} accept=".json,.txt" style={{ display: 'none' }} />
+              <button className="btn" onClick={exportDeckYdk}>EXPORTAR DECK (.YDK)</button>
+              <button className="btn" onClick={shareDeck}>COMPARTILHAR LINK</button>
+              <button className="btn" onClick={() => fileInputRef.current?.click()}>IMPORTAR DECK (JSON/TXT/YDK)</button>
+              <input type="file" ref={fileInputRef} onChange={importDeck} accept=".json,.txt,.ydk" style={{ display: 'none' }} />
               <button className="btn btn-danger" onClick={clearDeck}>Limpar</button>
             </div>
 
@@ -1218,7 +1468,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
               </div>
             </div>
             <div className="search-panel-filters">
-              <input type="text" className="search-input" placeholder="Buscar (ex: dragao, blue eyes)..." value={deckSearchTerm} onChange={(e) => { setDeckSearchTerm(e.target.value); setCurrentPage(1) }} />
+              <input type="text" className="search-input" placeholder="Buscar nome/efeito (ex: yubel, destroy)..." value={deckSearchTerm} onChange={(e) => { setDeckSearchTerm(e.target.value); setCurrentPage(1) }} />
               <select className="filter-select" value={deckTypeFilter} onChange={(e) => { setDeckTypeFilter(e.target.value); setCurrentPage(1) }}>
                 <option value="">Todos os Tipos</option>
                 <option value="monster">Monstro</option>
@@ -1249,6 +1499,14 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
                     onChange={(e) => { setLibraryOptions(prev => ({ ...prev, hideInDeck: e.target.checked })); setCurrentPage(1) }}
                   />
                   <span>Ocultar cartas já no deck</span>
+                </label>
+                <label className="library-option" title={`Oculta as cartas proibidas na banlist TCG ${BANLIST_EFFECTIVE}`}>
+                  <input
+                    type="checkbox"
+                    checked={libraryOptions.hideForbidden}
+                    onChange={(e) => { setLibraryOptions(prev => ({ ...prev, hideForbidden: e.target.checked })); setCurrentPage(1) }}
+                  />
+                  <span>Ocultar cartas proibidas</span>
                 </label>
                 <label className="library-option">
                   <input
@@ -1310,6 +1568,12 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         onExport={downloadDeckTxt}
         onClose={() => setExportModalOpen(false)}
       />
+
+      <HandSimulatorModal
+        open={simOpen}
+        deckArray={mainDeck}
+        onClose={() => setSimOpen(false)}
+      />
     </DndContext>
   )
 }
@@ -1322,13 +1586,16 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [deck, setDeck] = useState([])
+  const [sharedDeckName, setSharedDeckName] = useState('')
   const [savedDecks, setSavedDecks] = useState([])
   const [modalCard, setModalCard] = useState(null)
+  const [marketInfo, setMarketInfo] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [deckSearchTerm, setDeckSearchTerm] = useState('')
   const [typeFilter, setTypeFilter] = useState('')
   const [raceFilter, setRaceFilter] = useState('')
   const [attrFilter, setAttrFilter] = useState('')
+  const [banFilter, setBanFilter] = useState('')
   const [deckTypeFilter, setDeckTypeFilter] = useState('')
   const [deckLevelFilter, setDeckLevelFilter] = useState('')
   const [lang, setLang] = useState('pt')
@@ -1349,6 +1616,7 @@ function App() {
     const image = card.images?.[0]?.card || card.images?.[0]?.art || ''
     const allNames = Object.values(card.text || {}).map(t => t?.name || '').filter(Boolean).join(' ')
     const normalizedNames = normalizeText(allNames)
+    const searchBlob = buildSearchBlob(card)
     
     const cardType = getCardTypeRaw(card, enName)
     
@@ -1358,6 +1626,7 @@ function App() {
       _enNameLower: enName.toLowerCase(),
       _image: image,
       _normalizedNames: normalizedNames,
+      _search: searchBlob,
       _cardType: cardType
     }
   }
@@ -1376,6 +1645,44 @@ function App() {
     return card.cardType
   }
 
+  // Link compartilhado (#deck=<codigo>): monta o deck a partir dos passcodes.
+  const importSharedDeck = (loadedCards) => {
+    const params = new URLSearchParams(window.location.hash.replace(/^#/, ''))
+    const code = params.get('deck')
+    if (!code) return
+    const parsed = decodeDeckCode(code)
+    if (!parsed) return
+    const byPass = new Map()
+    const byId = new Map()
+    for (const card of loadedCards) {
+      byId.set(card.id, card)
+      for (const p of card.passwords || []) {
+        const key = String(p)
+        if (!byPass.has(key)) byPass.set(key, card)
+      }
+    }
+    const buildSection = (list, deckType) => {
+      const counts = new Map()
+      for (const p of list) {
+        const card = byPass.get(String(p))
+        if (card) counts.set(card.id, (counts.get(card.id) || 0) + 1)
+      }
+      return [...counts.entries()].map(([id, qty]) => ({ ...byId.get(id), qty, deckType }))
+    }
+    const shared = [
+      ...buildSection(parsed.main, 'main'),
+      ...buildSection(parsed.extra, 'extra'),
+      ...buildSection(parsed.side, 'side'),
+    ]
+    if (!shared.length) {
+      alert('O link do deck compartilhado não trouxe cartas conhecidas.')
+      return
+    }
+    setDeck(shared)
+    setSharedDeckName('Deck Compartilhado')
+    alert(`Deck compartilhado carregado: ${shared.reduce((sum, c) => sum + c.qty, 0)} carta(s).`)
+  }
+
   const loadCards = async () => {
     try {
       const response = await fetch('/json/cards.json')
@@ -1390,6 +1697,7 @@ function App() {
       enriched._byType = byType
       
       setCards(enriched)
+      importSharedDeck(enriched)
       
       const raceSet = new Set()
       for (const card of data) { if (card.type) raceSet.add(card.type) }
@@ -1408,6 +1716,17 @@ function App() {
 
   useEffect(() => { loadCards(); loadSavedDecks() }, [])
 
+  useEffect(() => {
+    if (!modalCard) return
+    const passcode = cardPasscode(modalCard)
+    if (!passcode) return
+    let alive = true
+    fetchMarketInfo(passcode)
+      .then((info) => { if (alive) setMarketInfo({ cardId: modalCard.id, ...info }) })
+      .catch(() => { if (alive) setMarketInfo({ cardId: modalCard.id, error: true }) })
+    return () => { alive = false }
+  }, [modalCard])
+
   const getAttributeName = (attr) => translateAttribute(attr)
 
   const getAttributeNamePT = getAttributeName
@@ -1419,11 +1738,12 @@ function App() {
   useEffect(() => {
     if (!cards.length) return
     
-    const normalizedSearch = normalizeText(debouncedSearchTerm)
-    const hasSearch = !!debouncedSearchTerm
+    const terms = searchTerms(debouncedSearchTerm)
+    const hasSearch = terms.length > 0
     const hasType = !!typeFilter
     const hasRace = !!raceFilter
     const hasAttr = !!attrFilter
+    const hasBan = !!banFilter
     
     const lowerAttr = attrFilter?.toLowerCase()
     
@@ -1431,10 +1751,11 @@ function App() {
     const flat = []
     
     for (const card of cards) {
-      if (hasSearch && !card._normalizedNames.includes(normalizedSearch)) continue
+      if (hasSearch && !cardSearchScore(card, terms)) continue
       if (hasType && card._cardType !== typeFilter) continue
       if (hasRace && card.type !== raceFilter) continue
       if (hasAttr && card.attribute?.toLowerCase() !== lowerAttr) continue
+      if (hasBan && banStatusFor(card) !== banFilter) continue
       
       const t = card._cardType
       if (result[t]) {
@@ -1443,10 +1764,14 @@ function App() {
       flat.push(card)
     }
     
+    if (hasSearch) {
+      sortBySearchScore(flat)
+      for (const key of Object.keys(result)) sortBySearchScore(result[key])
+    }
     setFilteredByType(result)
     setFilteredCards(flat)
     setCurrentPage(1)
-  }, [cards, debouncedSearchTerm, typeFilter, raceFilter, attrFilter])
+  }, [cards, debouncedSearchTerm, typeFilter, raceFilter, attrFilter, banFilter])
 
   const deckIdSet = useMemo(() => {
     const set = new Set()
@@ -1511,8 +1836,8 @@ function App() {
 
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<CardsView cards={cards} filteredCards={filteredCards} filteredByType={filteredByType} currentPage={currentPage} setCurrentPage={setCurrentPage} deck={deck} setModalCard={setModalCard} searchTerm={searchTerm} setSearchTerm={setSearchTerm} typeFilter={typeFilter} setTypeFilter={setTypeFilter} raceFilter={raceFilter} setRaceFilter={setRaceFilter} attrFilter={attrFilter} setAttrFilter={setAttrFilter} races={races} lang={lang} setLang={setLang} onOpenScanner={() => setScannerOpen(true)} />} />
-            <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} isMobile={isMobile} deckIdSet={deckIdSet} onOpenScanner={() => setScannerOpen(true)} />} />
+            <Route path="/" element={<CardsView cards={cards} filteredCards={filteredCards} filteredByType={filteredByType} currentPage={currentPage} setCurrentPage={setCurrentPage} deck={deck} setModalCard={setModalCard} searchTerm={searchTerm} setSearchTerm={setSearchTerm} typeFilter={typeFilter} setTypeFilter={setTypeFilter} raceFilter={raceFilter} setRaceFilter={setRaceFilter} attrFilter={attrFilter} setAttrFilter={setAttrFilter} banFilter={banFilter} setBanFilter={setBanFilter} races={races} lang={lang} setLang={setLang} onOpenScanner={() => setScannerOpen(true)} />} />
+            <Route path="/deck" element={<DeckPage cards={cards} deck={deck} setDeck={setDeck} deckSearchTerm={deckSearchTerm} setDeckSearchTerm={setDeckSearchTerm} deckTypeFilter={deckTypeFilter} setDeckTypeFilter={setDeckTypeFilter} deckLevelFilter={deckLevelFilter} setDeckLevelFilter={setDeckLevelFilter} setModalCard={setModalCard} savedDecks={savedDecks} setSavedDecks={setSavedDecks} lang={lang} setLang={setLang} isMobile={isMobile} deckIdSet={deckIdSet} onOpenScanner={() => setScannerOpen(true)} sharedDeckName={sharedDeckName} />} />
             <Route path="/batalha" element={<BattlePage cards={cards} />} />
             <Route path="/criar-card" element={<CardMakerPage cards={cards} />} />
             <Route path="/noite-da-rapaziada" element={<NoiteDaRapaziada />} />
@@ -1548,6 +1873,29 @@ function App() {
                     <h4>Efeito</h4>
                     <p>{modalCard.text?.pt?.effect || modalCard.text?.en?.effect || 'Sem efeito disponível'}</p>
                   </div>
+                  {(() => {
+                    if (!cardPasscode(modalCard)) return null
+                    const info = marketInfo && marketInfo.cardId === modalCard.id ? marketInfo : null
+                    return (
+                      <div className="card-market">
+                        <h4>Mercado (YGOPRODeck)</h4>
+                        {!info ? (
+                          <p className="market-loading">Consultando preço...</p>
+                        ) : info.error ? (
+                          <p className="market-error">Não foi possível obter o preço agora.</p>
+                        ) : (
+                          <div className="market-grid">
+                            <span>TCGPlayer</span>
+                            <strong>{formatUsd(info.priceTcg) || '—'}</strong>
+                            <span>Cardmarket</span>
+                            <strong>{formatEur(info.priceCardmarket) || '—'}</strong>
+                            <span>Lançamento TCG</span>
+                            <strong>{info.tcgDate || '—'}</strong>
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })()}
                   {(() => {
                     const cardInDeck = deck.find(c => c.id === modalCard.id)
                     const qty = cardInDeck?.qty || 0
