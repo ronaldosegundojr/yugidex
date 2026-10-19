@@ -107,6 +107,21 @@ export const normalizeText = (text) => {
     .join(' ')
 }
 
+// Remove trechos entre < > de um nome (ex.: "Maliss <Q> White Binder" ->
+// "Maliss White Binder"), usada para casar nomes com e sem esses trechos.
+export const stripAngleSegments = (s) => String(s || '').replace(/\s*<[A-Za-z0-9]+>\s*/g, ' ')
+
+// Chaves normalizadas de um nome de carta: o proprio nome e a variante sem os
+// trechos < >, para casar digitacoes/banlist com ou sem esses trechos.
+export const nameKeys = (name) => {
+  const keys = []
+  const direct = normalizeText(name)
+  if (direct) keys.push(direct)
+  const stripped = normalizeText(stripAngleSegments(name))
+  if (stripped && stripped !== direct) keys.push(stripped)
+  return keys
+}
+
 export function useDebounce(value, delay) {
   const [debounced, setDebounced] = useState(value)
   useEffect(() => {

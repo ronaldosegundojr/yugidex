@@ -19,9 +19,11 @@ import {
   dbCardCategory,
   editionLabel,
   isWhiteName,
+  NAME_COLOR_PRESETS,
 } from './cardMakerData'
 import { loadPrintings, printingsForCard, defaultPrinting, regionLabel } from './printingsData'
-import { getCardImage, normalizeText } from './cardUtils'
+import { getCardImage, normalizeText, nameKeys } from './cardUtils'
+import { BAN_LABELS, BAN_MAX_COPIES, BANLIST_EFFECTIVE, banStatusFor, banStatusForName } from './banlistData'
 import { buildDeckPdf } from './deckPdf'
 import './CardMakerPage.css'
 
@@ -334,7 +336,7 @@ export default function CardMakerPage({ cards = [] }) {
   const [libTab, setLibTab] = useState('db')
   const [dbSearch, setDbSearch] = useState('')
   const [dbPage, setDbPage] = useState(1)
-  const [dbFilters, setDbFilters] = useState({ kinds: [], attribute: 'all' })
+  const [dbFilters, setDbFilters] = useState({ kinds: [], attribute: 'all', ban: 'all' })
   // Sobe quando o catalogo de impressoes (sets) termina de carregar, para
   // recalcular as opcoes de impressao na tela.
   const [printingsReady, setPrintingsReady] = useState(false)
@@ -388,6 +390,61 @@ export default function CardMakerPage({ cards = [] }) {
       alive = false
     }
   }, [])
+
+  // Indice nome normalizado -> carta do banco, para casar o nome digitado no
+  // editor com a carta original e completar os dados de colecao.
+  const collectionNameIndex = useMemo(() => {
+    const idx = new Map()
+    for (const c of cards) {
+      const names = [c.text?.en?.name, c.text?.pt?.name, c._ptName]
+      for (const nm of names) {
+        if (!nm) continue
+        for (const key of nameKeys(nm)) {
+          if (!idx.has(key)) idx.set(key, c)
+        }
+      }
+    }
+    return idx
+  }, [cards])
+
+  // Preenchimento automatico de dados de colecao: quando o nome digitado casa
+  // com uma carta do banco e set/edicao estao vazios, completa serial, set,
+  // edicao, ano e o vinculo com a carta (dbCardId). Nunca sobrescreve valores
+  // ja preenchidos. Roda em duas fases: antes do catalogo de impressoes carregar
+  // preenche serial/vinculo; quando carrega (printingsReady), completa set,
+  // edicao e ano da impressao padrao. Patch vazio = para, sem loop.
+  useEffect(() => {
+    const name = String(state.name || '').trim()
+    if (!name || state.set || state.edition) return
+    let hit = null
+    for (const key of nameKeys(name)) {
+      hit = collectionNameIndex.get(key)
+      if (hit) break
+    }
+    if (!hit) return
+    const patch = {}
+    if (!state.serial) {
+      const pw = Array.isArray(hit.passwords) && hit.passwords.length ? String(hit.passwords[0]) : ''
+      if (pw) patch.serial = pw
+    }
+    if (!state.dbCardId && hit.id) patch.dbCardId = hit.id
+    if (printingsReady) {
+      const printing = defaultPrinting(hit.id)
+      if (printing) {
+        if (printing.code) patch.set = printing.code
+        if (printing.edition) patch.edition = editionLabel(printing.edition)
+        if (printing.year) {
+          const year = String(printing.year)
+          const cur = String(state.year || '')
+          const currentYear = String(new Date().getFullYear())
+          if (year !== cur && (!cur || cur === currentYear)) patch.year = year
+        }
+      }
+    }
+    if (!Object.keys(patch).length) return
+    setState((prev) => ({ ...prev, ...patch }))
+    if (patch.set) setToast(`Dados de coleção preenchidos: ${patch.set}`)
+  }, [state, collectionNameIndex, printingsReady])
 
   useEffect(() => {
     if (!toast) return
@@ -616,6 +673,56 @@ export default function CardMakerPage({ cards = [] }) {
     return acc
   }, [deckCards])
 
+  // Status de banlist por nome de carta no deck (chave normalizada), com a
+  // contagem de copias, para exibir os selos e avisar de excessos.
+  const deckBan = useMemo(() => {
+    const map = new Map()
+    deckCards.forEach((c) => {
+      const nm = String(c.state?.name || '').trim()
+      if (!nm) return
+      const status = banStatusForName(nm, collectionNameIndex)
+      if (status === 'unlimited') return
+      const key = normalizeText(nm)
+      const cur = map.get(key)
+      if (cur) cur.count += 1
+      else map.set(key, { status, count: 1 })
+    })
+    return map
+  }, [deckCards, collectionNameIndex])
+
+  // Total de copias restritas e quantas nomes estao acima do limite.
+  const deckBanSummary = useMemo(() => {
+    let copies = 0
+    let over = 0
+    deckBan.forEach((v) => {
+      copies += v.count
+      if (v.count > BAN_MAX_COPIES[v.status]) over += 1
+    })
+    return { copies, over }
+  }, [deckBan])
+
+  // Sufixo de aviso para toasts quando a carta/estado esta na banlist.
+  const banToastSuffix = (name) => {
+    const status = banStatusForName(name, collectionNameIndex)
+    if (status === 'unlimited') return ''
+    const max = BAN_MAX_COPIES[status]
+    return ` — ${BAN_LABELS[status]} na banlist TCG (${max} ${max === 1 ? 'cópia' : 'cópias'} permitida${max === 1 ? '' : 's'})`
+  }
+
+  // ---- Presets de cor do titulo ----
+  // Preset ativo: cor personalizada sempre que houver cor escolhida.
+  const activePreset = state.nameColor ? 'custom' : state.nameColorPreset || 'auto'
+  const applyNamePreset = (value) => {
+    if (value === 'custom') {
+      update({
+        nameColorPreset: 'custom',
+        nameColor: state.nameColor || (isWhiteName(state) ? '#ffffff' : '#000000'),
+      })
+    } else {
+      update({ nameColorPreset: value, nameColor: '' })
+    }
+  }
+
   const update = useCallback((patch) => {
     setState((s) => ({ ...s, ...patch }))
   }, [])
@@ -799,12 +906,12 @@ export default function CardMakerPage({ cards = [] }) {
 
   const addCurrentToDeck = () => {
     setDeckCards((prev) => [...prev, { id: newDeckCardId(), state: { ...state } }])
-    setToast('Carta adicionada ao deck')
+    setToast('Carta adicionada ao deck' + banToastSuffix(state.name))
   }
 
   const addSavedToDeck = (entry) => {
     setDeckCards((prev) => [...prev, { id: newDeckCardId(), state: { ...entry.state } }])
-    setToast(`${entry.name} adicionada ao deck`)
+    setToast(`${entry.name} adicionada ao deck` + banToastSuffix(entry.name))
   }
 
   const removeDeckCard = (id) => setDeckCards((prev) => prev.filter((c) => c.id !== id))
@@ -884,10 +991,11 @@ export default function CardMakerPage({ cards = [] }) {
 
   const importDbCard = (card) => {
     const p = defaultPrinting(card.id)
-    setState(stateFromDbCard(card, p))
+    const s = stateFromDbCard(card, p)
+    setState(s)
     setCurrentId(null)
     setMode('editor')
-    setToast('Carta importada para edição')
+    setToast('Carta importada para edição' + banToastSuffix(s.name))
   }
 
   // ---- Arrastar carta do banco para o criador ----
@@ -908,7 +1016,7 @@ export default function CardMakerPage({ cards = [] }) {
     const p = defaultPrinting(card.id)
     const s = stateFromDbCard(card, p)
     setDeckCards((prev) => [...prev, { id: newDeckCardId(), state: s }])
-    setToast(`${s.name || 'Carta'} adicionada ao deck`)
+    setToast(`${s.name || 'Carta'} adicionada ao deck` + banToastSuffix(s.name))
   }
 
   const handleCreatorDrop = (e) => {
@@ -981,6 +1089,7 @@ export default function CardMakerPage({ cards = [] }) {
       if (s.effect) details.push(`   EFEITO: ${s.effect}`)
       if (s.pendulumEffect) details.push(`   EFEITO DO PÊNDULO: ${s.pendulumEffect}`)
       if (s.nameColor) details.push(`   COR DO TÍTULO: ${s.nameColor}`)
+      if (s.nameColorPreset && s.nameColorPreset !== 'auto') details.push(`   PRESET DA COR: ${s.nameColorPreset}`)
       const art = escapeJsonArt(s)
       if (art) details.push(`   IMAGEM DA CARTA: ${art}`)
       if (s.set) details.push(`   SET: ${s.set}`)
@@ -1101,6 +1210,7 @@ export default function CardMakerPage({ cards = [] }) {
     if (s.effect) content += `   EFEITO: ${s.effect}\n`
     if (s.pendulumEffect) content += `   EFEITO DO PÊNDULO: ${s.pendulumEffect}\n`
     if (s.nameColor) content += `   COR DO TÍTULO: ${s.nameColor}\n`
+    if (s.nameColorPreset && s.nameColorPreset !== 'auto') content += `   PRESET DA COR: ${s.nameColorPreset}\n`
     const art = escapeJsonArt(s)
     if (art) content += `   IMAGEM DA CARTA: ${art}\n`
     else if (s.art && s.art.startsWith('data:')) content += `   IMAGEM DA CARTA: (imagem local - use o .json)\n`
@@ -1155,6 +1265,7 @@ export default function CardMakerPage({ cards = [] }) {
     'EFEITO': 'effect',
     'EFEITO DO PÊNDULO': 'pendulumEffect',
     'COR DO TÍTULO': 'nameColor',
+    'PRESET DA COR': 'nameColorPreset',
     'IMAGEM DA CARTA': 'art',
     'SET': 'set',
     'SERIAL': 'serial',
@@ -1305,21 +1416,23 @@ export default function CardMakerPage({ cards = [] }) {
     const q = normalizeText(dbSearch)
     const tests = DB_FILTER_CHIPS.filter((c) => dbFilters.kinds.includes(c.value))
     const attr = dbFilters.attribute
+    const ban = dbFilters.ban
     return cards.filter((c) => {
       if (q && !(c._normalizedNames || '').includes(q)) return false
       if (tests.length && !tests.some((t) => t.test(c))) return false
       if (attr !== 'all' && String(c.attribute || '').toLowerCase() !== attr) return false
+      if (ban !== 'all' && banStatusFor(c) !== ban) return false
       return true
     })
   }, [cards, dbSearch, dbFilters])
 
-  const dbHasFilters = dbFilters.kinds.length > 0 || dbFilters.attribute !== 'all'
+  const dbHasFilters = dbFilters.kinds.length > 0 || dbFilters.attribute !== 'all' || dbFilters.ban !== 'all'
   const toggleDbKind = (value) =>
     setDbFilters((f) => ({
       ...f,
       kinds: f.kinds.includes(value) ? f.kinds.filter((k) => k !== value) : [...f.kinds, value],
     }))
-  const clearDbFilters = () => setDbFilters({ kinds: [], attribute: 'all' })
+  const clearDbFilters = () => setDbFilters({ kinds: [], attribute: 'all', ban: 'all' })
 
   const dbTotalPages = Math.max(1, Math.ceil(filteredDb.length / DB_PER_PAGE))
   const dbPageCards = useMemo(
@@ -1574,40 +1687,34 @@ export default function CardMakerPage({ cards = [] }) {
 
             <div className="cm-field">
               <span>Cor do título</span>
-              <div className="cm-color-row">
-                <label className="cm-check">
-                  <input
-                    type="checkbox"
-                    checked={!state.nameColor}
-                    onChange={(e) =>
-                      update({
-                        nameColor: e.target.checked
-                          ? ''
-                          : isWhiteName(state)
-                            ? '#ffffff'
-                            : '#000000',
-                      })
+              <div className="cm-presets" role="group" aria-label="Preset de cor do título">
+                {NAME_COLOR_PRESETS.map((p) => (
+                  <button
+                    key={p.value}
+                    type="button"
+                    className={`cm-preset-chip ${p.foil ? `foil-${p.foil}` : ''} ${activePreset === p.value ? 'active' : ''}`}
+                    onClick={() => applyNamePreset(p.value)}
+                    title={
+                      p.value === 'auto'
+                        ? 'Preto/branco e folha seguindo a raridade da carta'
+                        : p.value === 'custom'
+                          ? 'Escolher uma cor livre para o título'
+                          : p.foil
+                            ? `Nome em folha ${p.foil === 'gold' ? 'dourada' : 'prateada'} (estilo ${p.label})`
+                            : `Nome preto/branco automático (estilo ${p.label})`
                     }
-                  />
-                  <span>Automática</span>
-                </label>
+                  >
+                    {p.label}
+                  </button>
+                ))}
                 <input
                   type="color"
                   className="cm-color-input"
                   value={state.nameColor || (isWhiteName(state) ? '#ffffff' : '#000000')}
-                  disabled={!state.nameColor}
-                  onChange={(e) => update({ nameColor: e.target.value })}
+                  disabled={activePreset !== 'custom'}
+                  onChange={(e) => update({ nameColorPreset: 'custom', nameColor: e.target.value })}
                   title="Escolher cor do título"
                 />
-                {state.nameColor && (
-                  <button
-                    type="button"
-                    className="cm-btn ghost small"
-                    onClick={() => update({ nameColor: '' })}
-                  >
-                    Resetar
-                  </button>
-                )}
               </div>
             </div>
 
@@ -1987,6 +2094,9 @@ export default function CardMakerPage({ cards = [] }) {
                   {deckCards.length} carta(s) • {deckBreakdown.monster} monstro(s) • {deckBreakdown.spell} magia(s) •{' '}
                   {deckBreakdown.trap} armadilha(s) • {Math.max(1, Math.ceil(deckCards.length / DECK_PER_PAGE))} folha(s) A4
                   {deckHasFilters ? ` • ${deckShownCount} exibida(s)` : ''}
+                  {deckBanSummary.copies
+                    ? ` • ${deckBanSummary.copies} restrita(s)${deckBanSummary.over ? ` (${deckBanSummary.over} acima do limite)` : ''}`
+                    : ''}
                 </span>
                 <span className="cdm-drag-hint">Arraste uma carta do banco para o deck</span>
               </div>
@@ -2142,51 +2252,64 @@ export default function CardMakerPage({ cards = [] }) {
                 className="cdm-grid"
                 style={{ gridTemplateColumns: `repeat(${deckCols}, minmax(0, 1fr))`, gap: `${deckGap}px` }}
               >
-                {filteredDeckGroups.map((g, idx) => (
-                  <div key={g.key} className="cdm-card">
-                    <div className="cdm-card-preview">
-                      <YugiohCardPreview state={g.state} width={deckCardWidth} />
-                      {deckView.showNumber && <span className="cdm-card-index">{idx + 1}</span>}
-                      {g.items.length > 1 && <span className="cdm-card-count">×{g.items.length}</span>}
-                    </div>
-                    {deckView.showName && <div className="cdm-card-name">{g.state.name || 'Sem nome'}</div>}
-                    {deckView.showActions && (
-                      <div className="cdm-card-actions">
-                        <button type="button" className="cm-btn ghost small" onClick={() => editDeckCard(g.items[0])}>
-                          Editar
-                        </button>
-                        {g.items.length > 1 ? (
-                          <>
-                            <button
-                              type="button"
-                              className="cm-btn ghost small danger"
-                              onClick={() => removeDeckCard(g.items[g.items.length - 1].id)}
-                              title="Remover 1 cópia"
-                            >
-                              −1
-                            </button>
-                            <button
-                              type="button"
-                              className="cm-btn ghost small danger"
-                              onClick={() => removeDeckCardIds(g.items.map((i) => i.id))}
-                              title="Remover todas as cópias"
-                            >
-                              Todas
-                            </button>
-                          </>
-                        ) : (
-                          <button
-                            type="button"
-                            className="cm-btn ghost small danger"
-                            onClick={() => removeDeckCard(g.items[0].id)}
+                {filteredDeckGroups.map((g, idx) => {
+                  const ban = deckBan.get(normalizeText(g.state?.name || ''))
+                  const banMax = ban ? BAN_MAX_COPIES[ban.status] : 0
+                  const banOver = !!ban && ban.count > banMax
+                  return (
+                    <div key={g.key} className="cdm-card">
+                      <div className="cdm-card-preview">
+                        <YugiohCardPreview state={g.state} width={deckCardWidth} />
+                        {deckView.showNumber && <span className="cdm-card-index">{idx + 1}</span>}
+                        {g.items.length > 1 && <span className="cdm-card-count">×{g.items.length}</span>}
+                        {ban && (
+                          <span
+                            className={`cdm-ban-badge ${ban.status}${banOver ? ' over' : ''}`}
+                            title={`${BAN_LABELS[ban.status]} na banlist TCG ${BANLIST_EFFECTIVE} — máximo ${banMax} cópia(s), ${ban.count} no deck`}
                           >
-                            Remover
-                          </button>
+                            {BAN_LABELS[ban.status]} {ban.count}/{banMax}
+                          </span>
                         )}
                       </div>
-                    )}
-                  </div>
-                ))}
+                      {deckView.showName && <div className="cdm-card-name">{g.state.name || 'Sem nome'}</div>}
+                      {deckView.showActions && (
+                        <div className="cdm-card-actions">
+                          <button type="button" className="cm-btn ghost small" onClick={() => editDeckCard(g.items[0])}>
+                            Editar
+                          </button>
+                          {g.items.length > 1 ? (
+                            <>
+                              <button
+                                type="button"
+                                className="cm-btn ghost small danger"
+                                onClick={() => removeDeckCard(g.items[g.items.length - 1].id)}
+                                title="Remover 1 cópia"
+                              >
+                                −1
+                              </button>
+                              <button
+                                type="button"
+                                className="cm-btn ghost small danger"
+                                onClick={() => removeDeckCardIds(g.items.map((i) => i.id))}
+                                title="Remover todas as cópias"
+                              >
+                                Todas
+                              </button>
+                            </>
+                          ) : (
+                            <button
+                              type="button"
+                              className="cm-btn ghost small danger"
+                              onClick={() => removeDeckCard(g.items[0].id)}
+                            >
+                              Remover
+                            </button>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
               </div>
             )}
 
@@ -2274,6 +2397,21 @@ export default function CardMakerPage({ cards = [] }) {
                       </option>
                     ))}
                   </select>
+                  <select
+                    className="cdm-filter-select"
+                    value={dbFilters.ban}
+                    onChange={(e) => {
+                      setDbFilters((f) => ({ ...f, ban: e.target.value }))
+                      setDbPage(1)
+                    }}
+                    title={`Banlist TCG vigente: ${BANLIST_EFFECTIVE}`}
+                  >
+                    <option value="all">Todas as listas</option>
+                    <option value="forbidden">Proibidas (0)</option>
+                    <option value="limited">Limitadas (1)</option>
+                    <option value="semilimited">Semi-limitadas (2)</option>
+                    <option value="unlimited">Liberadas (3)</option>
+                  </select>
                   {dbHasFilters && (
                     <button
                       type="button"
@@ -2317,6 +2455,8 @@ export default function CardMakerPage({ cards = [] }) {
                   {dbPageCards.map((card) => {
                     const img = getCardImage(card)
                     const nm = card._ptName || card.text?.pt?.name || card.text?.en?.name || ''
+                    const ban = banStatusFor(card)
+                    const restricted = ban !== 'unlimited'
                     return (
                       <button
                         key={card.id}
@@ -2326,9 +2466,17 @@ export default function CardMakerPage({ cards = [] }) {
                         onDragStart={handleLibDragStart(card)}
                         onDragEnd={() => setDragOver(false)}
                         onClick={() => importDbCard(card)}
-                        title={`Editar: ${nm}`}
+                        title={`Editar: ${nm}${restricted ? ` • ${BAN_LABELS[ban]} (máx. ${BAN_MAX_COPIES[ban]})` : ''}`}
                       >
                         {img ? <img src={img} alt={nm} loading="lazy" /> : <div className="cdm-lib-noimg">{nm.slice(0, 12)}</div>}
+                        {restricted && (
+                          <span
+                            className={`cdm-ban-badge ${ban}`}
+                            title={`${BAN_LABELS[ban]} na banlist TCG ${BANLIST_EFFECTIVE} — máximo ${BAN_MAX_COPIES[ban]} cópia(s) no deck`}
+                          >
+                            {BAN_LABELS[ban]} · {BAN_MAX_COPIES[ban]}
+                          </span>
+                        )}
                         <span>{nm}</span>
                       </button>
                     )

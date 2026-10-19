@@ -136,6 +136,21 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
   const trapSpell = L.isTrapSpell
   const scale = width / CARD_W
   const rarity = state.rarity || 'common'
+  // Preset de cor do titulo escolhido no editor (ausente = 'auto', que
+  // mantem o comportamento antigo de seguir a raridade da carta).
+  const namePreset = state.nameColorPreset || 'auto'
+  // Presets pretos: preto/branco automatico (sem folha nenhuma no nome).
+  const blackNamePreset = namePreset === 'common' || namePreset === 'normal' || namePreset === 'rare'
+  // Classe de folha do nome: preset tem prioridade sobre a raridade; presets
+  // pretos forçam nome liso; 'auto'/'custom' caem na raridade como antes.
+  const nameRarityClass = namePreset === 'super'
+      ? 'silver'
+      : namePreset === 'ultra' || namePreset === 'secret'
+        ? 'gold'
+        : blackNamePreset
+          ? ''
+          : rarity
+  const foilNameClass = nameRarityClass === 'gold' || nameRarityClass === 'silver' ? nameRarityClass : ''
 
   const stars = L.showLevel ? Math.max(0, Math.min(12, Number(state.level) || 0)) : 0
   const linkCount = countLinkArrows(state.linkArrows)
@@ -144,9 +159,9 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
   const autoFit = state.autoFit !== false
   // Acabamento metalizado/holografico (foil)
   const holographic = state.holographic === true
-  // Nome vira foil quando a carta e holografica e a raridade nao define uma
-  // folha propria (ouro/prata). Com ouro/prata a raridade ja cuida do nome.
-  const holoName = holographic && rarity !== 'gold' && rarity !== 'silver'
+  // Nome vira foil quando a carta e holografica e o nome nao esta coberto por
+  // uma folha propria (raridade/preset ouro/prata) nem num preset preto.
+  const holoName = holographic && !foilNameClass && !blackNamePreset
 
   return (
     <div
@@ -202,7 +217,7 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
             text={state.name || 'Nome da Carta'}
             baseSize={Number(state.nameSize || 65)}
             box={L.name}
-            className={`ycm-name ${rarity} ${whiteName && !state.nameColor ? 'white' : ''} ${holoName ? 'holo' : ''}`}
+            className={`ycm-name ${nameRarityClass} ${whiteName && !state.nameColor && !foilNameClass ? 'white' : ''} ${holoName ? 'holo' : ''}`}
             style={{
               ...absStyle(L.name, 4),
               // Cor personalizada do titulo tem prioridade sobre o branco/preto

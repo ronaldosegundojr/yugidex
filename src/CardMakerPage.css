@@ -243,12 +243,42 @@
   accent-color: var(--gold);
 }
 
-/* ---- Cor do titulo ---- */
-.cm-color-row {
+/* ---- Cor do titulo: presets no estilo das raridades YGO ---- */
+.cm-presets {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
   flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.cm-preset-chip {
+  padding: 0.26rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(229, 191, 53, 0.35);
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.cm-preset-chip:hover {
+  border-color: var(--gold);
+  color: var(--text-light);
+}
+.cm-preset-chip.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #1a1408;
+  font-weight: 700;
+}
+/* Amostra da folha no proprio rotulo (fora do preset ativo) */
+.cm-preset-chip.foil-silver:not(.active) {
+  color: #e8e8e8;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+}
+.cm-preset-chip.foil-gold:not(.active) {
+  color: #f5d010;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
 }
 .cm-color-input {
   width: 44px;
@@ -928,6 +958,62 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   min-height: 1.15em;
+}
+
+/* ---- Selo de banlist (proibida/limitada/semi-limitada) ---- */
+.cdm-ban-badge {
+  position: absolute;
+  z-index: 3;
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.55);
+}
+.cdm-ban-badge.forbidden {
+  background: #b3261e;
+  color: #fff;
+}
+.cdm-ban-badge.limited {
+  background: #e8710a;
+  color: #fff;
+}
+.cdm-ban-badge.semilimited {
+  background: #f9d423;
+  color: #1a1408;
+}
+.cdm-ban-badge.over {
+  outline: 2px solid #ff5252;
+  animation: cdm-ban-pulse 1.2s ease-in-out infinite;
+}
+@keyframes cdm-ban-pulse {
+  50% {
+    outline-color: rgba(255, 82, 82, 0.15);
+  }
+}
+
+/* Selo no preview do deck: canto inferior esquerdo (o topo tem indice/qtd) */
+.cdm-card-preview .cdm-ban-badge {
+  bottom: 6px;
+  left: 6px;
+}
+
+/* Selo no card do banco: canto superior direito, sobre a imagem */
+.cdm-lib-card {
+  position: relative;
+}
+.cdm-lib-card .cdm-ban-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: auto;
+  min-height: 0;
+  overflow: visible;
+  text-overflow: clip;
+  text-align: left;
 }
 .cdm-saved-card {
   display: flex;

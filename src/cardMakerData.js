@@ -81,6 +81,21 @@ export const RARITIES = [
   { value: 'gold', label: 'Ouro (foil)' },
 ]
 
+// Presets de cor do titulo (nome) no estilo das raridades YGO:
+// Comum/Normal/Rara = preto/branco automatico; Super Rara = folha prata;
+// Ultra/Secret Rara = folha ouro; Personalizada = cor livre; Automática =
+// segue a raridade/holografico da carta (comportamento antigo).
+export const NAME_COLOR_PRESETS = [
+  { value: 'auto', label: 'Automática' },
+  { value: 'common', label: 'Comum' },
+  { value: 'normal', label: 'Normal' },
+  { value: 'rare', label: 'Rara' },
+  { value: 'super', label: 'Super Rara', foil: 'silver' },
+  { value: 'ultra', label: 'Ultra Rara', foil: 'gold' },
+  { value: 'secret', label: 'Secret Rara', foil: 'gold' },
+  { value: 'custom', label: 'Personalizada' },
+]
+
 export const LEVELS = Array.from({ length: 13 }, (_, i) => i)
 
 // ---- Setas de Link (link-0 .. link-7) ----
@@ -254,6 +269,10 @@ export function defaultCardState() {
     // Cor personalizada do titulo (nome). Vazio = automatica (preto/branco
     // conforme o tipo da carta).
     nameColor: '',
+    // Preset de cor do titulo ('auto' | 'common' | 'normal' | 'rare' |
+    // 'super' | 'ultra' | 'secret' | 'custom'). nameColor preenche quando o
+    // preset e 'custom' e continua tendo prioridade absoluta no preview.
+    nameColorPreset: 'auto',
     typeSize: 26,
     atkDefSize: 36,
     // ---- Formatacao do texto do efeito ----
