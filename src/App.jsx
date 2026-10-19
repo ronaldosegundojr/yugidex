@@ -602,16 +602,183 @@ function HandSimulatorModal({ open, deckArray, onClose, lang = 'pt' }) {
 
 const SimpleCard = ({ card, onClick }) => (
   <div className="simple-card" onClick={() => onClick(card)}>
+    <div className="deck-card-badges">
+      {card._rarity && (
+        <span className={`deck-card-rarity rarity-${card._rarity}`} title={`Raridade Master Duel: ${card._rarity.toUpperCase()}`}>
+          {card._rarity.toUpperCase()}
+        </span>
+      )}
+    </div>
     <img src={card._image} alt={card._ptName} loading="lazy" />
-    {card._rarity && (
-      <span className={`deck-card-rarity rarity-${card._rarity}`} title={`Raridade Master Duel: ${card._rarity.toUpperCase()}`}>
-        {card._rarity.toUpperCase()}
-      </span>
-    )}
   </div>
 )
 
 const MemoSimpleCard = SimpleCard
+
+// ---- Filtros em dropdown (Raridade / Banlist / Opcoes) para a biblioteca ----
+const RARITY_OPTS = [
+  { key: 'n', code: 'N', label: 'Normal' },
+  { key: 'r', code: 'R', label: 'Rara' },
+  { key: 'sr', code: 'SR', label: 'Super Rara' },
+  { key: 'ur', code: 'UR', label: 'Ultra Rara' },
+]
+
+const BAN_OPTS = [
+  { key: 'unlimited', short: '3', label: 'Ilimitada', tip: 'Ilimitada (Liberada): até 3 cópias da mesma carta no deck.' },
+  { key: 'limited', short: '1', label: 'Limitada', tip: 'Limitada: no máximo 1 cópia da mesma carta no deck.' },
+  { key: 'semilimited', short: '2', label: 'Semi', tip: 'Semi-limitada: pode ter até 2 cópias da mesma carta no deck.' },
+  { key: 'forbidden', short: '0', label: 'Proibida', tip: 'Proibida (banida): não pode ter nenhuma cópia no deck.' },
+]
+const ALL_BAN_KEYS = BAN_OPTS.map((o) => o.key)
+
+function useOutsideClose(open, setOpen) {
+  const ref = useRef(null)
+  useEffect(() => {
+    if (!open) return undefined
+    const onDoc = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false)
+    }
+    document.addEventListener('mousedown', onDoc)
+    return () => document.removeEventListener('mousedown', onDoc)
+  }, [open, setOpen])
+  return ref
+}
+
+function RarityDropdown({ value, onChange }) {
+  const [open, setOpen] = useState(false)
+  const ref = useOutsideClose(open, setOpen)
+  const current = RARITY_OPTS.find((o) => o.key === value)
+  return (
+    <div className="lib-dropdown" ref={ref}>
+      <button
+        type="button"
+        className={`lib-dropdown-btn${current ? ' has-value' : ''}`}
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        title="Filtrar por raridade"
+      >
+        <span className="lib-dropdown-lead">
+          {current ? (
+            <span className={`md-rarity-badge ${current.key}`}>{current.code}</span>
+          ) : (
+            <span className="md-rarity-icon ur">UR</span>
+          )}
+          <span>{current ? current.label : 'Raridade'}</span>
+        </span>
+        <span className="lib-dropdown-caret">▾</span>
+      </button>
+      {open && (
+        <div className="lib-dropdown-menu">
+          <button
+            type="button"
+            className={`lib-dropdown-option${!current ? ' active' : ''}`}
+            onClick={() => { onChange(''); setOpen(false) }}
+          >
+            Todas as raridades
+          </button>
+          {RARITY_OPTS.map((opt) => (
+            <button
+              key={opt.key}
+              type="button"
+              className={`lib-dropdown-option${value === opt.key ? ' active' : ''}`}
+              onClick={() => { onChange(value === opt.key ? '' : opt.key); setOpen(false) }}
+            >
+              <span className={`md-rarity-badge ${opt.key}`}>{opt.code}</span>
+              <span>{opt.label}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function BanDropdown({ value, onChange }) {
+  const [open, setOpen] = useState(false)
+  const ref = useOutsideClose(open, setOpen)
+  const selected = ALL_BAN_KEYS.filter((k) => value.includes(k))
+  const allOn = selected.length === ALL_BAN_KEYS.length
+  const toggle = (key) => {
+    const next = selected.includes(key)
+      ? selected.filter((k) => k !== key)
+      : ALL_BAN_KEYS.filter((k) => selected.includes(k) || k === key)
+    onChange(next)
+  }
+  return (
+    <div className="lib-dropdown" ref={ref}>
+      <button
+        type="button"
+        className={`lib-dropdown-btn${allOn ? '' : ' has-value'}`}
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        title="Filtrar por status da banlist"
+      >
+        <span className="lib-dropdown-lead">
+          <span className="md-ban-icon">!</span>
+          <span>{allOn ? 'Banlist' : `Banlist (${selected.length})`}</span>
+        </span>
+        <span className="lib-dropdown-caret">▾</span>
+      </button>
+      {open && (
+        <div className="lib-dropdown-menu">
+          {BAN_OPTS.map((opt) => (
+            <label key={opt.key} className="lib-dropdown-check" title={opt.tip}>
+              <span className={`md-ban-badge ${opt.key}`}>{opt.short}</span>
+              <span>{opt.label}</span>
+              <input type="checkbox" checked={value.includes(opt.key)} onChange={() => toggle(opt.key)} />
+            </label>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function LibraryOptionsDropdown({ options, setOptions, onChange }) {
+  const [open, setOpen] = useState(false)
+  const ref = useOutsideClose(open, setOpen)
+  const items = [
+    { key: 'groupDuplicates', label: 'Agrupar cartas repetidas' },
+    { key: 'hideInDeck', label: 'Ocultar cartas já no deck', reset: true },
+    { key: 'hideForbidden', label: 'Ocultar cartas proibidas', reset: true, title: `Oculta as cartas proibidas na banlist TCG ${BANLIST_EFFECTIVE}` },
+    { key: 'compactGrid', label: 'Modo compacto (mais cartas)' },
+  ]
+  const activeCount = items.filter((i) => options[i.key]).length
+  return (
+    <div className="lib-dropdown" ref={ref}>
+      <button
+        type="button"
+        className={`lib-dropdown-btn${activeCount ? ' has-value' : ''}`}
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        title="Opções da biblioteca"
+      >
+        <span className="lib-dropdown-lead">
+          <span className="lib-dropdown-caret">⚙</span>
+          <span>Opções{activeCount ? ` (${activeCount})` : ''}</span>
+        </span>
+        <span className="lib-dropdown-caret">▾</span>
+      </button>
+      {open && (
+        <div className="lib-dropdown-menu">
+          {items.map((item) => (
+            <label key={item.key} className="lib-dropdown-check" title={item.title}>
+              <span>{item.label}</span>
+              <input
+                type="checkbox"
+                checked={!!options[item.key]}
+                onChange={(e) => {
+                  setOptions((prev) => ({ ...prev, [item.key]: e.target.checked }))
+                  if (item.reset && onChange) onChange()
+                }}
+              />
+            </label>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurrentPage, setModalCard, searchTerm, setSearchTerm, typeFilter, setTypeFilter, raceFilter, setRaceFilter, attrFilter, setAttrFilter, banFilter, setBanFilter, races, lang, setLang, onOpenScanner }) {
   const [expandedTypes, setExpandedTypes] = useState({})
@@ -832,20 +999,24 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         {...attributes}
         onClick={() => onClick(card)}
       >
-        <img src={card._image} alt={card._ptName} loading="lazy" />
-        {banStatus !== 'unlimited' && (
-          <span
-            className={`deck-card-ban ${banStatus}${banOver ? ' over' : ''}`}
-            title={`${BAN_LABELS[banStatus]} — banlist TCG ${BANLIST_EFFECTIVE} (máx ${BAN_MAX_COPIES[banStatus]} cópia(s))`}
-          >
-            {BAN_SHORT_LABELS[banStatus]}
-          </span>
-        )}
-        {card._rarity && (
-          <span className={`deck-card-rarity rarity-${card._rarity}`} title={`Raridade Master Duel: ${card._rarity.toUpperCase()}`}>
-            {card._rarity.toUpperCase()}
-          </span>
-        )}
+        <div className="deck-card-thumb">
+          <div className="deck-card-badges">
+            {card._rarity && (
+              <span className={`deck-card-rarity rarity-${card._rarity}`} title={`Raridade Master Duel: ${card._rarity.toUpperCase()}`}>
+                {card._rarity.toUpperCase()}
+              </span>
+            )}
+            {banStatus !== 'unlimited' && (
+              <span
+                className={`deck-card-ban ${banStatus}${banOver ? ' over' : ''}`}
+                title={`${BAN_LABELS[banStatus]} — banlist TCG ${BANLIST_EFFECTIVE} (máx ${BAN_MAX_COPIES[banStatus]} cópia(s))`}
+              >
+                {BAN_SHORT_LABELS[banStatus]}
+              </span>
+            )}
+          </div>
+          <img src={card._image} alt={card._ptName} loading="lazy" />
+        </div>
         <div className="deck-library-card-name">{card._ptName}</div>
         <div className="deck-library-controls">
           {isInDeck ? (
@@ -882,13 +1053,13 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
     const hasType = !!deckTypeFilter
     const hasLevel = !!deckLevelFilter
     const hasRarity = !!deckRarityFilter
-    const hasBan = !!deckBanFilter
+    const hasBan = deckBanFilter.length > 0
     
     const list = cards.filter(card => {
       if (hasSearch && !cardSearchScore(card, terms)) return false
       if (libraryOptions.hideInDeck && deckIdSet.has(card.id)) return false
       if (libraryOptions.hideForbidden && banStatusFor(card) === 'forbidden') return false
-      if (hasBan && banStatusFor(card) !== deckBanFilter) return false
+      if (hasBan && !deckBanFilter.includes(banStatusFor(card))) return false
       if (hasType) {
         const type = card._cardType
         if (deckTypeFilter !== type) return false
@@ -1573,8 +1744,12 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         {...listeners}
         {...attributes}
       >
-        <div className="deck-card-image-wrapper" onClick={(e) => { e.stopPropagation(); onClick(card) }}>
-          <img src={card._image} alt={card._ptName} loading="lazy" />
+        <div className="deck-card-badges">
+          {card._rarity && (
+            <span className={`deck-card-rarity rarity-${card._rarity}`} title={`Raridade Master Duel: ${card._rarity.toUpperCase()}`}>
+              {card._rarity.toUpperCase()}
+            </span>
+          )}
           {banStatus !== 'unlimited' && (
             <span
               className={`deck-card-ban ${banStatus}${banOver ? ' over' : ''}`}
@@ -1583,11 +1758,9 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
               {BAN_SHORT_LABELS[banStatus]}
             </span>
           )}
-          {card._rarity && (
-            <span className={`deck-card-rarity rarity-${card._rarity}`} title={`Raridade Master Duel: ${card._rarity.toUpperCase()}`}>
-              {card._rarity.toUpperCase()}
-            </span>
-          )}
+        </div>
+        <div className="deck-card-image-wrapper" onClick={(e) => { e.stopPropagation(); onClick(card) }}>
+          <img src={card._image} alt={card._ptName} loading="lazy" />
           {qty > 1 && <span className="deck-card-qty">{qty}</span>}
           <div className="deck-card-tooltip">
             <div className="tooltip-name">{card._ptName}</div>
@@ -1796,111 +1969,15 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
                 <option value="trap">Armadilhas</option>
               </select>
 
-              {/* Filtro de Raridade Master Duel */}
-              <div className="md-rarity-filter-bar">
-                <div className="md-rarity-label-group">
-                  <span className="md-rarity-icon ur">UR</span>
-                  <span className="md-rarity-title">Raridade</span>
-                </div>
-                <div className="md-rarity-buttons" role="group" aria-label="Filtro de Raridade">
-                  <button
-                    type="button"
-                    className={`md-rarity-btn rarity-n ${deckRarityFilter === 'n' ? 'active' : ''}`}
-                    onClick={() => { setDeckRarityFilter(deckRarityFilter === 'n' ? '' : 'n'); setCurrentPage(1) }}
-                    title="Normal (N)"
-                  >
-                    <span className="md-rarity-badge n">N</span>
-                    <span className="md-rarity-btn-text">Normal</span>
-                  </button>
-                  <button
-                    type="button"
-                    className={`md-rarity-btn rarity-r ${deckRarityFilter === 'r' ? 'active' : ''}`}
-                    onClick={() => { setDeckRarityFilter(deckRarityFilter === 'r' ? '' : 'r'); setCurrentPage(1) }}
-                    title="Rara (R)"
-                  >
-                    <span className="md-rarity-badge r">R</span>
-                    <span className="md-rarity-btn-text">Rara</span>
-                  </button>
-                  <button
-                    type="button"
-                    className={`md-rarity-btn rarity-sr ${deckRarityFilter === 'sr' ? 'active' : ''}`}
-                    onClick={() => { setDeckRarityFilter(deckRarityFilter === 'sr' ? '' : 'sr'); setCurrentPage(1) }}
-                    title="Super Rara (SR)"
-                  >
-                    <span className="md-rarity-badge sr">SR</span>
-                    <span className="md-rarity-btn-text">Super Rara</span>
-                  </button>
-                  <button
-                    type="button"
-                    className={`md-rarity-btn rarity-ur ${deckRarityFilter === 'ur' ? 'active' : ''}`}
-                    onClick={() => { setDeckRarityFilter(deckRarityFilter === 'ur' ? '' : 'ur'); setCurrentPage(1) }}
-                    title="Ultra Rara (UR)"
-                  >
-                    <span className="md-rarity-badge ur">UR</span>
-                    <span className="md-rarity-btn-text">Ultra Rara</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* Filtro de Banlist (Ilimitada/Limitada/Semi-limitada/Proibida) */}
-              <div className="md-ban-filter-bar">
-                <div className="md-rarity-label-group">
-                  <span className="md-ban-icon">!</span>
-                  <span className="md-rarity-title">Banlist</span>
-                </div>
-                <div className="md-rarity-buttons" role="group" aria-label="Filtro de Banlist">
-                  {[
-                    { key: 'unlimited', short: '3', label: 'Ilimitada', tip: 'Ilimitada (Liberada): pode ter até 3 cópias da mesma carta no deck.' },
-                    { key: 'limited', short: '1', label: 'Limitada', tip: 'Limitada: no máximo 1 cópia da mesma carta no deck. Pode ter várias cartas limitadas diferentes, só não podem ser a mesma.' },
-                    { key: 'semilimited', short: '2', label: 'Semi', tip: 'Semi-limitada: pode ter até 2 cópias da mesma carta no deck.' },
-                    { key: 'forbidden', short: '0', label: 'Proibida', tip: 'Proibida (banida): não pode ter nenhuma cópia no deck (0 cópias).' }
-                  ].map(opt => (
-                    <button
-                      key={opt.key}
-                      type="button"
-                      className={`md-ban-btn ban-${opt.key} ${deckBanFilter === opt.key ? 'active' : ''}`}
-                      onClick={() => { setDeckBanFilter(deckBanFilter === opt.key ? '' : opt.key); setCurrentPage(1) }}
-                      title={opt.tip}
-                    >
-                      <span className={`md-ban-badge ${opt.key}`}>{opt.short}</span>
-                      <span className="md-rarity-btn-text">{opt.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="library-options">
-                <label className="library-option">
-                  <input
-                    type="checkbox"
-                    checked={libraryOptions.groupDuplicates}
-                    onChange={(e) => setLibraryOptions(prev => ({ ...prev, groupDuplicates: e.target.checked }))}
-                  />
-                  <span>Agrupar cartas repetidas</span>
-                </label>
-                <label className="library-option">
-                  <input
-                    type="checkbox"
-                    checked={libraryOptions.hideInDeck}
-                    onChange={(e) => { setLibraryOptions(prev => ({ ...prev, hideInDeck: e.target.checked })); setCurrentPage(1) }}
-                  />
-                  <span>Ocultar cartas já no deck</span>
-                </label>
-                <label className="library-option" title={`Oculta as cartas proibidas na banlist TCG ${BANLIST_EFFECTIVE}`}>
-                  <input
-                    type="checkbox"
-                    checked={libraryOptions.hideForbidden}
-                    onChange={(e) => { setLibraryOptions(prev => ({ ...prev, hideForbidden: e.target.checked })); setCurrentPage(1) }}
-                  />
-                  <span>Ocultar cartas proibidas</span>
-                </label>
-                <label className="library-option">
-                  <input
-                    type="checkbox"
-                    checked={libraryOptions.compactGrid}
-                    onChange={(e) => setLibraryOptions(prev => ({ ...prev, compactGrid: e.target.checked }))}
-                  />
-                  <span>Modo compacto (mais cartas)</span>
-                </label>
+              {/* Filtros em dropdown: Raridade, Banlist e Opções */}
+              <div className="lib-filter-dropdowns">
+                <RarityDropdown value={deckRarityFilter} onChange={(v) => { setDeckRarityFilter(v); setCurrentPage(1) }} />
+                <BanDropdown value={deckBanFilter} onChange={(v) => { setDeckBanFilter(v); setCurrentPage(1) }} />
+                <LibraryOptionsDropdown
+                  options={libraryOptions}
+                  setOptions={setLibraryOptions}
+                  onChange={() => setCurrentPage(1)}
+                />
               </div>
             </div>
             <div className="search-results-count">{filteredCards.length} cartas encontradas</div>
@@ -1985,7 +2062,7 @@ function App() {
   const [deckTypeFilter, setDeckTypeFilter] = useState('')
   const [deckLevelFilter, setDeckLevelFilter] = useState('')
   const [deckRarityFilter, setDeckRarityFilter] = useState('')
-  const [deckBanFilter, setDeckBanFilter] = useState('')
+  const [deckBanFilter, setDeckBanFilter] = useState(ALL_BAN_KEYS)
   const [lang, setLang] = useState('pt')
   const [isMobile, setIsMobile] = useState(false)
   const [scannerOpen, setScannerOpen] = useState(false)

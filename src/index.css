@@ -2247,15 +2247,10 @@ body::before {
 .library-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
 .library-grid.compact { grid-template-columns: repeat(6, 1fr); gap: 0.35rem; }
 .library-grid.compact .deck-library-card-name { font-size: 0.62rem; padding: 0.15rem; }
-.library-options { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 0.75rem; padding: 0.5rem 0.6rem; background: rgba(0, 0, 0, 0.25); border: 1px solid var(--gold-dark); border-radius: 8px; }
-.library-option { display: flex; align-items: center; gap: 0.45rem; color: #ddd; font-size: 0.78rem; cursor: pointer; line-height: 1.2; }
-.library-option:hover { color: #fff; }
-.library-option input[type='checkbox'] { width: 15px; height: 15px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0; }
 
 @media (max-width: 768px) {
   .library-grid { grid-template-columns: repeat(3, 1fr); gap: 0.4rem; }
   .library-grid.compact { grid-template-columns: repeat(4, 1fr); gap: 0.3rem; }
-  .library-options { grid-template-columns: 1fr; }
 }
 .deck-library-card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
 .deck-library-card-name { padding: 0.25rem; font-size: 0.75rem; color: var(--gold); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -2264,8 +2259,8 @@ body::before {
 .deck-library-btn.add:hover { background: #3ce680; }
 .deck-library-btn.remove { background: var(--red-glow); color: white; }
 
-.deck-card-item { position: relative; width: 70px; height: 100px; }
-.deck-card-image-wrapper { position: relative; width: 100%; height: 100%; cursor: pointer; overflow: hidden; border-radius: 4px; }
+.deck-card-item { position: relative; width: 70px; }
+.deck-card-image-wrapper { position: relative; width: 100%; height: 100px; cursor: pointer; overflow: hidden; border-radius: 4px; }
 .deck-card-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 .deck-card-qty { position: absolute; bottom: 2px; right: 2px; background: var(--gold); color: var(--egypt-dark); font-size: 0.7rem; font-weight: bold; padding: 1px 4px; border-radius: 3px; }
 
@@ -2334,6 +2329,127 @@ body::before {
 }
 .deck-card-rarity.rarity-ur {
   background: linear-gradient(135deg, #b02cf5 0%, #6850f8 45%, #30d5fc 100%);
+}
+
+/* ---- Selos (raridade/banlist) ACIMA da carta, sem cobrir o simbolo ---- */
+.deck-card-thumb {
+  position: relative;
+  width: 100%;
+}
+.deck-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 0.15rem 0.1rem;
+}
+.deck-card-badges:empty {
+  display: none;
+}
+.deck-card-badges .deck-card-rarity,
+.deck-card-badges .deck-card-ban {
+  position: static;
+  top: auto;
+  right: auto;
+  left: auto;
+  bottom: auto;
+  border-radius: 4px;
+}
+.deck-card-item .deck-card-badges {
+  width: 70px;
+}
+
+/* ---- Filtros em dropdown (biblioteca do /deck) ---- */
+.lib-filter-dropdowns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+.lib-dropdown {
+  position: relative;
+}
+.lib-dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.34rem 0.6rem;
+  background: var(--card-bg, #14110c);
+  border: 1px solid var(--gold-dark, #6b5a1e);
+  border-radius: 6px;
+  color: var(--text, #ddd);
+  font-size: 0.74rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.lib-dropdown-btn:hover {
+  border-color: var(--gold, #d4af37);
+  color: #fff;
+}
+.lib-dropdown-btn.has-value {
+  border-color: var(--gold, #d4af37);
+  color: var(--gold, #d4af37);
+}
+.lib-dropdown-lead {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+.lib-dropdown-caret {
+  font-size: 0.6rem;
+  opacity: 0.85;
+}
+.lib-dropdown-menu {
+  position: absolute;
+  z-index: 60;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 200px;
+  max-height: 280px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.3rem;
+  background: var(--egypt-dark, #14110c);
+  border: 1px solid var(--gold, #d4af37);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+.lib-dropdown-option,
+.lib-dropdown-check {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0.32rem 0.45rem;
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  color: var(--text, #ddd);
+  font-size: 0.76rem;
+  text-align: left;
+  cursor: pointer;
+}
+.lib-dropdown-option:hover,
+.lib-dropdown-check:hover {
+  background: rgba(212, 175, 55, 0.12);
+  color: #fff;
+}
+.lib-dropdown-option.active {
+  background: rgba(212, 175, 55, 0.2);
+  color: var(--gold, #d4af37);
+  font-weight: 700;
+}
+.lib-dropdown-check input[type='checkbox'] {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--gold, #d4af37);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
 /* ---- Master Duel: Barra e Botoes de Raridade (MD oficial) ---- */

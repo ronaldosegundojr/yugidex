@@ -725,28 +725,100 @@
   gap: 0.45rem;
   margin-bottom: 0.55rem;
 }
-.cdm-md-filters .md-rarity-filter-bar,
-.cdm-md-filters .md-ban-filter-bar {
-  margin: 0;
-  padding: 0.35rem 0.5rem;
-  justify-content: flex-start;
-  gap: 0.45rem;
+
+/* ---- Filtros em dropdown (Raridade / Banlist) ---- */
+.cdm-md-filters-dropdown {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
 }
-.cdm-md-filters .md-rarity-buttons {
+.cdm-dropdown {
+  position: relative;
+}
+.cdm-dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.32rem 0.6rem;
+  background: var(--yblack);
+  border: 1px solid var(--gold-dark);
+  border-radius: 6px;
+  color: var(--text-light);
+  font-size: 0.74rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.cdm-dropdown-btn:hover {
+  border-color: var(--gold);
+  color: #fff;
+}
+.cdm-dropdown-btn.has-value {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.cdm-dropdown-lead {
+  display: inline-flex;
+  align-items: center;
   gap: 0.35rem;
 }
-.cdm-md-filters .md-rarity-btn,
-.cdm-md-filters .md-ban-btn {
-  padding: 0.28rem 0.55rem;
+.cdm-dropdown-label {
+  white-space: nowrap;
 }
-/* Na coluna estreita da biblioteca mostra apenas os selos (N/R/SR/UR e
-  3/1/2/0), com o texto completo no tooltip. */
-.cdm-library .cdm-md-filters .md-rarity-btn-text {
-  display: none;
+.cdm-dropdown-caret {
+  font-size: 0.6rem;
+  opacity: 0.8;
 }
-.cdm-library .cdm-md-filters .md-rarity-filter-bar,
-.cdm-library .cdm-md-filters .md-ban-filter-bar {
-  padding: 0.3rem 0.4rem;
+.cdm-dropdown-menu {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 190px;
+  max-height: 260px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.3rem;
+  background: var(--yblack-light, #14110c);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+.cdm-dropdown-option,
+.cdm-dropdown-check {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0.32rem 0.45rem;
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  color: var(--text-light);
+  font-size: 0.76rem;
+  text-align: left;
+  cursor: pointer;
+}
+.cdm-dropdown-option:hover,
+.cdm-dropdown-check:hover {
+  background: rgba(212, 175, 55, 0.12);
+  color: #fff;
+}
+.cdm-dropdown-option.active {
+  background: rgba(212, 175, 55, 0.2);
+  color: var(--gold);
+  font-weight: 700;
+}
+.cdm-dropdown-check input[type='checkbox'] {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--gold);
+  cursor: pointer;
+  flex-shrink: 0;
+  order: 3;
+  margin-left: auto;
 }
 .cdm-view-all-row {
   display: flex;
@@ -801,6 +873,19 @@
   justify-content: center;
   width: 100%;
   line-height: 0;
+}
+/* Selos (raridade/banlist) exibidos ACIMA da carta no deck criado. */
+.cdm-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  width: 100%;
+  min-height: 0;
+}
+.cdm-card-badges:empty {
+  display: none;
 }
 .cdm-card-count,
 .cdm-card-index {
@@ -1131,25 +1216,41 @@
   margin-left: 0.35rem;
 }
 
-/* Selo no preview do deck: canto inferior esquerdo (o topo tem indice/qtd) */
-.cdm-card-preview .cdm-ban-badge {
-  bottom: 6px;
-  left: 6px;
+/* Selo no preview do deck: exibido no strip acima (.cdm-card-badges). */
+.cdm-card-badges .cdm-ban-badge {
+  position: static;
+  bottom: auto;
+  left: auto;
 }
 
-/* Selo no card do banco: canto superior direito, sobre a imagem */
+/* Selo no card do banco: agora exibido ACIMA da imagem (nao cobre mais a
+   imagem nem o simbolo do tipo da carta). */
 .cdm-lib-card {
   position: relative;
 }
-.cdm-lib-card .cdm-ban-badge {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  width: auto;
+.cdm-lib-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  width: 100%;
   min-height: 0;
+}
+.cdm-lib-badges:empty {
+  display: none;
+}
+.cdm-lib-badges .cdm-ban-badge,
+.cdm-lib-badges .cdm-ban-new {
+  position: static;
+  top: auto;
+  right: auto;
+  left: auto;
+  bottom: auto;
+  width: auto;
   overflow: visible;
   text-overflow: clip;
-  text-align: left;
+  text-align: center;
 }
 .cdm-saved-card {
   display: flex;
