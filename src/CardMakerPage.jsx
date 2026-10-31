@@ -669,6 +669,16 @@ export default function CardMakerPage({ cards = [] }) {
       if (pw) patch.serial = pw
     }
     if (!state.dbCardId && hit.id) patch.dbCardId = hit.id
+    // Cartas Link: copia o ATK da carta existente quando o campo ainda esta
+    // vazio (a carta do banco sempre traz o ATK da Link original).
+    if (
+      state.type === 'link' &&
+      !String(state.atk ?? '').trim() &&
+      hit.atk !== undefined &&
+      hit.atk !== null
+    ) {
+      patch.atk = String(hit.atk)
+    }
     if (printingsReady) {
       const printing = defaultPrinting(hit.id)
       if (printing) {
@@ -2197,7 +2207,7 @@ export default function CardMakerPage({ cards = [] }) {
                 </select>
               </label>
 
-              {state.type !== 'link' && (
+              {state.type !== 'link' ? (
                 <div className="cm-row">
                   <label className="cm-field">
                     <span>ATK</span>
@@ -2208,6 +2218,11 @@ export default function CardMakerPage({ cards = [] }) {
                     <input type="text" inputMode="numeric" maxLength={3005} value={state.def} onChange={(e) => update({ def: e.target.value })} placeholder="0" />
                   </label>
                 </div>
+              ) : (
+                <label className="cm-field">
+                  <span>ATK</span>
+                  <input type="text" inputMode="numeric" maxLength={3005} value={state.atk} onChange={(e) => update({ atk: e.target.value })} placeholder="0" />
+                </label>
               )}
 
               {state.type === 'link' && (

@@ -239,6 +239,29 @@ export const starFile = (state) => {
 export const countLinkArrows = (arrows) =>
   LINK_ARROWS.reduce((sum, a) => sum + (arrows?.[a.id] ? 1 : 0), 0)
 
+// Setas de Link do banco (YGOJSON) usam nomes diferentes dos IDs do editor.
+// Converte a lista do banco para o formato { [id]: true } usado na carta.
+const DB_LINK_ARROW_IDS = {
+  topleft: 0,
+  topcenter: 1,
+  topright: 2,
+  middleleft: 3,
+  middleright: 4,
+  bottomleft: 5,
+  bottomcenter: 6,
+  bottomright: 7,
+}
+
+export function linkArrowsFromDb(arrows) {
+  const out = {}
+  if (!Array.isArray(arrows)) return out
+  for (const arrow of arrows) {
+    const id = DB_LINK_ARROW_IDS[String(arrow).toLowerCase()]
+    if (id !== undefined) out[id] = true
+  }
+  return out
+}
+
 // Tipos em que o nome/footer ficam em branco
 export const isWhiteName = (state) =>
   state.type === 'xyz' ||
@@ -377,6 +400,9 @@ export function stateFromDbCard(card, printing = null) {
     atk,
     def,
     level,
+    // Cartas Link do banco trazem as setas em `linkArrows`; converte para o
+    // formato do editor para que o Link Rating apareca corretamente.
+    linkArrows: type === 'link' ? linkArrowsFromDb(card.linkArrows) : base.linkArrows,
     spellTrapIcon,
     art,
     serial,

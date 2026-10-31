@@ -335,6 +335,12 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
         {!trapSpell &&
           (L.isLink ? (
             <>
+              <div className="ycm-atkdef label" style={absStyle(L.atkLabel, 3)}>
+                ATK/
+              </div>
+              <div className="ycm-atkdef value right" style={absStyle(L.atk, 3)}>
+                {state.atk}
+              </div>
               <img className="ycm-layer" style={absStyle(L.linkLabel, 3)} src={frame('other/LINK Label.png')} alt="" />
               <div className="ycm-atkdef ycm-linknum" style={absStyle(L.linkNumber, 5)}>
                 {linkCount}
