@@ -130,6 +130,57 @@ export const TIPO_PADRAO = {
   link: 'Dragon / Link',
 }
 
+// ---- Traducao dos tipos de monstro (racas) do banco ----
+// Valores presentes em cards.json (campo `type`). A chave e normalizada sem
+// espacos, hifens ou underscores, entao "Winged Beast" e "wingedbeast" casam.
+export const MONSTER_RACES_PT = {
+  warrior: 'Guerreiro',
+  machine: 'Máquina',
+  fiend: 'Demônio',
+  dragon: 'Dragão',
+  spellcaster: 'Mago',
+  fairy: 'Fada',
+  beast: 'Fera',
+  wingedbeast: 'Besta Alada',
+  cyberse: 'Ciberso',
+  aqua: 'Aqua',
+  rock: 'Rocha',
+  insect: 'Inseto',
+  beastwarrior: 'Guerreiro-Besta',
+  zombie: 'Zumbi',
+  plant: 'Planta',
+  psychic: 'Psíquico',
+  reptile: 'Réptil',
+  pyro: 'Piro',
+  fish: 'Peixe',
+  dinosaur: 'Dinossauro',
+  thunder: 'Trovão',
+  seaserpent: 'Serpente Marinha',
+  wyrm: 'Wyrm',
+  illusion: 'Ilusão',
+  divinebeast: 'Besta Divina',
+  creatorgod: 'Deus Criador',
+}
+
+// Classificacoes que aparecem junto da raca (campo `classifications`).
+export const MONSTER_CLASSIFICATIONS_PT = {
+  normal: 'Normal',
+  effect: 'Efeito',
+  tuner: 'Regulador',
+  pendulum: 'Pêndulo',
+  ritual: 'Ritual',
+  fusion: 'Fusão',
+  synchro: 'Synchro',
+  'darksynchro': 'Dark Synchro',
+  xyz: 'Xyz',
+  link: 'Link',
+  flip: 'Flip',
+  gemini: 'Gêmeos',
+  spirit: 'Espírito',
+  toon: 'Toon',
+  union: 'União',
+}
+
 // ---- Layout (mesmas coordenadas do cardmaker.net) ----
 // Cada campo devolve { x, y, w, h } em pixels do canvas 694x1013.
 export function computeLayout(state) {
@@ -327,6 +378,37 @@ export function defaultCardState() {
 // estado do criador, para poder editar nome/estrelas/texto e salvar como nova.
 const cap = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : '')
 
+const monsterTypeKey = (value) =>
+  String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[\s_-]+/g, '')
+
+// Traduz uma raca do banco (ex.: "fiend" -> "Demônio"). Valores desconhecidos
+// mantem o texto original capitalizado, para nao perder informacao.
+export function translateMonsterRace(value) {
+  const key = monsterTypeKey(value)
+  if (!key) return ''
+  return MONSTER_RACES_PT[key] || cap(value)
+}
+
+// Traduz uma classificacao (ex.: "effect" -> "Efeito").
+export function translateMonsterClassification(value) {
+  const key = monsterTypeKey(value)
+  if (!key) return ''
+  return MONSTER_CLASSIFICATIONS_PT[key] || cap(value)
+}
+
+// Monta a linha "Raça / Classificações" ja em portugues.
+export function translateMonsterType(race, classifications = []) {
+  const raceLabel = translateMonsterRace(race)
+  const classLabels = (classifications || [])
+    .map(translateMonsterClassification)
+    .filter(Boolean)
+  if (!raceLabel) return classLabels.join(' / ')
+  return classLabels.length ? `${raceLabel} / ${classLabels.join(' / ')}` : raceLabel
+}
+
 // Categoria do tipo de carta do banco (usada para filtros e para montar o estado
 // do criador): 'spell' | 'trap' | 'link' | 'xyz' | 'synchro' | 'fusion' |
 // 'ritual' | 'effect' | 'normal'.
@@ -366,9 +448,8 @@ export function stateFromDbCard(card, printing = null) {
   const attr = String(card.attribute || '').toLowerCase()
   const attribute = ATTRIBUTES.some((a) => a.value === attr) ? attr : base.attribute
 
-  const race = cap(card.type)
-  const cls = classifications.map(cap).join(' / ')
-  const monsterType = race ? (cls ? `${race} / ${cls}` : race) : base.monsterType
+  const translatedMonsterType = translateMonsterType(card.type, classifications)
+  const monsterType = translatedMonsterType || base.monsterType
 
   const level = Number(card.level ?? card.rank ?? 0) || 0
   const atk = card.atk === undefined || card.atk === null ? '' : String(card.atk)

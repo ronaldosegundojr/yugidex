@@ -157,6 +157,13 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
   const spellTrapWord = trapSpell ? (state.type === 'trap' ? 'Carta Armadilha' : 'Carta Mágica') : ''
   const effectFont = isNormalMonster(state) ? '"Stone Serif Italic", serif' : '"Matrix Book", serif'
   const autoFit = state.autoFit !== false
+  // Tamanho configuravel dos numeros/rotulos de ATK e DEF.
+  const atkDefFontSize =
+    Number(state.atkDefSize) > 0 ? Number(state.atkDefSize) : 36
+  const atkDefTextStyle = {
+    fontSize: atkDefFontSize + 'px',
+    lineHeight: Math.round(atkDefFontSize * 0.95) + 'px',
+  }
   // Acabamento metalizado/holografico (foil)
   const holographic = state.holographic === true
   // Nome vira foil quando a carta e holografica e o nome nao esta coberto por
@@ -335,10 +342,10 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
         {!trapSpell &&
           (L.isLink ? (
             <>
-              <div className="ycm-atkdef label" style={absStyle(L.atkLabel, 3)}>
+              <div className="ycm-atkdef label" style={absStyle(L.atkLabel, 3, atkDefTextStyle)}>
                 ATK/
               </div>
-              <div className="ycm-atkdef value right" style={absStyle(L.atk, 3)}>
+              <div className="ycm-atkdef value right" style={absStyle(L.atk, 3, atkDefTextStyle)}>
                 {state.atk}
               </div>
               <img className="ycm-layer" style={absStyle(L.linkLabel, 3)} src={frame('other/LINK Label.png')} alt="" />
@@ -348,16 +355,16 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
             </>
           ) : (
             <>
-              <div className="ycm-atkdef label" style={absStyle(L.atkLabel, 3)}>
+              <div className="ycm-atkdef label" style={absStyle(L.atkLabel, 3, atkDefTextStyle)}>
                 ATK/
               </div>
-              <div className="ycm-atkdef value right" style={absStyle(L.atk, 3)}>
+              <div className="ycm-atkdef value right" style={absStyle(L.atk, 3, atkDefTextStyle)}>
                 {state.atk}
               </div>
-              <div className="ycm-atkdef label" style={absStyle(L.defLabel, 3)}>
+              <div className="ycm-atkdef label" style={absStyle(L.defLabel, 3, atkDefTextStyle)}>
                 DEF/
               </div>
-              <div className="ycm-atkdef value right" style={absStyle(L.def, 3)}>
+              <div className="ycm-atkdef value right" style={absStyle(L.def, 3, atkDefTextStyle)}>
                 {state.def}
               </div>
             </>

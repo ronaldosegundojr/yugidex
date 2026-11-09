@@ -342,6 +342,9 @@ function LibBadges({ rarity, ban, banChange }) {
 // as cartas do banco".
 const ALL_DB_BATCH = 60
 
+// Limite de copias iguais (mesmo conteudo) no deck criado.
+const MAX_DECK_COPIES = 3
+
 // Chave estavel para agrupar cartas repetidas (mesmo conteudo = mesma chave).
 const deckStateKey = (s) => {  if (!s) return ''
   try {
@@ -968,6 +971,12 @@ export default function CardMakerPage({ cards = [] }) {
     return { copies, over }
   }, [deckBan])
 
+  // Quantas copias da carta que esta no editor existem no deck criado.
+  const currentDeckCopies = useMemo(() => {
+    const key = deckStateKey(state)
+    return deckCards.filter((c) => deckStateKey(c.state) === key).length
+  }, [deckCards, state])
+
   // Sufixo de aviso para toasts quando a carta/estado esta na banlist.
   const banToastSuffix = (name) => {
     const status = banStatusForName(name, collectionNameIndex)
@@ -1174,17 +1183,55 @@ export default function CardMakerPage({ cards = [] }) {
 
   const newDeckCardId = () => `dc_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`
 
+  // Entradas do deck com o mesmo conteudo da carta informada.
+  const deckEntriesForState = (targetState) => {
+    const key = deckStateKey(targetState)
+    return deckCards.filter((c) => deckStateKey(c.state) === key)
+  }
+
+  const deckCopiesForState = (targetState) => deckEntriesForState(targetState).length
+
+  // Adiciona uma copia respeitando o limite de 3 cartas iguais. Retorna false
+  // quando o limite ja foi atingido (sem alterar o deck).
+  const addDeckCardWithLimit = (targetState, successMessage) => {
+    const key = deckStateKey(targetState)
+    if (deckCards.filter((c) => deckStateKey(c.state) === key).length >= MAX_DECK_COPIES) {
+      setToast(`Máximo de ${MAX_DECK_COPIES} cópias iguais no deck`)
+      return false
+    }
+    setDeckCards((prev) => {
+      const count = prev.filter((c) => deckStateKey(c.state) === key).length
+      if (count >= MAX_DECK_COPIES) return prev
+      return [...prev, { id: newDeckCardId(), state: { ...targetState } }]
+    })
+    if (successMessage) setToast(successMessage)
+    return true
+  }
+
+  // Remove uma copia da carta informada (a ultima adicionada).
+  const removeDeckStateCopy = (targetState) => {
+    const key = deckStateKey(targetState)
+    setDeckCards((prev) => {
+      for (let i = prev.length - 1; i >= 0; i--) {
+        if (deckStateKey(prev[i].state) === key) {
+          return [...prev.slice(0, i), ...prev.slice(i + 1)]
+        }
+      }
+      return prev
+    })
+  }
+
   const addCurrentToDeck = () => {
-    setDeckCards((prev) => [...prev, { id: newDeckCardId(), state: { ...state } }])
-    setToast('Carta adicionada ao deck' + banToastSuffix(state.name))
+    addDeckCardWithLimit(state, 'Carta adicionada ao deck' + banToastSuffix(state.name))
   }
 
   const addSavedToDeck = (entry) => {
-    setDeckCards((prev) => [...prev, { id: newDeckCardId(), state: { ...entry.state } }])
-    setToast(`${entry.name} adicionada ao deck` + banToastSuffix(entry.name))
+    addDeckCardWithLimit(
+      entry.state,
+      `${entry.name} adicionada ao deck` + banToastSuffix(entry.name),
+    )
   }
 
-  const removeDeckCard = (id) => setDeckCards((prev) => prev.filter((c) => c.id !== id))
   const removeDeckCardIds = (ids) => {
     const set = new Set(ids)
     setDeckCards((prev) => prev.filter((c) => !set.has(c.id)))
@@ -1286,8 +1333,7 @@ export default function CardMakerPage({ cards = [] }) {
   const addDbCardToDeck = (card) => {
     const p = defaultPrinting(card.id)
     const s = stateFromDbCard(card, p)
-    setDeckCards((prev) => [...prev, { id: newDeckCardId(), state: s }])
-    setToast(`${s.name || 'Carta'} adicionada ao deck` + banToastSuffix(s.name))
+    addDeckCardWithLimit(s, `${s.name || 'Carta'} adicionada ao deck` + banToastSuffix(s.name))
   }
 
   const handleCreatorDrop = (e) => {
@@ -1927,6 +1973,29 @@ export default function CardMakerPage({ cards = [] }) {
               Link de compartilhamento
             </button>
           </div>
+          <div className="cm-deck-add">
+            <button
+              type="button"
+              className="cm-btn ghost"
+              onClick={() => removeDeckStateCopy(state)}
+              disabled={currentDeckCopies === 0}
+              title="Remover 1 cópia do deck"
+            >
+              −
+            </button>
+            <span className="cm-deck-add-count" title="Cópias desta carta no deck">
+              {currentDeckCopies}/{MAX_DECK_COPIES} no deck
+            </span>
+            <button
+              type="button"
+              className="cm-btn primary"
+              onClick={addCurrentToDeck}
+              disabled={currentDeckCopies >= MAX_DECK_COPIES}
+              title="Adicionar esta carta ao deck (máx. 3 cópias iguais)"
+            >
+              + Adicionar ao deck
+            </button>
+          </div>
         </section>
 
         <aside className="cm-form">
@@ -2054,10 +2123,24 @@ export default function CardMakerPage({ cards = [] }) {
             </div>
 
             {!isTrapSpell && (
-              <label className="cm-field">
-                <span>Tipo do monstro (raça)</span>
-                <input type="text" value={state.monsterType} onChange={(e) => update({ monsterType: e.target.value })} placeholder="Ex: Dragon / Effect" />
-              </label>
+              <>
+                <label className="cm-field">
+                  <span>Tipo do monstro (raça)</span>
+                  <input type="text" value={state.monsterType} onChange={(e) => update({ monsterType: e.target.value })} placeholder="Ex: Dragão / Efeito" />
+                </label>
+                <label className="cm-field">
+                  <span>Tamanho da fonte do tipo/raça (px)</span>
+                  <input
+                    type="number"
+                    min="8"
+                    max="60"
+                    step="1"
+                    list="cm-size-presets"
+                    value={state.typeSize ?? 26}
+                    onChange={(e) => update({ typeSize: clampSize(e.target.value, 8, 60, 26) })}
+                  />
+                </label>
+              </>
             )}
 
             <label className="cm-field">
@@ -2224,6 +2307,19 @@ export default function CardMakerPage({ cards = [] }) {
                   <input type="text" inputMode="numeric" maxLength={3005} value={state.atk} onChange={(e) => update({ atk: e.target.value })} placeholder="0" />
                 </label>
               )}
+
+              <label className="cm-field">
+                <span>Tamanho da fonte de ATK/DEF (px)</span>
+                <input
+                  type="number"
+                  min="8"
+                  max="80"
+                  step="1"
+                  list="cm-size-presets"
+                  value={state.atkDefSize ?? 36}
+                  onChange={(e) => update({ atkDefSize: clampSize(e.target.value, 8, 80, 36) })}
+                />
+              </label>
 
               {state.type === 'link' && (
                 <div className="cm-field">
@@ -2603,6 +2699,9 @@ export default function CardMakerPage({ cards = [] }) {
                   const banMax = ban ? BAN_MAX_COPIES[ban.status] : 0
                   const banOver = !!ban && ban.count > banMax
                   const banChange = banChangeByName(g.state?.name || '')
+                  const copies = deckCopiesForState(g.state)
+                  const atMaxCopies = copies >= MAX_DECK_COPIES
+                  const copyEntries = deckEntriesForState(g.state)
                   return (
                     <div key={g.key} className="cdm-card">
                       <div className="cdm-card-badges">
@@ -2632,43 +2731,53 @@ export default function CardMakerPage({ cards = [] }) {
                       <div className="cdm-card-preview">
                         <YugiohCardPreview state={g.state} width={deckCardWidth} />
                         {deckView.showNumber && <span className="cdm-card-index">{idx + 1}</span>}
-                        {g.items.length > 1 && <span className="cdm-card-count">×{g.items.length}</span>}
+                        {copies > 1 && <span className="cdm-card-count">×{copies}</span>}
                       </div>
                       {deckView.showName && <div className="cdm-card-name">{g.state.name || 'Sem nome'}</div>}
                       {deckView.showActions && (
-                        <div className="cdm-card-actions">
-                          <button type="button" className="cm-btn ghost small" onClick={() => editDeckCard(g.items[0])}>
-                            Editar
-                          </button>
-                          {g.items.length > 1 ? (
-                            <>
-                              <button
-                                type="button"
-                                className="cm-btn ghost small danger"
-                                onClick={() => removeDeckCard(g.items[g.items.length - 1].id)}
-                                title="Remover 1 cópia"
-                              >
-                                −1
-                              </button>
-                              <button
-                                type="button"
-                                className="cm-btn ghost small danger"
-                                onClick={() => removeDeckCardIds(g.items.map((i) => i.id))}
-                                title="Remover todas as cópias"
-                              >
-                                Todas
-                              </button>
-                            </>
-                          ) : (
+                        <>
+                          <div className="cdm-card-actions">
+                            <button type="button" className="cm-btn ghost small" onClick={() => editDeckCard(g.items[0])}>
+                              Editar
+                            </button>
                             <button
                               type="button"
                               className="cm-btn ghost small danger"
-                              onClick={() => removeDeckCard(g.items[0].id)}
+                              onClick={() => removeDeckCardIds(copyEntries.map((i) => i.id))}
+                              title="Remover todas as cópias"
                             >
                               Remover
                             </button>
-                          )}
-                        </div>
+                          </div>
+                          <div className="cdm-card-qty">
+                            <button
+                              type="button"
+                              className="cm-btn ghost small"
+                              onClick={() => removeDeckStateCopy(g.state)}
+                              disabled={copies <= 1}
+                              title="Remover 1 cópia"
+                            >
+                              −
+                            </button>
+                            <span className="cdm-card-qty-value" title="Cópias desta carta no deck">
+                              {copies}/{MAX_DECK_COPIES}
+                            </span>
+                            <button
+                              type="button"
+                              className="cm-btn ghost small"
+                              onClick={() =>
+                                addDeckCardWithLimit(
+                                  g.state,
+                                  'Cópia adicionada ao deck' + banToastSuffix(g.state?.name),
+                                )
+                              }
+                              disabled={atMaxCopies}
+                              title={`Adicionar 1 cópia (máx. ${MAX_DECK_COPIES})`}
+                            >
+                              +
+                            </button>
+                          </div>
+                        </>
                       )}
                     </div>
                   )
