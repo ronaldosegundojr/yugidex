@@ -1490,3 +1490,67 @@
 .cdm-lib-card:active {
   cursor: grabbing;
 }
+
+/* ---- Modal: escolha de impressao do PDF (frente/verso) ---- */
+.cm-pdf-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.74);
+  backdrop-filter: blur(3px);
+}
+.cm-pdf-modal {
+  width: min(620px, 94vw);
+  padding: 1.1rem 1.2rem 1.2rem;
+  background: var(--yblack-light);
+  border: 1px solid var(--gold-dark);
+  border-radius: 12px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.65);
+}
+.cm-pdf-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.cm-pdf-head h3 {
+  margin: 0;
+  color: var(--gold);
+  font-size: 1.15rem;
+}
+.cm-pdf-question {
+  margin: 1rem 0 0.55rem;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.cm-pdf-question strong {
+  color: var(--gold);
+}
+.cm-pdf-hint {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+.cm-pdf-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.1rem;
+}
+.cm-pdf-actions .cm-btn {
+  flex: 1 1 190px;
+}
+@media (max-width: 520px) {
+  .cm-pdf-actions {
+    flex-direction: column;
+  }
+  .cm-pdf-actions .cm-btn {
+    width: 100%;
+  }
+}

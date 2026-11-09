@@ -544,6 +544,7 @@ export default function CardMakerPage({ cards = [] }) {
   const [toast, setToast] = useState('')
   const [previewWidth, setPreviewWidth] = useState(421)
   const [printCards, setPrintCards] = useState(null)
+  const [pdfModeOpen, setPdfModeOpen] = useState(false)
   const [deckContainerW, setDeckContainerW] = useState(756)
   const cardRef = useRef(null)
   const previewRef = useRef(null)
@@ -835,8 +836,11 @@ export default function CardMakerPage({ cards = [] }) {
           a.click()
           setToast('Download gerado!')
         } else {
-          const { pages } = await buildDeckPdf(images, pc.filename)
-          setToast(`PDF gerado: ${images.length} carta(s) em ${pages} folha(s) A4`)
+          const { pages, pdfPages } = await buildDeckPdf(images, pc.filename, {
+            duplex: pc.duplex,
+          })
+          const duplexInfo = pc.duplex ? ` (${pdfPages} páginas, frente e verso)` : ''
+          setToast(`PDF gerado: ${images.length} carta(s) em ${pages} folha(s) A4${duplexInfo}`)
         }
       } catch (e) {
         console.error('Erro ao gerar arquivo do deck:', e)
@@ -1127,7 +1131,7 @@ export default function CardMakerPage({ cards = [] }) {
   }
 
   // ---- Exportacao em PNG/PDF (A4, matriz 3x3) ----
-  const generateFromStates = (cards, filename, kind = 'pdf') => {
+  const generateFromStates = (cards, filename, kind = 'pdf', options = {}) => {
     if (!cards.length) {
       setToast('Nenhuma carta para exportar')
       return
@@ -1138,6 +1142,7 @@ export default function CardMakerPage({ cards = [] }) {
       cards: cards.map((c) => ({ ...c, state: { ...c.state, art: artForExport(c.state.art) } })),
       filename,
       kind,
+      duplex: options.duplex === true,
     })
   }
 
@@ -1348,7 +1353,8 @@ export default function CardMakerPage({ cards = [] }) {
 
   const deckFilename = () => (deckName.trim() || 'deck-yugidex').replace(/[^\w-]+/g, '_')
 
-  const exportDeckPdf = () => {
+  const exportDeckPdf = (duplex = false) => {
+    setPdfModeOpen(false)
     if (!deckCards.length) {
       setToast('Deck vazio')
       return
@@ -1357,6 +1363,8 @@ export default function CardMakerPage({ cards = [] }) {
     generateFromStates(
       deckCards.map((c, i) => ({ id: `dc${i}`, state: c.state })),
       `${safe}.pdf`,
+      'pdf',
+      { duplex },
     )
   }
 
@@ -2518,7 +2526,7 @@ export default function CardMakerPage({ cards = [] }) {
                   <button
                     type="button"
                     className="cm-btn primary small cdm-pdf-btn"
-                    onClick={exportDeckPdf}
+                    onClick={() => setPdfModeOpen(true)}
                     disabled={busy || !deckCards.length}
                   >
                     {busy ? 'Gerando...' : 'Salvar PDF (A4)'}
@@ -3157,6 +3165,55 @@ export default function CardMakerPage({ cards = [] }) {
         <option value="110"></option>
         <option value="120"></option>
       </datalist>
+
+      {pdfModeOpen && (
+        <div
+          className="cm-pdf-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Modo de impressão do PDF"
+          onClick={() => setPdfModeOpen(false)}
+        >
+          <div className="cm-pdf-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="cm-pdf-head">
+              <h3>Modo de impressão</h3>
+              <button
+                type="button"
+                className="cdm-all-close"
+                onClick={() => setPdfModeOpen(false)}
+                aria-label="Fechar"
+                title="Fechar"
+              >
+                ×
+              </button>
+            </div>
+            <p className="cm-pdf-question">
+              Gostaria de Imprimir <strong>FRENTE E VERSO</strong> (com desenho na parte de
+              trás da carta) ou <strong>SOMENTE FRENTE</strong> (parte de trás em branco)?
+            </p>
+            <p className="cm-pdf-hint">
+              Frente e verso gera páginas alternadas com as costas das cartas alinhadas. Na
+              impressora, escolha frente e verso virando na borda longa.
+            </p>
+            <div className="cm-pdf-actions">
+              <button
+                type="button"
+                className="cm-btn primary"
+                onClick={() => exportDeckPdf(true)}
+              >
+                FRENTE E VERSO
+              </button>
+              <button
+                type="button"
+                className="cm-btn ghost"
+                onClick={() => exportDeckPdf(false)}
+              >
+                SOMENTE FRENTE
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {toast && <div className="cm-toast">{toast}</div>}
     </div>
