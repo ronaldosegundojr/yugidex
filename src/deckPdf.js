@@ -13,7 +13,7 @@ import {
 // Verso oficial do TCG (Yu-Gi-Oh! TRADING CARD GAME): redemoinho
 // marrom-laranja com oval quase preto no centro, "KONAMI(R)" no canto
 // superior esquerdo e o logo "Yu-Gi-Oh! TRADING CARD GAME" no canto
-// inferior direito. Montado em 1394x2031 (~600 DPI na carta impressa).
+// inferior direito. Scan do wiki oficial em espanhol ("Sin carta").
 const CARD_BACK_IMAGE = '/cardmaker/other/card-back.jpg'
 
 // Fallback vetorial simplificado (mesmo estilo do verso oficial), usado
@@ -97,8 +97,8 @@ async function getCardBackDataUrl() {
   if (cardBackDataUrl) return cardBackDataUrl
   try {
     const img = await loadImage(CARD_BACK_IMAGE)
-    // Usa as dimensoes nativas do asset (1394x2031): preserva a proporcao
-    // exata do verso oficial e a resolucao alta (~600 DPI na impressao).
+    // Usa as dimensoes nativas do asset, preservando a proporcao exata
+    // do verso oficial.
     const w = img.naturalWidth || CARD_W * 2
     const h = img.naturalHeight || CARD_H * 2
     cardBackDataUrl = renderCardBack(img, w, h)
