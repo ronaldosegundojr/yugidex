@@ -1610993,15 +1610993,6 @@
     ],
     "images": [
       {
-        "id": "ac085c92-0cce-4059-b526-501794b28af9",
-        "art": "https://images.ygoprodeck.com/images/cards_cropped/101302003.jpg",
-        "card": "https://images.ygoprodeck.com/images/cards/101302003.jpg"
-      },
-      {
-        "id": "b8930582-37ad-4e5e-80b3-3d99c6603285",
-        "card": "https://ms.yugipedia.com//e/e6/DDDZeroDemiseKingZeroMachinex-OW.png"
-      },
-      {
         "id": "9dd0e7fa-157f-458c-a9b6-15b5633985e2",
         "password": "20715411",
         "art": "https://images.ygoprodeck.com/images/cards_cropped/20715411.jpg",
@@ -1611028,11 +1611019,22 @@
       "efe8a162-6cf7-451d-8ffa-f5f88589f36d",
       "efe8a162-6cf7-451d-8ffa-f5f88589f36d"
     ],
-    "legality": {},
+    "legality": {
+      "tcg": {
+        "current": "unlimited"
+      },
+      "ocg": {
+        "current": "unlimited"
+      }
+    },
+    "masterDuel": {
+      "rarity": "ur",
+      "craftable": true
+    },
     "externalIDs": {
       "yugipedia": [
         {
-          "name": "D/D/D Zero Demise King Zero Machinex",
+          "name": "D/D/D Zero Doom Queen Machinex",
           "id": 1127275
         }
       ],
