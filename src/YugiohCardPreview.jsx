@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import {
   CARD_W,
   CARD_H,
@@ -20,7 +20,7 @@ import './YugiohCardPreview.css'
 // Texto que reduz a fonte automaticamente para caber na caixa (fitFont do cardmaker).
 // Quando `autoFit` e false mantem o tamanho base (padrao do /criar-card), mesmo
 // que o texto fique no limite da caixa.
-function FittedText({ text, baseSize, box, className, style, autoFit = true }) {
+function FittedText({ text, baseSize, box, className, style, autoFit = true, pointerHandlers }) {
   const ref = useRef(null)
 
   useLayoutEffect(() => {
@@ -59,7 +59,12 @@ function FittedText({ text, baseSize, box, className, style, autoFit = true }) {
   }, [text, baseSize, box.w, box.h, autoFit])
 
   return (
-    <div ref={ref} className={className} style={{ ...style, fontSize: baseSize }}>
+    <div
+      ref={ref}
+      className={className}
+      style={{ ...style, fontSize: baseSize }}
+      {...pointerHandlers}
+    >
       {text}
     </div>
   )
@@ -68,7 +73,7 @@ function FittedText({ text, baseSize, box, className, style, autoFit = true }) {
 // Texto que reduz o tamanho da fonte para caber na largura disponivel e, se
 // ainda faltar espaco, comprime levemente na horizontal (squeeze do cardmaker).
 // Com `autoFit` false o tamanho base e mantido e apenas comprime na horizontal.
-function SqueezeText({ text, baseSize, box, className, style, autoFit = true }) {
+function SqueezeText({ text, baseSize, box, className, style, autoFit = true, pointerHandlers }) {
   const wrapRef = useRef(null)
   const spanRef = useRef(null)
 
@@ -111,7 +116,12 @@ function SqueezeText({ text, baseSize, box, className, style, autoFit = true }) 
   }, [text, baseSize, box.w, autoFit])
 
   return (
-    <div ref={wrapRef} className={`ycm-squeeze ${className || ''}`} style={style}>
+    <div
+      ref={wrapRef}
+      className={`ycm-squeeze ${className || ''}`}
+      style={style}
+      {...pointerHandlers}
+    >
       <span ref={spanRef} style={{ fontSize: baseSize }}>
         {text}
       </span>
@@ -129,7 +139,16 @@ const absStyle = (box, zIndex, extra = {}) => ({
   ...extra,
 })
 
-export default function YugiohCardPreview({ state, width = 421, className = '', innerRef }) {
+const clamp = (value, min, max) => Math.max(min, Math.min(max, value))
+
+export default function YugiohCardPreview({
+  state,
+  width = 421,
+  className = '',
+  innerRef,
+  editablePositions = false,
+  onPositionChange,
+}) {
   const L = computeLayout(state)
   const whiteName = isWhiteName(state)
   const whiteFooter = isWhiteFooter(state)
@@ -157,6 +176,87 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
   const spellTrapWord = trapSpell ? (state.type === 'trap' ? 'Carta Armadilha' : 'Carta Mágica') : ''
   const effectFont = isNormalMonster(state) ? '"Stone Serif Italic", serif' : '"Matrix Book", serif'
   const autoFit = state.autoFit !== false
+  const [draggingText, setDraggingText] = useState('')
+  const textDragRef = useRef(null)
+
+  const textOffset = (key) => ({
+    x: Number(state[key + 'OffsetX']) || 0,
+    y: Number(state[key + 'OffsetY']) || 0,
+  })
+
+  const offsetBox = (box, key) => {
+    const offset = textOffset(key)
+    return { ...box, x: box.x + offset.x, y: box.y + offset.y }
+  }
+
+  const endTextDrag = (e) => {
+    const drag = textDragRef.current
+    if (!drag || drag.pointerId !== e.pointerId) return
+    if (e.currentTarget.hasPointerCapture?.(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    }
+    textDragRef.current = null
+    setDraggingText('')
+  }
+
+  // Arraste do tipo/efeito: os eventos usam a escala do preview para converter
+  // pixels da tela em pixels do canvas logico da carta. O texto fica limitado
+  // dentro da carta para nao sair do molde.
+  const textDragHandlers = (key, baseBox) => {
+    if (!editablePositions || !onPositionChange) return undefined
+    return {
+      onPointerDown: (e) => {
+        if (!e.isPrimary || e.button !== 0) return
+        e.preventDefault()
+        e.stopPropagation()
+        e.currentTarget.setPointerCapture?.(e.pointerId)
+        const offset = textOffset(key)
+        textDragRef.current = {
+          key,
+          baseBox,
+          pointerId: e.pointerId,
+          startX: e.clientX,
+          startY: e.clientY,
+          baseX: offset.x,
+          baseY: offset.y,
+          scale,
+        }
+        setDraggingText(key)
+      },
+      onPointerMove: (e) => {
+        const drag = textDragRef.current
+        if (!drag || drag.key !== key || drag.pointerId !== e.pointerId) return
+        const nextX = drag.baseX + (e.clientX - drag.startX) / drag.scale
+        const nextY = drag.baseY + (e.clientY - drag.startY) / drag.scale
+        onPositionChange({
+          [`${key}OffsetX`]: Math.round(
+            clamp(nextX, -drag.baseBox.x, CARD_W - drag.baseBox.x - drag.baseBox.w),
+          ),
+          [`${key}OffsetY`]: Math.round(
+            clamp(nextY, -drag.baseBox.y, CARD_H - drag.baseBox.y - drag.baseBox.h),
+          ),
+        })
+      },
+      onPointerUp: endTextDrag,
+      onPointerCancel: endTextDrag,
+    }
+  }
+
+  const textDragStyle = (key) =>
+    editablePositions
+      ? { cursor: draggingText === key ? 'grabbing' : 'grab', touchAction: 'none' }
+      : undefined
+
+  const dragClass = (key) =>
+    editablePositions
+      ? `ycm-drag-text${draggingText === key ? ' dragging' : ''}`
+      : ''
+
+  const typeBox = offsetBox(L.type, 'type')
+  const effectBox = offsetBox(L.effect, 'effect')
+  const pendulumEffectBox = L.isPendulum
+    ? offsetBox(L.effectPendulum, 'pendulumEffect')
+    : L.effectPendulum
   // Tamanho configuravel dos numeros/rotulos de ATK e DEF.
   const atkDefFontSize =
     Number(state.atkDefSize) > 0 ? Number(state.atkDefSize) : 36
@@ -269,10 +369,11 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
           <SqueezeText
             text={`[${state.monsterType || ''}]`}
             baseSize={Number(state.typeSize || 26)}
-            box={L.type}
-            className="ycm-type"
-            style={absStyle(L.type, 3)}
+            box={typeBox}
+            className={`ycm-type ${dragClass('type')}`}
+            style={{ ...absStyle(typeBox, 3), ...textDragStyle('type') }}
             autoFit={autoFit}
+            pointerHandlers={textDragHandlers('type', L.type)}
           />
         )}
 
@@ -280,14 +381,18 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
         <FittedText
           text={state.effect || ''}
           baseSize={Number(state.effectSize) > 0 ? Number(state.effectSize) : 24}
-          box={L.effect}
-          className="ycm-effect"
+          box={effectBox}
+          className={`ycm-effect ${dragClass('effect')}`}
           autoFit={autoFit}
-          style={absStyle(L.effect, 3, {
-            fontFamily: effectFont,
-            lineHeight: state.effectSpacing ? String(state.effectSpacing) : '1.15',
-            textAlign: state.effectAlign || 'justify',
-          })}
+          style={{
+            ...absStyle(effectBox, 3, {
+              fontFamily: effectFont,
+              lineHeight: state.effectSpacing ? String(state.effectSpacing) : '1.15',
+              textAlign: state.effectAlign || 'justify',
+            }),
+            ...textDragStyle('effect'),
+          }}
+          pointerHandlers={textDragHandlers('effect', L.effect)}
         />
 
         {/* efeito do pendulo */}
@@ -295,14 +400,18 @@ export default function YugiohCardPreview({ state, width = 421, className = '', 
           <FittedText
             text={state.pendulumEffect || ''}
             baseSize={Number(state.effectSize) > 0 ? Number(state.effectSize) : 24}
-            box={L.effectPendulum}
-            className="ycm-effect"
+            box={pendulumEffectBox}
+            className={`ycm-effect ${dragClass('pendulumEffect')}`}
             autoFit={autoFit}
-            style={absStyle(L.effectPendulum, 3, {
-              fontFamily: '"Matrix Book", serif',
-              lineHeight: state.effectSpacing ? String(state.effectSpacing) : '1.15',
-              textAlign: state.effectAlign || 'justify',
-            })}
+            style={{
+              ...absStyle(pendulumEffectBox, 3, {
+                fontFamily: '"Matrix Book", serif',
+                lineHeight: state.effectSpacing ? String(state.effectSpacing) : '1.15',
+                textAlign: state.effectAlign || 'justify',
+              }),
+              ...textDragStyle('pendulumEffect'),
+            }}
+            pointerHandlers={textDragHandlers('pendulumEffect', L.effectPendulum)}
           />
         )}
 

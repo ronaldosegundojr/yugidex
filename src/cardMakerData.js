@@ -362,6 +362,14 @@ export function defaultCardState() {
     nameColorPreset: 'auto',
     typeSize: 26,
     atkDefSize: 36,
+    // Posicao personalizada dos textos arrastaveis no preview (em px do
+    // canvas logico 694x1013). 0 = posicao padrao do molde.
+    typeOffsetX: 0,
+    typeOffsetY: 0,
+    effectOffsetX: 0,
+    effectOffsetY: 0,
+    pendulumEffectOffsetX: 0,
+    pendulumEffectOffsetY: 0,
     // ---- Formatacao do texto do efeito ----
     // autoFit = true reduz a fonte automaticamente para caber na caixa.
     // Cartas vindas do banco usam false (mantem o tamanho padrao do /criar-card).

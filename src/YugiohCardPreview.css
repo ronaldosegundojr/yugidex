@@ -153,6 +153,18 @@
   white-space: pre-wrap;
 }
 
+/* Textos arrastaveis apenas no preview do editor */
+.ycm-drag-text:hover {
+  background: rgba(229, 191, 53, 0.08);
+  outline: 1px dashed rgba(229, 191, 53, 0.9);
+  outline-offset: 1px;
+}
+.ycm-drag-text.dragging {
+  background: rgba(229, 191, 53, 0.14);
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+
 /* Escalas do pendulo */
 .ycm-scale {
   font-family: 'Matrix Bold Small', 'Times New Roman', serif;

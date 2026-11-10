@@ -1153,6 +1153,25 @@ export default function CardMakerPage({ cards = [] }) {
     generateFromStates([{ id: 'carta-atual', state }], `${safe}.pdf`)
   }
 
+  const hasCustomTextPositions = [
+    'typeOffsetX',
+    'typeOffsetY',
+    'effectOffsetX',
+    'effectOffsetY',
+    'pendulumEffectOffsetX',
+    'pendulumEffectOffsetY',
+  ].some((key) => Number(state[key]))
+
+  const resetTextPositions = () =>
+    update({
+      typeOffsetX: 0,
+      typeOffsetY: 0,
+      effectOffsetX: 0,
+      effectOffsetY: 0,
+      pendulumEffectOffsetX: 0,
+      pendulumEffectOffsetY: 0,
+    })
+
   const clampSize = (v, min, max, def) => {
     const n = Number(v)
     if (Number.isNaN(n)) return def
@@ -1968,8 +1987,17 @@ export default function CardMakerPage({ cards = [] }) {
       <div className="cm-layout">
         <section className="cm-preview" ref={previewRef}>
           <div className="cm-preview-inner">
-            <YugiohCardPreview state={state} width={previewWidth} innerRef={cardRef} />
+            <YugiohCardPreview
+              state={state}
+              width={previewWidth}
+              innerRef={cardRef}
+              editablePositions
+              onPositionChange={update}
+            />
           </div>
+          <p className="cm-preview-hint">
+            Arraste o tipo/raça ou o texto de efeito na carta para reposicionar.
+          </p>
           <div className="cm-preview-actions">
             <button type="button" className="cm-btn primary" onClick={handleDownload} disabled={busy}>
               {busy ? 'Gerando...' : 'Baixar PNG'}
@@ -1980,6 +2008,11 @@ export default function CardMakerPage({ cards = [] }) {
             <button type="button" className="cm-btn ghost" onClick={handleShare}>
               Link de compartilhamento
             </button>
+            {hasCustomTextPositions && (
+              <button type="button" className="cm-btn ghost" onClick={resetTextPositions}>
+                Restaurar textos
+              </button>
+            )}
           </div>
           <div className="cm-deck-add">
             <button

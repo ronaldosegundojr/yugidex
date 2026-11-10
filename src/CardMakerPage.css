@@ -159,6 +159,14 @@
   background: radial-gradient(circle at 50% 30%, rgba(229, 191, 53, 0.12), transparent 70%);
   border-radius: 10px;
 }
+.cm-preview-hint {
+  margin: -0.35rem 0 0;
+  max-width: 430px;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  line-height: 1.35;
+  text-align: center;
+}
 .cm-preview-actions {
   display: flex;
   gap: 0.5rem;
