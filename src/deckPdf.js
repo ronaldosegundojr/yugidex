@@ -10,8 +10,14 @@ import {
   DECK_PER_PAGE,
 } from './cardMakerData'
 
-// Desenho da parte de tras da carta, em SVG para manter a qualidade vetorial
-// ate a conversao para JPEG (o jsPDF nao aceita SVG diretamente).
+// Verso oficial do TCG (Yu-Gi-Oh! TRADING CARD GAME): redemoinho
+// marrom-laranja com oval quase preto no centro, "KONAMI(R)" no canto
+// superior esquerdo e o logo "Yu-Gi-Oh! TRADING CARD GAME" no canto
+// inferior direito. Montado em 1394x2031 (~600 DPI na carta impressa).
+const CARD_BACK_IMAGE = '/cardmaker/other/card-back.jpg'
+
+// Fallback vetorial simplificado (mesmo estilo do verso oficial), usado
+// apenas se o asset em alta resolucao nao carregar.
 const CARD_BACK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="694" height="1013" viewBox="0 0 694 1013">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
@@ -53,8 +59,9 @@ const CARD_BACK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="694" heigh
   </g>
   <circle cx="347" cy="506" r="121" fill="#1b0d06" stroke="#c89b52" stroke-width="4"/>
   <circle cx="347" cy="506" r="107" fill="none" stroke="#6f4a23" stroke-width="2"/>
-  <text x="347" y="520" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="42" font-style="italic" font-weight="bold" fill="url(#gold)">Yu-Gi-Oh!</text>
-  <text x="347" y="862" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="bold" letter-spacing="9" fill="#c89b52" opacity="0.7">YUGIDEX</text>
+  <text x="52" y="74" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="bold" fill="#fff">KONAMI&#174;</text>
+  <text x="347" y="940" text-anchor="end" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-style="italic" font-weight="bold" fill="#f5d78a">Yu-Gi-Oh!</text>
+  <text x="347" y="972" text-anchor="end" font-family="Georgia, 'Times New Roman', serif" font-size="16" font-weight="bold" letter-spacing="3" fill="#f5d78a">TRADING CARD GAME&#8482;</text>
   <rect width="694" height="1013" fill="url(#vignette)" pointer-events="none"/>
 </svg>`
 
@@ -68,20 +75,40 @@ const loadImage = (src) =>
     img.src = src
   })
 
-// Converte o SVG em JPEG uma unica vez. O mesmo data URL e reaproveitado em
-// todas as paginas de verso (com alias no jsPDF), evitando um PDF gigante.
+// Desenha o verso num canvas e codifica em JPEG uma unica vez. O mesmo data
+// URL e reaproveitado em todas as paginas de verso (com alias no jsPDF),
+// evitando um PDF gigante.
+const renderCardBack = (img, w, h) => {
+  const canvas = document.createElement('canvas')
+  canvas.width = w
+  canvas.height = h
+  const ctx = canvas.getContext('2d')
+  // Achata os cantos arredondados transparentes do molde sobre o mesmo
+  // tom de marrom usado na borda do verso.
+  ctx.fillStyle = '#2a160b'
+  ctx.fillRect(0, 0, w, h)
+  ctx.imageSmoothingEnabled = true
+  ctx.imageSmoothingQuality = 'high'
+  ctx.drawImage(img, 0, 0, w, h)
+  return canvas.toDataURL('image/jpeg', 0.92)
+}
+
 async function getCardBackDataUrl() {
   if (cardBackDataUrl) return cardBackDataUrl
-  const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(CARD_BACK_SVG)}`
-  const img = await loadImage(svgUrl)
-  const canvas = document.createElement('canvas')
-  canvas.width = CARD_W * 2
-  canvas.height = CARD_H * 2
-  const ctx = canvas.getContext('2d')
-  ctx.fillStyle = '#2a160b'
-  ctx.fillRect(0, 0, canvas.width, canvas.height)
-  ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-  cardBackDataUrl = canvas.toDataURL('image/jpeg', 0.92)
+  try {
+    const img = await loadImage(CARD_BACK_IMAGE)
+    // Usa as dimensoes nativas do asset (1394x2031): preserva a proporcao
+    // exata do verso oficial e a resolucao alta (~600 DPI na impressao).
+    const w = img.naturalWidth || CARD_W * 2
+    const h = img.naturalHeight || CARD_H * 2
+    cardBackDataUrl = renderCardBack(img, w, h)
+  } catch {
+    // Asset indisponivel ou canvas contaminado (CORS): recorre ao desenho
+    // vetorial simplificado, que e mesmo-origem por ser um data URL.
+    const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(CARD_BACK_SVG)}`
+    const img = await loadImage(svgUrl)
+    cardBackDataUrl = renderCardBack(img, CARD_W * 2, CARD_H * 2)
+  }
   return cardBackDataUrl
 }
 

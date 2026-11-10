@@ -3221,8 +3221,8 @@ export default function CardMakerPage({ cards = [] }) {
               </button>
             </div>
             <p className="cm-pdf-question">
-              Gostaria de Imprimir <strong>FRENTE E VERSO</strong> (com desenho na parte de
-              trás da carta) ou <strong>SOMENTE FRENTE</strong> (parte de trás em branco)?
+              Gostaria de Imprimir <strong>FRENTE E VERSO</strong> (com o verso oficial do TCG na
+              parte de trás da carta) ou <strong>SOMENTE FRENTE</strong> (parte de trás em branco)?
             </p>
             <p className="cm-pdf-hint">
               Frente e verso gera páginas alternadas com as costas das cartas alinhadas. Na
