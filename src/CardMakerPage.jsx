@@ -342,9 +342,6 @@ function LibBadges({ rarity, ban, banChange }) {
 // as cartas do banco".
 const ALL_DB_BATCH = 60
 
-// Limite de copias iguais (mesmo conteudo) no deck criado.
-const MAX_DECK_COPIES = 3
-
 // Chave estavel para agrupar cartas repetidas (mesmo conteudo = mesma chave).
 const deckStateKey = (s) => {  if (!s) return ''
   try {
@@ -1215,21 +1212,10 @@ export default function CardMakerPage({ cards = [] }) {
 
   const deckCopiesForState = (targetState) => deckEntriesForState(targetState).length
 
-  // Adiciona uma copia respeitando o limite de 3 cartas iguais. Retorna false
-  // quando o limite ja foi atingido (sem alterar o deck).
-  const addDeckCardWithLimit = (targetState, successMessage) => {
-    const key = deckStateKey(targetState)
-    if (deckCards.filter((c) => deckStateKey(c.state) === key).length >= MAX_DECK_COPIES) {
-      setToast(`Máximo de ${MAX_DECK_COPIES} cópias iguais no deck`)
-      return false
-    }
-    setDeckCards((prev) => {
-      const count = prev.filter((c) => deckStateKey(c.state) === key).length
-      if (count >= MAX_DECK_COPIES) return prev
-      return [...prev, { id: newDeckCardId(), state: { ...targetState } }]
-    })
+  // Adiciona uma copia ao deck criado, sem limite de cartas repetidas.
+  const addDeckCard = (targetState, successMessage) => {
+    setDeckCards((prev) => [...prev, { id: newDeckCardId(), state: { ...targetState } }])
     if (successMessage) setToast(successMessage)
-    return true
   }
 
   // Remove uma copia da carta informada (a ultima adicionada).
@@ -1246,11 +1232,11 @@ export default function CardMakerPage({ cards = [] }) {
   }
 
   const addCurrentToDeck = () => {
-    addDeckCardWithLimit(state, 'Carta adicionada ao deck' + banToastSuffix(state.name))
+    addDeckCard(state, 'Carta adicionada ao deck' + banToastSuffix(state.name))
   }
 
   const addSavedToDeck = (entry) => {
-    addDeckCardWithLimit(
+    addDeckCard(
       entry.state,
       `${entry.name} adicionada ao deck` + banToastSuffix(entry.name),
     )
@@ -1357,7 +1343,7 @@ export default function CardMakerPage({ cards = [] }) {
   const addDbCardToDeck = (card) => {
     const p = defaultPrinting(card.id)
     const s = stateFromDbCard(card, p)
-    addDeckCardWithLimit(s, `${s.name || 'Carta'} adicionada ao deck` + banToastSuffix(s.name))
+    addDeckCard(s, `${s.name || 'Carta'} adicionada ao deck` + banToastSuffix(s.name))
   }
 
   const handleCreatorDrop = (e) => {
@@ -2025,14 +2011,13 @@ export default function CardMakerPage({ cards = [] }) {
               −
             </button>
             <span className="cm-deck-add-count" title="Cópias desta carta no deck">
-              {currentDeckCopies}/{MAX_DECK_COPIES} no deck
+              {currentDeckCopies} no deck
             </span>
             <button
               type="button"
               className="cm-btn primary"
               onClick={addCurrentToDeck}
-              disabled={currentDeckCopies >= MAX_DECK_COPIES}
-              title="Adicionar esta carta ao deck (máx. 3 cópias iguais)"
+              title="Adicionar esta carta ao deck"
             >
               + Adicionar ao deck
             </button>
@@ -2741,7 +2726,6 @@ export default function CardMakerPage({ cards = [] }) {
                   const banOver = !!ban && ban.count > banMax
                   const banChange = banChangeByName(g.state?.name || '')
                   const copies = deckCopiesForState(g.state)
-                  const atMaxCopies = copies >= MAX_DECK_COPIES
                   const copyEntries = deckEntriesForState(g.state)
                   return (
                     <div key={g.key} className="cdm-card">
@@ -2801,19 +2785,18 @@ export default function CardMakerPage({ cards = [] }) {
                               −
                             </button>
                             <span className="cdm-card-qty-value" title="Cópias desta carta no deck">
-                              {copies}/{MAX_DECK_COPIES}
+                              {copies}
                             </span>
                             <button
                               type="button"
                               className="cm-btn ghost small"
                               onClick={() =>
-                                addDeckCardWithLimit(
+                                addDeckCard(
                                   g.state,
                                   'Cópia adicionada ao deck' + banToastSuffix(g.state?.name),
                                 )
                               }
-                              disabled={atMaxCopies}
-                              title={`Adicionar 1 cópia (máx. ${MAX_DECK_COPIES})`}
+                              title="Adicionar 1 cópia"
                             >
                               +
                             </button>
