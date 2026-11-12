@@ -2556,6 +2556,11 @@ body::before {
 .md-rarity-badge.ur {
   background: linear-gradient(135deg, #b02cf5 0%, #6850f8 45%, #30d5fc 100%);
 }
+.md-rarity-badge.none {
+  background: linear-gradient(135deg, #3b4452, #232a35);
+  border: 1px dashed rgba(255, 255, 255, 0.35);
+  color: #cbd5e1;
+}
 
 /* Estado ativo dos botoes por raridade com cores fiéis ao Master Duel */
 .md-rarity-btn.rarity-n.active {

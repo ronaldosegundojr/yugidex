@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { toPng } from 'html-to-image'
+import { downloadFile, downloadUrl } from './downloadFile'
 import YugiohCardPreview from './YugiohCardPreview'
 import {
   CARD_TYPES,
@@ -116,7 +117,7 @@ const DECK_FILTER_CHIPS = [
 
 // Chips de filtro para o "Banco de cartas" (pool), no estilo do Master Duel.
 const DB_FILTER_CHIPS = [
-  { value: 'monster', label: 'Monstros', test: (c) => !['spell', 'trap'].includes(dbCardCategory(c)) },
+  { value: 'monster', label: 'Monstros', test: (c) => !['spell', 'trap', 'token'].includes(dbCardCategory(c)) },
   { value: 'normal', label: 'Normais', test: (c) => dbCardCategory(c) === 'normal' },
   { value: 'effect', label: 'Efeito', test: (c) => dbCardCategory(c) === 'effect' },
   { value: 'ritual', label: 'Ritual', test: (c) => dbCardCategory(c) === 'ritual' },
@@ -126,15 +127,19 @@ const DB_FILTER_CHIPS = [
   { value: 'link', label: 'Link', test: (c) => dbCardCategory(c) === 'link' },
   { value: 'spell', label: 'Magias', test: (c) => dbCardCategory(c) === 'spell' },
   { value: 'trap', label: 'Armadilhas', test: (c) => dbCardCategory(c) === 'trap' },
+  { value: 'token', label: 'Token', test: (c) => dbCardCategory(c) === 'token' },
 ]
 
 // ---- Filtros de raridade e banlist (mesmos do /deck) ----
-const RARITY_FILTER_OPTIONS = MASTER_DUEL_RARITIES.map((r) => ({
-  key: r.key,
-  code: r.code,
-  label: r.label,
-  tip: `${r.label} (${r.code})`,
-}))
+const RARITY_FILTER_OPTIONS = [
+  ...MASTER_DUEL_RARITIES.map((r) => ({
+    key: r.key,
+    code: r.code,
+    label: r.label,
+    tip: `${r.label} (${r.code})`,
+  })),
+  { key: 'none', code: '—', label: 'Sem raridade', tip: 'Sem raridade (tokens e cartas fora do Master Duel)' },
+]
 
 const BAN_FILTER_OPTIONS = [
   {
@@ -313,10 +318,10 @@ function RarityBanFilters({ rarity, ban, onRarityChange, onBanChange }) {
 function LibBadges({ rarity, ban, banChange }) {
   const rOpt = RARITY_FILTER_OPTIONS.find((o) => o.key === rarity)
   const restricted = ban && ban !== 'unlimited'
-  if (!rOpt && !restricted && !banChange) return null
+  if ((!rOpt || rOpt.key === 'none') && !restricted && !banChange) return null
   return (
     <div className="cdm-lib-badges">
-      {rOpt && (
+      {rOpt && rOpt.key !== 'none' && (
         <span className={`md-rarity-badge ${rOpt.key}`} title={`Raridade ${rOpt.label}`}>
           {rOpt.code}
         </span>
@@ -827,10 +832,7 @@ export default function CardMakerPage({ cards = [] }) {
         if (cancelled) return
         if (!images.length) return
         if (pc.kind === 'png') {
-          const a = document.createElement('a')
-          a.download = pc.filename
-          a.href = images[0]
-          a.click()
+          downloadUrl(images[0], pc.filename)
           setToast('Download gerado!')
         } else {
           const { pages, pdfPages } = await buildDeckPdf(images, pc.filename, {
@@ -897,7 +899,7 @@ export default function CardMakerPage({ cards = [] }) {
         const a = SPELL_TRAP_TYPES.includes(s.type) ? s.type : s.attribute
         if (a !== attr) return false
       }
-      if (rarity.length && !rarity.includes(customCardRarity(s, cards))) return false
+      if (rarity.length && !rarity.includes(customCardRarity(s, cards) || 'none')) return false
       if (banSet.length && !banSet.includes(banStatusForName(s.name || ''))) return false
       return true
     })
@@ -1416,8 +1418,9 @@ export default function CardMakerPage({ cards = [] }) {
       if (s.atk !== undefined && s.atk !== '') details.push(`   ATK: ${s.atk}`)
       if (s.def !== undefined && s.def !== '') details.push(`   DEF: ${s.def}`)
       if (s.pendulum) details.push(`   PÊNDULO: Escala Azul ${s.scaleBlue} / Escala Vermelha ${s.scaleRed}`)
-      if (s.effect) details.push(`   EFEITO: ${s.effect}`)
-      if (s.pendulumEffect) details.push(`   EFEITO DO PÊNDULO: ${s.pendulumEffect}`)
+      const indentMultiline = (value) => String(value).replace(/\r?\n/g, '\n   ')
+      if (s.effect) details.push(`   EFEITO: ${indentMultiline(s.effect)}`)
+      if (s.pendulumEffect) details.push(`   EFEITO DO PÊNDULO: ${indentMultiline(s.pendulumEffect)}`)
       if (s.nameColor) details.push(`   COR DO TÍTULO: ${s.nameColor}`)
       if (s.nameColorPreset && s.nameColorPreset !== 'auto') details.push(`   PRESET DA COR: ${s.nameColorPreset}`)
       const art = escapeJsonArt(s)
@@ -1448,23 +1451,13 @@ export default function CardMakerPage({ cards = [] }) {
     return content
   }
 
-  const downloadBlob = (content, type, filename) => {
-    const blob = new Blob([content], { type })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = filename
-    a.click()
-    URL.revokeObjectURL(url)
-  }
-
   const exportCreatedDeckTxt = () => {
     const content = buildCreatedDeckTxt()
     if (!content) {
       setToast('Adicione cartas ao deck primeiro')
       return
     }
-    downloadBlob(content, 'text/plain;charset=utf-8', `${deckFilename()}.txt`)
+    downloadFile(content, 'text/plain;charset=utf-8', `${deckFilename()}.txt`)
     setToast('Deck salvo em .txt')
   }
 
@@ -1491,7 +1484,7 @@ export default function CardMakerPage({ cards = [] }) {
       extra,
       side: [],
     }
-    downloadBlob(JSON.stringify(deckData, null, 2), 'application/json', `${deckFilename()}.json`)
+    downloadFile(JSON.stringify(deckData, null, 2), 'application/json', `${deckFilename()}.json`)
     setToast('Deck salvo em .json')
   }
 
@@ -1512,7 +1505,7 @@ export default function CardMakerPage({ cards = [] }) {
       },
     }
     const stamp = new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')
-    downloadBlob(JSON.stringify(payload, null, 2), 'application/json', `rascunho-yugidex-${stamp}.json`)
+    downloadFile(JSON.stringify(payload, null, 2), 'application/json', `rascunho-yugidex-${stamp}.json`)
     setToast('Rascunho salvo em .json')
   }
 
@@ -1561,7 +1554,7 @@ export default function CardMakerPage({ cards = [] }) {
     content += `       FIM DO RASCUNHO\n`
     content += `========================================\n`
     const stamp = new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')
-    downloadBlob(content, 'text/plain;charset=utf-8', `rascunho-yugidex-${stamp}.txt`)
+    downloadFile(content, 'text/plain;charset=utf-8', `rascunho-yugidex-${stamp}.txt`)
     setToast('Rascunho salvo em .txt')
   }
 
@@ -1570,7 +1563,7 @@ export default function CardMakerPage({ cards = [] }) {
   const readFileText = (file) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader()
-      reader.onload = () => resolve(String(reader.result || ''))
+      reader.onload = () => resolve(String(reader.result || '').replace(/^\uFEFF/, ''))
       reader.onerror = () => reject(reader.error)
       reader.readAsText(file, 'utf-8')
     })
@@ -1606,42 +1599,67 @@ export default function CardMakerPage({ cards = [] }) {
 
   // Le o .txt gerado por "Salvar .txt" e reconstroi os estados das cartas.
   const parseDeckTxt = (text) => {
-    const lines = String(text || '').split(/\r?\n/)
+    const content = String(text || '').replace(/^\uFEFF/, '')
+    const lines = content.split(/\r?\n/)
     let name = ''
     const cards = []
     let current = null
     let lastField = null
+    const hasCardsHeader = /^\s*CARTAS DO DECK\s*$/im.test(content)
+    let inCards = !hasCardsHeader
 
-    lines.forEach((line) => {
+    for (const line of lines) {
       const nameMatch = line.match(/^\s*NOME DO DECK:\s*(.*)$/i)
       if (nameMatch) {
         name = nameMatch[1].trim()
-        return
+        continue
       }
-      const numMatch = line.match(/^\s*\d+\.\s+(.*)$/)
+      if (/^\s*CARTAS DO DECK\s*$/i.test(line)) {
+        inCards = true
+        current = null
+        lastField = null
+        continue
+      }
+      if (/^\s*(RESUMO DO DECK|FIM DA EXPORTAÇÃO|FIM DA EXPORTACAO|FIM DO RASCUNHO)\s*$/i.test(line)) {
+        inCards = false
+        current = null
+        lastField = null
+        continue
+      }
+      if (!inCards) continue
+
+      const numMatch = line.match(/^(\d+)\.\s+(.*)$/)
       if (numMatch) {
-        current = { name: numMatch[1].trim(), fields: [] }
-        cards.push(current)
-        lastField = null
-        return
+        const number = Number(numMatch[1])
+        if (number === cards.length + 1 && (!lastField || cards.length === 0)) {
+          current = { name: numMatch[2].trim(), fields: [] }
+          cards.push(current)
+          lastField = null
+          continue
+        }
       }
-      if (!current) return
-      if (line.trim() === '') {
-        lastField = null
-        return
-      }
+      if (!current) continue
       const keyMatch = line.match(/^\s{2,}([^:]+):\s?(.*)$/)
       if (keyMatch) {
         const key = TXT_FIELD_BY_LABEL[keyMatch[1].trim().toUpperCase()]
         if (key) {
           lastField = { key, value: keyMatch[2] }
           current.fields.push(lastField)
-          return
+          continue
         }
+      }
+      // Continuacao indentada (inclusive linhas em branco) de um campo.
+      if (lastField && /^\s{2,}/.test(line)) {
+        lastField.value += `\n${line.replace(/^ {3}/, '')}`
+        continue
+      }
+      if (line.trim() === '') {
+        lastField = null
+        continue
       }
       // Linha sem rotulo: continua o valor anterior (ex.: efeito multilinha).
       if (lastField) lastField.value += `\n${line}`
-    })
+    }
 
     const states = cards.map((card) => {
       const s = { name: card.name }
@@ -1665,6 +1683,11 @@ export default function CardMakerPage({ cards = [] }) {
             }
             break
           }
+          case 'art': {
+            const art = value.trim()
+            if (art && !art.startsWith('(')) s.art = art
+            break
+          }
           default:
             s[key] = value
         }
@@ -1677,7 +1700,21 @@ export default function CardMakerPage({ cards = [] }) {
 
   // Le o .json gerado por "Salvar .json" e reconstroi os estados das cartas.
   const parseDeckJson = (text) => {
-    const data = JSON.parse(text)
+    const data = JSON.parse(String(text || '').replace(/^\uFEFF/, ''))
+    if (!data || typeof data !== 'object') return { name: '', states: [], currentCard: null }
+
+    if (data.kind === 'draft' || data.card || data.deck) {
+      const deckStates = Array.isArray(data.deck?.cards)
+        ? data.deck.cards.filter((s) => s && typeof s === 'object')
+        : []
+      const currentCard = data.card && typeof data.card === 'object' ? data.card : null
+      return {
+        name: data.deck?.name || currentCard?.name || '',
+        states: deckStates.length ? deckStates : currentCard ? [currentCard] : [],
+        currentCard,
+      }
+    }
+
     const list = []
     ;['main', 'extra', 'side'].forEach((k) => {
       if (Array.isArray(data[k])) list.push(...data[k])
@@ -1691,20 +1728,33 @@ export default function CardMakerPage({ cards = [] }) {
         return null
       })
       .filter(Boolean)
-    return { name: data.name || '', states }
+    return { name: data.name || '', states, currentCard: null }
   }
 
-  const applyImportedDeck = (name, states) => {
-    if (!states.length) {
+  const applyImportedDeck = (name, states, currentCard = null) => {
+    if (!states.length && !currentCard) {
       setToast('Nenhuma carta encontrada no arquivo')
       return
     }
-    setDeckName(name || '')
-    setCurrentDeckId(null)
-    setDeckCards(
-      states.map((s) => ({ id: newDeckCardId(), state: { ...defaultCardState(), ...s } })),
+    if (states.length) {
+      setDeckName(name || '')
+      setCurrentDeckId(null)
+      setDeckCards(
+        states.map((s) => ({ id: newDeckCardId(), state: { ...defaultCardState(), ...s } })),
+      )
+    }
+    if (currentCard) {
+      setState({ ...defaultCardState(), ...currentCard })
+      setCurrentId(null)
+      setMode('editor')
+    }
+    setToast(
+      currentCard && states.length
+        ? `Rascunho restaurado: ${states.length} carta(s) no deck e carta atual`
+        : currentCard
+          ? 'Rascunho restaurado'
+          : `${states.length} carta(s) importada(s)`,
     )
-    setToast(`${states.length} carta(s) importada(s)`)
   }
 
   const handleImportDeckTxt = async (file) => {
@@ -1723,8 +1773,8 @@ export default function CardMakerPage({ cards = [] }) {
     if (!file) return
     try {
       const text = await readFileText(file)
-      const { name, states } = parseDeckJson(text)
-      applyImportedDeck(name, states)
+      const { name, states, currentCard } = parseDeckJson(text)
+      applyImportedDeck(name, states, currentCard)
     } catch (e) {
       console.error('Falha ao importar .json:', e)
       setToast('Arquivo .json inválido')
@@ -1744,7 +1794,7 @@ export default function CardMakerPage({ cards = [] }) {
   const filteredSavedLib = useMemo(() => {
     const { rarity, ban } = savedFilters
     return saved.filter((c) => {
-      if (rarity.length && !rarity.includes(customCardRarity(c.state, cards))) return false
+      if (rarity.length && !rarity.includes(customCardRarity(c.state, cards) || 'none')) return false
       if (ban.length && !ban.includes(banStatusForName(c.state?.name || c.name || ''))) return false
       return true
     })
@@ -1768,7 +1818,7 @@ export default function CardMakerPage({ cards = [] }) {
       if (tests.length && !tests.some((t) => t.test(c))) return false
       if (attr !== 'all' && String(c.attribute || '').toLowerCase() !== attr) return false
       if (banSet.length && !banSet.includes(banStatusFor(c))) return false
-      if (rarity.length && !rarity.includes(String(c._rarity || '').toLowerCase())) return false
+      if (rarity.length && !rarity.includes(String(c._rarity || '').toLowerCase() || 'none')) return false
       return true
     })
     if (hasSearch) sortBySearchScore(list)
@@ -2733,7 +2783,7 @@ export default function CardMakerPage({ cards = [] }) {
                         {(() => {
                           const rk = customCardRarity(g.state, cards)
                           const rOpt = RARITY_FILTER_OPTIONS.find((o) => o.key === rk)
-                          return rOpt ? (
+                          return rOpt && rOpt.key !== 'none' ? (
                             <span className={`md-rarity-badge ${rOpt.key}`} title={`Raridade ${rOpt.label}`}>
                               {rOpt.code}
                             </span>

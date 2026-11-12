@@ -9,6 +9,7 @@ import CardMakerPage from './CardMakerPage'
 import { buildSearchBlob, searchTerms, cardSearchScore, sortBySearchScore } from './cardUtils'
 import { BAN_LABELS, BAN_MAX_COPIES, BAN_SHORT_LABELS, BANLIST_EFFECTIVE, banStatusFor } from './banlistData'
 import { cardPasscode, fetchMarketInfo, formatUsd, formatEur } from './marketData'
+import { downloadFile } from './downloadFile'
 import { probAtLeastOne, drawHand, drawIndividualHand, formatPercent } from './handOdds'
 import { encodeDeckCode, decodeDeckCode } from './deckShare'
 import './YGOCard.css'
@@ -621,6 +622,7 @@ const RARITY_OPTS = [
   { key: 'r', code: 'R', label: 'Rara' },
   { key: 'sr', code: 'SR', label: 'Super Rara' },
   { key: 'ur', code: 'UR', label: 'Ultra Rara' },
+  { key: 'none', code: '—', label: 'Sem raridade' },
 ]
 const ALL_RARITY_KEYS = RARITY_OPTS.map((o) => o.key)
 
@@ -828,6 +830,7 @@ function CardsView({ cards, filteredCards, filteredByType, currentPage, setCurre
             <option value="fusion">Fusion</option>
             <option value="ritual">Ritual</option>
             <option value="link">Link</option>
+            <option value="token">Token</option>
           </select>
           <select className="filter-select" value={raceFilter} onChange={(e) => setRaceFilter(e.target.value)}>
             <option value="">Todas as Raças</option>
@@ -1066,7 +1069,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         if (deckLevelFilter === 'spell' && type !== 'spell') return false
         if (deckLevelFilter === 'trap' && type !== 'trap') return false
       }
-      if (hasRarity && !deckRarityFilter.includes(card._rarity)) return false
+      if (hasRarity && !deckRarityFilter.includes(card._rarity || 'none')) return false
       return true
     })
     if (hasSearch) sortBySearchScore(list)
@@ -1249,19 +1252,20 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
   const exportDeckJson = () => {
     if (mainDeck.length === 0 && extraDeck.length === 0 && sideDeck.length === 0) { alert('Adicione cartas ao deck!'); return }
     const name = deckName.trim() || 'ygo-deck'
+    const exportItem = (c) => ({
+      id: c.id,
+      qty: c.qty,
+      name: c.text?.en?.name || c._ptName || '',
+      passcode: cardPasscode(c) || ''
+    })
     const deckData = {
       name,
-      main: mainDeck.map(c => ({ id: c.id, qty: c.qty })),
-      extra: extraDeck.map(c => ({ id: c.id, qty: c.qty })),
-      side: sideDeck.map(c => ({ id: c.id, qty: c.qty }))
+      exportedAt: new Date().toISOString(),
+      main: mainDeck.map(exportItem),
+      extra: extraDeck.map(exportItem),
+      side: sideDeck.map(exportItem)
     }
-    const blob = new Blob([JSON.stringify(deckData, null, 2)], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `${name}.json`
-    a.click()
-    URL.revokeObjectURL(url)
+    downloadFile(JSON.stringify(deckData, null, 2), 'application/json', `${name}.json`)
   }
 
   // Exporta no formato YDK (YGOPro/EDOPro): passcodes por secao, repetidos
@@ -1297,13 +1301,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
       ...side,
       ''
     ].join('\n')
-    const blob = new Blob([content], { type: 'text/plain' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `${name}.ydk`
-    a.click()
-    URL.revokeObjectURL(url)
+    downloadFile(content, 'text/plain;charset=utf-8', `${name}.ydk`)
     if (skipped > 0) alert(`${skipped} carta(s) sem código oficial foram omitidas do .ydk.`)
   }
 
@@ -1404,7 +1402,8 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         content += `${prefix}${displayName}${qtySuffix}\n`
 
         const details = []
-        if (opts.effect) details.push(`   EFEITO: ${card.text?.pt?.effect || card.text?.en?.effect || ''}`)
+        const indentMultiline = (value) => String(value).replace(/\r?\n/g, '\n   ')
+        if (opts.effect) details.push(`   EFEITO: ${indentMultiline(card.text?.pt?.effect || card.text?.en?.effect || '')}`)
         if (opts.cardType) details.push(`   TIPO: ${getTypeLabelPT(card._cardType)}`)
         if (opts.level && card.level) details.push(`   NÍVEL: ${card.level}`)
         if (opts.attribute && card.attribute) details.push(`   ATRIBUTO: ${translateAttribute(card.attribute)}`)
@@ -1463,13 +1462,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
     const content = buildDeckExportTxt(exportOptions)
     if (!content) { alert('Adicione cartas ao deck!'); return }
     const name = deckName.trim() || 'ygo-deck'
-    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `${name}.txt`
-    a.click()
-    URL.revokeObjectURL(url)
+    downloadFile(content, 'text/plain;charset=utf-8', `${name}.txt`)
     setExportModalOpen(false)
   }
 
@@ -1507,7 +1500,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         ) || null
       }
 
-      const idStr = String(c.id || c.cardId || c.code || c.password || c.konami_id || '').trim()
+      const idStr = String(c.id || c.cardId || c.code || c.passcode || c.password || c.konami_id || '').trim()
       if (idStr) {
         const byId = cards.find(card => String(card.id) === idStr)
         if (byId) return byId
@@ -1548,7 +1541,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
         let sideRaw = []
         let importedDeckName = ''
 
-        const content = e.target.result
+        const content = String(e.target.result || '').replace(/^\uFEFF/, '')
 
         if (isJson) {
           const parsed = JSON.parse(content)
@@ -1592,11 +1585,12 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
           // Parse TXT (formato exportado pelo /deck). Aceita o modo agrupado
           // ("1. Nome (QUANTIDADE DESEJADA: 2x)") e o expandido (uma linha
           // "1. Nome" por copia), com ou sem secoes e numeracao.
-          const lines = content.split('\n')
+          const lines = content.split(/\r?\n/)
           let currentSection = 'main'
           // Arquivos exportados tem o cabecalho "CARTAS DO DECK"; arquivos
           // manuais sem cabecalho continuam aceitos.
-          let inCards = !/^CARTAS DO DECK$/im.test(content)
+          const hasCardsHeader = /^\s*CARTAS DO DECK\s*$/im.test(content)
+          let inCards = !hasCardsHeader
 
           const sectionFromLine = (t) => {
             if (t.startsWith('--- MAIN DECK')) return 'main'
@@ -1618,7 +1612,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
               currentSection = section
               continue
             }
-            if (/^CARTAS DO DECK$/i.test(trimmed)) {
+            if (/^\s*CARTAS DO DECK\s*$/i.test(trimmed)) {
               inCards = true
               continue
             }
@@ -1632,14 +1626,23 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
             if (/^[=-]{3,}$/.test(trimmed)) continue
 
             // Remove a numeracao ("1. ") e o sufixo de quantidade agrupada.
-            let lineText = trimmed.replace(/^\d+\.\s+/, '')
+            const numbered = trimmed.match(/^\d+\.\s+(.*)$/)
+            let lineText = numbered ? numbered[1] : trimmed
             let qty = 1
             const qtyMatch = lineText.match(/^(.*?)\s*\(QUANTIDADE DESEJADA:\s*(\d+)x\)\s*$/i)
             if (qtyMatch) {
               lineText = qtyMatch[1].trim()
-              qty = parseInt(qtyMatch[2], 10) || 1
+              const parsedQty = parseInt(qtyMatch[2], 10)
+              qty = Number.isFinite(parsedQty) && parsedQty > 0 ? Math.min(parsedQty, 99) : 1
             }
             if (!lineText) continue
+            // Linhas de continuacao (ex.: efeito multilinha) nao devem virar
+            // cartas. Aceita nomes conhecidos ou linhas que parecem cabecalho
+            // de carta (com quantidade ou seguidas de detalhes indentados).
+            const knownCard = findCard({ name: lineText })
+            const nextLine = lines[i + 1] || ''
+            const looksLikeHeader = !!qtyMatch || /^\s{2,}\S/.test(nextLine)
+            if (!knownCard && !looksLikeHeader) continue
 
             // A imagem pode vir na linha seguinte (quando exportada).
             let imageUrl = null
@@ -1663,9 +1666,10 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
           const result = []
           for (const item of arr) {
             const card = findCard(item)
-            const qty = typeof item === 'object' && item !== null
-              ? (parseInt(item.qty || item.quantity || item.count || item.amount || 1) || 1)
+            const rawQty = typeof item === 'object' && item !== null
+              ? parseInt(item.qty || item.quantity || item.count || item.amount || 1, 10)
               : 1
+            const qty = Number.isFinite(rawQty) && rawQty > 0 ? Math.min(rawQty, 99) : 1
             if (card) {
               result.push({ ...card, qty, deckType: defaultType })
             } else {
@@ -1950,6 +1954,7 @@ function DeckPage({ cards, deck, setDeck, deckSearchTerm, setDeckSearchTerm, dec
                 <option value="monster">Monstro</option>
                 <option value="spell">Magia</option>
                 <option value="trap">Armadilha</option>
+                <option value="token">Token</option>
               </select>
               <select className="filter-select" value={deckLevelFilter} onChange={(e) => { setDeckLevelFilter(e.target.value); setCurrentPage(1) }}>
                 <option value="">Todos os Níveis</option>
@@ -2168,8 +2173,14 @@ function App() {
   }
 
   const loadSavedDecks = () => {
-    const saved = localStorage.getItem('ygoSavedDecks')
-    if (saved) setSavedDecks(JSON.parse(saved))
+    try {
+      const saved = localStorage.getItem('ygoSavedDecks')
+      if (!saved) return
+      const parsed = JSON.parse(saved)
+      if (Array.isArray(parsed)) setSavedDecks(parsed)
+    } catch {
+      localStorage.removeItem('ygoSavedDecks')
+    }
   }
 
   useEffect(() => { loadCards(); loadSavedDecks() }, [])

@@ -4,6 +4,7 @@ import BattleScreenSwitcher from './components/BattleScreenSwitcher'
 import FieldScreen from './components/FieldScreen'
 import { useBattleSession } from './hooks/useBattleSession'
 import { playBattleSound } from './battleSounds'
+import { downloadFile } from './downloadFile'
 
 const SOUND_BUTTONS = [
   { key: 'mamaco', label: 'Eu vim ver o macaco', icon: '🐒' },
@@ -272,13 +273,7 @@ function HistoryModal({ history, onClose }) {
       return `#${idx + 1} [${when}] ${who}${item.change > 0 ? '+' : ''}${item.change} LP -> ${item.resultLp}`
     })
     const content = ['Log do Duelo - YuGiDex', ''].concat(lines, ['', `Total de registros: ${items.length}`]).join('\n')
-    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `duelo-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')}.txt`
-    a.click()
-    URL.revokeObjectURL(url)
+    downloadFile(content, 'text/plain;charset=utf-8', `duelo-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')}.txt`)
   }
 
   return (

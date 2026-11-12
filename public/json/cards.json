@@ -359191,7 +359191,8 @@
         "name": "Segna-Drago Divino"
       },
       "pt": {
-        "name": "Ficha de Dragão Divino"
+        "name": "Ficha de Dragão Divino",
+        "effect": "Este card pode ser usado como uma \"Ficha de Dragão Divino\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha Dragón Divino"
@@ -369932,7 +369933,8 @@
         "name": "Segna-Giorno del Giudizio"
       },
       "pt": {
-        "name": "Ficha de Juízo Final"
+        "name": "Ficha de Juízo Final",
+        "effect": "Este card pode ser usado como qualquer Ficha."
       },
       "es": {
         "name": "Ficha Día del Juicio"
@@ -385243,7 +385245,8 @@
         "name": "Segna-Dragonoide"
       },
       "pt": {
-        "name": "Ficha Dragonoide"
+        "name": "Ficha Dragonoide",
+        "effect": "Este card pode ser usado como uma \"Ficha Dragonoide\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha Dragonoide"
@@ -431764,7 +431767,8 @@
         "name": "Segna-Emissario dell'Oscurità"
       },
       "pt": {
-        "name": "Ficha de Emissário da Escuridão"
+        "name": "Ficha de Emissário da Escuridão",
+        "effect": "Este card pode ser usado como uma \"Ficha de Emissário da Escuridão\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha de Emisario de la Oscuridad"
@@ -498965,7 +498969,8 @@
         "name": "Segna-Soffice"
       },
       "pt": {
-        "name": "Ficha de Felpa"
+        "name": "Ficha de Felpa",
+        "effect": "Este card pode ser usado como uma \"Ficha de Felpa\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha Pelusa"
@@ -689380,7 +689385,8 @@
         "name": "Segna-Mostro Insetto"
       },
       "pt": {
-        "name": "Ficha de Monster Inseto"
+        "name": "Ficha de Monster Inseto",
+        "effect": "Invocado por Invocação-Especial com o efeito de \"Rainha dos Insetos\"."
       },
       "es": {
         "name": "Ficha Monstruo Insecto"
@@ -740821,7 +740827,8 @@
         "name": "Segna-Kuriboh"
       },
       "pt": {
-        "name": "Ficha de Kuriboh"
+        "name": "Ficha de Kuriboh",
+        "effect": "Este card pode ser usado como uma \"Ficha de Kuriboh\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha Kuriboh"
@@ -745398,7 +745405,8 @@
         "name": "Segna-Agnello"
       },
       "pt": {
-        "name": "Ficha de Cordeiro"
+        "name": "Ficha de Cordeiro",
+        "effect": "Este card pode ser usado como uma \"Ficha de Cordeiro\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha de Cordero"
@@ -877565,7 +877573,8 @@
         "name": "Segna-Miraggio"
       },
       "pt": {
-        "name": "Ficha de Miragem"
+        "name": "Ficha de Miragem",
+        "effect": "Invocado por Invocação-Especial com o efeito de \"Duplo Físico\". Destrua esta Ficha no final do turno."
       },
       "es": {
         "name": "Ficha de Espejismo"
@@ -970994,7 +971003,8 @@
         "name": "Segna-Ojama"
       },
       "pt": {
-        "name": "Ficha de Ojama"
+        "name": "Ficha de Ojama",
+        "effect": "Este card pode ser usado como uma \"Ficha de Ojama\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha de Ojama"
@@ -976506,7 +976516,8 @@
         "name": "Segna-Opzione"
       },
       "pt": {
-        "name": "Ficha de Opção"
+        "name": "Ficha de Opção",
+        "effect": "Este card pode ser usado como uma \"Ficha de Opção\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha de Opción"
@@ -1023166,7 +1023177,8 @@
         "name": "Segna-Fotonico"
       },
       "pt": {
-        "name": "Ficha de Fóton"
+        "name": "Ficha de Fóton",
+        "effect": "Este card pode ser usado como uma \"Ficha de Fóton\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha Fotónica"
@@ -1184829,7 +1184841,8 @@
         "name": "Segna-Montone"
       },
       "pt": {
-        "name": "Ficha de Ovelha"
+        "name": "Ficha de Ovelha",
+        "effect": "Este card pode ser usado como uma \"Ficha de Ovelha\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha de Oveja"
@@ -1214408,7 +1214421,8 @@
         "name": "Segna-Spaccacielo"
       },
       "pt": {
-        "name": "Ficha de Destruidor Celeste"
+        "name": "Ficha de Destruidor Celeste",
+        "effect": "Este card pode ser usado como uma \"Ficha de Destruidor Celeste\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha Cañonera"
@@ -1216078,7 +1216092,8 @@
         "name": "Segna-Melma"
       },
       "pt": {
-        "name": "Ficha de Limo"
+        "name": "Ficha de Limo",
+        "effect": "Este card pode ser usado como uma \"Ficha de Limo\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha de Gelatina"
@@ -1243470,7 +1243485,8 @@
         "name": "Segna-Ragno"
       },
       "pt": {
-        "name": "Ficha de Aranha"
+        "name": "Ficha de Aranha",
+        "effect": "Este card pode ser usado como qualquer Ficha."
       },
       "es": {
         "name": "Ficha Araña"
@@ -1405404,7 +1405420,8 @@
         "name": "Segna-Ingannatore"
       },
       "pt": {
-        "name": "Ficha de Traiçoeiro"
+        "name": "Ficha de Traiçoeiro",
+        "effect": "Invocado por Invocação-Especial com o efeito de \"Traiçoeiro Feitiço 4\". Esta Ficha não pode declarar um ataque."
       },
       "es": {
         "name": "Ficha Difícil"
@@ -1448414,7 +1448431,8 @@
         "name": "Segna-Vassallo"
       },
       "pt": {
-        "name": "Ficha Vassalo"
+        "name": "Ficha Vassalo",
+        "effect": "Este card pode ser usado como qualquer Ficha."
       },
       "es": {
         "name": "Ficha Vasallo"
@@ -1545111,7 +1545129,8 @@
         "name": "Segna-Maschera"
       },
       "pt": {
-        "name": "Ficha de Máscara"
+        "name": "Ficha de Máscara",
+        "effect": "Este card pode ser usado como uma \"Ficha de Máscara\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha Máscara"
@@ -1545477,7 +1545496,8 @@
         "effect": "Questa carta può essere utilizzata come \"Segna-Ogdoadico\".\n\n\nSe viene utilizzata come un altro Segna-Mostro, utilizzata il Tipo/Attributo/Livello/ATK/DEF di quel Segna-Mostro."
       },
       "pt": {
-        "name": "Ficha de Ogdoádico"
+        "name": "Ficha de Ogdoádico",
+        "effect": "Este card pode ser usado como uma \"Ficha de Ogdoádico\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha Ogdoádica"
@@ -1548837,7 +1548857,8 @@
         "name": "Segna-Bomba"
       },
       "pt": {
-        "name": "Ficha de Bomba"
+        "name": "Ficha de Bomba",
+        "effect": "Este card pode ser usado como uma \"Ficha de Bomba\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha Bomba"
@@ -1548898,7 +1548919,8 @@
         "official": false
       },
       "pt": {
-        "name": "Símbolo de Carisma"
+        "name": "Símbolo de Carisma",
+        "effect": "Se você usar este card como uma Ficha, considere usar outras Cartas de Ficha. ※Os Tipos \"Charisma\" e o Atributo \"LAUGH\" não existem nas regras do Yu-Gi-Oh! OCG."
       },
       "ja": {
         "name": "カリスマトークン",
@@ -1548947,7 +1548969,8 @@
         "name": "Segnalino"
       },
       "pt": {
-        "name": "Marcador"
+        "name": "Marcador",
+        "effect": "Este card pode ser usado como um \"Marcador\"."
       },
       "es": {
         "name": "Contador"
@@ -1549880,7 +1549903,8 @@
         "name": "Segna-Congegno"
       },
       "pt": {
-        "name": "Ficha de Dispositivo"
+        "name": "Ficha de Dispositivo",
+        "effect": "Este card pode ser usado como uma \"Ficha de Dispositivo\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha Artilugio"
@@ -1550889,7 +1550913,8 @@
         "name": "Segna-Ragazzi-Birichini"
       },
       "pt": {
-        "name": "Ficha de Travesso-Guris"
+        "name": "Ficha de Travesso-Guris",
+        "effect": "Este card pode ser usado como uma \"Ficha de Travesso-Guris\".\n\n\n*Se ela for usada como outra Ficha, aplique o Tipo/Atributo/Nível/ATK/DEF dessa outra Ficha."
       },
       "es": {
         "name": "Ficha Brominiños"
@@ -1550955,7 +1550980,8 @@
         "name": "Segnalino Predatore"
       },
       "pt": {
-        "name": "Marcador de Predador"
+        "name": "Marcador de Predador",
+        "effect": "Este card pode ser usado como um \"Marcador de Predador\"."
       },
       "es": {
         "name": "Contador de Predador"
@@ -1551621,7 +1551647,8 @@
         "name": "Segnalino Magia"
       },
       "pt": {
-        "name": "Marcador de Magia"
+        "name": "Marcador de Magia",
+        "effect": "Este card pode ser usado como um \"Marcador de Magia\"."
       },
       "es": {
         "name": "Contador Mágico"
@@ -1556334,7 +1556361,8 @@
         "name": "Segnalino Cuneo"
       },
       "pt": {
-        "name": "Marcador de Cunha"
+        "name": "Marcador de Cunha",
+        "effect": "Este card pode ser usado como um \"Marcador de Cunha\"."
       },
       "es": {
         "name": "Contador de Cuña"
@@ -1587163,7 +1587191,8 @@
         "name": "Segna-Avventuriero"
       },
       "pt": {
-        "name": "Ficha de Aventura"
+        "name": "Ficha de Aventura",
+        "effect": "Este card pode ser usado como qualquer Ficha."
       },
       "es": {
         "name": "Ficha Aventurera"
@@ -1632720,5 +1632749,30 @@
       ]
     },
     "series": []
+  },
+  {
+    "$schema": "https://raw.githubusercontent.com/iconmaster5326/YGOJSON/main/schema/v1/card.json",
+    "id": "3be252f9-0eb6-4ce3-ac53-9f181e19762c",
+    "text": {
+      "en": {
+        "name": "Emperor of Darkness Token",
+        "effect": "This card can be used as any token."
+      },
+      "pt": {
+        "name": "Ficha do Imperador das Trevas",
+        "effect": "Este card pode ser usado como qualquer Ficha."
+      }
+    },
+    "cardType": "token",
+    "passwords": [],
+    "images": [
+      {
+        "id": "7fd2f321-76c8-4bb6-aa1c-97ec534b959f",
+        "card": "https://www.yugiohcardguide.com/images/sr01/SR01-ENTKN.jpg"
+      }
+    ],
+    "sets": [],
+    "legality": {},
+    "externalIDs": {}
   }
 ]

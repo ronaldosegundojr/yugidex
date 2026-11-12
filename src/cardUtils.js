@@ -135,6 +135,9 @@ export const buildSearchBlob = (card) => {
   if (text.pt?.effect) parts.push(text.pt.effect)
   if (card?.name) parts.push(card.name)
   parts.push(card?.attribute, card?.type, card?.cardType, card?.subcategory)
+  if (String(card?.cardType || '').toLowerCase() === 'token') {
+    parts.push('ficha fichas token tokens')
+  }
   parts.push(
     Array.isArray(card?.classifications)
       ? card.classifications.join(' ')

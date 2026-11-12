@@ -206,7 +206,7 @@ export function computeLayout(state) {
     artBox: { x: 59, y: 161, w: 577, h: 577 },
     picture: isPendulum
       ? { x: 45, y: 182, w: 603, h: 596 }
-      : { x: 86, y: 186, w: 526, h: 526 },
+      : { x: 84, y: 186, w: 526, h: 526 },
     loreBorder: { x: 30, y: 743, w: 633, h: 225 },
     loreBackground: { x: 44, y: 754, w: 608, h: 204 },
     type: { x: 51, y: isPendulum ? 789 : 764, w: 586, h: 22 },
@@ -418,13 +418,14 @@ export function translateMonsterType(race, classifications = []) {
 }
 
 // Categoria do tipo de carta do banco (usada para filtros e para montar o estado
-// do criador): 'spell' | 'trap' | 'link' | 'xyz' | 'synchro' | 'fusion' |
-// 'ritual' | 'effect' | 'normal'.
+// do criador): 'spell' | 'trap' | 'token' | 'link' | 'xyz' | 'synchro' |
+// 'fusion' | 'ritual' | 'effect' | 'normal'.
 export function dbCardCategory(card) {
   if (!card) return 'normal'
   const ct = String(card.cardType || '').toLowerCase()
   if (ct === 'spell') return 'spell'
   if (ct === 'trap') return 'trap'
+  if (ct === 'token') return 'token'
   const monsterTypes = (card.monsterCardTypes || []).map((t) => String(t).toLowerCase())
   const classifications = (card.classifications || []).map((c) => String(c).toLowerCase())
   if (monsterTypes.includes('link')) return 'link'
